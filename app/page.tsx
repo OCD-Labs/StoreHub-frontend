@@ -50,9 +50,6 @@ const Page = () => {
                   <p className=" text-black text-opacity-70 text-2xl ">
                     Near Integration
                   </p>
-                  <p className=" text-black text-opacity-70 text-2xl ">
-                    Near Integration
-                  </p>
                   <p className="mt-4">
                   Integrated the NEAR blockchain for a secure, scalable online store, ensuring integrity for you and your customers.
                   </p>
