@@ -1,3 +1,14 @@
+# Store Hub — Your Single-Click Ecommerce Solution
+
+Store Hub is a groundbreaking solution for businesses looking to effortlessly establish an online presence. With just a single click, you can launch an e-commerce store, co-own the store with friends, and gain unparalleled business insights and analytics to help your business thrive in the online marketplace.
+
+Our platform leverages the power of blockchain technology to guarantee the integrity of your online store. We utilize the NEAR blockchain, known for its user-friendly, carbon-neutral, secure, and infinitely scalable characteristics. NEAR provides a foundation for an ecommerce solution that is both performant and secure, ensuring that your business operations are seamless and reliable.
+
+
+![Imgur](https://i.imgur.com/yNUxKle.png)
+
+## Tech
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -15,17 +26,6 @@ pnpm dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 
