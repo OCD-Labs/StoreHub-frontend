@@ -1,10 +1,35 @@
 'use client'
-
-import { useState } from 'react'
+import { log } from 'console'
+// @ts-nocheck
+import { use, useState, useEffect, useRef } from 'react'
 // import { Switch } from '@headlessui/react'
 const baseUrl = 'https://store-hub-djxu.onrender.com/api/v1/'
 const CreateStore = () => {
   const [agreed, setAgreed] = useState(false)
+  const [UserData, setUserData] = useState()
+  const [formData, setFormData] = useState({
+    name: '',
+    description: '',
+    profile_image_url: 'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250',
+    category: '',
+  })
+
+  const handleChange = (e: any) => {
+    console.log(e.target.value, e.target.name, 'target')
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
+  console.log(formData, 'form data')
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    // Do something with the form data
+    console.log(formData)
+
+    createNewStore()
+  }
 
   // Generate time options
   const timeOptions: JSX.Element[] = []
@@ -20,45 +45,54 @@ const CreateStore = () => {
       )
     }
   }
-  const User: any = localStorage.getItem('userData')
-  const userData = JSON.parse(User)
-  console.log(userData.data.result.user.user_id, 'userData')
+
+  // console.log((UserData?UserData.data: ''), 'userData')
 
   // create new store
-  const storeData = {
-    name: 'Jewelry',
-    description: 'My JewelryStore',
-    profile_image_url: 'string',
-    category: 'string',
-  }
+  // const storeData = {
+  //   name: 'Jewelry',
+  //   description: 'My JewelryStore',
+  //   profile_image_url: 'string',
+  //   category: 'string',
+  // }
   const createStoreOptions = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${userData.data.result.access_token}`,
+      Authorization: `Bearer ${
+        UserData ? UserData.data.result.access_token : ''
+      }`,
     },
-    body: JSON.stringify(storeData),
+    body: JSON.stringify(formData),
   }
 
-  const createNewStore = (e: any) => {
-    e.preventDefault()
-    try {
-      fetch(
-        baseUrl + `users/${userData.data.result.user.user_id}/stores`,
-        createStoreOptions,
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data, 'my new store')
-        })
-    } catch (error) {
-      console.log(error)
+  const createNewStore = () => {
+    if (UserData) {
+      try {
+        fetch(
+          baseUrl +
+            `users/${UserData ? UserData.data.result.user.user_id : ''}/stores`,
+          createStoreOptions,
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            console.log(data, 'my new store')
+          })
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 
+  useEffect(() => {
+    const User: any = localStorage.getItem('userData')
+    const userData = JSON.parse(User)
+    setUserData(userData)
+  }, [3])
+
   return (
     <main>
-      <form>
+      <form className="text-dark">
         <p className="text-[20px] font-bold text-black">Create Store</p>
 
         <div className="md:flex md:justify-between">
@@ -87,16 +121,26 @@ const CreateStore = () => {
           <div className="mt-6 md:mt-0 md:w-[60%]">
             <span className="md:flex gap-3 md:py-4 md:justify-end">
               <label>Store Name</label>
-              <input className="block w-full md:w-[75%] md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0" />
+              <input
+                name="name"
+                onInput={handleChange}
+                value={formData.name}
+                className="block w-full md:w-[75%] md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
+              />
             </span>
             <div className="flex justify-between md:justify-end">
               <span className="flex justify-between items-center w-[48%] mr-4 md:py-4 md:justify-end">
-                <label className="mr-2 md:mr-4">Category</label>
-                <select className="md:w-[55%] lg:w-[57%] block rounded-md border-0 px-2.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0">
-                  <option>Option 1</option>
-                  <option>Option 2</option>
-                  <option>Option 3</option>
-                  <option>Option 4</option>
+                <label className="mr-2 md:mr-4">category</label>
+                <select
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  className="md:w-[55%] lg:w-[57%] block rounded-md border-0 px-2.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
+                >
+                  <option>Fashion</option>
+                  <option>Books</option>
+                  <option>Electronics</option>
+                  <option>Apparels</option>
                 </select>
               </span>
               <span className="flex justify-between items-center w-[43%] md:w-[45%] md:py-4 md:justify-end">
@@ -109,7 +153,12 @@ const CreateStore = () => {
             <span className="md:flex gap-3"></span>
             <span className="md:flex gap-3 md:py-4 md:justify-end">
               <label>Description</label>
-              <textarea className="block w-full md:w-[75%] md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0" />
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                className="block w-full md:w-[75%] md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
+              />
             </span>
             <span className="md:flex gap-3 md:py-4 justify-end">
               <label>Add Tags</label>
@@ -186,7 +235,7 @@ const CreateStore = () => {
         </div>
         <div className="flex justify-center items-center">
           <button
-            onClick={createNewStore}
+            onClick={handleSubmit}
             className="rounded-[10px] py-4 text-white bg-[#161616] text-lg w-full sm:w-3/4 sm:mx-auto my-6 sm:my-12"
           >
             Create Store

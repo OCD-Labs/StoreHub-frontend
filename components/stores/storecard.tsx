@@ -7,7 +7,7 @@ import { FC } from 'react'
 
 interface Props {}
 
-const Storecard: FC<Props> = () => {
+const Storecard: FC<Props> = ({store}) => {
   return (
     <Card>
       <div>
@@ -16,7 +16,7 @@ const Storecard: FC<Props> = () => {
             <Image src={pfpic} width={60} height={60} alt="storepic"></Image>
             <div className="flex flex-col">
               <h2 className="text-dark opacity-80 font-semibold leading-4 ">
-                <Link href="/stores/1">Techies assemble</Link>
+                <Link href="/stores/1">{ store.name }</Link>
               </h2>
               <ul className="flex gap-3 font-thin">
                 <li>cloth</li>
