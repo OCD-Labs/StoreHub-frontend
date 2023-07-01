@@ -51,8 +51,7 @@ const Page = () => {
                     Near Integration
                   </p>
                   <p className="mt-4">
-                    Collaborate with friends or business partners seamlessly
-                    with our co-ownership feature.
+                  Integrated the NEAR blockchain for a secure, scalable online store, ensuring integrity for you and your customers.
                   </p>
                 </div>
               </div>
@@ -65,8 +64,7 @@ const Page = () => {
                     One-click Store Launch
                   </p>
                   <p className="mt-4">
-                    Collaborate with friends or business partners seamlessly
-                    with our co-ownership feature.
+                  Launch an online business with Store Hub with just one click of a button.
                   </p>
                 </div>
               </div>
@@ -79,8 +77,7 @@ const Page = () => {
                     Analytics and insights
                   </p>
                   <p className="mt-4">
-                    Collaborate with friends or business partners seamlessly
-                    with our co-ownership feature.
+                  Gain valuable insights into your business operations with our advanced analytics
                   </p>
                 </div>
               </div>
