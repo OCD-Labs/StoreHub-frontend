@@ -67,6 +67,7 @@ export class Wallet {
   signOut() {
     this.wallet.signOut()
     this.wallet = this.accountId = this.createAccessKeyFor = null
+    localStorage.removeItem('userData')
     window.location.replace(window.location.origin + window.location.pathname)
   }
 

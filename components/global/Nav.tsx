@@ -15,14 +15,14 @@ const Nav = () => {
   const [isMenuOpened, setMenuOpen] = useState(false)
 
   //sign in base url
-  const baseUrl = 'https://storehub-zjp3.onrender.com/api/v1/'
+  const baseUrl = 'https://store-hub-djxu.onrender.com/api/v1'
 
   const signInData = {
     account_id: wallet.accountId,
   }
   // Configuration for the Fetch API request
   const signInfetchOptions = {
-    method: 'GET',
+    method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
@@ -47,14 +47,20 @@ const Nav = () => {
     return () => {}
   })
 
+  useEffect(() => {
+    if (wallet.accountId) {
+      signIn()
+    }
+  })
+
   const signIn = () => {
     try {
       if (wallet.accountId) {
-        fetch(baseUrl + '/auth/login', signInfetchOptions)
+        fetch(baseUrl + '/auth/', signInfetchOptions)
           .then((response) => response.json())
           .then((data) => {
             // Handle the response data
-            console.log(data)
+            localStorage.setItem('userData', JSON.stringify(data))
           })
       }
     } catch (error) {
@@ -64,24 +70,22 @@ const Nav = () => {
 
   const signOut = () => {
     try {
-      fetch(
-        'https://storehub-zjp3.onrender.com/api/v1/auth/logout',
-        signOutfetchOptions,
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          // Handle the response data
-          console.log(data)
-        })
+      localStorage.removeItem('userData')
+      // fetch(
+      //   'https://storehub-zjp3.onrender.com/api/v1/auth/logout',
+      //   signOutfetchOptions,
+      // )
+      //   .then((response) => response.json())
+      //   .then((data) => {
+      //     // Handle the response data
+      //     // localStorage.setItem("userData", data);
+      //   })
     } catch (error) {}
   }
 
   //wallet sign in
   const handleSignIn = async () => {
     try {
-      console.log('sign in')
-
-      // use fetch to signin a user from an endpoint
       await wallet.signIn()
     } catch (error) {
       console.log(error)
@@ -108,7 +112,8 @@ const Nav = () => {
           <Link href="/features">Features</Link>
           <Link href="/stores">Stores</Link>
           <Link href="/contacts">Contacts</Link>
-          {/* <button onClick={signIn}>sign out</button> */}
+          {/* <button onClick={signOut}>sign out</button> */}
+          {/* <button onClick={signIn}>sign in</button> */}
           {!isSignedIn ? (
             <>
               {' '}
