@@ -3,7 +3,7 @@
 // NEAR
 import { Wallet } from '../NearAuth/near-wallet.js'
 
-const CONTRACT_ADDRESS = 'desperado.testnet'
+const CONTRACT_ADDRESS = "v2-storehub.testnet";
 
 // When creating the wallet you can optionally ask to create an access key
 // Having the key enables to call non-payable methods without interrupting the user to sign
