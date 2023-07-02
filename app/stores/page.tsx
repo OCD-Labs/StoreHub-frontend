@@ -1,41 +1,41 @@
-'use client'
-import React from 'react'
-import sorticon from 'public/assets/icons/sorticon.svg'
-import Image from 'next/image'
-import { Stack } from 'react-bootstrap'
-import { useState, useEffect } from 'react'
-import Storecard from '@components/stores/storecard'
-import { useGlobalContext } from '../../app/Context/store'
+"use client";
+import React from "react";
+import sorticon from "public/assets/icons/sorticon.svg";
+import Image from "next/image";
+import { Stack } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import Storecard from "@components/stores/storecard";
+import { useGlobalContext } from "../../app/Context/store";
 const Storepage = () => {
-  const [allStores, setAllStores] = useState([])
-  const { wallet } = useGlobalContext()
-  const baseUrl = 'https://store-hub-djxu.onrender.com/api/v1/'
+  const [allStores, setAllStores] = useState([]);
+  const { wallet } = useGlobalContext();
+  const baseUrl = "https://store-hub-djxu.onrender.com/api/v1/";
   // Get all stores
 
   const getStoreOptions = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
-  }
+  };
 
   const fetchAllStores = () => {
     try {
-      fetch(baseUrl + 'stores', getStoreOptions)
+      fetch(baseUrl + "stores", getStoreOptions)
         .then((response) => response.json())
         .then((data) => {
-          console.log(data, 'all stores')
-          setAllStores(data.data.result.stores)
-        })
+          console.log(data, "all stores");
+          setAllStores(data.data.result.stores);
+        });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  console.log('stores', allStores)
+  };
+  console.log("stores", allStores);
 
   useEffect(() => {
-    fetchAllStores()
-  }, [])
+    fetchAllStores();
+  }, []);
 
   return (
     <div className="border border-black pt-8">
@@ -72,15 +72,14 @@ const Storepage = () => {
           </div>
           <Stack gap={3}>
             {allStores.map((store, index) => (
-                    <Storecard key={index} store={store} />
-        
-      ))}
+              <Storecard key={index} store={store} />
+            ))}
             <div></div>
           </Stack>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Storepage
+export default Storepage;
