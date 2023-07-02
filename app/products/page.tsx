@@ -19,32 +19,32 @@ const Products = () => {
 
   const data = [
     {
-        img: "../../assets/images/jewellery2.png",
+        img: "../../assets/images/necklace.png",
         name: "Enchanted Halo",
         amount: 500,
     },
     {
-        img: "../../assets/images/jewellery2.png",
+        img: "../../assets/images/necklace.png",
         name: "Enchanted Halo",
         amount: 500,
     },
     {
-        img: "../../assets/images/jewellery2.png",
+        img: "../../assets/images/necklace.png",
         name: "Enchanted Halo",
         amount: 500,
     },
     {
-        img: "../../assets/images/jewellery2.png",
+        img: "../../assets/images/necklace.png",
         name: "Enchanted Halo",
         amount: 500,
     },
     {
-        img: "../../assets/images/jewellery2.png",
+        img: "../../assets/images/necklace.png",
         name: "Enchanted Halo",
         amount: 500,
     },
     {
-        img: "../../assets/images/jewellery2.png",
+        img: "../../assets/images/necklace.png",
         name: "Enchanted Halo",
         amount: 500,
     },
@@ -95,7 +95,7 @@ const Products = () => {
         <div className="border-4 w-full mx-auto md:mx-0 p-6 pb-16 relative my-4 md:w-[45%] md:h-[25rem]">
           <img
             className="w-[200px] mx-auto md:w-[270px]"
-            src="../../assets/images/jewellery.png"
+            src="../../assets/images/necklace.png"
             alt="product"
           />
           <img
