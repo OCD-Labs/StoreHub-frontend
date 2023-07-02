@@ -9,16 +9,18 @@ interface Props {
   store: Store
 }
 
-const Storecard: FC<Props> = ({store}) => {
+const Storecard: FC<Props> = ({ store }) => {
+  console.log(store, 'store')
+
   return (
-    <Card>
+    <Card className="border p-2">
       <div>
         <div>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-row gap-3 ">
             <Image src={pfpic} width={60} height={60} alt="storepic"></Image>
             <div className="flex flex-col">
               <h2 className="text-dark opacity-80 font-semibold leading-4 ">
-                <Link href="/stores/1">{ store.name }</Link>
+                <Link href="/stores/1">{store.name}</Link>
               </h2>
               <ul className="flex gap-3 font-thin">
                 <li>cloth</li>
@@ -37,7 +39,14 @@ const Storecard: FC<Props> = ({store}) => {
           <div>
             <p>owner</p>
             <div>
-              <Image src={owner} alt="owner"></Image>
+              <Link
+                href={{
+                  pathname: '/inventory',
+                  query: { id: store.id, name: store.name },
+                }}
+              >
+                <Image src={owner} alt="owner"></Image>
+              </Link>
             </div>
           </div>
         </div>

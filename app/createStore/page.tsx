@@ -1,65 +1,85 @@
-"use client";
-import { log } from "console";
+'use client'
+import { log } from 'console'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 // @ts-nocheck
-import { useState, useEffect, useContext } from "react";
-import { getSession } from "@components/util/session";
-import { BASE_URL, CONTRACT_ADDRESS } from "@components/util/config";
-import { useGlobalContext } from "@app/Context/store";
+import { useState, useEffect, useContext } from 'react'
+import { getSession } from '@components/util/session'
+import { BASE_URL, CONTRACT_ADDRESS } from '@components/util/config'
+import { useGlobalContext } from '@app/Context/store'
 
 const CreateStore = () => {
-  const { wallet } = useGlobalContext();
-  const [session, setSession] = useState<Session>();
+  const { wallet } = useGlobalContext()
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const [session, setSession] = useState<Session>()
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    store_account_id: "",
+    name: '',
+    description: '',
+    store_account_id: '',
     profile_image_url:
-      "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
-    category: "",
-  });
-
+      'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250',
+    category: '',
+  })
+  const storeData = {
+    store_id: formData.store_account_id,
+    user_id: session ? session.user.user_id : '',
+  }
+  console.log(storeData, 'storeData')
   const handleChange = (e: any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+  }
 
   const handleSubmit = (e: any) => {
-    e.preventDefault();
-    createNewStore();
-  };
+    e.preventDefault()
+    console.log(formData, 'formData')
+  debugger
+    createNewStore()
+  }
+  console.log(session, 'session')
+
+  useEffect(() => {
+    let transactionHashes = searchParams.get('transactionHashes')
+    if (transactionHashes) {
+      router.push('/userStores')
+    }
+  })
 
   // Generate time options
-  const timeOptions: JSX.Element[] = [];
+  const timeOptions: JSX.Element[] = []
   for (let hour = 0; hour < 24; hour++) {
     for (let minute = 0; minute < 60; minute += 15) {
-      const time = `${hour.toString().padStart(2, "0")}:${minute
+      const time = `${hour
         .toString()
-        .padStart(2, "0")}`;
+        .padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
       timeOptions.push(
         <option key={time} value={time}>
           {time}
-        </option>
-      );
+        </option>,
+      )
     }
   }
 
   const createNewStore = () => {
-    formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`;
+    formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`
 
     if (session) {
       try {
+        localStorage.setItem('storeData', JSON.stringify(storeData))
         fetch(
-          BASE_URL + `/users/${session ? session.user.user_id : ""}/stores`,
+          BASE_URL + `/users/${session ? session.user.user_id : ''}/stores`,
           {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${session ? session.access_token : ""}`,
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${session ? session.access_token : ''}`,
             },
             body: JSON.stringify(formData),
-          }
+          },
         )
           .then((response) => response.json())
           .then((data: StoreResponse) => {
@@ -68,24 +88,24 @@ const CreateStore = () => {
             wallet
               .callMethod({
                 contractId: CONTRACT_ADDRESS,
-                method: "create_store",
+                method: 'create_store',
                 args: { store_id: formData.store_account_id },
               })
               .then((data) => {
-                console.log(data);
+                console.log(data)
               })
-              .catch((error) => console.log(error));
-          });
+              .catch((error) => console.log(error))
+          })
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     }
-  };
+  }
 
   useEffect(() => {
-    let session = getSession();
-    setSession(session);
-  }, [3]);
+    let session = getSession()
+    setSession(session)
+  }, [3])
 
   return (
     <main>
@@ -247,7 +267,7 @@ const CreateStore = () => {
         </div>
       </form>
     </main>
-  );
-};
+  )
+}
 
-export default CreateStore;
+export default CreateStore

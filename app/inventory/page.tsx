@@ -1,165 +1,309 @@
-"use client";
-
+'use client'
+import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
+import { getSession } from '@components/util/session'
+import '../../styles/inventory.css'
+const BASE_URL = 'https://store-hub-djxu.onrender.com/api/v1/'
 const Inventory = () => {
-  const ID = "123PDWD";
+  const ID = '123PDWD'
+  const [storeItems, setStoreItems] = useState()
+  const [session, setSession] = useState<Session>()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const getStoreItemsOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${session ? session.access_token : ''}`,
+    },
+  }
+  // const searchParams = useSearchParams()
+  const getStoreData = async () => {
+    try {
+      fetch(
+        BASE_URL +
+          `users/${session ? session.user.user_id : ''}/stores/${id}/items`,
+        getStoreItemsOptions,
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data, 'store items')
+          setStoreItems(data ? data.data.result.items : [])
+        })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const id = useSearchParams().get('id')
+  const name = useSearchParams().get('name')
+
+  const [formData, setFormData] = useState({
+    item_name: '',
+    page: '',
+    page_size: '',
+    sort: '',
+  })
+
+  const handleChange = (e: any) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault()
+    console.log(formData, 'formData')
+    debugger
+    getStoreData()
+  }
+  console.log(session, 'session')
+
+  // useEffect(() => {
+  //   let transactionHashes = searchParams.get('transactionHashes')
+  //   if (transactionHashes) {
+  //     router.push('/userStores')
+  //   }
+  // })
+
+  // Generate time options
+  const timeOptions: JSX.Element[] = []
+  for (let hour = 0; hour < 24; hour++) {
+    for (let minute = 0; minute < 60; minute += 15) {
+      const time = `${hour
+        .toString()
+        .padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
+      timeOptions.push(
+        <option key={time} value={time}>
+          {time}
+        </option>,
+      )
+    }
+  }
+  const readyItems = async () => {
+    let session = getSession()
+    setSession(session)
+  }
+
+  useEffect(() => {
+    readyItems().then(() => {
+      getStoreData
+    ()})
+  }, [3])
+
+  const getStoreProducts = async () => {}
 
   const data = [
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
     {
-      name: "Celestial Luster",
-      category: "jewelry",
+      name: 'Celestial Luster',
+      category: 'jewelry',
       id: 25,
       quantity: 20,
-      status: "Active",
-      img: "../../assets/icons/product-img.svg",
-      price: "$500",
+      status: 'Active',
+      img: '../../assets/icons/product-img.svg',
+      price: '$500',
     },
-  ];
+  ]
 
   const renderedItems = data.map((product, key) => {
     return (
       <>
         <div className="flex justify-between items-center py-3">
           <span className="flex gap-2 items-center md:w-[30%] w-[15em] text-right mr-4 whitespace-nowrap">
-            <img src="../../assets/icons/dot.svg" alt="dot" className="w-[5px]"/>
-            <p>{product.name}</p>
-            <img src={product.img} alt="product" className="w-[25px]"/>
+            <img
+              src="../../assets/icons/dot.svg"
+              alt="dot"
+              className="w-[5px]"
+            />
+            <p>{product.name} </p>
+            <img src={product.img} alt="product" className="w-[25px]" />
           </span>
           <p className="md:w-[15%] w-[90px] mr-6 md:mr-0">{product.category}</p>
           <p className="md:w-[15%] w-[90px]">{product.id}</p>
           <p className="md:w-[15%] w-[90px]">{product.quantity}</p>
           <p className="md:w-[15%] w-[90px]">{product.price}</p>
           <p className="md:w-[15%] w-[90px]">{product.status}</p>
-          <img src='../../assets/icons/three-dot.svg' alt="see more" className=""/>
+          <img
+            src="../../assets/icons/three-dot.svg"
+            alt="see more"
+            className=""
+          />
         </div>
-        <hr className="w-[95%] mx-auto"/>
+        <hr className="w-[95%] mx-auto" />
       </>
-    );
-  });
+    )
+  })
 
   return (
     <main className="mb-6">
-      <p className="text-[20px] font-bold text-black">
-        Shine, Shimmer, Glimmer
-      </p>
+      // modal
+      <div className={`modal ${false ? 'is-open' : ''}`}>
+        <div className="modal-content">
+          <h2>Modal</h2>
+          <form onSubmit={handleSubmit}>
+            <label>
+              Item Name:
+              <input
+                type="text"
+                name="item_name"
+                value={formData.item_name}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Page:
+              <input
+                type="text"
+                name="page"
+                value={formData.page}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Page Size:
+              <input
+                type="text"
+                name="page_size"
+                value={formData.page_size}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              Sort:
+              <input
+                type="text"
+                name="sort"
+                value={formData.sort}
+                onChange={handleChange}
+              />
+            </label>
+            <div className="button-container">
+              <button type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <p className="text-[20px] font-bold text-black">{name}</p>
       <span className="flex my-4">
-        <p>Store ID : {ID} </p>
+        <p>Store ID : {id} </p>
         <span className="ml-4">
           <p>Verified</p>
         </span>
@@ -206,12 +350,21 @@ const Inventory = () => {
               <p className="md:w-[15%] w-[90px]">Staus</p>
             </section>
             <hr />
-            <section className="flex-0-0-auto scroll-snap-align-start min-w-[500px]">{renderedItems}</section>
+            {storeItems ? (
+              <>
+                <p>No items found. Add an item</p>
+              </>
+            ) : (
+              <></>
+            )}
+            {/* <section className="flex-0-0-auto scroll-snap-align-start min-w-[500px]">
+              {renderedItems}
+            </section> */}
           </div>
         </section>
       </div>
     </main>
-  );
-};
+  )
+}
 
-export default Inventory;
+export default Inventory
