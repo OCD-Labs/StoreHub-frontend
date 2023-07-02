@@ -1,94 +1,91 @@
-'use client'
-import { log } from 'console'
+"use client";
+import { log } from "console";
 // @ts-nocheck
-import { use, useState, useEffect, useRef } from 'react'
-// import { Switch } from '@headlessui/react'
-const baseUrl = 'https://store-hub-djxu.onrender.com/api/v1/'
+import { useState, useEffect, useContext } from "react";
+import { getSession } from "@components/util/session";
+import { BASE_URL, CONTRACT_ADDRESS } from "@components/util/config";
+import { useGlobalContext } from "@app/Context/store";
+
 const CreateStore = () => {
-  const [agreed, setAgreed] = useState(false)
-  const [UserData, setUserData] = useState()
+  const { wallet } = useGlobalContext();
+  const [session, setSession] = useState<Session>();
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    profile_image_url: 'https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250',
-    category: '',
-  })
+    name: "",
+    description: "",
+    store_account_id: "",
+    profile_image_url:
+      "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
+    category: "",
+  });
 
   const handleChange = (e: any) => {
-    console.log(e.target.value, e.target.name, 'target')
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
-  console.log(formData, 'form data')
+    });
+  };
 
   const handleSubmit = (e: any) => {
-    e.preventDefault()
-    // Do something with the form data
-    console.log(formData)
-
-    createNewStore()
-  }
+    e.preventDefault();
+    createNewStore();
+  };
 
   // Generate time options
-  const timeOptions: JSX.Element[] = []
+  const timeOptions: JSX.Element[] = [];
   for (let hour = 0; hour < 24; hour++) {
     for (let minute = 0; minute < 60; minute += 15) {
-      const time = `${hour
+      const time = `${hour.toString().padStart(2, "0")}:${minute
         .toString()
-        .padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
+        .padStart(2, "0")}`;
       timeOptions.push(
         <option key={time} value={time}>
           {time}
-        </option>,
-      )
+        </option>
+      );
     }
-  }
-
-  // console.log((UserData?UserData.data: ''), 'userData')
-
-  // create new store
-  // const storeData = {
-  //   name: 'Jewelry',
-  //   description: 'My JewelryStore',
-  //   profile_image_url: 'string',
-  //   category: 'string',
-  // }
-  const createStoreOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${
-        UserData ? UserData.data.result.access_token : ''
-      }`,
-    },
-    body: JSON.stringify(formData),
   }
 
   const createNewStore = () => {
-    if (UserData) {
+    formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`;
+
+    if (session) {
       try {
         fetch(
-          baseUrl +
-            `users/${UserData ? UserData.data.result.user.user_id : ''}/stores`,
-          createStoreOptions,
+          BASE_URL + `/users/${session ? session.user.user_id : ""}/stores`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session ? session.access_token : ""}`,
+            },
+            body: JSON.stringify(formData),
+          }
         )
           .then((response) => response.json())
-          .then((data) => {
-            console.log(data, 'my new store')
-          })
+          .then((data: StoreResponse) => {
+            // TODO: Store data in Context or Redux
+
+            wallet
+              .callMethod({
+                contractId: CONTRACT_ADDRESS,
+                method: "create_store",
+                args: { store_id: formData.store_account_id },
+              })
+              .then((data) => {
+                console.log(data);
+              })
+              .catch((error) => console.log(error));
+          });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
-  }
+  };
 
   useEffect(() => {
-    const User: any = localStorage.getItem('userData')
-    const userData = JSON.parse(User)
-    setUserData(userData)
-  }, [3])
+    let session = getSession();
+    setSession(session);
+  }, [3]);
 
   return (
     <main>
@@ -125,6 +122,7 @@ const CreateStore = () => {
                 name="name"
                 onInput={handleChange}
                 value={formData.name}
+                placeholder="Farmland Groceries Store"
                 className="block w-full md:w-[75%] md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
               />
             </span>
@@ -141,13 +139,18 @@ const CreateStore = () => {
                   <option>Books</option>
                   <option>Electronics</option>
                   <option>Apparels</option>
+                  <option>Food & Fruits</option>
                 </select>
               </span>
               <span className="flex justify-between items-center w-[43%] md:w-[45%] md:py-4 md:justify-end">
-                <label className="mr-2 md:mr-4">Store ID</label>
-                <button className="md:w-[55%] lg:w-[57%] block rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0">
-                  123PBLW
-                </button>
+                <label className="mr-2 md:mr-4">Store Account ID</label>
+                <input
+                  name="store_account_id"
+                  value={formData.store_account_id}
+                  onChange={handleChange}
+                  placeholder="farm-land"
+                  className="md:w-[55%] lg:w-[57%] block rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
+                ></input>
               </span>
             </div>
             <span className="md:flex gap-3"></span>
@@ -157,6 +160,7 @@ const CreateStore = () => {
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
+                placeholder="Best farmland produces at your door step"
                 className="block w-full md:w-[75%] md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
               />
             </span>
@@ -243,7 +247,7 @@ const CreateStore = () => {
         </div>
       </form>
     </main>
-  )
-}
+  );
+};
 
-export default CreateStore
+export default CreateStore;

@@ -17,6 +17,8 @@ import { setupMyNearWallet } from '@near-wallet-selector/my-near-wallet'
 const THIRTY_TGAS = '30000000000000'
 const NO_DEPOSIT = '0'
 
+let CONTRACT_ID = "v2-storehub.testnet";
+
 // Wallet that simplifies using the wallet selector
 export class Wallet {
   walletSelector
@@ -24,13 +26,13 @@ export class Wallet {
   network
   createAccessKeyFor
 
-  constructor({ createAccessKeyFor = undefined, network = 'testnet' }) {
+  constructor({ createAccessKeyFor = CONTRACT_ID, network = 'testnet' }) {
     // Login to a wallet passing a contractId will create a local
     // key, so the user skips signing non-payable transactions.
     // Omitting the accountId will result in the user being
     // asked to sign all transactions.
-    this.createAccessKeyFor = createAccessKeyFor
-    this.network = 'testnet'
+    this.createAccessKeyFor = createAccessKeyFor;
+    this.network = network;
   }
 
   // To be called when the website loads

@@ -5,7 +5,9 @@ import owner from 'public/assets/images/owner.png'
 import Link from 'next/link'
 import { FC } from 'react'
 
-interface Props {}
+interface Props {
+  store: Store
+}
 
 const Storecard: FC<Props> = ({store}) => {
   return (
