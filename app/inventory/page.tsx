@@ -7,15 +7,25 @@ import '../../styles/inventory.css'
 const BASE_URL = 'https://store-hub-djxu.onrender.com/api/v1/'
 const Inventory = () => {
   const ID = '123PDWD'
-  const [storeItems, setStoreItems] = useState()
+  const [storeItems, setStoreItems] = useState([])
   const [session, setSession] = useState<Session>()
   const [isModalOpen, setIsModalOpen] = useState(false)
-
+  const token = useSearchParams().get('token')
+  const userID = useSearchParams().get('user')
+  
   const getStoreItemsOptions = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${session ? session.access_token : ''}`,
+      Authorization: `Bearer ${token}`,
+    },
+  }
+
+  const addStoreItemsOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
     },
   }
   // const searchParams = useSearchParams()
@@ -23,7 +33,7 @@ const Inventory = () => {
     try {
       fetch(
         BASE_URL +
-          `users/${session ? session.user.user_id : ''}/stores/${id}/items`,
+          `users/${userID}/stores/${id}/items`,
         getStoreItemsOptions,
       )
         .then((response) => response.json())
@@ -37,6 +47,7 @@ const Inventory = () => {
   }
   const id = useSearchParams().get('id')
   const name = useSearchParams().get('name')
+  
 
   const [formData, setFormData] = useState({
     item_name: '',
@@ -53,10 +64,12 @@ const Inventory = () => {
   }
 
   const handleSubmit = (e: any) => {
+    
     e.preventDefault()
     console.log(formData, 'formData')
     debugger
-    getStoreData()
+    addStoreProducts()
+    setIsModalOpen(false)
   }
   console.log(session, 'session')
 
@@ -92,7 +105,24 @@ const Inventory = () => {
     ()})
   }, [3])
 
-  const getStoreProducts = async () => {}
+  
+
+  const addStoreProducts = async () => {
+    try {
+      fetch(
+        BASE_URL +
+          `users/${userID}/stores/${id}/items`,
+        getStoreItemsOptions,
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data, 'store items')
+          setStoreItems(data ? data.data.result.items : [])
+        })
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const data = [
     {
@@ -255,7 +285,7 @@ const Inventory = () => {
   return (
     <main className="mb-6">
       // modal
-      <div className={`modal ${false ? 'is-open' : ''}`}>
+      <div className={`modal ${isModalOpen ? 'is-open' : ''}`}>
         <div className="modal-content">
           <h2>Modal</h2>
           <form onSubmit={handleSubmit}>
@@ -334,7 +364,7 @@ const Inventory = () => {
                 <option>Option 3</option>
                 <option>Option 4</option>
               </select>
-              <button className="block py-2 rounded-md border-0 px-1 md:px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 md:my-0">
+              <button onClick={()=> {setIsModalOpen(!isModalOpen)}} className="block py-2 rounded-md border-0 px-1 md:px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 md:my-0">
                 Add Items
               </button>
             </div>
@@ -350,7 +380,7 @@ const Inventory = () => {
               <p className="md:w-[15%] w-[90px]">Staus</p>
             </section>
             <hr />
-            {storeItems ? (
+            {storeItems?.length <1 ? (
               <>
                 <p>No items found. Add an item</p>
               </>

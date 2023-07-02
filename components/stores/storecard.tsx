@@ -4,6 +4,8 @@ import pfpic from 'public/assets/images/pfpic.png'
 import owner from 'public/assets/images/owner.png'
 import Link from 'next/link'
 import { FC } from 'react'
+import { useState, useEffect } from 'react'
+import { getSession } from '@components/util/session'
 
 interface Props {
   store: Store
@@ -11,7 +13,15 @@ interface Props {
 
 const Storecard: FC<Props> = ({ store }) => {
   console.log(store, 'store')
-
+  const [Session, setSession] = useState<Session>()
+  let token = Session?.access_token; 
+  let user_id = Session?.user.user_id 
+  useEffect(()=> {
+    let session = getSession()
+    setSession(session)
+    console.log(Session); 
+  },[2])
+  console.log(Session); 
   return (
     <Card className="border p-2">
       <div>
@@ -42,7 +52,7 @@ const Storecard: FC<Props> = ({ store }) => {
               <Link
                 href={{
                   pathname: '/inventory',
-                  query: { id: store.id, name: store.name },
+                  query: { id: store.id, name: store.name, token: token, user:user_id },
                 }}
               >
                 <Image src={owner} alt="owner"></Image>
