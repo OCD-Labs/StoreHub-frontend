@@ -30,18 +30,6 @@ type StoreOwner = {
   added_at: string // Should be a valid date-time string
 }
 
-// Define store type
-type Store = {
-  id: number
-  name: string
-  description: string
-  profile_image_url: string
-  is_verified: boolean
-  category: string
-  is_frozen: boolean
-  created_at: string // Should be a valid date-time string
-}
-
 // Define storeResult type
 type StoreResult = {
   store: Store
@@ -58,6 +46,7 @@ type StoreResponse = {
 }
 
 type Store = {
+  id: string
   name: string
   description: string
   store_account_id: string
@@ -77,4 +66,32 @@ type Session = {
 type storeData = {
   store_id: string
   user_id: string | number
+}
+
+type StoreItem = {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  store_id: number;
+  image_urls: string[];
+  category: string;
+  discount_percentage: string;
+  supply_quantity: number;
+  extra: object;
+  is_frozen: boolean;
+  created_at: Date;
+  updated_at: Date;
+}
+
+type ResponseData = {
+  message: string;
+  result: {
+    item: StoreItem;
+  };
+}
+
+type GetItemApiResponse = {
+  status: string;
+  data: ResponseData;
 }
