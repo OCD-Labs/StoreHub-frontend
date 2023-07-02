@@ -4,21 +4,33 @@ import pfpic from 'public/assets/images/pfpic.png'
 import owner from 'public/assets/images/owner.png'
 import Link from 'next/link'
 import { FC } from 'react'
+import { useState, useEffect } from 'react'
+import { getSession } from '@components/util/session'
 
 interface Props {
   store: Store
 }
 
-const Storecard: FC<Props> = ({store}) => {
+const Storecard: FC<Props> = ({ store }) => {
+  console.log(store, 'store')
+  const [Session, setSession] = useState<Session>()
+  let token = Session?.access_token; 
+  let user_id = Session?.user.user_id 
+  useEffect(()=> {
+    let session = getSession()
+    setSession(session)
+    console.log(Session); 
+  },[2])
+  console.log(Session); 
   return (
-    <Card>
+    <Card className="border p-2">
       <div>
         <div>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-row gap-3 ">
             <Image src={pfpic} width={60} height={60} alt="storepic"></Image>
             <div className="flex flex-col">
               <h2 className="text-dark opacity-80 font-semibold leading-4 ">
-                <Link href="/stores/1">{ store.name }</Link>
+                <Link href="/stores/1">{store.name}</Link>
               </h2>
               <ul className="flex gap-3 font-thin">
                 <li>cloth</li>
@@ -37,7 +49,14 @@ const Storecard: FC<Props> = ({store}) => {
           <div>
             <p>owner</p>
             <div>
-              <Image src={owner} alt="owner"></Image>
+              <Link
+                href={{
+                  pathname: '/inventory',
+                  query: { id: store.id, name: store.name, token: token, user:user_id },
+                }}
+              >
+                <Image src={owner} alt="owner"></Image>
+              </Link>
             </div>
           </div>
         </div>
