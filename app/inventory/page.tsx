@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { getSession } from '@components/util/session'
 import '../../styles/inventory.css'
+import StoreItem from '@components/stores/StoreItem';
 const BASE_URL = 'https://store-hub-djxu.onrender.com/api/v1/'
 const Inventory = () => {
   const ID = '123PDWD'
@@ -12,7 +13,7 @@ const Inventory = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const token = useSearchParams().get('token')
   const userID = useSearchParams().get('user')
-  
+
   const getStoreItemsOptions = {
     method: 'GET',
     headers: {
@@ -32,8 +33,7 @@ const Inventory = () => {
   const getStoreData = async () => {
     try {
       fetch(
-        BASE_URL +
-          `users/${userID}/stores/${id}/items`,
+        BASE_URL + `users/${userID}/stores/${id}/items`,
         getStoreItemsOptions,
       )
         .then((response) => response.json())
@@ -47,7 +47,6 @@ const Inventory = () => {
   }
   const id = useSearchParams().get('id')
   const name = useSearchParams().get('name')
-  
 
   const [formData, setFormData] = useState({
     item_name: '',
@@ -64,7 +63,6 @@ const Inventory = () => {
   }
 
   const handleSubmit = (e: any) => {
-    
     e.preventDefault()
     console.log(formData, 'formData')
     debugger
@@ -101,23 +99,22 @@ const Inventory = () => {
 
   useEffect(() => {
     readyItems().then(() => {
-      getStoreData
-    ()})
+      getStoreData()
+    })
   }, [3])
 
-  
-
   const addStoreProducts = async () => {
+    console.log(`${BASE_URL}users/${userID}/stores/${id}/items`)
+
     try {
       fetch(
-        BASE_URL +
-          `users/${userID}/stores/${id}/items`,
+        BASE_URL + `users/${userID}/stores/${id}/items`,
         getStoreItemsOptions,
       )
         .then((response) => response.json())
         .then((data) => {
           console.log(data, 'store items')
-          setStoreItems(data ? data.data.result.items : [])
+          setStoreItems(data?.data.result.items)
         })
     } catch (error) {
       console.log(error)
@@ -253,7 +250,7 @@ const Inventory = () => {
     },
   ]
 
-  const renderedItems = data.map((product, key) => {
+  const renderedItems = storeItems.map((product, key) => {
     return (
       <>
         <div className="flex justify-between items-center py-3">
@@ -268,9 +265,9 @@ const Inventory = () => {
           </span>
           <p className="md:w-[15%] w-[90px] mr-6 md:mr-0">{product.category}</p>
           <p className="md:w-[15%] w-[90px]">{product.id}</p>
-          <p className="md:w-[15%] w-[90px]">{product.quantity}</p>
+          <p className="md:w-[15%] w-[90px]">{product.supply_quantity}</p>
           <p className="md:w-[15%] w-[90px]">{product.price}</p>
-          <p className="md:w-[15%] w-[90px]">{product.status}</p>
+          <p className="md:w-[15%] w-[90px]">{product.discount_percentage}</p>
           <img
             src="../../assets/icons/three-dot.svg"
             alt="see more"
@@ -326,7 +323,9 @@ const Inventory = () => {
               />
             </label>
             <div className="button-container">
-              <button type="submit">Submit</button>
+              <button onClick={handleSubmit} className="bg-blue" type="submit">
+                Add
+              </button>
             </div>
           </form>
         </div>
@@ -364,7 +363,12 @@ const Inventory = () => {
                 <option>Option 3</option>
                 <option>Option 4</option>
               </select>
-              <button onClick={()=> {setIsModalOpen(!isModalOpen)}} className="block py-2 rounded-md border-0 px-1 md:px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 md:my-0">
+              <button
+                onClick={() => {
+                  setIsModalOpen(!isModalOpen)
+                }}
+                className="block py-2 rounded-md border-0 px-1 md:px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 md:my-0"
+              >
                 Add Items
               </button>
             </div>
@@ -380,12 +384,14 @@ const Inventory = () => {
               <p className="md:w-[15%] w-[90px]">Staus</p>
             </section>
             <hr />
-            {storeItems?.length <1 ? (
+            {storeItems?.length < 1 ? (
               <>
                 <p>No items found. Add an item</p>
               </>
             ) : (
-              <></>
+              <> <section className="flex-0-0-auto scroll-snap-align-start min-w-[500px]">
+              {renderedItems}
+            </section></>
             )}
             {/* <section className="flex-0-0-auto scroll-snap-align-start min-w-[500px]">
               {renderedItems}
