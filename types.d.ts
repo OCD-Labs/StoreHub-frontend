@@ -46,6 +46,7 @@ type StoreResponse = {
 }
 
 type Store = {
+  id: string
   name: string
   description: string
   store_account_id: string
