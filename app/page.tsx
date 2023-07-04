@@ -29,8 +29,8 @@ const Page = () => {
           </h2>
         </div>
         <div>
-          <div className="grid2x2 gap-10 w-[95%] m-auto flex-wrap">
-            <div className="w-16 h-[300px]  bg-opacity-50 rounded-tl-lg rounded-tr-lg border-b border-l">
+          <div className="flex flex-col gap-10 sm:grid sm:grid-cols-2 sm:grid-rows-2 sm:gap-10 w-[90%] justify-center m-auto flex-wrap">
+            <div className="w-[100%] h-[300px]  bg-opacity-50 rounded-tl-lg rounded-tr-lg border-b border-l">
               <div className="w-[100%] h-[80%] flex bg-orange-300 m-auto rounded-lg">
                 <div className="w-[80%] m-auto">
                   <p className=" text-black text-opacity-70 text-2xl ">
@@ -44,40 +44,43 @@ const Page = () => {
               </div>
               <div className="ml-10 mb-4">Learn More</div>
             </div>
-            <div className="w-16 h-[300px]  bg-opacity-50 rounded-tl-lg rounded-tr-lg border-b border-l">
+            <div className="w-[100%] h-[300px]  bg-opacity-50 rounded-tl-lg rounded-tr-lg border-b border-l">
               <div className="w-[100%] h-[80%] flex bg-slate-300 m-auto rounded-lg">
                 <div className="w-[80%] m-auto">
                   <p className=" text-black text-opacity-70 text-2xl ">
                     Near Integration
                   </p>
                   <p className="mt-4">
-                  Integrated the NEAR blockchain for a secure, scalable online store, ensuring integrity for you and your customers.
+                    Integrated the NEAR blockchain for a secure, scalable online
+                    store, ensuring integrity for you and your customers.
                   </p>
                 </div>
               </div>
               <div className="ml-10 mb-4">Learn More</div>
             </div>
-            <div className="w-16 h-[300px]  bg-opacity-50 rounded-tl-lg rounded-tr-lg border-b border-l">
+            <div className="w-[100%] h-[300px]  bg-opacity-50 rounded-tl-lg rounded-tr-lg border-b border-l">
               <div className="w-[100%] h-[80%] flex bg-violet-300 m-auto rounded-lg">
                 <div className="w-[80%] m-auto">
                   <p className=" text-black text-opacity-70 text-2xl ">
                     One-click Store Launch
                   </p>
                   <p className="mt-4">
-                  Launch an online business with Store Hub with just one click of a button.
+                    Launch an online business with Store Hub with just one click
+                    of a button.
                   </p>
                 </div>
               </div>
               <div className="ml-10 mb-4">Learn More</div>
             </div>
-            <div className="w-16 h-[300px]  bg-opacity-50 rounded-tl-lg rounded-tr-lg border-b border-l">
+            <div className="w-[100%] h-[300px]  bg-opacity-50 rounded-tl-lg rounded-tr-lg border-b border-l">
               <div className="w-[100%] h-[80%] flex bg-stone-400 m-auto rounded-lg">
                 <div className="w-[80%] m-auto">
                   <p className=" text-black  text-2xl ">
                     Analytics and insights
                   </p>
                   <p className="mt-4">
-                  Gain valuable insights into your business operations with our advanced analytics
+                    Gain valuable insights into your business operations with
+                    our advanced analytics
                   </p>
                 </div>
               </div>
