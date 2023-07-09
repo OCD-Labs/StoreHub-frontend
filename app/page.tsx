@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Page = () => {
@@ -14,11 +15,9 @@ const Page = () => {
               user-friendly, and infinitely scalable solutions for seamless
               operations. Revolutionize your digital presence with Store Hub.
             </p>
-            <button type="button" className="outline_btn mt-6 font-medium">
-              <p className="hover:text-white items-baseline leading-tight text-black text-[16px]">
-                Connect Wallet
-              </p>
-            </button>
+            <Link href="/stores" className="outline_btn mt-6 font-medium w-20">
+              Stores
+            </Link>
           </div>
         </div>
       </div>
