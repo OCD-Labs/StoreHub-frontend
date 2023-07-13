@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { useGlobalContext } from '@app/Context/store'
+import { userWallet } from '@app/StoreManager'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { setSession } from '@components/util/session'
 import { BASE_URL } from '@components/util/config'
@@ -12,7 +12,7 @@ import { BASE_URL } from '@components/util/config'
 
 const Nav = () => {
   // const [providers, setProviders] = useState(null)
-  const { wallet }: any = useGlobalContext()
+  const { wallet }: any = userWallet.getState()
   const [isSignedIn, setIsSignedIn] = useState()
   const [isMenuOpened, setMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
@@ -59,15 +59,7 @@ const Nav = () => {
   const signOut = () => {
     try {
       localStorage.removeItem('userData')
-      // fetch(
-      //   'https://storehub-zjp3.onrender.com/api/v1/auth/logout',
-      //   signOutfetchOptions,
-      // )
-      //   .then((response) => response.json())
-      //   .then((data) => {
-      //     // Handle the response data
-      //     // localStorage.setItem("userData", data);
-      //   })
+
     } catch (error) {}
   }
 

@@ -5,10 +5,10 @@ import Image from 'next/image'
 import { Stack } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 import Storecard from '@components/stores/storecard'
-import { useGlobalContext } from '../../app/Context/store'
+import { userWallet } from '@app/StoreManager'
 const Storepage = () => {
   const [allStores, setAllStores] = useState([])
-  const { wallet } = useGlobalContext()
+  const { wallet } = userWallet.getState()
   const baseUrl = 'https://store-hub-djxu.onrender.com/api/v1/'
   // Get all stores
 

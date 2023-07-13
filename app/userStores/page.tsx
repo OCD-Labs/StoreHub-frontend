@@ -20,7 +20,7 @@ const UserStores = () => {
     },
   }
 
-  const fetchAllUserStores = () => {
+  const fetchAllUserStores = (): void => {
     try {
       fetch(baseUrl + 'stores', getStoreOptions)
         .then((response) => response.json())
