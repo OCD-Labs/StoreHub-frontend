@@ -7,10 +7,10 @@ import Link from 'next/link'
 import { useState, useEffect, useContext } from 'react'
 import { getSession } from '@components/util/session'
 import { BASE_URL, CONTRACT_ADDRESS } from '@components/util/config'
-import { useGlobalContext } from '@app/Context/store'
+import { userWallet } from '@app/StoreManager'
 
 const CreateStore = () => {
-  const { wallet } = useGlobalContext()
+  const { wallet } = userWallet.getState()
   const searchParams = useSearchParams()
   const router = useRouter()
   const [session, setSession] = useState<Session>()
