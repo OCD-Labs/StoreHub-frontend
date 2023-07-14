@@ -69,29 +69,31 @@ type storeData = {
 }
 
 type StoreItem = {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  store_id: number;
-  image_urls: string[];
-  category: string;
-  discount_percentage: string;
-  supply_quantity: number;
-  extra: object;
-  is_frozen: boolean;
-  created_at: Date;
-  updated_at: Date;
+  id: number
+  name: string
+  description: string
+  price: string
+  store_id: number
+  image_urls: string[]
+  category: string
+  discount_percentage: string
+  supply_quantity: number
+  extra: object
+  is_frozen: boolean
+  created_at: Date
+  updated_at: Date
 }
 
 type ResponseData = {
-  message: string;
+  message: string
   result: {
-    item: StoreItem;
-  };
+    item: StoreItem
+  }
 }
 
 type GetItemApiResponse = {
-  status: string;
-  data: ResponseData;
+  status: string
+  data: ResponseData
 }
+
+

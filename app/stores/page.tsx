@@ -5,9 +5,11 @@ import Image from 'next/image'
 import { Stack } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 import Storecard from '@components/stores/storecard'
+import AppLoader from '@components/global/AppLoader'
 import { userWallet } from '@app/StoreManager'
 const Storepage = () => {
   const [allStores, setAllStores] = useState([])
+  const [loading, setLoading] = useState(true)
   const { wallet } = userWallet.getState()
   const baseUrl = 'https://store-hub-djxu.onrender.com/api/v1/'
   // Get all stores
@@ -26,6 +28,7 @@ const Storepage = () => {
         .then((data) => {
           console.log(data, 'all stores')
           setAllStores(data.data.result.stores)
+          setLoading(false)
         })
     } catch (error) {
       console.log(error)
@@ -70,12 +73,16 @@ const Storepage = () => {
               </div>
             </div>
           </div>
-          <Stack gap={3}>
-            {allStores.map((store, index) => (
-              <Storecard key={index} store={store} />
-            ))}
-            <div></div>
-          </Stack>
+          {loading ? (
+            <AppLoader />
+          ) : (
+            <Stack gap={3}>
+              {allStores.map((store, index) => (
+                <Storecard key={index} store={store} />
+              ))}
+              <div></div>
+            </Stack>
+          )}
         </div>
       </div>
     </div>
