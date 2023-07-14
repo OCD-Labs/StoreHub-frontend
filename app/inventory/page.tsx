@@ -6,12 +6,14 @@ import { getSession } from '@components/util/session'
 import '../../styles/inventory.css'
 import StoreItem from '@components/stores/StoreItem'
 import ProductItem from '@components/stores/productitem'
+import AppLoader from '@components/global/AppLoader'
 const BASE_URL = 'https://store-hub-djxu.onrender.com/api/v1/'
 const Inventory = () => {
   const ID = '123PDWD'
   const [storeItems, setStoreItems] = useState([])
   const [session, setSession] = useState<Session>()
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [loading, setloading] = useState<boolean>(true)
   const token = useSearchParams().get('token')
   const userID = useSearchParams().get('user')
 
@@ -41,6 +43,7 @@ const Inventory = () => {
         .then((data) => {
           console.log(data, 'store items')
           setStoreItems(data ? data.data.result.items : [])
+          setloading(false)
         })
     } catch (error) {
       console.log(error)
@@ -234,10 +237,10 @@ const Inventory = () => {
               <p className="md:w-[15%] w-[90px]">Staus</p>
             </section>
             <hr />
-            {storeItems?.length < 1 ? (
-              <>
-                <p>No items found. Add an item</p>
-              </>
+            {loading ? (
+              <AppLoader />
+            ) : storeItems?.length < 1 ? (
+              <p>No items found. Add an item</p>
             ) : (
               storeItems.map((product, key) => (
                 <ProductItem key={key} product={product} />
