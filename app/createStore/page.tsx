@@ -8,10 +8,10 @@ import Link from "next/link";
 import { useState, useEffect, useRef, useContext } from "react";
 import { getSession } from "@components/util/session";
 import { BASE_URL, CONTRACT_ADDRESS } from "@components/util/config";
-import { useGlobalContext } from "@app/Context/store";
+import { userWallet } from "@app/StoreManager";
 
 const CreateStore = () => {
-  const { wallet } = useGlobalContext();
+  const { wallet } = userWallet.getState();
   const searchParams = useSearchParams();
   const router = useRouter();
   const [session, setSession] = useState<Session>();
@@ -81,10 +81,10 @@ const CreateStore = () => {
                 method: "create_store",
                 args: { store_id: formData.store_account_id },
               })
-              .then((data) => {
+              .then((data: any) => {
                 console.log(data);
               })
-              .catch((error) => console.log(error));
+              .catch((error: any) => console.log(error));
           });
       } catch (error) {
         console.log(error);
