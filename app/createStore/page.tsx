@@ -25,7 +25,12 @@ const CreateStore = () => {
     category: "",
   });
 
-  const storeData = {
+  interface StoreDataInterface {
+    store_id: string
+    user_id: string | number
+  }
+
+  const storeData: StoreDataInterface = {
     store_id: formData.store_account_id,
     user_id: session ? session.user.user_id : "",
   };
@@ -37,11 +42,11 @@ const CreateStore = () => {
     });
   };
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (e: any): void => {
     e.preventDefault();
     console.log(formData, "formData");
-    // debugger;
-    // createNewStore();
+    debugger;
+    createNewStore();
   };
   console.log(session, "session");
 
@@ -52,9 +57,8 @@ const CreateStore = () => {
     }
   });
 
-
   //crete new store
-  const createNewStore = () => {
+  const createNewStore = (): void => {
     formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`;
 
     if (session) {
@@ -114,7 +118,7 @@ const CreateStore = () => {
   // handle add tag
   const [tags, setTags] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
-  
+
   const handleAddTagDivClick = (): void => {
     if (inputRef.current) {
       inputRef.current.focus();
@@ -131,29 +135,31 @@ const CreateStore = () => {
       let tag = e.currentTarget.value.replace(/\$+/g, " ").trim();
       if (tag.length > 1 && !tags.includes(tag)) {
         tag.split(",").forEach((tag) => {
-          setTags([...tags, tag])
+          setTags([...tags, tag]);
           console.log(tags);
-          setTagInput('')
+          setTagInput("");
         });
       }
     }
   };
-  
-//rendering list of tags
+
+  //rendering list of tags
   const renderedItems = tags?.map((tag: string) => {
-    return <li
-      key={tag}
-      className="text-black flex justify-between items-center bg-blue py-[5px] pl-[10px] pr-[8px] my-[4px] mx-[5px] rounded-[5px]"
-    >
-      {tag}
-      <img
-        className="h-4 w-4 bg-[rgba (192, 225, 233, 0)] rounded ml-2 cursor-pointer"
-        src="../../assets/icons/x.svg"
-        alt="remove tag"
-        onClick={() => removeTag(tag)}
-      />
-    </li>
-})
+    return (
+      <li
+        key={tag}
+        className="text-black flex justify-between items-center bg-blue py-[5px] pl-[10px] pr-[8px] my-[4px] mx-[5px] rounded-[5px]"
+      >
+        {tag}
+        <img
+          className="h-4 w-4 bg-[rgba (192, 225, 233, 0)] rounded ml-2 cursor-pointer"
+          src="../../assets/icons/x.svg"
+          alt="remove tag"
+          onClick={() => removeTag(tag)}
+        />
+      </li>
+    );
+  });
 
   return (
     <main>
@@ -276,27 +282,39 @@ const CreateStore = () => {
             <span className="md:flex gap-3 md:py-4 justify-end">
               <label>Add Tags</label>
               <div className="md:w-[75%]">
-              <div onClick={handleAddTagDivClick} className="flex w-full  md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:mt-0 md:mb-2">
-               
-                <ul className="flex flex-wrap">
-                {(tags.length === 0 && inputTag.length === 0) && (
-  <p className="absolute mt-[0.65rem] md:mt-[0.5rem] text-gray-400">
-    Press space after each word to add a tag
-  </p>
-)}                 {renderedItems}
-                <input
-                  onKeyUp={addTag}
-                  type="text"
-                  className={`outline-none py-2 flex flex-1 text-base ${tags.length >= 6 ? 'hidden' : 'block'}`}
-                  onChange={(e) => setTagInput(e.target.value)}
-                  value={inputTag.toLocaleLowerCase()}
-                  ref={inputRef}
-                />
-                </ul>
-               
-              </div>
-              {tags.includes(inputTag) && <p className="text-red-500">{inputTag.toLocaleUpperCase()} already exists</p>}
-              {tags.length >= 6 && <p className="text-yellow-500">Maximum tag limit reached (6)</p>}
+                <div
+                  onClick={handleAddTagDivClick}
+                  className="flex w-full  md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:mt-0 md:mb-2"
+                >
+                  <ul className="flex flex-wrap">
+                    {tags.length === 0 && inputTag.length === 0 && (
+                      <p className="absolute mt-[0.65rem] md:mt-[0.5rem] text-gray-400">
+                        Press space after each word to add a tag
+                      </p>
+                    )}{" "}
+                    {renderedItems}
+                    <input
+                      onKeyUp={addTag}
+                      type="text"
+                      className={`outline-none py-2 flex flex-1 text-base ${
+                        tags.length >= 6 ? "hidden" : "block"
+                      }`}
+                      onChange={(e) => setTagInput(e.target.value)}
+                      value={inputTag.toLocaleLowerCase()}
+                      ref={inputRef}
+                    />
+                  </ul>
+                </div>
+                {tags.includes(inputTag) && (
+                  <p className="text-red-500">
+                    {inputTag.toLocaleUpperCase()} already exists
+                  </p>
+                )}
+                {tags.length >= 6 && (
+                  <p className="text-yellow-500">
+                    Maximum tag limit reached (6)
+                  </p>
+                )}
               </div>
             </span>
           </div>
