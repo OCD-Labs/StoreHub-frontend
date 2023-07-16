@@ -79,7 +79,7 @@ const Nav = () => {
   // console.log(wallet, useGlobalContext())
 
   return (
-    <nav className="flex-between items-baseline w-full mt-3 mb-16">
+    <nav className="flex-between items-baseline w-full mt-3 mb-16 sticky top-0 py-[10px] bg-white">
       <Link href="/">
         <p className="text-black font-bold leading-tight text-opacity-30 text-[20px]">
           StoreHub
