@@ -9,6 +9,9 @@ import { getSession } from '@components/util/session'
 import { BASE_URL, CONTRACT_ADDRESS } from '@components/util/config'
 import { userWallet } from '@app/StoreManager'
 
+import BunnyCDNStorage from 'bunnycdn-storage'
+
+
 const CreateStore = () => {
   const { wallet } = userWallet.getState()
   const searchParams = useSearchParams()
@@ -37,7 +40,7 @@ const CreateStore = () => {
   const handleSubmit = (e: any) => {
     e.preventDefault()
     console.log(formData, 'formData')
-  debugger
+    debugger
     createNewStore()
   }
   console.log(session, 'session')
