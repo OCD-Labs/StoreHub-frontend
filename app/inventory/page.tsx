@@ -6,6 +6,7 @@ import { getSession } from '@components/util/session'
 import '../../styles/inventory.css'
 import StoreItem from '@components/stores/StoreItem'
 import ProductItem from '@components/stores/productitem'
+import AddItemModal from '@components/stores/create-store/addItemModal'
 const BASE_URL = 'https://store-hub-djxu.onrender.com/api/v1/'
 const Inventory = () => {
   const ID = '123PDWD'
@@ -49,34 +50,7 @@ const Inventory = () => {
   const id = useSearchParams().get('id')
   const name = useSearchParams().get('name')
 
-  type FormData = {
-    item_name: string
-    page: string
-    page_size: string
-    sort: string
-  }
-
-  const [formData, setFormData] = useState<FormData>({
-    item_name: '',
-    page: '',
-    page_size: '',
-    sort: '',
-  })
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log(formData, 'formData')
-    debugger
-    addStoreProducts()
-    setIsModalOpen(false)
-  }
+ 
   console.log(session, 'session')
 
   // useEffect(() => {
@@ -111,73 +85,18 @@ const Inventory = () => {
     })
   }, [3])
 
-  const addStoreProducts = async () => {
-    console.log(`${BASE_URL}users/${userID}/stores/${id}/items`)
-
-    try {
-      fetch(
-        BASE_URL + `users/${userID}/stores/${id}/items`,
-        getStoreItemsOptions,
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data, 'store items')
-          setStoreItems(data?.data.result.items)
-        })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   return (
     <main className="mb-6">
       // modal
-      <div className={`modal ${isModalOpen ? 'is-open' : ''}`}>
-        <div className="modal-content">
-          <h2>Modal</h2>
-          <form onSubmit={handleSubmit}>
-            <label>
-              Item Name:
-              <input
-                type="text"
-                name="item_name"
-                value={formData.item_name}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Page:
-              <input
-                type="text"
-                name="page"
-                value={formData.page}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Page Size:
-              <input
-                type="text"
-                name="page_size"
-                value={formData.page_size}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Sort:
-              <input
-                type="text"
-                name="sort"
-                value={formData.sort}
-                onChange={handleChange}
-              />
-            </label>
-            <div className="button-container">
-              <button onClick={handleSubmit} className="bg-blue" type="submit">
-                Add
-              </button>
-            </div>
-          </form>
+      {/* <div className={`modal animate-animatefadeIn animate-animatefadeOut lg:px-[] ${isModalOpen ? 'is-open' : ''}`}> */}
+      <div className={`modal ${isModalOpen ? 'animate-animatefadeIn is-open' : 'animate-animatefadeOut'} lg:px-[] ${isModalOpen ? 'is-open' : ''}`}>
+
+        <div className="modal-content w-[90%] md:w-[60%]">
+          <div className='flex justify-between items-center lg:px-20px'>
+          <h2 className='text-lg font-bold text-black'>Add Item</h2>
+          <span onClick={() => setIsModalOpen(!isModalOpen)} className='text-lg cursor-pointer p-2'>X</span>
+          </div>
+          <AddItemModal BASE_URL={BASE_URL} id={id} userID={userID} setIsModalOpen={setIsModalOpen} addStoreItemsOptions={addStoreItemsOptions} setStoreItems={setStoreItems}/>
         </div>
       </div>
       <p className="text-[20px] font-bold text-black">{name}</p>
