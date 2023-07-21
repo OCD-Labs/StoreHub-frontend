@@ -1,4 +1,4 @@
-type User = {
+interface User {
   user_id: number
   first_name: string
   last_name: string
@@ -9,6 +9,11 @@ type User = {
   password_changed_at: string
   is_active: boolean
   is_email_verified: boolean
+}
+
+interface UserData{
+  access_token: string
+  user: User
 }
 
 type UserResponse = {
@@ -95,5 +100,3 @@ type GetItemApiResponse = {
   status: string
   data: ResponseData
 }
-
-

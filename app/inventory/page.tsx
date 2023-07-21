@@ -5,9 +5,10 @@ import { useEffect, useState } from 'react'
 import { getSession } from '@components/util/session'
 import '../../styles/inventory.css'
 import StoreItem from '@components/stores/StoreItem'
+import { User } from '@app/StoreManager/userstore'
 import ProductItem from '@components/stores/productitem'
 import AppLoader from '@components/global/AppLoader'
-const BASE_URL = 'https://store-hub-djxu.onrender.com/api/v1/'
+import { BASE_URL } from '@components/util/config'
 const Inventory = () => {
   const ID = '123PDWD'
   const [storeItems, setStoreItems] = useState([])
@@ -16,6 +17,8 @@ const Inventory = () => {
   const [loading, setloading] = useState<boolean>(true)
   const token = useSearchParams().get('token')
   const userID = useSearchParams().get('user')
+
+
 
   const getStoreItemsOptions = {
     method: 'GET',

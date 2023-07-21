@@ -12,6 +12,9 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  images: {
+    domains: ['www.gravatar.com', 'res.cloudinary.com'],
+  },
 }
 
 module.exports = nextConfig

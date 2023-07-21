@@ -1,29 +1,31 @@
-"use client";
-import { log } from "console";
-import { useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+'use client'
+import { log } from 'console'
+import { useForm } from 'react-hook-form'
+import { useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 // @ts-nocheck
-import { useState, useEffect, useRef, useContext } from "react";
-import { getSession } from "@components/util/session";
-import { BASE_URL, CONTRACT_ADDRESS } from "@components/util/config";
-import { userWallet } from "@app/StoreManager";
+import { useState, useEffect, useRef, useContext } from 'react'
+import { getSession } from '@components/util/session'
+import { BASE_URL, CONTRACT_ADDRESS } from '@components/util/config'
+import { userWallet } from '@app/StoreManager'
+import ImageUploader from '@components/global/ImageUploader'
 
 const CreateStore = () => {
-  const { wallet } = userWallet.getState();
-  const searchParams = useSearchParams();
-  const router = useRouter();
-  const [session, setSession] = useState<Session>();
-  const [inputTag, setTagInput] = useState<string>("");
+  const { wallet } = userWallet.getState()
+  const searchParams = useSearchParams()
+  const router = useRouter()
+  const [imageData, setImageData] = useState<any>()
+  const [session, setSession] = useState<Session>()
+  const [inputTag, setTagInput] = useState<string>('')
+
   const [formData, setFormData] = useState({
-    name: "",
-    description: "",
-    store_account_id: "",
-    profile_image_url:
-      "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
-    category: "",
-  });
+    name: '',
+    description: '',
+    store_account_id: '',
+    profile_image_url: '',
+    category: 'fashion',
+  })
 
   interface StoreDataInterface {
     store_id: string
@@ -32,116 +34,126 @@ const CreateStore = () => {
 
   const storeData: StoreDataInterface = {
     store_id: formData.store_account_id,
-    user_id: session ? session.user.user_id : "",
-  };
-  console.log(storeData, "storeData");
+    user_id: session ? session.user.user_id : '',
+  }
+  console.log(formData, 'storeData')
   const handleChange = (e: any) => {
+    formData.profile_image_url = imageData?.secure_url
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+  }
 
-  const onSubmit = (e: any): void => {
-    e.preventDefault();
-    console.log(formData, "formData");
-    debugger;
-    createNewStore();
-  };
-  console.log(session, "session");
+  const onSubmit = (): void => {
+    console.log(formData, 'formData')
+    debugger
+    createNewStore()
+  }
+  console.log(session, 'session')
 
   useEffect(() => {
-    let transactionHashes = searchParams.get("transactionHashes");
+    let transactionHashes = searchParams.get('transactionHashes')
     if (transactionHashes) {
-      router.push("/userStores");
+      router.push('/userStores')
     }
-  });
+  })
+
+  // set Image data
+  const handleImageData = (data: any) => {
+    setImageData(data)
+    console.log(data, 'image data at store')
+  }
+  console.log(imageData?.secure_url, 'image data at')
 
   //crete new store
   const createNewStore = (): void => {
-    formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`;
-
+    formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`
+    debugger
     if (session) {
       try {
-        localStorage.setItem("storeData", JSON.stringify(storeData));
+        localStorage.setItem('storeData', JSON.stringify(storeData))
         fetch(
-          BASE_URL + `/users/${session ? session.user.user_id : ""}/stores`,
+          BASE_URL + `/users/${session ? session.user.user_id : ''}/stores`,
           {
-            method: "POST",
+            method: 'POST',
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${session ? session.access_token : ""}`,
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${session ? session.access_token : ''}`,
             },
             body: JSON.stringify(formData),
-          }
+          },
         )
-          .then((response) => response.json())
+          .then((response) => {
+            return response.json()
+          })
           .then((data: StoreResponse) => {
             // TODO: Store data in Context or Redux
-
+            console.log(data)
+            debugger
             wallet
               .callMethod({
                 contractId: CONTRACT_ADDRESS,
-                method: "create_store",
+                method: 'create_store',
                 args: { store_id: formData.store_account_id },
               })
               .then((data: any) => {
-                console.log(data);
+                console.log(data)
               })
-              .catch((error: any) => console.log(error));
-          });
+              .catch((error: any) => console.log(error))
+          })
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     }
-  };
+  }
 
   useEffect(() => {
-    let session = getSession();
-    setSession(session);
-  }, [3]);
+    let session = getSession()
+    setSession(session)
+  }, [3])
 
   //handle form validation
 
   interface IFormInputs {
-    name: string;
-    category: string;
-    description: string;
+    name: string
+    category: string
+    description: string
   }
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IFormInputs>();
+  } = useForm<IFormInputs>()
 
   // handle add tag
-  const [tags, setTags] = useState<string[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [tags, setTags] = useState<string[]>([])
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleAddTagDivClick = (): void => {
     if (inputRef.current) {
-      inputRef.current.focus();
+      inputRef.current.focus()
     }
-  };
+  }
 
   const removeTag = (tag: string) => {
-    const updatedTags = tags.filter((t) => t !== tag);
-    setTags(updatedTags);
-  };
+    const updatedTags = tags.filter((t) => t !== tag)
+    setTags(updatedTags)
+  }
 
   const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === " " && tags.length < 6) {
-      let tag = e.currentTarget.value.replace(/\$+/g, " ").trim();
+    if (e.key === ' ' && tags.length < 6) {
+      let tag = e.currentTarget.value.replace(/\$+/g, ' ').trim()
       if (tag.length > 1 && !tags.includes(tag)) {
-        tag.split(",").forEach((tag) => {
-          setTags([...tags, tag]);
-          console.log(tags);
-          setTagInput("");
-        });
+        tag.split(',').forEach((tag) => {
+          setTags([...tags, tag])
+          console.log(tags)
+          setTagInput('')
+        })
       }
     }
-  };
+  }
 
   //rendering list of tags
   const renderedItems = tags?.map((tag: string) => {
@@ -158,8 +170,8 @@ const CreateStore = () => {
           onClick={() => removeTag(tag)}
         />
       </li>
-    );
-  });
+    )
+  })
 
   return (
     <main>
@@ -167,42 +179,22 @@ const CreateStore = () => {
         <p className="text-[20px] font-bold text-black">Create Store</p>
 
         <div className="md:flex md:justify-between">
-          <div className="">
-            <div className="flex flex-col my-4">
-              <div className="cursor-pointer border-4 border-dashed p-16 w-fit flex flex-col justify-center items-center rounded-[38px] mx-auto md:mx-0 md:ml-4">
-                <img
-                  src="../../assets/icons/gallery-add.svg"
-                  alt="Add gallery"
-                />
-                <p className="mt-3">Upload Photo</p>
-              </div>
-              <p className="text-center text-black">JPG, PNG or GIF</p>
-            </div>
-
-            <div className="flex justify-around md:justify-between mt-6">
-              <button className="rounded-[10px] py-3 border border-black w-[40%]">
-                Edit Photo
-              </button>
-              <button className="rounded-[10px] py-3 text-white bg-[#161616] w-[40%]">
-                Delete
-              </button>
-            </div>
-          </div>
+          <ImageUploader onUpdateImage={handleImageData} />
 
           <div className="mt-6 md:mt-0 md:w-[60%]">
             <span className="md:flex gap-3 md:py-4 md:justify-end md:items-center">
               <label>Store Name</label>
               <div className="md:w-[75%] w-full">
                 <input
-                  {...register("name", {
-                    required: "Store name is required",
+                  {...register('name', {
+                    required: 'Store name is required',
                     minLength: {
                       value: 3,
-                      message: "Store name must be at least 3 characters",
+                      message: 'Store name must be at least 3 characters',
                     },
                     maxLength: {
                       value: 50,
-                      message: "Store name cannot exceed 50 characters",
+                      message: 'Store name cannot exceed 50 characters',
                     },
                   })}
                   name="name"
@@ -252,15 +244,15 @@ const CreateStore = () => {
               <label>Description</label>
               <div className="w-full md:w-[75%]">
                 <textarea
-                  {...register("description", {
-                    required: "Description is required",
+                  {...register('description', {
+                    required: 'Description is required',
                     minLength: {
                       value: 10,
-                      message: "Description must be at least 10 characters",
+                      message: 'Description must be at least 10 characters',
                     },
                     maxLength: {
                       value: 200,
-                      message: "Description cannot exceed 200 characters",
+                      message: 'Description cannot exceed 200 characters',
                     },
                   })}
                   name="description"
@@ -291,13 +283,13 @@ const CreateStore = () => {
                       <p className="absolute mt-[0.65rem] md:mt-[0.5rem] text-gray-400">
                         Press space after each word to add a tag
                       </p>
-                    )}{" "}
+                    )}{' '}
                     {renderedItems}
                     <input
                       onKeyUp={addTag}
                       type="text"
                       className={`outline-none py-2 flex flex-1 text-base ${
-                        tags.length >= 6 ? "hidden" : "block"
+                        tags.length >= 6 ? 'hidden' : 'block'
                       }`}
                       onChange={(e) => setTagInput(e.target.value)}
                       value={inputTag.toLocaleLowerCase()}
@@ -330,7 +322,7 @@ const CreateStore = () => {
         </div>
       </form>
     </main>
-  );
-};
+  )
+}
 
-export default CreateStore;
+export default CreateStore
