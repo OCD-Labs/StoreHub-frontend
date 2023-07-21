@@ -1,4 +1,4 @@
-type User = {
+interface User {
   user_id: number
   first_name: string
   last_name: string
@@ -9,6 +9,11 @@ type User = {
   password_changed_at: string
   is_active: boolean
   is_email_verified: boolean
+}
+
+interface UserData{
+  access_token: string
+  user: User
 }
 
 type UserResponse = {
@@ -69,29 +74,29 @@ type storeData = {
 }
 
 type StoreItem = {
-  id: number;
-  name: string;
-  description: string;
-  price: string;
-  store_id: number;
-  image_urls: string[];
-  category: string;
-  discount_percentage: string;
-  supply_quantity: number;
-  extra: object;
-  is_frozen: boolean;
-  created_at: Date;
-  updated_at: Date;
+  id: number
+  name: string
+  description: string
+  price: string
+  store_id: number
+  image_urls: string[]
+  category: string
+  discount_percentage: string
+  supply_quantity: number
+  extra: object
+  is_frozen: boolean
+  created_at: Date
+  updated_at: Date
 }
 
 type ResponseData = {
-  message: string;
+  message: string
   result: {
-    item: StoreItem;
-  };
+    item: StoreItem
+  }
 }
 
 type GetItemApiResponse = {
-  status: string;
-  data: ResponseData;
+  status: string
+  data: ResponseData
 }
