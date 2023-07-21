@@ -36,6 +36,22 @@
   }
 }
 
+.file-upload label {
+    border: 2px dashed #3D3D3D;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    max-width: 100%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-upload .file-types {
+    display: none !important;
+}
+
+
 /* Tailwind Styles */
 
 .black_btn {

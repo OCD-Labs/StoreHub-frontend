@@ -14,20 +14,25 @@ interface Props {
 const Storecard: FC<Props> = ({ store }) => {
   console.log(store, 'store')
   const [Session, setSession] = useState<Session>()
-  let token = Session?.access_token; 
-  let user_id = Session?.user.user_id 
-  useEffect(()=> {
+  let token = Session?.access_token
+  let user_id = Session?.user.user_id
+  useEffect(() => {
     let session = getSession()
     setSession(session)
-    console.log(Session); 
-  },[2])
-  console.log(Session); 
+    console.log(Session)
+  }, [2])
+  console.log(Session)
   return (
     <Card className="border p-2">
       <div>
         <div>
           <div className="flex flex-row gap-3 ">
-            <Image src={pfpic} width={60} height={60} alt="storepic"></Image>
+            <Image
+              src={store.profile_image_url ? store.profile_image_url : pfpic}
+              width={60}
+              height={60}
+              alt="storepic"
+            ></Image>
             <div className="flex flex-col">
               <h2 className="text-dark opacity-80 font-semibold leading-4 ">
                 <Link href="/stores/1">{store.name}</Link>
@@ -52,7 +57,12 @@ const Storecard: FC<Props> = ({ store }) => {
               <Link
                 href={{
                   pathname: '/inventory',
-                  query: { id: store.id, name: store.name, token: token, user:user_id },
+                  query: {
+                    id: store.id,
+                    name: store.name,
+                    token: token,
+                    user: user_id,
+                  },
                 }}
               >
                 <Image src={owner} alt="owner"></Image>

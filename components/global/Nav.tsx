@@ -4,6 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { userWallet } from '@app/StoreManager'
+import { User } from '@app/StoreManager/userstore'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { setSession } from '@components/util/session'
 import { BASE_URL } from '@components/util/config'
@@ -12,10 +13,11 @@ import { BASE_URL } from '@components/util/config'
 
 const Nav = () => {
   // const [providers, setProviders] = useState(null)
-  const { wallet }: any = userWallet.getState()
+  const { wallet } = userWallet.getState()
   const [isSignedIn, setIsSignedIn] = useState()
   const [isMenuOpened, setMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  console.log(process.env.STORAGE_PASSWORD, 'user state from zustand')
 
   useEffect(() => {
     ;(async () => {
@@ -35,16 +37,23 @@ const Nav = () => {
 
   const signIn = () => {
     try {
+      debugger
       if (wallet.accountId) {
-        fetch(BASE_URL + '/auth', {
+        fetch(BASE_URL + '/auth/login', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ account_id: wallet.accountId }),
+          body: JSON.stringify({
+            email: 'ikehfavourdeveloper@gmail.com',
+            password: 'faVour#0001',
+          }),
         })
           .then((response) => response.json())
+
           .then(({ data }: UserResponse) => {
+            console.log(data, 'data from api')
+
             setSession({
               access_token: data.result.access_token,
               user: data.result.user,
@@ -54,13 +63,6 @@ const Nav = () => {
     } catch (error) {
       console.log(error)
     }
-  }
-
-  const signOut = () => {
-    try {
-      localStorage.removeItem('userData')
-
-    } catch (error) {}
   }
 
   //wallet sign in
