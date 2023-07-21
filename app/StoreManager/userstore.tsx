@@ -1,7 +1,7 @@
 'use client'
 import { create } from 'zustand'
 
-import { signIn } from '@app/api/getUser'
+import { signIn } from '@app/apis/getUser'
 
 const user = signIn()
 

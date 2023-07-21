@@ -21,6 +21,8 @@
     "autoprefixer": "10.4.14",
     "bootstrap": "^5.3.0",
     "file-loader": "^6.2.0",
+    "bunnycdn-storage": "^1.0.4",
+    "bunnycdn-stream": "^2.2.1",
     "near-api-js": "^0.44.2",
     "next": "13.4.7",
     "postcss": "8.4.24",
