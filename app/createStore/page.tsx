@@ -3,6 +3,9 @@ import { log } from 'console'
 import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
+import { ToastContainer, toast } from 'react-toastify'
+
+import 'react-toastify/dist/ReactToastify.css'
 import Link from 'next/link'
 // @ts-nocheck
 import { useState, useEffect, useRef, useContext } from 'react'
@@ -52,13 +55,6 @@ const CreateStore = () => {
   }
   console.log(session, 'session')
 
-  useEffect(() => {
-    let transactionHashes = searchParams.get('transactionHashes')
-    if (transactionHashes) {
-      router.push('/userStores')
-    }
-  })
-
   // set Image data
   const handleImageData = (data: any) => {
     setImageData(data)
@@ -90,6 +86,16 @@ const CreateStore = () => {
           .then((data: StoreResponse) => {
             // TODO: Store data in Context or Redux
             console.log(data)
+            if (data?.status !== 'error') {
+              toast('Successfully created your store!')
+              setTimeout(() => {
+                router.push(
+                  `/inventory?id=${data.data.result.store.id}&name=${data.data.result.store.name}&token=${session?.access_token}&user=${session?.user.user_id}`,
+                )
+              }, 2000)
+            } else {
+              toast('failed to create your store. Try again!')
+            }
             debugger
             wallet
               .callMethod({
@@ -176,6 +182,7 @@ const CreateStore = () => {
 
   return (
     <main>
+      <ToastContainer />
       <form className="text-dark" onSubmit={handleSubmit(onSubmit)}>
         <p className="text-[20px] font-bold text-black">Create Store</p>
 

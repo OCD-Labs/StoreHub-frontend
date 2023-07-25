@@ -11,13 +11,15 @@ import AddItemModal from "@components/stores/create-store/addItemModal";
 import AppLoader from "@components/global/AppLoader";
 import { BASE_URL } from "@components/util/config";
 const Inventory = () => {
-  const ID = "123PDWD";
-  const [storeItems, setStoreItems] = useState([]);
-  const [session, setSession] = useState<Session>();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [loading, setloading] = useState<boolean>(true);
-  const token = useSearchParams().get("token");
-  const userID = useSearchParams().get("user");
+
+  const ID = '123PDWD'
+  const [storeItems, setStoreItems] = useState([])
+  const [session, setSession] = useState<Session>()
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [loading, setloading] = useState<boolean>(true)
+  const token = useSearchParams().get('token')
+  const userID = useSearchParams().get('user')
+
 
   const getStoreItemsOptions = {
     method: "GET",
@@ -38,8 +40,9 @@ const Inventory = () => {
   const getStoreData = async () => {
     try {
       fetch(
-        BASE_URL + `users/${userID}/stores/${id}/items`,
-        getStoreItemsOptions
+
+        BASE_URL + `/users/${userID}/stores/${id}/items`,
+        getStoreItemsOptions,
       )
         .then((response) => response.json())
         .then((data) => {
