@@ -18,8 +18,6 @@ const Inventory = () => {
   const token = useSearchParams().get('token')
   const userID = useSearchParams().get('user')
 
-
-
   const getStoreItemsOptions = {
     method: 'GET',
     headers: {
@@ -39,7 +37,7 @@ const Inventory = () => {
   const getStoreData = async () => {
     try {
       fetch(
-        BASE_URL + `users/${userID}/stores/${id}/items`,
+        BASE_URL + `/users/${userID}/stores/${id}/items`,
         getStoreItemsOptions,
       )
         .then((response) => response.json())

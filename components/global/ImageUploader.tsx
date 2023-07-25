@@ -96,9 +96,19 @@ const ImageUploader = ({ onUpdateImage }: any) => {
           </div>
 
           <div className="flex justify-around md:justify-between mt-6">
-            <button className="rounded-[10px] py-3 border border-black w-[40%]">
+            {/* <button>Edit Photo</button> */}
+            <input
+              id="dropzone-file"
+              type="file"
+              className="hidden"
+              onChange={handleChange}
+            />
+            <label
+              className="flex justify-center m-auto rounded-[10px] py-3 border border-black w-[40%]"
+              htmlFor="dropzone-file"
+            >
               Edit Photo
-            </button>
+            </label>
             <button
               onClick={() => setSelectedImage(null)}
               className="rounded-[10px] py-3 text-white bg-[#161616] w-[40%]"
