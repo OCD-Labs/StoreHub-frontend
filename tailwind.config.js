@@ -24,6 +24,20 @@ module.exports = {
         satoshi: ['Satoshi', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
       },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: 0 },
+          '100%': { opacity: 1 },
+        },
+        fadeOut: {
+          '0%': { opacity: 1 },
+          '100%': { opacity: 0 },
+        },
+      },
+      animation: {
+        animatefadeIn: 'fadeIn 1s ease-in-out',
+        animatefadeOut: 'fadeOut 1s ease-in-out',
+       }
     },
   },
   plugins: [],

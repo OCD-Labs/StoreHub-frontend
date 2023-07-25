@@ -1,15 +1,17 @@
-'use client'
-import { useRouter } from 'next/navigation'
-import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import { getSession } from '@components/util/session'
-import '../../styles/inventory.css'
-import StoreItem from '@components/stores/StoreItem'
-import { User } from '@app/StoreManager/userstore'
-import ProductItem from '@components/stores/productitem'
-import AppLoader from '@components/global/AppLoader'
-import { BASE_URL } from '@components/util/config'
+"use client";
+import { useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import { getSession } from "@components/util/session";
+import "../../styles/inventory.css";
+import StoreItem from "@components/stores/StoreItem";
+import { User } from "@app/StoreManager/userstore";
+import ProductItem from "@components/stores/productitem";
+import AddItemModal from "@components/stores/create-store/addItemModal";
+import AppLoader from "@components/global/AppLoader";
+import { BASE_URL } from "@components/util/config";
 const Inventory = () => {
+
   const ID = '123PDWD'
   const [storeItems, setStoreItems] = useState([])
   const [session, setSession] = useState<Session>()
@@ -18,70 +20,44 @@ const Inventory = () => {
   const token = useSearchParams().get('token')
   const userID = useSearchParams().get('user')
 
+
   const getStoreItemsOptions = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  }
+  };
 
   const addStoreItemsOptions = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  }
+  };
   // const searchParams = useSearchParams()
   const getStoreData = async () => {
     try {
       fetch(
+
         BASE_URL + `/users/${userID}/stores/${id}/items`,
         getStoreItemsOptions,
       )
         .then((response) => response.json())
         .then((data) => {
-          console.log(data, 'store items')
-          setStoreItems(data ? data.data.result.items : [])
-          setloading(false)
-        })
+          console.log(data, "store items");
+          setStoreItems(data ? data.data.result.items : []);
+          setloading(false);
+        });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  const id = useSearchParams().get('id')
-  const name = useSearchParams().get('name')
+  };
+  const id = useSearchParams().get("id");
+  const name = useSearchParams().get("name");
 
-  type FormData = {
-    item_name: string
-    page: string
-    page_size: string
-    sort: string
-  }
-
-  const [formData, setFormData] = useState<FormData>({
-    item_name: '',
-    page: '',
-    page_size: '',
-    sort: '',
-  })
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    })
-  }
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log(formData, 'formData')
-    debugger
-    addStoreProducts()
-    setIsModalOpen(false)
-  }
-  console.log(session, 'session')
+  console.log(session, "session");
 
   // useEffect(() => {
   //   let transactionHashes = searchParams.get('transactionHashes')
@@ -91,97 +67,57 @@ const Inventory = () => {
   // })
 
   // Generate time options
-  const timeOptions: JSX.Element[] = []
+  const timeOptions: JSX.Element[] = [];
   for (let hour = 0; hour < 24; hour++) {
     for (let minute = 0; minute < 60; minute += 15) {
-      const time = `${hour
+      const time = `${hour.toString().padStart(2, "0")}:${minute
         .toString()
-        .padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
+        .padStart(2, "0")}`;
       timeOptions.push(
         <option key={time} value={time}>
           {time}
-        </option>,
-      )
+        </option>
+      );
     }
   }
   const readyItems = async () => {
-    let session = getSession()
-    setSession(session)
-  }
+    let session = getSession();
+    setSession(session);
+  };
 
   useEffect(() => {
     readyItems().then(() => {
-      getStoreData()
-    })
-  }, [3])
-
-  const addStoreProducts = async () => {
-    console.log(`${BASE_URL}users/${userID}/stores/${id}/items`)
-
-    try {
-      fetch(
-        BASE_URL + `users/${userID}/stores/${id}/items`,
-        getStoreItemsOptions,
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data, 'store items')
-          setStoreItems(data?.data.result.items)
-        })
-    } catch (error) {
-      console.log(error)
-    }
-  }
+      getStoreData();
+    });
+  }, [3]);
 
   return (
     <main className="mb-6">
-      // modal
-      <div className={`modal ${isModalOpen ? 'is-open' : ''}`}>
-        <div className="modal-content">
-          <h2>Modal</h2>
-          <form onSubmit={handleSubmit}>
-            <label>
-              Item Name:
-              <input
-                type="text"
-                name="item_name"
-                value={formData.item_name}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Page:
-              <input
-                type="text"
-                name="page"
-                value={formData.page}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Page Size:
-              <input
-                type="text"
-                name="page_size"
-                value={formData.page_size}
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Sort:
-              <input
-                type="text"
-                name="sort"
-                value={formData.sort}
-                onChange={handleChange}
-              />
-            </label>
-            <div className="button-container">
-              <button onClick={handleSubmit} className="bg-blue" type="submit">
-                Add
-              </button>
-            </div>
-          </form>
+      <div
+        className={`modal ${
+          isModalOpen
+            ? "animate-animatefadeIn is-open"
+            : "animate-animatefadeOut"
+        } lg:px-[] ${isModalOpen ? "is-open" : ""}`}
+      >
+        <div className="modal-content w-[90%] md:w-[60%]">
+          <div className="flex justify-between items-center lg:px-20px">
+            <h2 className="text-lg font-bold text-black">Add Item</h2>
+            <span
+              onClick={() => setIsModalOpen(!isModalOpen)}
+              className="text-lg cursor-pointer p-2"
+            >
+              X
+            </span>
+          </div>
+          <AddItemModal
+            BASE_URL={BASE_URL}
+            id={id}
+            userID={userID}
+            setIsModalOpen={setIsModalOpen}
+            addStoreItemsOptions={addStoreItemsOptions}
+            setStoreItems={setStoreItems}
+          />
         </div>
       </div>
       <p className="text-[20px] font-bold text-black">{name}</p>
@@ -219,7 +155,7 @@ const Inventory = () => {
               </select>
               <button
                 onClick={() => {
-                  setIsModalOpen(!isModalOpen)
+                  setIsModalOpen(!isModalOpen);
                 }}
                 className="block py-2 rounded-md border-0 px-1 md:px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 md:my-0"
               >
@@ -251,7 +187,7 @@ const Inventory = () => {
         </section>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default Inventory
+export default Inventory;
