@@ -1,105 +1,129 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Dispatch, SetStateAction, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 type addStoreItemsOptions = {
-  method: string;
+  method: string
   headers: {
-    "Content-Type": string;
-    Authorization: string;
-  };
-};
+    'Content-Type': string
+    Authorization: string
+  }
+}
 
 interface PropsInterface {
-  BASE_URL: string;
-  userID: string | null;
-  id: string | null;
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>;
-  addStoreItemsOptions: addStoreItemsOptions;
-  setStoreItems: Dispatch<SetStateAction<never[]>>;
+  BASE_URL: string
+  userID: string | null
+  id: string | null
+  session: Session | undefined
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>
+  addItemStatus: any
+  addStoreItemsOptions: addStoreItemsOptions
+  setStoreItems: Dispatch<SetStateAction<never[]>>
 }
 
 const AddItemModal: React.FC<PropsInterface> = ({
   BASE_URL,
   userID,
   id,
+  session,
   setIsModalOpen,
   addStoreItemsOptions,
-  setStoreItems,
+  addItemStatus,
 }) => {
   type FormData = {
-    name: string;
-    description: string;
-    price: string;
-    image_url: string;
-    category: string;
-    discount_percentage: string;
-    supply_quantity: number;
-  };
+    name: string
+    description: string
+    price: string
+    image_urls: string[]
+    category: string
+    discount_percentage: string
+    supply_quantity: number
+  }
 
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    description: "",
-    price: "",
-    image_url:
-      "https://www.gravatar.com/avatar/2c7d99fe281ecd3bcd65ab915bac6dd5?s=250",
-    category: "",
-    discount_percentage: "",
-    supply_quantity: 0,
-  });
+  const [formData, setFormData] = useState<any>({
+    name: '',
+    description: '',
+    price: '',
+    image_urls: [
+      'https://res.cloudinary.com/duxnx9n5t/image/upload/v1689930570/bh8ys2dnwq7ttaxs3gpz.jpg',
+    ],
+    category: 'Fashion',
+    discount_percentage: '',
+    supply_quantity: 1,
+  })
 
-  const addStoreProducts = async (): Promise<void> => {
-    console.log(`${BASE_URL}users/${userID}/stores/${id}/items`);
+  const addStoreProducts = async () => {
+    console.log(`${BASE_URL}/users/${userID}/stores/${id}/items`)
+    debugger
 
-    try {
-      fetch(
-        BASE_URL + `users/${userID}/stores/${id}/items`,
-        addStoreItemsOptions
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data, "store items");
-          setStoreItems(data?.data.result.items);
-        });
-    } catch (error) {
-      console.log(error);
+    const itemData = {
+      name: formData.name,
+      description: formData.description,
+      price: formData.price,
+      image_urls: formData.image_urls,
+      category: formData.category,
+      discount_percentage: formData.discount_percentage,
+      supply_quantity: parseInt(formData.supply_quantity),
     }
-  };
+    try {
+      fetch(BASE_URL + `/users/${userID}/stores/${id}/items`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session ? session.access_token : ''}`,
+        },
+        body: JSON.stringify(itemData),
+      })
+        .then((response) => {
+          console.log(response.clone().json())
+
+          return response.json()
+        })
+        .then((data: any) => {
+          addItemStatus(data?.status)
+          console.log(data, 'store items')
+        })
+    } catch (error) {
+      console.log(error, 'error from call')
+    }
+  }
 
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>,
   ): void => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    });
-  };
+    })
+    console.log(formData, 'formData')
+  }
 
   const handleFormSubmit: SubmitHandler<IFormInputs> = () => {
     // e.preventDefault();
     // debugger;
-    console.log(formData, "formData");
-    addStoreProducts();
-    setIsModalOpen(false);
-  };
+
+    addStoreProducts()
+    setIsModalOpen(false)
+  }
 
   //form validation
   interface IFormInputs {
-    name: string;
-    description: string;
-    price: string;
-    category: string;
-    discount_percentage: string;
-    supply_quantity: string;
-}
+    name: string
+    description: string
+    price: string
+    image_urls: string[]
+    category: string
+    discount_percentage: string
+    supply_quantity: number
+  }
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IFormInputs>();
+  } = useForm<IFormInputs>()
 
   return (
     <>
@@ -110,15 +134,15 @@ const AddItemModal: React.FC<PropsInterface> = ({
               <label>Item Name</label>
               <div className="lg:w-[75%] w-full">
                 <input
-                  {...register("name", {
-                    required: "Store name is required",
+                  {...register('name', {
+                    required: 'Store name is required',
                     minLength: {
                       value: 3,
-                      message: "Store name must be at least 3 characters",
+                      message: 'Store name must be at least 3 characters',
                     },
                     maxLength: {
                       value: 50,
-                      message: "Store name cannot exceed 50 characters",
+                      message: 'Store name cannot exceed 50 characters',
                     },
                   })}
                   name="name"
@@ -139,15 +163,15 @@ const AddItemModal: React.FC<PropsInterface> = ({
               <label>Description</label>
               <div className="w-full lg:w-[75%]">
                 <textarea
-                  {...register("description", {
-                    required: "Description is required",
+                  {...register('description', {
+                    required: 'Description is required',
                     minLength: {
                       value: 10,
-                      message: "Description must be at least 10 characters",
+                      message: 'Description must be at least 10 characters',
                     },
                     maxLength: {
                       value: 200,
-                      message: "Description cannot exceed 200 characters",
+                      message: 'Description cannot exceed 200 characters',
                     },
                   })}
                   name="description"
@@ -170,15 +194,15 @@ const AddItemModal: React.FC<PropsInterface> = ({
               <label>Price</label>
               <div className="lg:w-[75%] w-full">
                 <input
-                  {...register("price", {
-                    required: "Store name is required",
+                  {...register('price', {
+                    required: 'Store name is required',
                     minLength: {
                       value: 3,
-                      message: "Store name must be at least 3 characters",
+                      message: 'Store name must be at least 3 characters',
                     },
                     maxLength: {
                       value: 50,
-                      message: "Store name cannot exceed 50 characters",
+                      message: 'Store name cannot exceed 50 characters',
                     },
                   })}
                   name="price"
@@ -195,39 +219,37 @@ const AddItemModal: React.FC<PropsInterface> = ({
               </div>
             </span>
 
-
-              <span className="flex flex-col md:items-center md:py-4">
-                <label className="mr-2 md:mr-4">Category</label>
-                <select
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                  className="rounded-md border-1 px-2.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 lg:my-0"
-                >
-                  <option>Fashion</option>
-                  <option>Books</option>
-                  <option>Electronics</option>
-                  <option>Apparels</option>
-                  <option>Food & Fruits</option>
-                </select>
-              </span>
-              
+            <span className="flex flex-col md:items-center md:py-4">
+              <label className="mr-2 md:mr-4">Category</label>
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className="rounded-md border-1 px-2.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 lg:my-0"
+              >
+                <option>Fashion</option>
+                <option>Books</option>
+                <option>Electronics</option>
+                <option>Apparels</option>
+                <option>Food & Fruits</option>
+              </select>
+            </span>
 
             <span className="lg:flex gap-3 md:py-4 lg:justify-end lg:items-center">
               <label>Discount</label>
               <div className="lg:w-[75%] w-full">
                 <input
-                //   {...register("discount_percentage", {
-                //     required: "Store name is required",
-                //     minLength: {
-                //       value: 3,
-                //       message: "Store name must be at least 3 characters",
-                //     },
-                //     maxLength: {
-                //       value: 50,
-                //       message: "Store name cannot exceed 50 characters",
-                //     },
-                //   })}
+                  //   {...register("discount_percentage", {
+                  //     required: "Store name is required",
+                  //     minLength: {
+                  //       value: 3,
+                  //       message: "Store name must be at least 3 characters",
+                  //     },
+                  //     maxLength: {
+                  //       value: 50,
+                  //       message: "Store name cannot exceed 50 characters",
+                  //     },
+                  //   })}
                   name="discount_percentage"
                   onChange={handleChange}
                   value={formData.discount_percentage}
@@ -246,20 +268,22 @@ const AddItemModal: React.FC<PropsInterface> = ({
               <label>Supply Quatntity</label>
               <div className="lg:w-[75%] w-full">
                 <input
-                //   {...register("name", {
-                //     required: "Store name is required",
-                //     minLength: {
-                //       value: 3,
-                //       message: "Store name must be at least 3 characters",
-                //     },
-                //     maxLength: {
-                //       value: 50,
-                //       message: "Store name cannot exceed 50 characters",
-                //     },
-                //   })}
+                  //   {...register("name", {
+                  //     required: "Store name is required",
+                  //     minLength: {
+                  //       value: 3,
+                  //       message: "Store name must be at least 3 characters",
+                  //     },
+                  //     maxLength: {
+                  //       value: 50,
+                  //       message: "Store name cannot exceed 50 characters",
+                  //     },
+                  //   })}
                   name="supply_quantity"
                   onChange={handleChange}
-                  value={formData.supply_quantity}
+                  type="number"
+                  min={1}
+                  value={parseInt(formData.supply_quantity)}
                   placeholder="Farmland Groceries Store"
                   className="focus:border-blue block w-full md:gap-[30px] rounded-md border-1 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 lg:my-0"
                 />
@@ -270,7 +294,6 @@ const AddItemModal: React.FC<PropsInterface> = ({
                 </span>
               </div>
             </span>
-
           </div>
           <div className="flex justify-center items-center">
             <button
@@ -283,7 +306,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
         </form>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default AddItemModal;
+export default AddItemModal
