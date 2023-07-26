@@ -2,7 +2,7 @@
 import Link from "next/link";
 import React, { useState } from "react";
 
-const SignUp = () => {
+const SignIn = () => {
   const [checked, setChecked] = useState<boolean>(false);
 
   const handleRadioChange = (): void => {
@@ -27,21 +27,13 @@ const SignUp = () => {
       <section className="sm:w-[55%] sm:px-6">
         <form>
           <p className="text-end">
-            Already have an account?{" "}
-            <Link href="/signin">
-              <span className="text-blue">Sign In</span>
+            Don't have an account?
+            <Link href="/signup">
+              <span className="text-blue"> Create Account</span>
             </Link>
           </p>
-          <p className="text-2xl font-bold py-4">Create Account</p>
+          <p className="text-2xl font-bold py-4">Login</p>
           <div className="flex flex-col gap-5 sm:gap-3 lg:gap-7">
-            <input
-              type="text"
-              name="fullname"
-              id="full-name"
-              className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              placeholder="Full Name"
-            />
-
             <input
               type="email"
               name="email"
@@ -56,14 +48,6 @@ const SignUp = () => {
               id="password"
               className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder="Password"
-            />
-
-            <input
-              type="passowrd"
-              name="confirm-password"
-              id="confirm-password"
-              className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              placeholder="Confirm Password"
             />
 
             <div className="flex items-center">
@@ -104,13 +88,11 @@ const SignUp = () => {
               </div>
 
               {/* Label text */}
-              <span className="ml-4">
-                I agree to the terms of service and privacy policy
-              </span>
+              <span className="ml-4">Remember me</span>
             </div>
 
             <button className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white bg-[#161616] text-lg w-full my-3 md:my-6">
-              Create Account
+              Login
             </button>
           </div>
 
@@ -146,4 +128,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;
