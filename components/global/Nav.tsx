@@ -37,7 +37,7 @@ const Nav = () => {
 
   const signIn = () => {
     try {
-      debugger
+      // debugger
       if (wallet.accountId) {
         fetch(BASE_URL + '/auth/login', {
           method: 'POST',
