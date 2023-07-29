@@ -4,42 +4,23 @@ import { FileUploader } from 'react-drag-drop-files'
 import { AdvancedImage } from '@cloudinary/react'
 import { Cloudinary } from '@cloudinary/url-gen'
 import { fill } from '@cloudinary/url-gen/actions/resize'
+import { handleImageUpload } from '@app/services/uploadService'
 
 const ImageUploader = ({ onUpdateImage }: any) => {
   const [selectedImage, setSelectedImage] = useState<any>(null)
-  const [imageData, setImageData] = useState<any>()
-  const fileTypes: string[] = ['PNG', 'JPEG', 'GIF', 'WEBP', 'JPG']
-  const preset_key = 'storehub-app'
-  const cloud_name = 'duxnx9n5t'
 
   const handleChange = (event: any) => {
-    const file = event.target.files[0]
-    handleImageUpload(file)
+    const file: File = event.target.files[0]
+    UploadImage(file)
     if (file) {
       setSelectedImage(file)
     }
   }
-  const handleImageUpload = (file: any) => {
-    const url = `https://api.cloudinary.com/v1_1/${cloud_name}/auto/upload`
-    const formData = new FormData()
-    formData.append('file', file)
-    formData.append('upload_preset', preset_key)
-    debugger
-    fetch(url, {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-
+  const UploadImage = async (file: any) => {
+    await handleImageUpload(file)
       .then((data) => {
         onUpdateImage(data)
-        setImageData((data: any) => {
-          return data
-        })
-
-        console.log(data, 'imagedata')
       })
-
       .catch((err) => console.log(err))
   }
   return (
