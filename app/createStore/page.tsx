@@ -56,7 +56,7 @@ const CreateStore = () => {
   console.log(session, 'session')
 
   // set Image data
-  const handleImageData = (data: any) => {
+  const handleImageData = (data: ImageData) => {
     setImageData(data)
     console.log(data, 'image data at store')
   }
