@@ -117,7 +117,7 @@ const CreateStore = () => {
   useEffect(() => {
     let session = getSession()
     setSession(session)
-  }, [3])
+  }, [])
 
   //handle form validation
 
