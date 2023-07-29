@@ -19,7 +19,7 @@ const SignIn = () => {
         </h1>
         <img
           className="py-11"
-          src="../../assets/images/signup.svg"
+          src="../../assets/images/signin.svg"
           alt="sign up"
         />
       </section>
