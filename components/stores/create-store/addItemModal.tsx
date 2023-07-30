@@ -1,4 +1,6 @@
+
 import { Dispatch, SetStateAction, useState } from 'react'
+import AddImageUpload from './addImageUpload'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 type addStoreItemsOptions = {
@@ -38,7 +40,11 @@ const AddItemModal: React.FC<PropsInterface> = ({
     discount_percentage: string
     supply_quantity: number
   }
-
+  const [images, setImages] = useState<string[]>([])
+  const updateImage = (imgurl: string) => {
+    images.push(imgurl)
+    console.log(images)
+  }
   const [formData, setFormData] = useState<any>({
     name: '',
     description: '',
@@ -59,11 +65,12 @@ const AddItemModal: React.FC<PropsInterface> = ({
       name: formData.name,
       description: formData.description,
       price: formData.price,
-      image_urls: formData.image_urls,
+      image_urls: images,
       category: formData.category,
       discount_percentage: formData.discount_percentage,
       supply_quantity: parseInt(formData.supply_quantity),
     }
+    debugger
     try {
       fetch(BASE_URL + `/users/${userID}/stores/${id}/items`, {
         method: 'POST',
@@ -158,7 +165,6 @@ const AddItemModal: React.FC<PropsInterface> = ({
                 </span>
               </div>
             </span>
-
             <span className="lg:flex gap-3 lg:py-4 lg:justify-end">
               <label>Description</label>
               <div className="w-full lg:w-[75%]">
@@ -189,7 +195,6 @@ const AddItemModal: React.FC<PropsInterface> = ({
                 </span>
               </div>
             </span>
-
             <span className="lg:flex gap-3 md:py-4 md:justify-end md:items-center">
               <label>Price</label>
               <div className="lg:w-[75%] w-full">
@@ -218,7 +223,6 @@ const AddItemModal: React.FC<PropsInterface> = ({
                 </span>
               </div>
             </span>
-
             <span className="flex flex-col md:items-center md:py-4">
               <label className="mr-2 md:mr-4">Category</label>
               <select
@@ -234,7 +238,6 @@ const AddItemModal: React.FC<PropsInterface> = ({
                 <option>Food & Fruits</option>
               </select>
             </span>
-
             <span className="lg:flex gap-3 md:py-4 lg:justify-end lg:items-center">
               <label>Discount</label>
               <div className="lg:w-[75%] w-full">
@@ -263,7 +266,6 @@ const AddItemModal: React.FC<PropsInterface> = ({
                 </span>
               </div>
             </span>
-
             <span className="lg:flex gap-3 lg:py-4 lg:justify-end lg:items-center">
               <label>Supply Quatntity</label>
               <div className="lg:w-[75%] w-full">
@@ -293,6 +295,13 @@ const AddItemModal: React.FC<PropsInterface> = ({
                   )}
                 </span>
               </div>
+            </span>
+
+            <span className="flex lg:flex gap-3 lg:py-4 lg:justify-center justify-center items-center lg:items-center">
+              <div>Product Images</div>
+              <AddImageUpload updateImage={updateImage} />
+              <AddImageUpload updateImage={updateImage} />
+              <AddImageUpload updateImage={updateImage} />
             </span>
           </div>
           <div className="flex justify-center items-center">
