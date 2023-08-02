@@ -11,13 +11,16 @@ import AddItemModal from '@components/stores/create-store/addItemModal'
 import AppLoader from '@components/global/AppLoader'
 import { BASE_URL } from '@components/util/config'
 import { ToastContainer, toast } from 'react-toastify'
+import { EditStoreProfile } from '@components/stores/create-store/EditStoreProfile'
 
 import 'react-toastify/dist/ReactToastify.css'
+import { flattenDiagnosticMessageText } from 'typescript'
 const Inventory = () => {
   const ID = '123PDWD'
   const [storeItems, setStoreItems] = useState<any>([])
   const [session, setSession] = useState<Session>()
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isEditProfileModalOpen, setIsEditProfileModal] = useState<boolean>(false)
   const [loading, setloading] = useState<boolean>(true)
   const token = useSearchParams().get('token')
   const userID = useSearchParams().get('user')
@@ -94,6 +97,12 @@ const Inventory = () => {
 
   return (
     <main className="mb-6">
+      {
+        isEditProfileModalOpen ?
+      <div>
+        <EditStoreProfile hideModal={setIsEditProfileModal} session={session}/>
+      </div> : null
+}
       <div
         className={`modal ${
           isModalOpen
@@ -123,6 +132,7 @@ const Inventory = () => {
           />
         </div>
       </div>
+
       <p className="text-[20px] font-bold text-black">{name}</p>
       <span className="flex my-4">
         <p>Store ID : {id} </p>
@@ -132,7 +142,7 @@ const Inventory = () => {
       </span>
       <div className="md:flex md:gap-5">
         <section className="flex gap-5 justify-between md:justify-start md:flex-col md:gap-5 mb-6 md:py-6">
-          <img src="../../assets/icons/Dashboard.svg" alt="Dashboard" />
+          <img src="../../assets/icons/Dashboard.svg" alt="Dashboard" onClick={() => setIsEditProfileModal(!isEditProfileModalOpen)}/>
           <img src="../../assets/icons/user.svg" alt="user" />
           <img src="../../assets/icons/notification.svg" alt="notification" />
           <img src="../../assets/icons/money.svg" alt="money" />

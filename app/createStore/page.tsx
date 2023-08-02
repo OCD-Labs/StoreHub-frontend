@@ -143,7 +143,7 @@ const CreateStore = () => {
     }
   }
 
-  const removeTag = (tag: string) => {
+  const removeTag = (tag: string): void => {
     const updatedTags = tags.filter((t) => t !== tag)
     setTags(updatedTags)
   }

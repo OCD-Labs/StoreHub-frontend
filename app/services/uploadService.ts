@@ -10,7 +10,7 @@ export const handleImageUpload = async (
 
   formData.append('file', file)
   formData.append('upload_preset', PRESET_KEY)
-  debugger
+  // debugger
   const ImageData = await fetch(URL, {
     method: 'POST',
     body: formData,
