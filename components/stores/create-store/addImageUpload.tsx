@@ -1,16 +1,17 @@
-import { useState } from 'react'
+import { useState, FC } from 'react'
 import { handleImageUpload } from '@app/services/uploadService'
 
-const AddImageUpload = ({
-  updateImage,
-}: {
+export interface UpdateImageProp {
   updateImage: (url: string) => void
-}) => {
+}
+
+const AddImageUpload: FC<UpdateImageProp> = ({
+  updateImage,
+}: UpdateImageProp) => {
   const [image, setImage] = useState<any>(null)
 
   //image upload code
   const handleImageChange = (event: any) => {
-
     const file: File = event.target.files[0]
 
     if (file) {

@@ -1,4 +1,6 @@
 import React from 'react'
+import item from '@public/assets/images/item.jpg'
+import Image from 'next/image'
 
 interface Iproductitem {
   name: string
@@ -6,7 +8,7 @@ interface Iproductitem {
   id: number
   quantity: number
   status: string
-  img: string
+  image_urls: string[]
   price: string
   supply_quantity: string
   discount_percentage: string
@@ -24,7 +26,7 @@ const ProductItem = (props: IproductProps) => {
     id,
     quantity,
     status,
-    img,
+    image_urls,
     price,
     supply_quantity,
     discount_percentage,
@@ -36,7 +38,13 @@ const ProductItem = (props: IproductProps) => {
         <span className="flex gap-2 items-center md:w-[30%] w-[15em] text-right mr-4 whitespace-nowrap">
           <img src="../../assets/icons/dot.svg" alt="dot" className="w-[5px]" />
           <p>{name} </p>
-          <img src={img} alt="product" className="w-[25px]" />
+          <Image
+            src={image_urls.length ? image_urls[0] : item}
+            alt="product"
+            className="w-[25px]"
+            width={25}
+            height={25}
+          />
         </span>
         <p className="md:w-[15%] w-[90px] mr-6 md:mr-0">{category}</p>
         <p className="md:w-[15%] w-[90px]">{id}</p>

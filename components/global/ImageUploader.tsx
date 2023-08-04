@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { useState } from 'react'
 import { FileUploader } from 'react-drag-drop-files'
 import { AdvancedImage } from '@cloudinary/react'
@@ -6,7 +6,13 @@ import { Cloudinary } from '@cloudinary/url-gen'
 import { fill } from '@cloudinary/url-gen/actions/resize'
 import { handleImageUpload } from '@app/services/uploadService'
 
-const ImageUploader = ({ onUpdateImage }: any) => {
+export interface UploadImageProp {
+  onUpdateImage: (value: void | ImageData) => void
+}
+
+const ImageUploader: FC<UploadImageProp> = ({
+  onUpdateImage,
+}: UploadImageProp) => {
   const [selectedImage, setSelectedImage] = useState<any>(null)
 
   const handleChange = (event: any) => {
@@ -16,7 +22,7 @@ const ImageUploader = ({ onUpdateImage }: any) => {
       setSelectedImage(file)
     }
   }
-  const UploadImage = async (file: any) => {
+  const UploadImage = async (file: File) => {
     await handleImageUpload(file)
       .then((data) => {
         onUpdateImage(data)
