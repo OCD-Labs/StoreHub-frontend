@@ -24,7 +24,7 @@ const ImageUploader = ({ onUpdateImage }: any) => {
       .catch((err) => console.log(err))
   }
   return (
-    <div className="w-[40%]">
+    <div className="w-[100%] md:w-[40%] mt-5">
       <div>
         <div>
           <div className="flex items-center justify-center w-full">
@@ -85,7 +85,7 @@ const ImageUploader = ({ onUpdateImage }: any) => {
               onChange={handleChange}
             />
             <label
-              className="flex justify-center m-auto rounded-[10px] py-3 border border-black w-[40%]"
+              className="flex justify-center rounded-[10px] py-3 border border-black w-[40%]"
               htmlFor="dropzone-file"
             >
               Edit Photo

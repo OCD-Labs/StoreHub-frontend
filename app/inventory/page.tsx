@@ -132,7 +132,7 @@ const Inventory = () => {
   return (
     <main className="mb-6">
       {isEditProfileModalOpen ? (
-        <div>
+        <div className={`modal ${isEditProfileModalOpen ? 'is-open' : ''}`}>
           <EditStoreProfile
             hideModal={setIsEditProfileModal}
             session={session}
