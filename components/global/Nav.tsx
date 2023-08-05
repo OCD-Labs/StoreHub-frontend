@@ -140,11 +140,6 @@ const Nav = () => {
                       <button className="black_btn">Create Store</button>
                     </Link>
                   </Dropdown.Item>
-                  <Dropdown.Item>
-                    <Link href="/userStores">
-                      <button className="black_btn">My Stores</button>
-                    </Link>
-                  </Dropdown.Item>
                   <Dropdown.Divider />
                   <Dropdown.Item href="#/action-3">
                     <div onClick={() => wallet.signOut()}> Sign Out</div>

@@ -7,11 +7,11 @@ import { FC } from 'react'
 import { useState, useEffect } from 'react'
 import { getSession } from '@components/util/session'
 
-interface Props {
+export interface StoreProps {
   store: Store
 }
 
-const Storecard: FC<Props> = ({ store }) => {
+const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
   console.log(store, 'store')
   const [Session, setSession] = useState<Session>()
   let token = Session?.access_token
@@ -56,7 +56,7 @@ const Storecard: FC<Props> = ({ store }) => {
             <div>
               <Link
                 href={{
-                  pathname: '/inventory',
+                  pathname: '/inventory/Itemsdashboard',
                   query: {
                     id: store.id,
                     name: store.name,

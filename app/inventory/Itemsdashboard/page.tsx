@@ -1,28 +1,16 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { useSearchParams } from "next/navigation";
-import { Key, useEffect, useState } from "react";
-import { getSession } from "@components/util/session";
-import "../../styles/inventory.css";
-import StoreItem from "@components/stores/StoreItem";
-import { User } from "@app/StoreManager/userstore";
-import ProductItem from "@components/stores/productitem";
-import AddItemModal from "@components/stores/create-store/addItemModal";
-import AppLoader from "@components/global/AppLoader";
-import { BASE_URL } from "@components/util/config";
-import { ToastContainer, toast } from "react-toastify";
-import { EditStoreProfile } from "@components/stores/create-store/EditStoreProfile";
-
-import "react-toastify/dist/ReactToastify.css";
-import { flattenDiagnosticMessageText } from "typescript";
-
-interface Store {
-  category: string;
-  id: number;
-  name: string;
-  profile_image_url: string;
-  // Add other properties of a single store item as needed
-}
+'use client'
+import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { Key, useEffect, useState } from 'react'
+import { getSession } from '@components/util/session'
+import '../../../styles/inventory.css'
+import StoreItem from '@components/stores/StoreItem'
+import { User } from '@app/StoreManager/userstore'
+import ProductItem from '@components/stores/productitem'
+import AddItemModal from '@components/stores/create-store/addItemModal'
+import AppLoader from '@components/global/AppLoader'
+import { BASE_URL } from '@components/util/config'
+import { ToastContainer, toast } from 'react-toastify'
 
 import 'react-toastify/dist/ReactToastify.css'
 const Inventory = () => {
@@ -102,10 +90,10 @@ const Inventory = () => {
     readyItems().then(() => {
       getStoreData()
     })
-  }, [3])
+  }, [storeItems.length])
 
   return (
-    <main className="mb-6">
+    <main className="w-full mb-6">
       <div
         className={`modal ${
           isModalOpen
@@ -135,22 +123,9 @@ const Inventory = () => {
           />
         </div>
       </div>
-      <p className="text-[20px] font-bold text-black">{name}</p>
-      <span className="flex my-4">
-        <p>Store ID : {id} </p>
-        <span className="ml-4">
-          <p>Verified</p>
-        </span>
-      </span>
+
       <div className="md:flex md:gap-5">
-        <section className="flex gap-5 justify-between md:justify-start md:flex-col md:gap-5 mb-6 md:py-6">
-          <img src="../../assets/icons/Dashboard.svg" alt="Dashboard" />
-          <img src="../../assets/icons/user.svg" alt="user" />
-          <img src="../../assets/icons/notification.svg" alt="notification" />
-          <img src="../../assets/icons/money.svg" alt="money" />
-          <img src="../../assets/icons/settings.svg" alt="settings" />
-          <img src="../../assets/icons/trash.svg" alt="settings" />
-        </section>
+  
         <ToastContainer />
         <section className="md:flex-1">
           <div className="md:flex-1 flex justify-between items-center sticky top-0 bg-white py-4">
