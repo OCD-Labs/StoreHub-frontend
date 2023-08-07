@@ -143,7 +143,7 @@ const CreateStore = () => {
     }
   }
 
-  const removeTag = (tag: string) => {
+  const removeTag = (tag: string): void => {
     const updatedTags = tags.filter((t) => t !== tag)
     setTags(updatedTags)
   }
@@ -234,7 +234,7 @@ const CreateStore = () => {
                   <option>Food & Fruits</option>
                 </select>
               </span>
-              <span className="flex flex-col md:flex-row md:items-center w-[45%] sm:w-[43%] md:w-[45%] md:py-4 md:justify-end">
+              <span className="flex flex-col md:flex-row md:items-center w-[45%] sm:w-[43%] md:w-[45%] md:py-4 md:justify-end mb-0">
                 <label className="mr-2 md:mr-4">Store Account ID</label>
                 <input
                   name="store_account_id"
