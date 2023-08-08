@@ -40,6 +40,8 @@
   background-color: #fff;
   padding: 20px;
   border-radius: 4px;
+  /* height: 90vh; */
+  overflow-y: auto;
 }
 
 /* h2 {
@@ -51,17 +53,17 @@ form {
   flex-direction: column;
 }
 
-label {
+/* label {
   margin-bottom: 10px;
-}
+} */
 
-input {
+/* input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 14px;
   margin-top: 4px;
-}
+} */
 
 .button-container {
   display: flex;
