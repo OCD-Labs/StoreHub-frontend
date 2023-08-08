@@ -1,15 +1,7 @@
 'use client'
-import { useRouter } from 'next/navigation'
 import { useSearchParams } from 'next/navigation'
-import { Key, useEffect, useState } from 'react'
-import { getSession } from '@components/util/session'
+import { useState } from 'react'
 import '../../styles/inventory.css'
-import StoreItem from '@components/stores/StoreItem'
-import { User } from '@app/StoreManager/userstore'
-import ProductItem from '@components/stores/productitem'
-import AddItemModal from '@components/stores/create-store/addItemModal'
-import AppLoader from '@components/global/AppLoader'
-import { BASE_URL } from '@components/util/config'
 import { ToastContainer, toast } from 'react-toastify'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -21,85 +13,10 @@ import settings from '@public/assets/icons/Inventory/settings.svg'
 import 'react-toastify/dist/ReactToastify.css'
 
 const Inventory = ({ children }: { children: React.ReactNode }) => {
-  const ID = '123PDWD'
-  const [storeItems, setStoreItems] = useState<any>([])
-  const [session, setSession] = useState<Session>()
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [loading, setloading] = useState<boolean>(true)
   const token = useSearchParams().get('token')
   const userID = useSearchParams().get('user')
-
-  const setAddItemStatus = (data: string) => {
-    if (data !== 'error') {
-      toast('Store item added successfully')
-    } else {
-      toast.error('Error while adding item. Try again')
-    }
-  }
-
-  const getStoreItemsOptions = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  }
-
-  const addStoreItemsOptions = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-  }
-  // const searchParams = useSearchParams()
-  const getStoreData = async () => {
-    try {
-      fetch(
-        BASE_URL + `/users/${userID}/stores/${id}/items`,
-        getStoreItemsOptions,
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data, 'store items')
-          setStoreItems(data ? data : [])
-          setloading(false)
-        })
-    } catch (error) {
-      console.log(error, 'error from call')
-    }
-  }
-  console.log(storeItems, 'storeitemszzz')
-
   const id = useSearchParams().get('id')
   const name = useSearchParams().get('name')
-
-  console.log(session, 'session')
-
-  // Generate time options
-  const timeOptions: JSX.Element[] = []
-  for (let hour = 0; hour < 24; hour++) {
-    for (let minute = 0; minute < 60; minute += 15) {
-      const time = `${hour
-        .toString()
-        .padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
-      timeOptions.push(
-        <option key={time} value={time}>
-          {time}
-        </option>,
-      )
-    }
-  }
-  const readyItems = async () => {
-    let session = getSession()
-    setSession(session)
-  }
-
-  useEffect(() => {
-    readyItems().then(() => {
-      getStoreData()
-    })
-  }, [storeItems.length])
 
   return (
     <main className="mb-6">

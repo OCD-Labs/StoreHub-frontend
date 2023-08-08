@@ -1,34 +1,20 @@
-
 import { Dispatch, SetStateAction, useState } from 'react'
 import AddImageUpload from './addImageUpload'
 import { SubmitHandler, useForm } from 'react-hook-form'
-
-type addStoreItemsOptions = {
-  method: string
-  headers: {
-    'Content-Type': string
-    Authorization: string
-  }
-}
+import { BASE_URL } from '@components/util/config'
+import { userWallet } from '@app/StoreManager'
 
 interface PropsInterface {
-  BASE_URL: string
   userID: string | null
   id: string | null
-  session: Session | undefined
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
   addItemStatus: any
-  addStoreItemsOptions: addStoreItemsOptions
-  setStoreItems: Dispatch<SetStateAction<never[]>>
 }
 
 const AddItemModal: React.FC<PropsInterface> = ({
-  BASE_URL,
   userID,
   id,
-  session,
   setIsModalOpen,
-  addStoreItemsOptions,
   addItemStatus,
 }) => {
   type FormData = {
@@ -36,6 +22,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
     description: string
     price: string
     image_urls: string[]
+    cover_img_url: string
     category: string
     discount_percentage: string
     supply_quantity: number
@@ -52,10 +39,13 @@ const AddItemModal: React.FC<PropsInterface> = ({
     image_urls: [
       'https://res.cloudinary.com/duxnx9n5t/image/upload/v1689930570/bh8ys2dnwq7ttaxs3gpz.jpg',
     ],
+    cover_img_url: 'string',
     category: 'Fashion',
     discount_percentage: '',
     supply_quantity: 1,
   })
+  const user = userWallet((state) => state.user)
+  console.log(user, 'user mehn')
 
   const addStoreProducts = async () => {
     console.log(`${BASE_URL}/users/${userID}/stores/${id}/items`)
@@ -66,6 +56,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
       description: formData.description,
       price: formData.price,
       image_urls: images,
+      cover_img_url: 'string',
       category: formData.category,
       discount_percentage: formData.discount_percentage,
       supply_quantity: parseInt(formData.supply_quantity),
@@ -76,7 +67,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${session ? session.access_token : ''}`,
+          Authorization: `Bearer ${user ? user.access_token : ''}`,
         },
         body: JSON.stringify(itemData),
       })
@@ -134,7 +125,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
 
   return (
     <>
-      <div>
+      <div className="z-30">
         <form onSubmit={handleSubmit(handleFormSubmit)}>
           <div className="mt-6 md:mt-0 lg:w-[90%]">
             <span className="lg:flex lg:justify-end gap-3 md:py-4">

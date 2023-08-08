@@ -8,8 +8,12 @@ const wallet = new Wallet({ createAccessKeyFor: CONTRACT_ADDRESS })
 
 interface State {
   wallet: Wallet
+  user: UserData | null
+  setUser: (user: UserData) => void
 }
 
 export const userWallet = create<State>((set) => ({
   wallet,
+  user: null,
+  setUser: (user) => set(() => ({ user: user })),
 }))

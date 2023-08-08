@@ -83,7 +83,7 @@ const CreateStore = () => {
           .then((response) => {
             return response.json()
           })
-          .then((data: StoreResponse) => {
+          .then((data: any) => {
             // TODO: Store data in Context or Redux
             console.log(data)
             if (data?.status !== 'error') {

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { userWallet } from '@app/StoreManager'
-import { User } from '@app/StoreManager/userstore'
+
 import Dropdown from 'react-bootstrap/Dropdown'
 import { setSession } from '@components/util/session'
 import { BASE_URL } from '@components/util/config'
@@ -14,10 +14,10 @@ import { BASE_URL } from '@components/util/config'
 const Nav = () => {
   // const [providers, setProviders] = useState(null)
   const { wallet } = userWallet.getState()
+  const setUser = userWallet((state) => state.setUser)
   const [isSignedIn, setIsSignedIn] = useState()
   const [isMenuOpened, setMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
-  console.log(process.env.STORAGE_PASSWORD, 'user state from zustand')
 
   useEffect(() => {
     ;(async () => {
@@ -37,7 +37,7 @@ const Nav = () => {
 
   const signIn = () => {
     try {
-      // debugger
+      debugger
       if (wallet.accountId) {
         fetch(BASE_URL + '/auth/login', {
           method: 'POST',
@@ -53,7 +53,10 @@ const Nav = () => {
 
           .then(({ data }: UserResponse) => {
             console.log(data, 'data from api')
-
+            setUser({
+              access_token: data.result.access_token,
+              user: data.result.user,
+            })
             setSession({
               access_token: data.result.access_token,
               user: data.result.user,
