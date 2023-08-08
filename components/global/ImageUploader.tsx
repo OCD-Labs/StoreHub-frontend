@@ -7,7 +7,7 @@ import { fill } from '@cloudinary/url-gen/actions/resize'
 import { handleImageUpload } from '@app/services/uploadService'
 
 export interface UploadImageProp {
-  onUpdateImage: (value: void | ImageData) => void
+  onUpdateImage: (value: any) => void
 }
 
 const ImageUploader: FC<UploadImageProp> = ({

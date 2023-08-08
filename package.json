@@ -42,7 +42,8 @@
   },
   "devDependencies": {
     "cypress": "^12.15.0",
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.3.0",
+    "encoding": "^0.1.13"
   },
   "config": {
     "commitizen": {
