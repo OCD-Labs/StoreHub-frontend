@@ -8,6 +8,7 @@ import Storecard from '@components/stores/storecard'
 import AppLoader from '@components/global/AppLoader'
 import { userWallet } from '@app/StoreManager'
 import { BASE_URL } from '@components/util/config'
+import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import PaginationControls from '@components/stores/PaginationControls'
 const Storepage = ({
   searchParams,

@@ -1,6 +1,8 @@
 import React from 'react'
 import item from '@public/assets/images/item.jpg'
 import Image from 'next/image'
+import ProductDropdown from './Inventory/ProductDropdown'
+
 
 interface Iproductitem {
   name: string
@@ -51,11 +53,7 @@ const ProductItem = (props: IproductProps) => {
         <p className="md:w-[15%] w-[90px]">{supply_quantity}</p>
         <p className="md:w-[15%] w-[90px]">{price}</p>
         <p className="md:w-[15%] w-[90px]">{discount_percentage}</p>
-        <img
-          src="../../assets/icons/three-dot.svg"
-          alt="see more"
-          className=""
-        />
+        <ProductDropdown />
       </div>
       <hr className="w-[95%] mx-auto" />
     </>
