@@ -6,9 +6,10 @@ import { Stack } from 'react-bootstrap'
 import { useState, useEffect } from 'react'
 import Storecard from '@components/stores/storecard'
 import AppLoader from '@components/global/AppLoader'
+import StoresSkeleton from '@components/stores/storesSkeleton'
 import { userWallet } from '@app/StoreManager'
 import { BASE_URL } from '@components/util/config'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
+
 import PaginationControls from '@components/stores/PaginationControls'
 const Storepage = ({
   searchParams,
@@ -85,14 +86,20 @@ const Storepage = ({
           <div>
             <div>
               <div className="flex justify-between pt-8 mx-2">
-                <div>12 stores</div>
+                <div>{allStores.length} stores</div>
                 <div>
-                  <Image src={sorticon} alt="sorticon" />
+                  <Image src={sorticon} width={30} height={30} alt="sorticon" />
                 </div>
               </div>
             </div>
             {loading ? (
-              <AppLoader />
+              <div>
+                <StoresSkeleton />
+                <StoresSkeleton />
+                <StoresSkeleton />
+                <StoresSkeleton />
+                <StoresSkeleton />
+              </div>
             ) : (
               <Stack gap={3}>
                 {allStores.map((store, index) => (

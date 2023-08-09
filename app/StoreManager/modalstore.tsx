@@ -1,12 +1,24 @@
 'use client'
 import { create } from 'zustand'
 
+export interface ModalOptions {
+  url: string
+  title: string
+}
+
 interface State {
-    isOpen: boolean
-    toggleModal: ()=> void
+  isOpen: boolean
+  modalOptions: ModalOptions
+  toggleModal: (options: ModalOptions) => void
 }
 
 export const modalstore = create<State>((set) => ({
-    isOpen: false,
-    toggleModal: () => set((state) => ({ isOpen: !state.isOpen })),
+  isOpen: false,
+  modalOptions: {
+    url: '',
+    title: '',
+  },
+  toggleModal: (options: ModalOptions) => set((state) => ({ isOpen: !state.isOpen, modalOptions:options })),
+//   updateUrl: (options: ModalOptions) =>
+//     set((state) => ({ modalOptions: options })),
 }))

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import owner from '../../../public/assets/images/owner.png'
+import owner from '../../../public/assets/images/owner.jpg'
 
 import StoreItem from '@components/stores/StoreItem'
 
@@ -29,7 +29,13 @@ export default function Page({ params }: { params: { slug: string } }) {
               </button>
             </div>
             <div>
-              <Image src={owner} alt="pfpic" width={60} height={60}></Image>
+              <Image
+                className="rounded-full"
+                src={owner}
+                alt="pfpic"
+                width={60}
+                height={60}
+              ></Image>
             </div>
           </div>
         </div>

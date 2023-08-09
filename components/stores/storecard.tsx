@@ -1,7 +1,7 @@
 import { Card } from 'react-bootstrap'
 import Image from 'next/image'
 import pfpic from 'public/assets/images/pfpic.png'
-import owner from 'public/assets/images/owner.png'
+import owner from 'public/assets/images/owner.jpg'
 import Link from 'next/link'
 import { FC } from 'react'
 import { useState, useEffect } from 'react'
@@ -27,12 +27,16 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
       <div>
         <div>
           <div className="flex flex-row gap-3 ">
-            <Image
-              src={store.profile_image_url ? store.profile_image_url : pfpic}
-              width={60}
-              height={60}
-              alt="storepic"
-            ></Image>
+            <div className="border-[1px] rounded border-black">
+              <Image
+                className="p-1 rounded"
+                src={store.profile_image_url ? store.profile_image_url : pfpic}
+                width={60}
+                height={60}
+                alt="storepic"
+              ></Image>
+            </div>
+
             <div className="flex flex-col">
               <h2 className="text-dark opacity-80 font-semibold leading-4 ">
                 <Link href="/stores/1">{store.name}</Link>
@@ -51,7 +55,7 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
             <button>fashion</button>
             <button>hardware</button>
           </div>
-          <div>
+          <div className="flex items-center gap-2">
             <p>owner</p>
             <div>
               <Link
@@ -65,7 +69,13 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
                   },
                 }}
               >
-                <Image src={owner} alt="owner"></Image>
+                <Image
+                  className="rounded-full"
+                  src={owner}
+                  width={40}
+                  height={40}
+                  alt="owner"
+                ></Image>
               </Link>
             </div>
           </div>
