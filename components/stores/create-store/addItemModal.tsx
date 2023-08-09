@@ -3,19 +3,20 @@ import AddImageUpload from './addImageUpload'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { BASE_URL } from '@components/util/config'
 import { userWallet } from '@app/StoreManager'
+import { ModalOptions, modalstore } from '@app/StoreManager/modalstore'
 
 interface PropsInterface {
   userID: string | null
   id: string | null
-  setIsModalOpen: Dispatch<SetStateAction<boolean>>
   addItemStatus: any
+  options: ModalOptions
 }
 
 const AddItemModal: React.FC<PropsInterface> = ({
   userID,
   id,
-  setIsModalOpen,
   addItemStatus,
+  options,
 }) => {
   type FormData = {
     name: string
@@ -45,10 +46,10 @@ const AddItemModal: React.FC<PropsInterface> = ({
     supply_quantity: 1,
   })
   const user = userWallet((state) => state.user)
+  const toggleModal = modalstore((state) => state.toggleModal)
   console.log(user, 'user mehn')
 
   const addStoreProducts = async () => {
-    console.log(`${BASE_URL}/users/${userID}/stores/${id}/items`)
     debugger
 
     const itemData = {
@@ -61,10 +62,11 @@ const AddItemModal: React.FC<PropsInterface> = ({
       discount_percentage: formData.discount_percentage,
       supply_quantity: parseInt(formData.supply_quantity),
     }
+    const method = options.title == 'update store' ? 'PATCH' : 'POST'
     debugger
     try {
-      fetch(BASE_URL + `/users/${userID}/stores/${id}/items`, {
-        method: 'POST',
+      fetch(options.url, {
+        method: method,
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${user ? user.access_token : ''}`,
@@ -77,11 +79,12 @@ const AddItemModal: React.FC<PropsInterface> = ({
           return response.json()
         })
         .then((data: any) => {
-          addItemStatus(data?.status)
+          addItemStatus(data?.status, options.title)
           console.log(data, 'store items')
         })
     } catch (error) {
       console.log(error, 'error from call')
+      addItemStatus('error')
     }
   }
 
@@ -101,9 +104,8 @@ const AddItemModal: React.FC<PropsInterface> = ({
   const handleFormSubmit: SubmitHandler<IFormInputs> = () => {
     // e.preventDefault();
     // debugger;
-
+    toggleModal(options)
     addStoreProducts()
-    setIsModalOpen(false)
   }
 
   //form validation
@@ -300,7 +302,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
               onClick={handleSubmit(handleFormSubmit)}
               className="rounded-[10px] py-4 text-white bg-[#161616] text-lg w-full sm:w-3/4 sm:mx-auto my-6 sm:my-12"
             >
-              Add Item
+              {options.title}
             </button>
           </div>
         </form>

@@ -1,22 +1,34 @@
-// @ts-nocheck
 'use client'
 import { useState } from 'react'
 import { Dropdown } from 'react-bootstrap'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { BASE_URL } from '@components/util/config'
 import deleteicon from '@public/assets/icons/Inventory/Delete.svg'
 import duplicate from '@public/assets/icons/Inventory/duplicate.svg'
 import Edit from '@public/assets/icons/Inventory/Edit.svg'
 import status from '@public/assets/icons/Inventory/status.svg'
 import { modalstore } from '@app/StoreManager/modalstore'
+import { ModalOptions } from '@app/StoreManager/modalstore'
 
-const ProductDropdown: React.FC = () => {
-  const isModalOpen = modalstore((state) => state.isOpen)
+const ProductDropdown = ({ itemid }: { itemid: number }) => {
   const toggleModal = modalstore((state) => state.toggleModal)
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const toggleDropdown = () => {
     setIsOpen(!isOpen)
   }
-  console.log(isModalOpen)
+  const userID: string | null = useSearchParams().get('user')
+
+  const id: string | null = useSearchParams().get('id')
+
+  const url: string = BASE_URL + `/users/${userID}/stores/${id}/items/${itemid}`
+
+  console.log(url, 'updateurl')
+
+  const updateOptions: ModalOptions = {
+    url: url,
+    title: 'update store',
+  }
 
   return (
     <div>
@@ -54,8 +66,14 @@ const ProductDropdown: React.FC = () => {
           }`}
         >
           <Dropdown.Item className="text-xs">
-            <div onClick={console.log('help')} className="flex gap-2">
-              <button onClick={toggleModal}>Edit</button>
+            <div className="flex gap-2">
+              <button
+                onClick={() => {
+                  toggleModal(updateOptions)
+                }}
+              >
+                Edit
+              </button>
               <span>
                 <Image
                   src={Edit}

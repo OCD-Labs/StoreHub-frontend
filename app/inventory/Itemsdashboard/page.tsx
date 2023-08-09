@@ -11,7 +11,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { BASE_URL } from '@components/util/config'
 import { ToastContainer, toast } from 'react-toastify'
 import { Key, Suspense, useEffect, useState } from 'react'
-import { modalstore } from '@app/StoreManager/modalstore'
+import { ModalOptions, modalstore } from '@app/StoreManager/modalstore'
 import { GetStoreItems } from '@app/apis/Inventory'
 import { GET_OPTIONS } from '@app/apis'
 
@@ -23,7 +23,7 @@ const Inventory = () => {
   const ID = '123PDWD'
   const [storeItems, setStoreItems] = useState<any>([])
   const [session, setSession] = useState<UserData | null>()
-
+  const modaloptions = modalstore((state) => state.modalOptions)
   const [loading, setloading] = useState<boolean>(true)
 
   const userID: string | null = useSearchParams().get('user')
@@ -31,14 +31,25 @@ const Inventory = () => {
   const id: string | null = useSearchParams().get('id')
   const token: string | null = useSearchParams().get('token')
 
-  const setAddItemStatus = (data: string) => {
-    if (data !== 'error') {
-      toast('Store item added successfully!')
+  const setAddItemStatus = (data: string, action: string) => {
+    if (action == 'update store') {
+      if (data !== 'error') {
+        toast('Store item updated successfully!')
+      } else {
+        toast.error('Error while updating item. Try again')
+      }
     } else {
-      toast.error('Error while adding item. Try again')
+      if (data !== 'error') {
+        toast('Store item added successfully!')
+      } else {
+        toast.error('Error while adding item. Try again')
+      }
     }
   }
-
+  const options: ModalOptions = {
+    url: BASE_URL + `/users/${userID}/stores/${id}/items`,
+    title: 'Add Item to Store',
+  }
   const getStoreData = async () => {
     try {
       fetch(BASE_URL + `/users/${userID}/stores/${id}/items`, {
@@ -79,9 +90,11 @@ const Inventory = () => {
         >
           <div className="modal-content w-[90%] md:w-[60%]">
             <div className="flex justify-between items-center lg:px-20px">
-              <h2 className="text-lg font-bold text-black">Add Item</h2>
+              <div></div>
               <span
-                onClick={toggleModal}
+                onClick={() => {
+                  toggleModal(options)
+                }}
                 className="text-lg cursor-pointer p-2"
               >
                 X
@@ -91,8 +104,8 @@ const Inventory = () => {
               id={id}
               userID={userID}
               addItemStatus={setAddItemStatus}
-              setIsModalOpen={toggleModal}
-            />
+              options={modaloptions}
+            ></AddItemModal>
           </div>
         </div>
 
@@ -115,7 +128,9 @@ const Inventory = () => {
                 <option>Option 4</option>
               </select> */}
                 <button
-                  onClick={toggleModal}
+                  onClick={() => {
+                    toggleModal(options)
+                  }}
                   className="block py-2 rounded-md border-0 px-1 md:px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 md:my-0"
                 >
                   Add Items
