@@ -1,7 +1,7 @@
 'use client'
 import { useSearchParams } from 'next/navigation'
 
-import '../../../styles/inventory.css'
+import '../styles/inventory.css'
 import { userWallet } from '@app/StoreManager'
 import ProductItem from '@components/stores/productitem'
 import AddItemModal from '@components/stores/create-store/addItemModal'
@@ -14,6 +14,7 @@ import { Key, Suspense, useEffect, useState } from 'react'
 import { ModalOptions, modalstore } from '@app/StoreManager/modalstore'
 import { GetStoreItems } from '@app/apis/Inventory'
 import { GET_OPTIONS } from '@app/apis'
+
 
 import 'react-toastify/dist/ReactToastify.css'
 
