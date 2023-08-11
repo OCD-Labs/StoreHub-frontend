@@ -50,7 +50,7 @@ const CreateStore = () => {
 
   const onSubmit = (): void => {
     console.log(formData, 'formData')
-    debugger
+    // debugger
     createNewStore()
   }
   console.log(session, 'session')
@@ -65,7 +65,7 @@ const CreateStore = () => {
   //crete new store
   const createNewStore = (): void => {
     formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`
-    debugger
+    // debugger
     if (session) {
       try {
         localStorage.setItem('storeData', JSON.stringify(storeData))
@@ -96,7 +96,7 @@ const CreateStore = () => {
             } else {
               toast('failed to create your store. Try again!')
             }
-            debugger
+            // debugger
             wallet
               .callMethod({
                 contractId: CONTRACT_ADDRESS,

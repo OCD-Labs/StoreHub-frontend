@@ -67,7 +67,7 @@ const Inventory = () => {
     })
   }, [3])
 
-  debugger
+  // debugger
 
   return (
     <Suspense>
