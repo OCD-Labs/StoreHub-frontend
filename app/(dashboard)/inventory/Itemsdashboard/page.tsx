@@ -79,7 +79,7 @@ const Inventory = () => {
     })
   }, [3])
 
-  debugger
+  // debugger
 
   return (
     <Suspense>
@@ -108,6 +108,13 @@ const Inventory = () => {
               options={modaloptions}
             ></AddItemModal>
           </div>
+        </div>
+
+        <div>
+          <span className='border'>
+            <img src='../../assets/images/necklace.png' alt='Product' className='border'/>
+            
+          </span>
         </div>
 
         <div className="md:flex md:gap-5">
