@@ -2,8 +2,8 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import AddImageUpload from './addImageUpload'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { BASE_URL } from '@components/util/config'
-import { userWallet } from '@app/StoreManager'
 import { ModalOptions, modalstore } from '@app/StoreManager/modalstore'
+import useProfile from '@app/hooks/useProfile'
 
 interface PropsInterface {
   userID: string | null
@@ -45,9 +45,10 @@ const AddItemModal: React.FC<PropsInterface> = ({
     discount_percentage: '',
     supply_quantity: 1,
   })
-  const user = userWallet((state) => state.user)
+
   const toggleModal = modalstore((state) => state.toggleModal)
-  console.log(user, 'user mehn')
+  const user: Session | undefined = useProfile().getSession()
+  console.log(user, 'user oo')
 
   const addStoreProducts = async () => {
     debugger

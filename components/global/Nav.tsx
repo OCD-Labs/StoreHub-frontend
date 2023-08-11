@@ -4,7 +4,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { userWallet } from '@app/StoreManager'
-
+import useProfile from '@app/hooks/useProfile'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { setSession } from '@components/util/session'
 import { BASE_URL } from '@components/util/config'
@@ -58,6 +58,10 @@ const Nav = () => {
               user: data.result.user,
             })
             setSession({
+              access_token: data.result.access_token,
+              user: data.result.user,
+            })
+            useProfile().setSession({
               access_token: data.result.access_token,
               user: data.result.user,
             })

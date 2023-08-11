@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import owner from '../../../public/assets/images/owner.jpg'
+import owner from '../../../../public/assets/images/owner.jpg'
 
 import StoreItem from '@components/stores/StoreItem'
 

@@ -40,8 +40,8 @@ const CreateStore = () => {
     user_id: session ? session.user.user_id : '',
   }
   console.log(formData, 'storeData')
+  formData.profile_image_url = imageData?.secure_url
   const handleChange = (e: any) => {
-    formData.profile_image_url = imageData?.secure_url
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
