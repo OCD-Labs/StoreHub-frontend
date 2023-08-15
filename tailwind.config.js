@@ -37,7 +37,10 @@ module.exports = {
       animation: {
         animatefadeIn: 'fadeIn 1s ease-in-out',
         animatefadeOut: 'fadeOut 1s ease-in-out',
-       }
+       },
+       screens: {
+        'averagescreen': '900px',
+      },
     },
   },
   plugins: [],
