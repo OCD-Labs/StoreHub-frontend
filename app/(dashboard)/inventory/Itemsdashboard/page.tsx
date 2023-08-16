@@ -33,6 +33,7 @@ const Inventory = () => {
 
   const id: string | null = useSearchParams().get("id");
   const token: string | null = useSearchParams().get("token");
+  const name: string | null = useSearchParams().get("name")
 
   const setAddItemStatus = (data: string, action: string) => {
     if (action == "update store") {
@@ -85,7 +86,7 @@ const Inventory = () => {
 
   return (
     <Suspense>
-      <main className="w-full mb-6">
+      <main className="w-full my-4 averagescreen:my-6">
         <div
           className={`modal ${
             isOpen ? "animate-animatefadeIn is-open" : "animate-animatefadeOut"
@@ -125,7 +126,7 @@ const Inventory = () => {
           <span className="w-[65%]">
             <div className="flex justify-between items-center">
               <p className="text-black font-semibold text-lg">
-                Shine, Shimmer, Glimmer
+                {name ? name : 'Shine, Shimmer, Glimmer'}
               </p>
               <p className="bg-[#7AB74A8C] px-2 h-fit text-[12px] rounded-lg">
                 Verified
@@ -173,7 +174,7 @@ const Inventory = () => {
           <div className="flex justify-between mb-6 sm:mb-10">
             <span className="relative w-[70%] sm:w-[75%]">
               <input
-                className="border w-full h-[-webkit-fill-available] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[25px] sm:pr-[35px]"
+                className="border w-full h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
                 placeholder="Search product name, category, ID, status"
               />
               <Image
@@ -181,14 +182,14 @@ const Inventory = () => {
                 alt="search product"
                 height={20}
                 width={20}
-                className="absolute top-1 sm:top-2 left-2 sm:left-3"
+                className="absolute top-2 left-2 sm:left-3"
               />
               <Image
                 src={filter}
                 alt="search product"
                 height={20}
                 width={20}
-                className="absolute top-1 sm:top-2 right-2"
+                className="absolute top-2 right-2"
               />
             </span>
             <button

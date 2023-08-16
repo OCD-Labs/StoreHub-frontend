@@ -18,10 +18,18 @@ import notification from "../../../public/assets/icons/Notification 2.svg";
 import arrow from "../../../public/assets/icons/arrow.svg";
 import hambuger from "../../../public/assets/icons/align-justify.svg";
 import cancel from "../../../public/assets/icons/x 2.svg";
+import NavDropDown from "@components/stores/Inventory/NavDropDown";
 
 const Inventory = ({ children }: { children: React.ReactNode }) => {
   const [activeItem, setActiveItem] = useState<string>("home");
   const [sideBar, setSideBar] = useState<boolean>(false);
+
+  //show nav dropdown on inventory page
+  // const [isNavModalOpen, setIsNavModalOpen] = useState<boolean>(false)
+
+  // const toggleDropdown = () => {
+  //   setIsNavModalOpen(!isNavModalOpen)
+  // }
 
   const handleSideBar = () => {
     setSideBar(!sideBar);
@@ -85,13 +93,14 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
       });
   };
 
+  getUserStores()
+
   return (
     <html lang="en">
       <body className="max-w-7xl text-sm m-auto sm:px-16 px-6">
         <main className="mb-6">
-          <p className="text-[20px] font-bold text-black">{name}</p>
 
-          <nav className="flex justify-between sticky top-0 border-b py-3">
+          <nav className="flex justify-between sticky top-0 border-b py-3 bg-white z-50">
             <p className="text-black font-bold leading-tight text-opacity-30 text-[20px] hidden averagescreen:block">
               StoreHub
             </p>
@@ -121,6 +130,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                 <Image src={arrow} alt="user details" className="ml-2" />
               </span>
               <Image src={notification} alt="notification" />
+              {/* <NavDropDown /> */}
             </div>
           </nav>
 
@@ -130,6 +140,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                 sideBar ? "flex" : "hidden"
               } fixed bg-white z-50`}
             >
+              <p className="text-[20px] text-black">{name}</p>
               <div>
                 <Link
                   onClick={() => handleItmeClick("home")}
@@ -270,7 +281,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
               </div>
             </section>
             <ToastContainer />
-            <div className="w-full pl-2 averagescreen:ml-[250px] mt-4">
+            <div className="w-full averagescreen:pl-2 averagescreen:ml-[250px]">
               {children}
             </div>
           </div>
