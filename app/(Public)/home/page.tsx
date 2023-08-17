@@ -5,7 +5,7 @@ const Page = () => {
   return (
     <div className="text-black">
       <div className="border border-black">
-        <div className="bg-blue p-6 flex w-[90%] m-auto items-center justify-center m-8 my-10">
+        <div className="bg-blue p-6 flex w-[90%] m-auto items-center justify-center my-10">
           <div>
             <div className="leading-10 w-[70%] text-black text-opacity-70 text-[64px] font-medium">
               Your One-Click Ecommerce Solution!

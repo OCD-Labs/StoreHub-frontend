@@ -1,8 +1,8 @@
-
 import React from 'react'
 import item from '@public/assets/images/item.jpg'
 import Image from 'next/image'
 import ProductDropdown from './Inventory/ProductDropdown'
+
 
 interface Iproductitem {
   name: string
@@ -33,6 +33,7 @@ const ProductItem = (props: IproductProps) => {
     supply_quantity,
     discount_percentage,
   } = product
+
 
   return (
     <>

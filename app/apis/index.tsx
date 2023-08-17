@@ -39,3 +39,20 @@ export const fetchAllStores = (
 
   return res
 }
+
+export const deleteStoreItem = (
+  option: OPTIONS,
+  userID: string | null,
+  storeId: string | null,
+  itemId: number,
+) => {
+  try {
+    debugger
+    fetch(
+      `${BASE_URL}/users/${userID}/stores/${storeId}/items/${itemId}`,
+      option,
+    )
+  } catch (error) {
+    throw new Error('Error occured while deleting store')
+  }
+}

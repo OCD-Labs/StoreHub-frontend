@@ -68,6 +68,7 @@ const Nav = () => {
           })
       }
     } catch (error) {
+      throw new Error('Couldnt sign in')
       console.log(error)
     }
   }

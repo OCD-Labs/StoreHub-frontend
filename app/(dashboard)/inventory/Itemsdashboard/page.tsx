@@ -18,16 +18,19 @@ import necklace from "../../../../public/assets/images/necklace.png";
 import search from "../../../../public/assets/icons/search.svg";
 import filter from "../../../../public/assets/icons/filter.svg";
 
-import "react-toastify/dist/ReactToastify.css";
+
+
+
+import 'react-toastify/dist/ReactToastify.css'
 
 const Inventory = () => {
-  const isOpen = modalstore((state) => state.isOpen);
-  const toggleModal = modalstore((state) => state.toggleModal);
-  const ID = "123PDWD";
-  const [storeItems, setStoreItems] = useState<any>([]);
-  const [session, setSession] = useState<UserData | null>();
-  const modaloptions = modalstore((state) => state.modalOptions);
-  const [loading, setloading] = useState<boolean>(true);
+  const isOpen = modalstore((state) => state.isOpen)
+  const toggleModal = modalstore((state) => state.toggleModal)
+  const ID = '123PDWD'
+  const [storeItems, setStoreItems] = useState<any>([])
+  const [session, setSession] = useState<UserData | null>()
+  const modaloptions = modalstore((state) => state.modalOptions)
+  const [loading, setloading] = useState<boolean>(true)
 
   const userID: string | null = useSearchParams().get("user");
 
@@ -104,6 +107,7 @@ const Inventory = () => {
                 X
               </span>
             </div>
+
             <AddItemModal
               id={id}
               userID={userID}
@@ -216,6 +220,7 @@ const Inventory = () => {
                 <p className="md:w-[15%] w-[90px]">Staus</p>
               </section>
               <hr />
+
               {loading ? (
                 <Skeleton count={10} />
               ) : storeItems?.length < 1 ? (

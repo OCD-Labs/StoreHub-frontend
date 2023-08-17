@@ -9,6 +9,7 @@ export interface ModalOptions {
 interface State {
   isOpen: boolean
   modalOptions: ModalOptions
+
   toggleModal: (options: ModalOptions) => void
 }
 
@@ -18,7 +19,6 @@ export const modalstore = create<State>((set) => ({
     url: '',
     title: '',
   },
-  toggleModal: (options: ModalOptions) => set((state) => ({ isOpen: !state.isOpen, modalOptions:options })),
-//   updateUrl: (options: ModalOptions) =>
-//     set((state) => ({ modalOptions: options })),
+  toggleModal: (options: ModalOptions) =>
+    set((state) => ({ isOpen: !state.isOpen, modalOptions: options })),
 }))
