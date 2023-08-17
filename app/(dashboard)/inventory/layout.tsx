@@ -165,7 +165,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                   <span
                     className={`${
                       activeItem === "home" ? "bg-[#000000] text-white" : ""
-                    } ml-2 px-4 w-[170px] md:w-[190px] py-[2px] font-bold rounded-[5px]`}
+                    } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-bold rounded-[5px]`}
                   >
                     Home
                   </span>
@@ -188,7 +188,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                   <span
                     className={`${
                       activeItem === "products" ? "bg-[#000000] text-white" : ""
-                    } ml-2 px-4 w-[170px] md:w-[190px] py-[2px] font-bold rounded-[5px]`}
+                    } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-bold rounded-[5px]`}
                   >
                     Products Inventory
                   </span>
@@ -198,7 +198,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                   onClick={() => handleItmeClick("sales")}
                   className="flex mb-6 cursor-pointer"
                   href={{
-                    pathname: "/inventory/orders",
+                    pathname: "/inventory/sales",
                     query: {
                       id: id,
                       name: name,
@@ -217,7 +217,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                   <span
                     className={`${
                       activeItem === "sales" ? "bg-[#000000] text-white" : ""
-                    } ml-2 px-4 w-[170px] md:w-[190px] py-[2px] font-bold rounded-[5px]`}
+                    } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-bold rounded-[5px]`}
                   >
                     Sales Management
                   </span>
@@ -245,7 +245,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                   <span
                     className={`${
                       activeItem === "orders" ? "bg-[#000000] text-white" : ""
-                    } ml-2 px-4 w-[170px] md:w-[190px] py-[2px] font-bold rounded-[5px]`}
+                    } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-bold rounded-[5px]`}
                   >
                     Order Management
                   </span>
@@ -273,7 +273,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                   <span
                     className={`${
                       activeItem === "settings" ? "bg-[#000000] text-white" : ""
-                    } ml-2 px-4 w-[170px] md:w-[190px] py-[2px] font-bold rounded-[5px]`}
+                    } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-bold rounded-[5px]`}
                   >
                     Settings
                   </span>

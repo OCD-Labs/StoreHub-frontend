@@ -89,7 +89,7 @@ const Inventory = () => {
 
   return (
     <Suspense>
-      <main className="w-full my-4 averagescreen:my-6">
+      <main className="w-full py-4 averagescreen:py-6">
         <div
           className={`modal ${
             isOpen ? "animate-animatefadeIn is-open" : "animate-animatefadeOut"
@@ -211,7 +211,7 @@ const Inventory = () => {
           <ToastContainer />
           <section className="md:flex-1">
             <div className="flex flex-col overflow-x-scroll scroll-smooth">
-              <section className="flex justify-between p-3 flex-0-0-auto scroll-snap-align-start min-w-[500px] bg-[#000000] text-white rounded-[5px]">
+              <section className="flex justify-between p-3 flex-0-0-auto scroll-snap-align-start min-w-[700px] sm:min-w-[500px] bg-[#000000] text-white rounded-[5px]">
                 <p className="md:w-[30%] w-[15em] mr-4">Product Name</p>
                 <p className="md:w-[15%] w-[90px] mr-6 md:mr-0">Category</p>
                 <p className="md:w-[15%] w-[90px]">ID</p>
