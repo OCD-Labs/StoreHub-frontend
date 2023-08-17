@@ -10,6 +10,19 @@ import Edit from '@public/assets/icons/Inventory/Edit.svg'
 import status from '@public/assets/icons/Inventory/status.svg'
 import { modalstore } from '@app/StoreManager/modalstore'
 import { ModalOptions } from '@app/StoreManager/modalstore'
+import { OPTIONS, deleteStoreItem } from '@app/apis'
+import useProfile from '@app/hooks/useProfile'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@components/ui/AlertDialog'
 
 const ProductDropdown = ({ itemid }: { itemid: number }) => {
   const toggleModal = modalstore((state) => state.toggleModal)
@@ -28,6 +41,18 @@ const ProductDropdown = ({ itemid }: { itemid: number }) => {
   const updateOptions: ModalOptions = {
     url: url,
     title: 'update store',
+  }
+
+  const DELETE_OPTION: OPTIONS = {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
+    },
+  }
+
+  const handleDelete = () => {
+    deleteStoreItem(DELETE_OPTION, userID, id, itemid)
   }
 
   return (
@@ -110,7 +135,24 @@ const ProductDropdown = ({ itemid }: { itemid: number }) => {
           </Dropdown.Item>
           <Dropdown.Divider />
           <Dropdown.Item href="#/action-3" className="text-xs flex gap-2">
-            Delete
+            <AlertDialog>
+              <AlertDialogTrigger>Delete</AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This action cannot be undone. This will permanently delete
+                    your Item.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDelete}>
+                    Continue
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
             <span>
               <Image
                 src={deleteicon}
