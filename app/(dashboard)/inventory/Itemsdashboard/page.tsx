@@ -25,7 +25,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../../../components/UI/Table'
+} from '../../../../components/ui/Table'
 
 import 'react-toastify/dist/ReactToastify.css'
 

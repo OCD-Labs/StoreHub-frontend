@@ -10,7 +10,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../UI/Table'
+} from '../ui/Table'
 
 interface Iproductitem {
   name: string
