@@ -22,7 +22,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@components/ui/AlertDialog'
+} from '@components/UI/AlertDialog'
 
 const ProductDropdown = ({ itemid }: { itemid: number }) => {
   const toggleModal = modalstore((state) => state.toggleModal)

@@ -2,7 +2,15 @@ import React from 'react'
 import item from '@public/assets/images/item.jpg'
 import Image from 'next/image'
 import ProductDropdown from './Inventory/ProductDropdown'
-
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../UI/Table'
 
 interface Iproductitem {
   name: string
@@ -34,29 +42,30 @@ const ProductItem = (props: IproductProps) => {
     discount_percentage,
   } = product
 
-
   return (
     <>
-      <div className="flex justify-between items-center py-3">
-        <span className="flex gap-2 items-center md:w-[30%] w-[15em] text-right mr-4 whitespace-nowrap">
-          <img src="../../assets/icons/dot.svg" alt="dot" className="w-[5px]" />
-          <p>{name} </p>
-          <Image
-            src={image_urls.length ? image_urls[0] : item}
-            alt="product"
-            className="w-[25px]"
-            width={25}
-            height={25}
-          />
-        </span>
-        <p className="md:w-[15%] w-[90px] mr-6 md:mr-0">{category}</p>
-        <p className="md:w-[15%] w-[90px]">{id}</p>
-        <p className="md:w-[15%] w-[90px]">{supply_quantity}</p>
-        <p className="md:w-[15%] w-[90px]">{price}</p>
-        <p className="md:w-[15%] w-[90px]">{discount_percentage}</p>
+      <TableCell className="flex gap-2 items-center md:w-[30%] w-[15em] text-right mr-4 whitespace-nowrap">
+        <p>{name} </p>
+        <Image
+          src={image_urls.length ? image_urls[0] : item}
+          alt="product"
+          className="w-[25px]"
+          width={25}
+          height={25}
+        />
+      </TableCell>
+      <TableCell className="md:w-[15%] w-[90px] mr-6 md:mr-0">
+        {category}
+      </TableCell>
+      <TableCell className="md:w-[15%] w-[90px]">{id}</TableCell>
+      <TableCell className="md:w-[15%] w-[90px]">{supply_quantity}</TableCell>
+      <TableCell className="md:w-[15%] w-[90px]">{price}</TableCell>
+      <TableCell className="md:w-[15%] w-[90px]">
+        {discount_percentage}
+      </TableCell>
+      <TableCell>
         <ProductDropdown itemid={id}></ProductDropdown>
-      </div>
-      <hr className="w-[95%] mx-auto" />
+      </TableCell>
     </>
   )
 }

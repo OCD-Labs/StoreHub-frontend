@@ -1,29 +1,29 @@
-"use client";
-import { useState } from "react";
-import { Dropdown } from "react-bootstrap";
-import Image from "next/image";
+'use client'
+import { useState } from 'react'
+import { Dropdown } from 'react-bootstrap'
+import Image from 'next/image'
 // import { useSearchParams } from 'next/navigation'
 // import { BASE_URL } from '@components/util/config'
-import deleteicon from "@public/assets/icons/Inventory/Delete.svg";
-import duplicate from "@public/assets/icons/Inventory/duplicate.svg";
-import Edit from "@public/assets/icons/Inventory/Edit.svg";
-import status from "@public/assets/icons/Inventory/status.svg";
+import deleteicon from '@public/assets/icons/Inventory/Delete.svg'
+import duplicate from '@public/assets/icons/Inventory/duplicate.svg'
+import Edit from '@public/assets/icons/Inventory/Edit.svg'
+import status from '@public/assets/icons/Inventory/status.svg'
 
 const NavDropDown = () => {
-  const [isNavModalOpen, setIsNavModalOpen] = useState<boolean>(false);
+  const [isNavModalOpen, setIsNavModalOpen] = useState<boolean>(false)
   const toggleDropdown = () => {
-    setIsNavModalOpen(!isNavModalOpen);
-  };
+    setIsNavModalOpen(!isNavModalOpen)
+  }
   return (
     <div>
       <Dropdown
         onToggle={toggleDropdown}
         className="flex flex-col static"
         style={{
-          position: "static",
+          position: 'static',
           padding: 0,
-          minWidth: "auto",
-          width: "10px",
+          minWidth: 'auto',
+          width: '10px',
         }}
       >
         <Dropdown.Toggle
@@ -46,18 +46,12 @@ const NavDropDown = () => {
 
         <div
           className={`flex flex-col z-20 border border-black text-sm p-4 gap-3 bg-white rounded-lg ${
-            isNavModalOpen === false ? "hidden" : ""
+            isNavModalOpen === false ? 'hidden' : ''
           }`}
         >
           <div className="text-xs">
             <div className="flex gap-2">
-              <button
-              // onClick={() => {
-              //   toggleDropdown()
-              // }}
-              >
-                My Store
-              </button>
+              <button>My Store</button>
               <span>
                 <Image
                   src={Edit}
@@ -82,7 +76,7 @@ const NavDropDown = () => {
           </div>
           <Dropdown.Divider />
           <div className="text-xs flex gap-2">
-            Sign Out{" "}
+            Sign Out{' '}
             <span>
               <Image
                 src={status}
@@ -95,7 +89,7 @@ const NavDropDown = () => {
         </div>
       </Dropdown>
     </div>
-  );
-};
+  )
+}
 
-export default NavDropDown;
+export default NavDropDown
