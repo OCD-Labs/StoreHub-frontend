@@ -36,7 +36,7 @@ const SalesOverview = () => {
           <ToastContainer />
           <section className="md:flex-1">
             <div className="flex flex-col overflow-x-scroll scroll-smooth">
-              <section className="flex justify-between p-3 flex-0-0-auto scroll-snap-align-start min-w-[700px] sm:min-w-[500px] bg-[#000000] text-white rounded-[5px]">
+              <section className="flex justify-between p-3 flex-0-0-auto scroll-snap-align-start min-w-[700px] bg-[#000000] text-white rounded-[5px]">
                 <p className="md:w-[30%] w-[13em] mr-4">Product Name</p>
                 <p className="md:w-[10%] w-[50px]">ID</p>
                 <p className="md:w-[15%] w-[90px]">Sales No.</p>

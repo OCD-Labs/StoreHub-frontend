@@ -30,7 +30,19 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
                 <span>Sales Overview</span>
               </Link>
             </ul>
-            <ul>Sales Chart</ul>
+            <ul><Link
+                href={{
+                  pathname: '/inventory/sales/saleschart',
+                  query: {
+                    id: id,
+                    name: name,
+                    token: token,
+                    user: userID,
+                  },
+                }}
+              >
+                <span>Sales Chart</span>
+              </Link></ul>
             <ul>Top Selling Products</ul>
             <ul>Review</ul>
           </li>
