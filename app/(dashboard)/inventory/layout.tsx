@@ -38,13 +38,6 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
   const [activeItem, setActiveItem] = useState<string>('home')
   const [sideBar, setSideBar] = useState<boolean>(false)
 
-  //show nav dropdown on inventory page
-  // const [isNavModalOpen, setIsNavModalOpen] = useState<boolean>(false)
-
-  // const toggleDropdown = () => {
-  //   setIsNavModalOpen(!isNavModalOpen)
-  // }
-
   const handleSideBar = () => {
     setSideBar(!sideBar)
   }
@@ -62,7 +55,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
     id: number
     name: string
     profile_image_url: string
-    // Add other properties of a single store item as needed
+    // Add other properties of a store item as needed
   }
 
   type UserStores = {
@@ -202,7 +195,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
 
           <div className="md:flex md:gap-4">
             <section
-              className={`averagescreen:flex gap-5 flex-col mb-6 md:py-6 pr-[10px] sm:pr-[30px] w-fit border-r-2 h-[100vh] ${
+              className={`averagescreen:flex gap-5 flex-col mb-6 md:py-6 pr-[20px] sm:pr-[30px] w-fit border-r-2 h-[100vh] ${
                 sideBar ? 'flex' : 'hidden'
               } fixed bg-white z-50`}
             >
