@@ -1,6 +1,5 @@
 import { BASE_URL } from '@components/util/config'
-import { GET_OPTIONS, POST_OPTION } from '..'
-
+import { GET_OPTIONS, OPTIONS, POST_OPTION } from '..'
 
 export const GetStoreItems = (
   userID: string | null,
@@ -19,6 +18,18 @@ export const EditStoreItem = (
 ): Promise<any> => {
   const res = fetch(
     BASE_URL + `/users/${userID}/stores/${id}/items`,
+    GET_OPTIONS,
+  ).then((response) => response.json())
+  return res
+}
+
+export const GetSalesOverview = (
+  userID: string | null,
+  id: string | null,
+  GET_OPTIONS: OPTIONS,
+): Promise<any> => {
+  const res = fetch(
+    BASE_URL + `/users/${userID}/stores/${id}/sales-overview`,
     GET_OPTIONS,
   ).then((response) => response.json())
   return res

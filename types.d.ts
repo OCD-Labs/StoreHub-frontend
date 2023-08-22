@@ -133,3 +133,14 @@ type GetItemApiResponse = {
   status: string
   data: ResponseData
 }
+
+type SalesOverview = {
+  data: {
+    message: string
+    result: {
+      metadata: {}
+      sales_overview: []
+    }
+  }
+  status: string
+}

@@ -34,6 +34,7 @@ const Inventory = () => {
   const toggleModal = modalstore((state) => state.toggleModal)
   const ID = '123PDWD'
   const [storeItems, setStoreItems] = useState<any>([])
+  const [refNo, setRefNo] = useState<number>(1)
   const [session, setSession] = useState<UserData | null>()
   const modaloptions = modalstore((state) => state.modalOptions)
   const [loading, setloading] = useState<boolean>(true)
@@ -54,6 +55,9 @@ const Inventory = () => {
     } else {
       if (data !== 'error') {
         toast('Store item added successfully!')
+        setRefNo(() => {
+          return refNo + 1
+        })
       } else {
         toast.error('Error while adding item. Try again')
       }
@@ -83,15 +87,9 @@ const Inventory = () => {
     }
   }
 
-  const readyItems = async () => {}
-
   useEffect(() => {
-    readyItems().then(() => {
-      getStoreData()
-    })
-  }, [3])
-
-  // debugger
+    getStoreData()
+  }, [refNo])
 
   return (
     <Suspense>

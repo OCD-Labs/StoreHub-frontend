@@ -36,8 +36,6 @@ const ProductDropdown = ({ itemid }: { itemid: number }) => {
 
   const url: string = BASE_URL + `/users/${userID}/stores/${id}/items/${itemid}`
 
-  console.log(url, 'updateurl')
-
   const updateOptions: ModalOptions = {
     url: url,
     title: 'update store',
