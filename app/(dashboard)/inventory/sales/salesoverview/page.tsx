@@ -1,12 +1,62 @@
-import React, { Key } from "react";
-import Image from "next/image";
-import search from "../../../../../public/assets/icons/search.svg";
-import filter from "../../../../../public/assets/icons/filter.svg";
-import ProductItem from "@components/stores/productitem";
-import Skeleton from "react-loading-skeleton";
-import { ToastContainer } from "react-toastify";
+'use client'
+import React, { Key, useEffect, useState } from 'react'
+import { GetSalesOverview } from '@app/apis/Inventory'
+import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import useProfile from '@app/hooks/useProfile'
+import search from '../../../../../public/assets/icons/search.svg'
+import filter from '../../../../../public/assets/icons/filter.svg'
+import ProductItem from '@components/stores/productitem'
+import Skeleton from 'react-loading-skeleton'
+import { ToastContainer } from 'react-toastify'
+import { OPTIONS } from '@app/apis'
+import SalesOverviewTable from '@components/stores/sales/SalesOverviewTable'
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../../../../../components/ui/Table'
 
-const SalesOverview = () => {
+const SalesOverview: React.FC = () => {
+  const [loading, setloading] = useState<boolean>(true)
+  const [SalesOverview, setSalesOverview] = useState<[]>([])
+
+  const userID: string | null = useSearchParams().get('user')
+
+  const id: string | null = useSearchParams().get('id')
+
+  const GET_OPTIONS: OPTIONS = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
+    },
+  }
+
+  async function getSales() {
+    try {
+      const sales: SalesOverview = await GetSalesOverview(
+        userID,
+        id,
+        GET_OPTIONS,
+      )
+      setSalesOverview(sales.data.result.sales_overview)
+    } catch (error) {
+      throw new Error('Error while fetching overview')
+    }
+  }
+
+  useEffect(() => {
+    getSales().then(() => {
+      setloading(false)
+    })
+  }, [1])
+  console.log(SalesOverview, 'sales')
+
   return (
     <div>
       <div>
@@ -33,34 +83,43 @@ const SalesOverview = () => {
       </div>
 
       <div className="md:flex mt-4 averagescreen:mt-6">
-          <ToastContainer />
-          <section className="md:flex-1">
-            <div className="flex flex-col overflow-x-scroll scroll-smooth">
-              <section className="flex justify-between p-3 flex-0-0-auto scroll-snap-align-start min-w-[700px] bg-[#000000] text-white rounded-[5px]">
-                <p className="md:w-[30%] w-[13em] mr-4">Product Name</p>
-                <p className="md:w-[10%] w-[50px]">ID</p>
-                <p className="md:w-[15%] w-[90px]">Sales No.</p>
-                <p className="md:w-[15%] w-[90px]">Sales%</p>
-                <p className="md:w-[15%] w-[90px]">Price</p>
-                <p className="md:w-[15%] w-[90px]">Revenue</p>
-              </section>
-              <hr />
-              {/* {loading ? (
-                <Skeleton count={10} />
-              ) : storeItems?.length < 1 ? (
-                <h1 className="text-black sm:text-5xl text-4xl text-center mt-[20%]">
-                  No Sales Record!
-                </h1>
-              ) : (
-                storeItems?.map((product: any, key: Key | null | undefined) => (
-                  <ProductItem key={key} product={product} />
-                ))
-              )} */}
-            </div>
-          </section>
-        </div>
+        <ToastContainer />
+        <section className="md:flex-1">
+          <div className="flex flex-col overflow-x-scroll scroll-smooth">
+            <Table>
+              <TableCaption>View your store overview</TableCaption>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Product Name</TableHead>
+                  <TableHead>ID</TableHead>
+                  <TableHead>Sales No.</TableHead>
+                  <TableHead>Sales%</TableHead>
+                  <TableHead>price</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {loading ? (
+                  <Skeleton count={10} />
+                ) : SalesOverview?.length < 1 ? (
+                  <h1 className="text-black sm:text-5xl text-4xl text-center mt-[20%]">
+                    No Overview Yet!
+                  </h1>
+                ) : (
+                  SalesOverview?.map(
+                    (product: any, key: Key | null | undefined) => (
+                      <TableRow>
+                        <SalesOverviewTable key={key} product={product} />
+                      </TableRow>
+                    ),
+                  )
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </section>
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default SalesOverview;
+export default SalesOverview
