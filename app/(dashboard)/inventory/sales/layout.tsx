@@ -1,12 +1,12 @@
-'use client'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
+"use client";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const Sales = ({ children }: { children: React.ReactNode }) => {
-  const token = useSearchParams().get('token')
-  const userID = useSearchParams().get('user')
-  const id = useSearchParams().get('id')
-  const name = useSearchParams().get('name')
+  const token = useSearchParams().get("token");
+  const userID = useSearchParams().get("user");
+  const id = useSearchParams().get("id");
+  const name = useSearchParams().get("name");
   return (
     <div className="py-4 averagescreen:py-6">
       <section>
@@ -18,7 +18,7 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
             <ul>
               <Link
                 href={{
-                  pathname: '/inventory/sales/salesoverview',
+                  pathname: "/inventory/sales/salesoverview",
                   query: {
                     id: id,
                     name: name,
@@ -30,9 +30,10 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
                 <span>Sales Overview</span>
               </Link>
             </ul>
-            <ul><Link
+            <ul>
+              <Link
                 href={{
-                  pathname: '/inventory/sales/saleschart',
+                  pathname: "/inventory/sales/saleschart",
                   query: {
                     id: id,
                     name: name,
@@ -42,7 +43,8 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
                 }}
               >
                 <span>Sales Chart</span>
-              </Link></ul>
+              </Link>
+            </ul>
             <ul>Top Selling Products</ul>
             <ul>Review</ul>
           </li>
@@ -61,7 +63,7 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
       </section>
       <section>{children}</section>
     </div>
-  )
-}
+  );
+};
 
-export default Sales
+export default Sales;
