@@ -99,9 +99,9 @@ const Inventory = () => {
             isOpen ? 'animate-animatefadeIn is-open' : 'animate-animatefadeOut'
           } lg:px-[] ${isOpen ? 'is-open' : ''}`}
         >
-          <div className="modal-content w-[90%] md:w-[60%]">
+          <div className="modal-content w-[90%] md:w-[60%] h-[90vh]">
             <div className="flex justify-between items-center lg:px-20px">
-              <div></div>
+              <div className='font-bold text-lg'>Add Item</div>
               <span
                 onClick={() => {
                   toggleModal(options)

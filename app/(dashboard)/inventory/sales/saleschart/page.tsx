@@ -138,7 +138,7 @@ const SalesChart = () => {
       </section>
 
       {/* sales chart section */}
-      <section className="shadow-xl rounded overflow-x-scroll">
+      <section className="shadow-xl rounded overflow-x-scroll p-2">
         <Chart />
       </section>
 

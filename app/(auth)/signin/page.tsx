@@ -71,7 +71,7 @@ const SignIn = () => {
                   <div
                     className={`w-4 h-4 bg-black rounded ${
                       checked ? "opacity-100 scale-100" : "opacity-0 scale-0"
-                    } transform rotate-45 transition-opacity duration-300`}
+                    } transition-opacity duration-300`}
                   >
                     {/* Checkmark SVG */}
                     <svg
