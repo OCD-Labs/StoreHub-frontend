@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Order = () => {
+const Sales = () => {
   return <div></div>
 }
 
-export default Order
+export default Sales
