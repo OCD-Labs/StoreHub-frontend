@@ -107,8 +107,8 @@ const SalesChart = () => {
       </section>
       <SaleInfo />
       <section className="my-6 averagescreen:mt-8 overflow-x-scroll scroll-smooth">
-        <div className="flex flex-0-0-auto scroll-snap-align-start min-w-[900px] sm:min-w-[500px] sm:min-w-[500px">
-          <div className="border w-fit px-4 py-2 rounded shadow-xl mr-5">
+        <div className="flex flex-0-0-auto scroll-snap-align-start min-w-[900px] sm:min-w-fit">
+          <div className="border px-4 py-2 rounded shadow-xl mr-5 w-[200px]">
             <span className="flex items-center">
               <div className="mr-4 bg-gray-300 p-2 rounded-full">
                 <Image
@@ -129,7 +129,7 @@ const SalesChart = () => {
             </span>
           </div>
 
-          <div className="border w-fit px-4 py-2 rounded shadow-xl mr-5">
+          <div className="border px-4 py-2 rounded shadow-xl mr-5 w-[200px]">
             <span className="flex items-center">
               <div className="mr-4 bg-gray-300 p-2 rounded-full">
                 <Image
@@ -150,7 +150,7 @@ const SalesChart = () => {
             </span>
           </div>
 
-          <div className="border w-fit px-4 py-2 rounded shadow-xl mr-5">
+          <div className="border px-4 py-2 rounded shadow-xl mr-5 w-[200px]">
             <span className="flex items-center">
               <div className="mr-4 bg-gray-300 p-2 rounded-full">
                 <Image
@@ -171,7 +171,7 @@ const SalesChart = () => {
             </span>
           </div>
 
-          <div className="border w-fit px-4 py-2 rounded shadow-xl mr-5">
+          <div className="border px-4 py-2 rounded shadow-xl mr-5 w-[200px]">
             <span className="flex items-center">
               <div className="mr-4 bg-gray-300 p-2 rounded-full">
                 <Image

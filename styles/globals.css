@@ -251,3 +251,9 @@
 .input {
   border: 1px solid gray;
 }
+
+@media screen and (min-width: 900px) {
+  .calculated-width {
+    width: calc(100% - 250px);
+  }
+}
