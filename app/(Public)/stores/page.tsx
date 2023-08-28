@@ -16,7 +16,7 @@ const Storepage = ({
 }: {
   searchParams: { [key: string]: string | string[] | undefined }
 }) => {
-  const [allStores, setAllStores] = useState([])
+  const [allStores, setAllStores] = useState<Store[]>([])
   const [loading, setLoading] = useState(true)
   const { wallet } = userWallet.getState()
 
@@ -42,7 +42,7 @@ const Storepage = ({
         getStoreOptions,
       )
         .then((response) => response.json())
-        .then((data) => {
+        .then((data: Stores) => {
           console.log(data, 'all stores')
           setAllStores(data.data.result.stores)
           setLoading(false)

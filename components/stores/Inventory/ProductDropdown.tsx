@@ -34,7 +34,7 @@ const ProductDropdown = ({ itemid }: { itemid: number }) => {
 
   const id: string | null = useSearchParams().get('id')
 
-  const url: string = BASE_URL + `/users/${userID}/stores/${id}/items/${itemid}`
+  const url: string = BASE_URL + `/inventory/stores/${id}/items/${itemid}`
 
   const updateOptions: ModalOptions = {
     url: url,
@@ -49,8 +49,12 @@ const ProductDropdown = ({ itemid }: { itemid: number }) => {
     },
   }
 
-  const handleDelete = () => {
-    deleteStoreItem(DELETE_OPTION, userID, id, itemid)
+  const handleDelete = async () => {
+    const res = await deleteStoreItem(DELETE_OPTION, userID, id, itemid)
+    console.log(res, 'resdele')
+
+    // const setDeleteStatus = modalstore((state) => state.setDeleteStatus)
+    // setDeleteStatus()
   }
 
   return (

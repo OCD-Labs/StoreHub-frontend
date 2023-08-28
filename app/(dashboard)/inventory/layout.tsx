@@ -30,8 +30,6 @@ import {
   DropdownMenuTrigger,
 } from '../../../components/ui/NavDropdown'
 
-import Nav from 'react-bootstrap/Nav'
-import Dropdown from 'react-bootstrap/Dropdown'
 // import NavDropDown from '@components/stores/Inventory/NavDropDown'
 
 const Inventory = ({ children }: { children: React.ReactNode }) => {
