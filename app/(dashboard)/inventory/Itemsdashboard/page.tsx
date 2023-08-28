@@ -64,12 +64,12 @@ const Inventory = () => {
     }
   }
   const options: ModalOptions = {
-    url: BASE_URL + `/users/${userID}/stores/${id}/items`,
+    url: BASE_URL + `/inventory/stores/${id}/items`,
     title: 'Add Item to Store',
   }
   const getStoreData = async () => {
     try {
-      fetch(BASE_URL + `/users/${userID}/stores/${id}/items`, {
+      fetch(BASE_URL + `/inventory/stores/${id}/items`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',

@@ -70,7 +70,7 @@ const CreateStore = () => {
       try {
         localStorage.setItem('storeData', JSON.stringify(storeData))
         fetch(
-          BASE_URL + `/users/${session ? session.user.user_id : ''}/stores`,
+          BASE_URL + `/inventory/stores`,
           {
             method: 'POST',
             headers: {
@@ -83,7 +83,7 @@ const CreateStore = () => {
           .then((response) => {
             return response.json()
           })
-          .then((data: any) => {
+          .then((data: StoreResult) => {
             // TODO: Store data in Context or Redux
             console.log(data)
             if (data?.status !== 'error') {

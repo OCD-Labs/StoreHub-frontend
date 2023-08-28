@@ -9,6 +9,7 @@ import uptrend from "../../../../../public/assets/icons/uptrend.svg";
 import totalitems from "../../../../../public/assets/icons/totalitems.svg";
 import totalcustomers from "../../../../../public/assets/icons/contacts.svg";
 import SalesTrend from "@components/stores/sales/SalesTrend";
+import useSWR from 'swr'
 import {
   TableCaption,
   TableHeader,
@@ -19,9 +20,19 @@ import {
 import { Table } from "react-bootstrap";
 import Chart from "@components/stores/sales/SalesChart";
 
+  const fetcher = (url:string) => fetch(url).then((res) => res.json());
+
 const SalesChart = () => {
   const amount = "3,765.88";
   const percent = "10";
+
+
+    const { data, error, isLoading } = useSWR(
+    "https://api.github.com/repos/vercel/swr",
+    fetcher
+    );
+  console.log(data, 'swr data');
+  
   return (
     <div>
       {/* four sections  */}
@@ -165,36 +176,41 @@ const SalesChart = () => {
         </div>
         <section className="md:flex-1">
           <div className="flex flex-col overflow-x-scroll scroll-smooth">
-            <Table>
+
+
+{/* <Table>
+              <TableCaption>View your store overview</TableCaption>
               <TableHeader>
                 <TableRow>
-                  {/* <TableHead>Customer ID</TableHead> */}
-                  <TableHead>Customer Name</TableHead>
-                  <TableHead>Item</TableHead>
-                  <TableHead>Item ID</TableHead>
-                  <TableHead>Order Date</TableHead>
-                  <TableHead>Delivery Date</TableHead>
-                  <TableHead>Price</TableHead>
+                  <TableHead>Product Name</TableHead>
+                  <TableHead>ID</TableHead>
+                  <TableHead>Sales No.</TableHead>
+                  <TableHead>Sales%</TableHead>
+                  <TableHead>price</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {/* {loading ? (
-                      <Skeleton count={10} />
-                      ) : storeItems?.length < 1 ? (
-                          <h1 className="text-black sm:text-5xl text-4xl text-center mt-[20%]">
-                          No Products Yet!
-                          </h1>
-                          ) : (
-                              storeItems?.map(
-                                  (product: any, key: Key | null | undefined) => (
-                                      <TableRow>
-                                      <ProductItem key={key} product={product} />
-                                      </TableRow>
-                                      ),
-                                      )
-                                    )} */}
+                {loading ? (
+                  <Skeleton count={10} />
+                ) : SalesOverview?.length < 1 ? (
+                  <h1 className="text-black sm:text-5xl text-4xl text-center mt-[20%]">
+                    No Overview Yet!
+                  </h1>
+                ) : (
+                  SalesOverview?.map(
+                    (product: any, key: Key | null | undefined) => (
+                      <TableRow>
+                        <SalesOverviewTable key={key} product={product} />
+                      </TableRow>
+                    ),
+                  )
+                )}
               </TableBody>
-            </Table>
+            </Table> */}
+
+      
+
+            
           </div>
         </section>
       </section>

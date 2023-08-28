@@ -9,8 +9,9 @@ export interface ModalOptions {
 interface State {
   isOpen: boolean
   modalOptions: ModalOptions
-
+  isItemDeleted: boolean
   toggleModal: (options: ModalOptions) => void
+  setDeleteStatus: () => void
 }
 
 export const modalstore = create<State>((set) => ({
@@ -19,6 +20,8 @@ export const modalstore = create<State>((set) => ({
     url: '',
     title: '',
   },
+  isItemDeleted: false,
   toggleModal: (options: ModalOptions) =>
     set((state) => ({ isOpen: !state.isOpen, modalOptions: options })),
+  setDeleteStatus: () => set((state) => ({ isItemDeleted: true })),
 }))

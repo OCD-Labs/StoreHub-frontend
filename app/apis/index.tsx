@@ -1,5 +1,5 @@
 import { userWallet } from '@app/StoreManager'
-import { User } from '@app/StoreManager/userstore'
+
 import { BASE_URL } from '@components/util/config'
 
 const { user } = userWallet.getState()
@@ -40,7 +40,7 @@ export const fetchAllStores = (
   return res
 }
 
-export const deleteStoreItem = (
+export const deleteStoreItem = async (
   option: OPTIONS,
   userID: string | null,
   storeId: string | null,
@@ -48,11 +48,14 @@ export const deleteStoreItem = (
 ) => {
   try {
     debugger
-    fetch(
-      `${BASE_URL}/users/${userID}/stores/${storeId}/items/${itemId}`,
+    const res = await fetch(
+      `${BASE_URL}/inventory/stores/${storeId}/items/${itemId}`,
       option,
     )
+    const result = await res.json()
+    return result
+    debugger
   } catch (error) {
-    throw new Error('Error occured while deleting store')
+    if (error) throw new Error(error + '')
   }
 }

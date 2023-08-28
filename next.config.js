@@ -13,7 +13,12 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['www.gravatar.com', 'res.cloudinary.com', 'www.greengrove.com'],
+    domains: [
+      'www.gravatar.com',
+      'big-7.png',
+      'res.cloudinary.com',
+      'www.greengrove.com',
+    ],
   },
 }
 

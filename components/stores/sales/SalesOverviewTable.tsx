@@ -28,7 +28,7 @@ interface IproductProps {
   product: Iproductitem
 }
 
-const SalesOverviewTable = (props: IproductProps) => {
+const ProductItem = (props: IproductProps) => {
   const { product } = props
   const {
     name,
@@ -70,4 +70,4 @@ const SalesOverviewTable = (props: IproductProps) => {
   )
 }
 
-export default SalesOverviewTable
+export default ProductItem
