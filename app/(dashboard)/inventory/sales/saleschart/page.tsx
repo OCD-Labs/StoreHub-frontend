@@ -1,38 +1,69 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import search from "../../../../../public/assets/icons/search.svg";
-import filter from "../../../../../public/assets/icons/filter.svg";
-import salesicon from "../../../../../public/assets/icons/salesicon.svg";
-import downtrend from "../../../../../public/assets/icons/downtrend.svg";
-import uptrend from "../../../../../public/assets/icons/uptrend.svg";
-import totalitems from "../../../../../public/assets/icons/totalitems.svg";
-import totalcustomers from "../../../../../public/assets/icons/contacts.svg";
-import SalesTrend from "@components/stores/sales/SalesTrend";
+import Image from 'next/image'
+import search from '../../../../../public/assets/icons/search.svg'
+import filter from '../../../../../public/assets/icons/filter.svg'
+import salesicon from '../../../../../public/assets/icons/salesicon.svg'
+import downtrend from '../../../../../public/assets/icons/downtrend.svg'
+import uptrend from '../../../../../public/assets/icons/uptrend.svg'
+import totalitems from '../../../../../public/assets/icons/totalitems.svg'
+import totalcustomers from '../../../../../public/assets/icons/contacts.svg'
+import SalesTrend from '@components/stores/sales/SalesTrend'
 import useSWR from 'swr'
+import SalesHistoryTable from '@components/stores/sales/SalesHistoryTable'
 import {
   TableCaption,
   TableHeader,
   TableRow,
   TableHead,
   TableBody,
-} from "@components/ui/Table";
-import { Table } from "react-bootstrap";
-import Chart from "@components/stores/sales/SalesChart";
+} from '@components/ui/Table'
+import { Table } from 'react-bootstrap'
+import Chart from '@components/stores/sales/SalesChart'
+import { Key, useEffect, useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import useProfile from '@app/hooks/useProfile'
+import { OPTIONS } from '@app/apis'
+import { GetSalesHistory } from '@app/apis/Inventory'
+import Skeleton from 'react-loading-skeleton'
 
-  const fetcher = (url:string) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
 const SalesChart = () => {
-  const amount = "3,765.88";
-  const percent = "10";
+  const amount = '3,765.88'
+  const percent = '10'
+  const [loading, setloading] = useState<boolean>(true)
+  const [salesHistory, setSalesHistory] = useState([])
 
+  const userID: string | null = useSearchParams().get('user')
 
-    const { data, error, isLoading } = useSWR(
-    "https://api.github.com/repos/vercel/swr",
-    fetcher
-    );
-  console.log(data, 'swr data');
-  
+  const id: string | null = useSearchParams().get('id')
+
+  const GET_OPTIONS: OPTIONS = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
+    },
+  }
+
+  async function getSalesHistroy() {
+    try {
+      const sales: Sales = await GetSalesHistory(id, GET_OPTIONS)
+      console.log(sales)
+
+      setSalesHistory(sales.data.result.sales)
+    } catch (error) {
+      throw new Error('Error while fetching overview')
+    }
+  }
+
+  useEffect(() => {
+    getSalesHistroy().then(() => {
+      setloading(false)
+    })
+  }, [1])
+
   return (
     <div>
       {/* four sections  */}
@@ -169,53 +200,51 @@ const SalesChart = () => {
               <option>Year</option>
             </select>
             <button className="px-2 py-1 flex items-center border ml-2">
-              <p className="mr-2 rounded">Filter</p>{" "}
+              <p className="mr-2 rounded">Filter</p>{' '}
               <Image src={filter} alt="filter by" />
             </button>
           </div>
         </div>
         <section className="md:flex-1">
           <div className="flex flex-col overflow-x-scroll scroll-smooth">
-
-
-{/* <Table>
+            <Table>
               <TableCaption>View your store overview</TableCaption>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Product Name</TableHead>
-                  <TableHead>ID</TableHead>
-                  <TableHead>Sales No.</TableHead>
-                  <TableHead>Sales%</TableHead>
-                  <TableHead>price</TableHead>
+                  <TableHead>Customer ID</TableHead>
+                  <TableHead>Customer Name</TableHead>
+                  <TableHead>Item name</TableHead>
+                  <TableHead>Item Id</TableHead>
+                  <TableHead>Order date</TableHead>
+                  <TableHead>Delivery date</TableHead>
+                  <TableHead>Price</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {loading ? (
                   <Skeleton count={10} />
-                ) : SalesOverview?.length < 1 ? (
+                ) : salesHistory?.length < 1 ? (
                   <h1 className="text-black sm:text-5xl text-4xl text-center mt-[20%]">
                     No Overview Yet!
                   </h1>
                 ) : (
-                  SalesOverview?.map(
+                  salesHistory?.map(
                     (product: any, key: Key | null | undefined) => (
-                      <TableRow>
-                        <SalesOverviewTable key={key} product={product} />
+                      <TableRow
+                        
+                      >
+                        <SalesHistoryTable key={key} sales={product} />
                       </TableRow>
                     ),
                   )
                 )}
               </TableBody>
-            </Table> */}
-
-      
-
-            
+            </Table>
           </div>
         </section>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default SalesChart;
+export default SalesChart

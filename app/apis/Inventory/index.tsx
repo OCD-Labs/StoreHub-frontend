@@ -29,7 +29,18 @@ export const GetSalesOverview = (
   GET_OPTIONS: OPTIONS,
 ): Promise<any> => {
   const res = fetch(
-    BASE_URL + `/users/${userID}/stores/${id}/sales-overview`,
+    BASE_URL + `/inventory/stores/${id}/sales-overview`,
+    GET_OPTIONS,
+  ).then((response) => response.json())
+  return res
+}
+
+export const GetSalesHistory = (
+  id: string | null,
+  GET_OPTIONS: OPTIONS,
+): Promise<any> => {
+  const res = fetch(
+    BASE_URL + `/inventory/stores/${id}/sales`,
     GET_OPTIONS,
   ).then((response) => response.json())
   return res

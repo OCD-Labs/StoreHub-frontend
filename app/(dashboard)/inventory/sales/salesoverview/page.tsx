@@ -44,6 +44,8 @@ const SalesOverview: React.FC = () => {
         id,
         GET_OPTIONS,
       )
+      console.log(sales)
+
       setSalesOverview(sales.data.result.sales_overview)
     } catch (error) {
       throw new Error('Error while fetching overview')
@@ -108,7 +110,7 @@ const SalesOverview: React.FC = () => {
                   SalesOverview?.map(
                     (product: any, key: Key | null | undefined) => (
                       <TableRow>
-                        <SalesOverviewTable key={key} product={product} />
+                        <SalesOverviewTable key={key} sales={product} />
                       </TableRow>
                     ),
                   )
