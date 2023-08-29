@@ -53,16 +53,34 @@ interface ImageData {
 
 // Define storeOwner type
 type StoreOwner = {
-  user_id: number
-  store_id: number
-  access_level: number
-  added_at: string // Should be a valid date-time string
+  account_id: string
+  profile_img_url: string
+  access_levels: []
+  added_at: string
 }
 
 // Define storeResult type
+
+
 type StoreResult = {
-  store: Store
-  store_owners: StoreOwner[]
+  status: string
+  data: {
+    message: string
+    result: {
+      store: {
+        id: number
+        name: string
+        description: string
+        profile_image_url: string
+        is_verified: boolean
+        category: string
+        is_frozen: boolean
+        created_at: string
+        user_access_levels: []
+      }
+      store_owners: StoreOwner[]
+    }
+  }
 }
 
 // Define storeResponse type
@@ -81,19 +99,6 @@ type StoreResponse = {
       stores: Store[]
     }
   }
-}
-
-type Store = {
-  id: string
-  name: string
-  description: string
-  store_account_id: string
-  profile_image_url: string
-  is_verified: string
-  category: string
-  is_frozen: boolean
-  is_verified: boolean
-  created_at: Date
 }
 
 type Session = {
@@ -143,4 +148,41 @@ type SalesOverview = {
     }
   }
   status: string
+}
+
+type Store = {
+  store: {
+    id: number
+    name: string
+    description: string
+    profile_image_url: string
+    is_verified: true
+    category: string
+    is_frozen: true
+    created_at: string
+    user_access_levels: []
+  }
+  store_owners: [
+    {
+      account_id: string
+      profile_img_url: string
+    },
+  ]
+}
+
+type Stores = {
+  status: string
+  data: {
+    message: string
+    result: {
+      stores: Store[]
+      metadata: {
+        current_page: number
+        page_size: number
+        first_page: number
+        last_page: number
+        total_records: number
+      }
+    }
+  }
 }

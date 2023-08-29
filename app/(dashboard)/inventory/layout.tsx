@@ -31,8 +31,6 @@ import {
 } from '../../../components/ui/NavDropdown'
 import '@styles/globals.css'
 
-import Nav from 'react-bootstrap/Nav'
-import Dropdown from 'react-bootstrap/Dropdown'
 // import NavDropDown from '@components/stores/Inventory/NavDropDown'
 
 const Inventory = ({ children }: { children: React.ReactNode }) => {

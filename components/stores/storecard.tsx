@@ -30,7 +30,11 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
             <div className="border-[1px] rounded border-black">
               <Image
                 className="p-1 rounded"
-                src={store.profile_image_url ? store.profile_image_url : pfpic}
+                src={
+                  store.store.profile_image_url
+                    ? store.store.profile_image_url
+                    : pfpic
+                }
                 width={60}
                 height={60}
                 alt="storepic"
@@ -39,7 +43,7 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
 
             <div className="flex flex-col">
               <h2 className="text-dark opacity-80 font-semibold leading-4 ">
-                <Link href="/stores/1">{store.name}</Link>
+                <Link href="/stores/1">{store.store.name}</Link>
               </h2>
               <ul className="flex gap-3 font-thin">
                 <li>cloth</li>
@@ -62,8 +66,8 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
                 href={{
                   pathname: '/inventory/Itemsdashboard',
                   query: {
-                    id: store.id,
-                    name: store.name,
+                    id: store.store.id,
+                    name: store.store.name,
                     token: token,
                     user: user_id,
                   },
