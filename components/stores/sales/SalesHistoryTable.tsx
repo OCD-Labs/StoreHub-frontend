@@ -12,7 +12,9 @@ import {
   TableRow,
 } from '../../ui/Table'
 
-interface ISalesHistory {
+
+
+export interface ISalesHistory {
   created_at: string
   customer_account_id: string
   customer_id: number
@@ -48,7 +50,8 @@ const SalesHistoryTable = (props: ISalesHistoryProps) => {
     store_id,
   } = sales
 
-  return (
+    return (
+      
     <>
       <TableCell className="md:w-[15%] w-[90px] mr-6 md:mr-0">
         {item_id}

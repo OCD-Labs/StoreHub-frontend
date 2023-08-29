@@ -10,6 +10,8 @@ import totalitems from '../../../../../public/assets/icons/totalitems.svg'
 import totalcustomers from '../../../../../public/assets/icons/contacts.svg'
 import SalesTrend from '@components/stores/sales/SalesTrend'
 import useSWR from 'swr'
+import SaleInfo from '@components/stores/sales/SaleInfo'
+import { ISalesHistory } from '@components/stores/sales/SalesHistoryTable'
 import SalesHistoryTable from '@components/stores/sales/SalesHistoryTable'
 import {
   TableCaption,
@@ -25,7 +27,16 @@ import { useSearchParams } from 'next/navigation'
 import useProfile from '@app/hooks/useProfile'
 import { OPTIONS } from '@app/apis'
 import { GetSalesHistory } from '@app/apis/Inventory'
+import { modalstore } from '@app/StoreManager/modalstore'
 import Skeleton from 'react-loading-skeleton'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '../../../../../components/ui/Dialog'
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json())
 
@@ -38,7 +49,8 @@ const SalesChart = () => {
   const userID: string | null = useSearchParams().get('user')
 
   const id: string | null = useSearchParams().get('id')
-
+  const setSaleInfoStatus = modalstore((state) => state.setSaleInfoStatus)
+  const setSaleInfo = modalstore((state) => state.setSaleInfo)
   const GET_OPTIONS: OPTIONS = {
     method: 'GET',
     headers: {
@@ -64,9 +76,13 @@ const SalesChart = () => {
     })
   }, [1])
 
+  // handle sale info display
+  const handleSaleInfoDisplay = (sale: ISalesHistory) => {
+    setSaleInfo(sale), setSaleInfoStatus()
+  }
+
   return (
     <div>
-      {/* four sections  */}
       <section>
         <span className="relative w-[70%] sm:w-[75%]">
           <input
@@ -89,7 +105,7 @@ const SalesChart = () => {
           />
         </span>
       </section>
-
+      <SaleInfo />
       <section className="my-6 averagescreen:mt-8 overflow-x-scroll scroll-smooth">
         <div className="flex flex-0-0-auto scroll-snap-align-start min-w-[900px] sm:min-w-[500px] sm:min-w-[500px">
           <div className="border w-fit px-4 py-2 rounded shadow-xl mr-5">
@@ -229,10 +245,8 @@ const SalesChart = () => {
                   </h1>
                 ) : (
                   salesHistory?.map(
-                    (product: any, key: Key | null | undefined) => (
-                      <TableRow
-                        
-                      >
+                    (product: ISalesHistory, key: Key | null | undefined) => (
+                      <TableRow onClick={() => handleSaleInfoDisplay(product)}>
                         <SalesHistoryTable key={key} sales={product} />
                       </TableRow>
                     ),
