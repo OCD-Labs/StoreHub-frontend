@@ -1,11 +1,12 @@
-"use client";
+
+'use client'
 import Image from "next/image";
-import { Key, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import search from "../../../../../public/assets/icons/search.svg";
 import filter from "../../../../../public/assets/icons/filter.svg";
-import { OPTIONS } from "@app/apis";
-import useProfile from "@app/hooks/useProfile";
-import { useSearchParams } from "next/navigation";
+import { OPTIONS } from '@app/apis'
+import useProfile from '@app/hooks/useProfile'
+import { useSearchParams } from 'next/navigation'
 import { FetchOrdersOverview } from "@app/apis/Inventory";
 import Skeleton from "react-loading-skeleton";
 import OrdersOverviewTable from "@components/stores/orders/OrdersOverviewTable";
@@ -17,52 +18,59 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../../../components/ui/Table";
+
+} from '../../../../../components/ui/Table'
 
 const OrdersOverview = () => {
-  const [loading, setloading] = useState<boolean>(true);
-  const [ordersOverview, setOrdersOverview] = useState<[]>([]);
+  const [loading, setloading] = useState<boolean>(true)
+  const [ordersOverview, setOrdersOverview] = useState<[]>([])
 
-  const store_id: string | null = useSearchParams().get("id");
+  const store_id: string | null = useSearchParams().get('id')
 
   const GET_OPTIONS: OPTIONS = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
     },
-  };
+  }
 
   type OrdersOverviewType = {
-    data: {
-      message: string;
-      result: {
-        metadata: {};
-        order: [];
-      };
-    };
     status: string;
-  };
+    data: {
+        message: string;
+        result: {
+          order: [];
+          metadata: {};
+        };
+    };
+}
+
 
   async function GetOrdersOverview() {
     try {
       const orders: OrdersOverviewType = await FetchOrdersOverview(
         store_id,
         GET_OPTIONS
-      );
-      setOrdersOverview(orders.data.result.order)
-      console.log(orders);
+
+      )
+      // setSalesOverview(sales.data.result.sales_overview)
+      console.log(orders)
     } catch (error) {
-      throw new Error("Error while fetching overview");
+      throw new Error('Error while fetching overview')
+
     }
   }
 
   useEffect(() => {
     GetOrdersOverview().then(() => {
-      setloading(false);
-    });
-  }, [1]);
-  console.log(ordersOverview, "orders");
+
+      setloading(false)
+    })
+  }, [1])
+  console.log(ordersOverview, 'orders')
+
+
 
   return (
     <div>
@@ -90,42 +98,50 @@ const OrdersOverview = () => {
       </section>
 
       <div className="md:flex mt-4 averagescreen:mt-6">
-        <section className="md:flex-1 w-full">
+
+      <section className="md:flex-1 w-full">
+
           <div className="flex flex-col overflow-x-scroll scroll-smooth">
             <Table>
               <TableCaption>View your order overview</TableCaption>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Product Name</TableHead>
+
                   <TableHead>Order ID</TableHead>
+                  <TableHead>Product Name</TableHead>
                   <TableHead>Customer Name</TableHead>
                   <TableHead>Order Date</TableHead>
-                  <TableHead>Delivery Status</TableHead>
+                  <TableHead>Delivery Date</TableHead>
+
                   <TableHead>Price</TableHead>
                   <TableHead>Payment Channel</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {loading ? (
+
+                {/* {loading ? (
                   <Skeleton count={10} />
-                ) : ordersOverview?.length < 1 ? (
+                ) : SalesOverview?.length < 1 ? (
                   <h1 className="text-black sm:text-5xl text-4xl text-center mt-[20%]">
-                    No Orders Yet!
+                    No Overview Yet!
                   </h1>
                 ) : (
-                  ordersOverview?.map(
-                    (order: any, key: Key | null | undefined) => (
+                  SalesOverview?.map(
+                    (product: any, key: Key | null | undefined) => (
                       <TableRow>
-                        <OrdersOverviewTable key={key} orders={order} />
+                        <SalesOverviewTable key={key} product={product} />
                       </TableRow>
                     ),
                   )
-                )}
+                )} */}
+
               </TableBody>
             </Table>
           </div>
         </section>
-      </div>
+
+        </div>
+
     </div>
   );
 };

@@ -12,62 +12,51 @@ import {
   TableRow,
 } from '../../ui/Table'
 
-interface Iproductitem {
-  name: string
-  category: string
-  id: number
-  quantity: number
-  status: string
-  image_urls: string[]
-  price: string
-  supply_quantity: string
-  discount_percentage: string
+interface ISales {
+  item_cover_img_url: string
+  item_id: number
+  item_name: string
+  item_price: string
+  number_of_sales: number
+  revenue: string
+  sale_id: number
+  sales_percentage: string
+  store_id: number
 }
 
-interface IproductProps {
-  product: Iproductitem
+interface ISalesProps {
+  sales: ISales
 }
 
-const ProductItem = (props: IproductProps) => {
-  const { product } = props
+const SalesOverviewTable = (props: ISalesProps) => {
+  const { sales } = props
   const {
-    name,
-    category,
-    id,
-    quantity,
-    status,
-    image_urls,
-    price,
-    supply_quantity,
-    discount_percentage,
-  } = product
+   item_cover_img_url,
+  item_id,
+  item_name,
+  item_price,
+  number_of_sales,
+  revenue,
+  sale_id,
+  sales_percentage,
+  store_id,
+  } = sales
 
   return (
     <>
-      <TableCell className="flex gap-2 items-center md:w-[30%] w-[15em] text-right mr-4 whitespace-nowrap">
-        <p>{name} </p>
-        <Image
-          src={image_urls.length ? image_urls[0] : item}
-          alt="product"
-          className="w-[25px]"
-          width={25}
-          height={25}
-        />
-      </TableCell>
+
       <TableCell className="md:w-[15%] w-[90px] mr-6 md:mr-0">
-        {category}
+        {item_name}
       </TableCell>
-      <TableCell className="md:w-[15%] w-[90px]">{id}</TableCell>
-      <TableCell className="md:w-[15%] w-[90px]">{supply_quantity}</TableCell>
-      <TableCell className="md:w-[15%] w-[90px]">{price}</TableCell>
+      <TableCell className="md:w-[15%] w-[90px]">{sale_id}</TableCell>
+      <TableCell className="md:w-[15%] w-[90px]">{number_of_sales}</TableCell>
+      <TableCell className="md:w-[15%] w-[90px]">{sales_percentage}</TableCell>
       <TableCell className="md:w-[15%] w-[90px]">
-        {discount_percentage}
+        {item_price}
       </TableCell>
-      <TableCell>
-        <ProductDropdown itemid={id}></ProductDropdown>
-      </TableCell>
+
     </>
   )
 }
 
-export default ProductItem
+export default SalesOverviewTable
