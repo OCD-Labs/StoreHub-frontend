@@ -29,6 +29,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '../../../components/ui/NavDropdown'
+import '@styles/globals.css'
 
 // import NavDropDown from '@components/stores/Inventory/NavDropDown'
 
@@ -191,7 +192,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
             </div>
           </nav>
 
-          <div className="md:flex md:gap-4">
+          <div className="md:flex">
             <section
               className={`averagescreen:flex gap-5 flex-col mb-6 md:py-6 pr-[20px] sm:pr-[30px] w-fit border-r-2 h-[100vh] ${
                 sideBar ? 'flex' : 'hidden'
@@ -338,7 +339,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
               </div>
             </section>
             <ToastContainer />
-            <div className="w-full averagescreen:pl-2 averagescreen:ml-[250px]">
+            <div className="w-full averagescreen:pl-2 averagescreen:ml-[250px] calculated-width">
               {children}
             </div>
           </div>
