@@ -34,7 +34,9 @@ const OrdersOverviewTable = (props: IproductProps) => {
 
   return (
     <>
+
       <TableCell className="md:w-[15%] w-[90px]">{order_id}</TableCell>
+
       <TableCell className="flex gap-2 items-center md:w-[30%] w-[15em] text-right mr-4 whitespace-nowrap">
         <p>{product_name} </p>
         <Image
@@ -45,6 +47,8 @@ const OrdersOverviewTable = (props: IproductProps) => {
           height={25}
         />
       </TableCell>
+
+
       <TableCell className="md:w-[15%] w-[90px] mr-6 md:mr-0">
         {customer_name}
       </TableCell>

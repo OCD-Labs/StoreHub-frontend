@@ -23,6 +23,7 @@ export const EditStoreItem = (
   return res;
 };
 
+
 export const GetSalesOverview = (
   userID: string | null,
   id: string | null,
@@ -35,11 +36,13 @@ export const GetSalesOverview = (
   return res
 }
 
+
 export const GetSalesHistory = (
   id: string | null,
-  GET_OPTIONS: OPTIONS,
+  GET_OPTIONS: OPTIONS
 ): Promise<any> => {
   const res = fetch(
+
     BASE_URL + `/inventory/stores/${id}/sales`,
     GET_OPTIONS,
   ).then((response) => response.json())

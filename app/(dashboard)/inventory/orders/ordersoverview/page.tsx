@@ -1,3 +1,4 @@
+
 'use client'
 import Image from "next/image";
 import { useState, useEffect } from "react";
@@ -17,6 +18,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+
 } from '../../../../../components/ui/Table'
 
 const OrdersOverview = () => {
@@ -44,25 +46,30 @@ const OrdersOverview = () => {
     };
 }
 
+
   async function GetOrdersOverview() {
     try {
       const orders: OrdersOverviewType = await FetchOrdersOverview(
         store_id,
         GET_OPTIONS
+
       )
       // setSalesOverview(sales.data.result.sales_overview)
       console.log(orders)
     } catch (error) {
       throw new Error('Error while fetching overview')
+
     }
   }
 
   useEffect(() => {
     GetOrdersOverview().then(() => {
+
       setloading(false)
     })
   }, [1])
   console.log(ordersOverview, 'orders')
+
 
 
   return (
@@ -91,22 +98,27 @@ const OrdersOverview = () => {
       </section>
 
       <div className="md:flex mt-4 averagescreen:mt-6">
+
       <section className="md:flex-1 w-full">
+
           <div className="flex flex-col overflow-x-scroll scroll-smooth">
             <Table>
               <TableCaption>View your order overview</TableCaption>
               <TableHeader>
                 <TableRow>
+
                   <TableHead>Order ID</TableHead>
                   <TableHead>Product Name</TableHead>
                   <TableHead>Customer Name</TableHead>
                   <TableHead>Order Date</TableHead>
                   <TableHead>Delivery Date</TableHead>
+
                   <TableHead>Price</TableHead>
                   <TableHead>Payment Channel</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
+
                 {/* {loading ? (
                   <Skeleton count={10} />
                 ) : SalesOverview?.length < 1 ? (
@@ -122,11 +134,14 @@ const OrdersOverview = () => {
                     ),
                   )
                 )} */}
+
               </TableBody>
             </Table>
           </div>
         </section>
+
         </div>
+
     </div>
   );
 };
