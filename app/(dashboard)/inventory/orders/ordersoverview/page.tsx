@@ -1,7 +1,7 @@
 
 'use client'
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { Key, useState, useEffect } from "react";
 import search from "../../../../../public/assets/icons/search.svg";
 import filter from "../../../../../public/assets/icons/filter.svg";
 import { OPTIONS } from '@app/apis'
@@ -54,7 +54,7 @@ const OrdersOverview = () => {
         GET_OPTIONS
 
       )
-      // setSalesOverview(sales.data.result.sales_overview)
+      setOrdersOverview(orders.data.result.order)
       console.log(orders)
     } catch (error) {
       throw new Error('Error while fetching overview')
@@ -107,11 +107,11 @@ const OrdersOverview = () => {
               <TableHeader>
                 <TableRow>
 
-                  <TableHead>Order ID</TableHead>
                   <TableHead>Product Name</TableHead>
+                  <TableHead>Order ID</TableHead>
                   <TableHead>Customer Name</TableHead>
                   <TableHead>Order Date</TableHead>
-                  <TableHead>Delivery Date</TableHead>
+                  <TableHead>Delivery Status</TableHead>
 
                   <TableHead>Price</TableHead>
                   <TableHead>Payment Channel</TableHead>
@@ -119,21 +119,21 @@ const OrdersOverview = () => {
               </TableHeader>
               <TableBody>
 
-                {/* {loading ? (
+                {loading ? (
                   <Skeleton count={10} />
-                ) : SalesOverview?.length < 1 ? (
+                ) : ordersOverview?.length < 1 ? (
                   <h1 className="text-black sm:text-5xl text-4xl text-center mt-[20%]">
                     No Overview Yet!
                   </h1>
                 ) : (
-                  SalesOverview?.map(
-                    (product: any, key: Key | null | undefined) => (
+                  ordersOverview?.map(
+                    (order: any, key: Key | null | undefined) => (
                       <TableRow>
-                        <SalesOverviewTable key={key} product={product} />
+                        <OrdersOverviewTable key={key} orders={order} />
                       </TableRow>
                     ),
                   )
-                )} */}
+                )}
 
               </TableBody>
             </Table>
