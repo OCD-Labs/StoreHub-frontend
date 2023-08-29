@@ -284,7 +284,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                   onClick={() => handleItmeClick('orders')}
                   className="flex mb-6"
                   href={{
-                    pathname: '/inventory/orders',
+                    pathname: '/inventory/orders/ordersoverview',
                     query: {
                       id: id,
                       name: name,
@@ -312,7 +312,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                   onClick={() => handleItmeClick('settings')}
                   className="flex mb-6 cursor-pointer"
                   href={{
-                    pathname: '/inventory/orders',
+                    pathname: '/inventory/orders/',
                     query: {
                       id: id,
                       name: name,
