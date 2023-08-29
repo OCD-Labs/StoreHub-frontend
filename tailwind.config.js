@@ -5,12 +5,12 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
+    './src/**/*.{js,ts,jsx,tsx}',
+    './node_modules/@tremor/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    transparent: "transparent",
-    current: "currentColor",
+    transparent: 'transparent',
+    current: 'currentColor',
     container: {
       center: true,
       padding: '2rem',
@@ -21,6 +21,7 @@ module.exports = {
     extend: {
       colors: {
         black: 'rgba(0, 0, 0, 0.6)',
+        lightgray: 'rgba(238, 233, 233, 1)',
         dark: 'black',
         'primary-orange': '#FF5722',
         blue: 'rgba(192, 225, 233, 1)',
@@ -60,31 +61,31 @@ module.exports = {
         // light mode
         tremor: {
           brand: {
-            faint: "#eff6ff", // blue-50
-            muted: "#bfdbfe", // blue-200
-            subtle: "#60a5fa", // blue-400
-            DEFAULT: "#3b82f6", // blue-500
-            emphasis: "#1d4ed8", // blue-700
-            inverted: "#ffffff", // white
+            faint: '#eff6ff', // blue-50
+            muted: '#bfdbfe', // blue-200
+            subtle: '#60a5fa', // blue-400
+            DEFAULT: '#3b82f6', // blue-500
+            emphasis: '#1d4ed8', // blue-700
+            inverted: '#ffffff', // white
           },
           background: {
-            muted: "#f9fafb", // gray-50
-            subtle: "#f3f4f6", // gray-100
-            DEFAULT: "#ffffff", // white
-            emphasis: "#374151", // gray-700
+            muted: '#f9fafb', // gray-50
+            subtle: '#f3f4f6', // gray-100
+            DEFAULT: '#ffffff', // white
+            emphasis: '#374151', // gray-700
           },
           border: {
-            DEFAULT: "#e5e7eb", // gray-200
+            DEFAULT: '#e5e7eb', // gray-200
           },
           ring: {
-            DEFAULT: "#e5e7eb", // gray-200
+            DEFAULT: '#e5e7eb', // gray-200
           },
           content: {
-            subtle: "#9ca3af", // gray-400
-            DEFAULT: "#6b7280", // gray-500
-            emphasis: "#374151", // gray-700
-            strong: "#111827", // gray-900
-            inverted: "#ffffff", // white
+            subtle: '#9ca3af', // gray-400
+            DEFAULT: '#6b7280', // gray-500
+            emphasis: '#374151', // gray-700
+            strong: '#111827', // gray-900
+            inverted: '#ffffff', // white
           },
         },
       },
@@ -104,7 +105,6 @@ module.exports = {
         poppins: ['Poppins', 'sans-serif'],
         satoshi: ['Satoshi', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
-       
       },
       keyframes: {
         fadeIn: {
