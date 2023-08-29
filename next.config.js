@@ -15,9 +15,9 @@ const nextConfig = {
   images: {
     domains: [
       'www.gravatar.com',
-      'big-7.png',
       'res.cloudinary.com',
       'www.greengrove.com',
+      'big-7.png',
     ],
   },
 }

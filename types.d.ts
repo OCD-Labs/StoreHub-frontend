@@ -61,7 +61,6 @@ type StoreOwner = {
 
 // Define storeResult type
 
-
 type StoreResult = {
   status: string
   data: {
@@ -145,6 +144,17 @@ type SalesOverview = {
     result: {
       metadata: {}
       sales_overview: []
+    }
+  }
+  status: string
+}
+
+type Sales = {
+  data: {
+    message: string
+    result: {
+      metadata: {}
+      sales: []
     }
   }
   status: string
