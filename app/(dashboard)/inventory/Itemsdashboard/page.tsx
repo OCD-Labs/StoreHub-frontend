@@ -49,6 +49,9 @@ const Inventory = () => {
     if (action == 'update store') {
       if (data !== 'error') {
         toast('Store item updated successfully!')
+        setRefNo(() => {
+          return refNo + 1
+        })
       } else {
         toast.error('Error while updating item. Try again')
       }
@@ -63,10 +66,13 @@ const Inventory = () => {
       }
     }
   }
+
   const options: ModalOptions = {
     url: BASE_URL + `/inventory/stores/${id}/items`,
     title: 'Add Item to Store',
   }
+
+  
   const getStoreData = async () => {
     try {
       fetch(BASE_URL + `/inventory/stores/${id}/items`, {
@@ -101,7 +107,7 @@ const Inventory = () => {
         >
           <div className="modal-content w-[90%] md:w-[60%] h-[90vh]">
             <div className="flex justify-between items-center lg:px-20px">
-              <div className='font-bold text-lg'>Add Item</div>
+              <div className="font-bold text-lg">Add Item</div>
               <span
                 onClick={() => {
                   toggleModal(options)

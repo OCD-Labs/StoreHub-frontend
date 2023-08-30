@@ -312,7 +312,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                   onClick={() => handleItmeClick('settings')}
                   className="flex mb-6 cursor-pointer"
                   href={{
-                    pathname: '/inventory/orders',
+                    pathname: '/inventory/storesettings',
                     query: {
                       id: id,
                       name: name,
