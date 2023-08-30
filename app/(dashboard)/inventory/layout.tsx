@@ -194,7 +194,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
 
           <div className="md:flex">
             <section
-              className={`averagescreen:flex gap-5 flex-col mb-6 md:py-6 pr-[20px] sm:pr-[30px] w-fit border-r-2 h-[100vh] ${
+              className={`averagescreen:flex gap-5 flex-col mb-6 md:py-6 pr-[20px]  w-fit border-r-2 h-[100vh] ${
                 sideBar ? 'flex' : 'hidden'
               } fixed bg-white z-50`}
             >
