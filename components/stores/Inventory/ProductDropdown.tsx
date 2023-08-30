@@ -30,6 +30,8 @@ const ProductDropdown = ({ itemid }: { itemid: number }) => {
   const toggleDropdown = () => {
     setIsOpen(!isOpen)
   }
+  const deleteStatus = modalstore((state) => state.isItemDeleted)
+  const setDeleteStatus = modalstore((state) => state.setDeleteStatus)
   const userID: string | null = useSearchParams().get('user')
 
   const id: string | null = useSearchParams().get('id')
@@ -51,8 +53,10 @@ const ProductDropdown = ({ itemid }: { itemid: number }) => {
 
   const handleDelete = async () => {
     const res = await deleteStoreItem(DELETE_OPTION, userID, id, itemid)
-    console.log(res, 'resdele')
 
+    if (res != 200) {
+      setDeleteStatus()
+    }
     // const setDeleteStatus = modalstore((state) => state.setDeleteStatus)
     // setDeleteStatus()
   }

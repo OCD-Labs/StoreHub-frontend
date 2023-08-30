@@ -52,9 +52,7 @@ export const deleteStoreItem = async (
       `${BASE_URL}/inventory/stores/${storeId}/items/${itemId}`,
       option,
     )
-    const result = await res.json()
-    return result
-    debugger
+    return await res.status
   } catch (error) {
     if (error) throw new Error(error + '')
   }
