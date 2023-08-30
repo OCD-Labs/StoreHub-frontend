@@ -34,9 +34,25 @@ const OrdersOverviewTable = (props: IordersProps) => {
     payment_channel,
   } = orders;
 
+  const formatTime = (timestamp: string) => {
+    const date: Date = new Date(timestamp);
+
+    const options: Intl.DateTimeFormatOptions = {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      // hour: "2-digit",
+      // minute: "2-digit",
+      // second: "2-digit",
+      // timeZoneName: "short",
+    };
+
+    const formattedDate: string = date.toLocaleString("en-US", options);
+    return formattedDate;
+  };
+
   return (
     <>
-
       <TableCell className="flex gap-2 items-center md:w-[30%] w-[15em] text-right mr-4 whitespace-nowrap">
         <p>{item_name} </p>
         <img
@@ -53,7 +69,7 @@ const OrdersOverviewTable = (props: IordersProps) => {
       <TableCell className="md:w-[15%] w-[90px] mr-6 md:mr-0">
         {`${buyer_first_name} ${buyer_last_name}`}
       </TableCell>
-      <TableCell className="md:w-[15%] w-[90px]">{created_at}</TableCell>
+      <TableCell className="md:w-[15%] w-[90px] whitespace-nowrap">{formatTime(created_at)}</TableCell>
       <TableCell className="md:w-[15%] w-[90px]">
         <button
           className={`p1-2 px-3 rounded-[8px] ${
