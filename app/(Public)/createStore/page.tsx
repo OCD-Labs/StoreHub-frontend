@@ -90,7 +90,7 @@ const CreateStore = () => {
               toast('Successfully created your store!')
               setTimeout(() => {
                 router.push(
-                  `/inventory/Itemsdashboard?id=${data.data.result.store.id}&name=${data.data.result.store.name}&token=${session?.access_token}&user=${session?.user.user_id}`,
+                  `/inventory/Itemsdashboard?id=${data.data.result.store.id}&name=${data.data.result.store.name}&user=${session?.user.user_id}`,
                 )
               }, 2000)
             } else {

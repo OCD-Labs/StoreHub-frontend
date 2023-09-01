@@ -1,14 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import AccessLevel from '@components/stores/storesettings/AccessLevel'
 import fullaccess from '../../../../public/assets/icons/Inventory/fullaccess.svg'
 import inventoryaccess from '../../../../public/assets/icons/Inventory/inventoryaccess.svg'
 import salesaccess from '../../../../public/assets/icons/Inventory/salesaccess.svg'
-import dropicon from '../../../../public/assets/icons/Inventory/dropicon.svg'
+
 import coown from '../../../../public/assets/icons/Inventory/coown.svg'
 import Image from 'next/image'
 import { Button } from '@components/ui/Button'
-import search from '../../../../public/assets/icons/search.svg'
-import filter from '../../../../public/assets/icons/filter.svg'
+
+
 import {
   Dialog,
   DialogContent,
@@ -17,6 +17,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../../../../components/ui/Dialog'
+import AccessModal from '@components/stores/storesettings/AccessModal'
 
 const Settings = () => {
   return (
@@ -61,39 +62,7 @@ const Settings = () => {
                   <Button variant="default">Add people</Button>
                 </DialogTrigger>
                 <DialogContent>
-                  <div className="flex flex-col justify-center items-center gap-4">
-                    <Image
-                      src={coown}
-                      width={60}
-                      height={60}
-                      alt="fullaccess"
-                    ></Image>
-                    <p>Add a co-owner to your store</p>
-                    <div className="flex flex-col gap-3">
-                      <span className="relative w-[100%] sm:w-[100%]">
-                        <input
-                          className="border w-[350px] h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
-                          placeholder="Search full name, username or email"
-                        />
-                        <Image
-                          src={search}
-                          alt="search product"
-                          height={20}
-                          width={20}
-                          className="absolute top-2 left-2 sm:left-3"
-                        />
-                      </span>
-                      <span className="relative w-[100%] sm:w-[100%]">
-                        <select className="border w-full h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px] text-gray-400">
-                          <option>Select Access</option>
-                          <option>Full Access</option>
-                          <option>Inventory Access</option>
-                          <option>Sales Access</option>
-                        </select>
-                      </span>
-                    </div>
-                    <Button variant="default">Add as co-owner</Button>
-                  </div>
+                  <AccessModal />
                 </DialogContent>
               </Dialog>
             </div>

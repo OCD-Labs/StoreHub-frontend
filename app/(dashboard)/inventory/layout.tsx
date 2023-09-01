@@ -44,7 +44,6 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
   const handleItmeClick = (item: string): void => {
     setActiveItem(item)
   }
-  const token = useSearchParams().get('token')
   const userID = useSearchParams().get('user')
   const id = useSearchParams().get('id')
   const name = useSearchParams().get('name')
@@ -72,35 +71,9 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const session = getSession()
     setSession(session)
-
-    // getUserStores()
   }, [])
-  console.log(`${session ? session : 'hell0'}`)
-  console.log(token, userID)
-
-  const [userStores, setUserStores] = useState<Store[]>()
-
-  //get list of stores owned by a user (todo)
-  const getUserStores = async () => {
-    fetch(BASE_URL + `/users/${session ? session.user.user_id : ''}/stores`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${session ? session.access_token : ''}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data)
-        // setUserStores(data?.data?.result?.stores ?? []);
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }
-
-  getUserStores()
-
+  console.log(`${session ? session.access_token : 'hell0'}`)
+  console.log(userID)
   return (
     <html lang="en">
       <body className="max-w-7xl text-sm m-auto sm:px-16 px-6">
@@ -208,7 +181,6 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                     query: {
                       id: id,
                       name: name,
-                      token: token,
                       user: userID,
                     },
                   }}
@@ -237,7 +209,6 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                     query: {
                       id: id,
                       name: name,
-                      token: token,
                       user: userID,
                     },
                   }}
@@ -260,7 +231,6 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                     query: {
                       id: id,
                       name: name,
-                      token: token,
                       user: userID,
                     },
                   }}
@@ -288,7 +258,6 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                     query: {
                       id: id,
                       name: name,
-                      token: token,
                       user: userID,
                     },
                   }}
@@ -317,7 +286,6 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                     query: {
                       id: id,
                       name: name,
-                      token: token,
                       user: userID,
                     },
                   }}

@@ -12,8 +12,8 @@ import { BASE_URL } from '@components/util/config'
 import { ToastContainer, toast } from 'react-toastify'
 import { Key, Suspense, useEffect, useState } from 'react'
 import { ModalOptions, modalstore } from '@app/StoreManager/modalstore'
-import { GetStoreItems } from '@app/apis/Inventory'
-import { GET_OPTIONS } from '@app/apis'
+import useProfile from '@app/hooks/useProfile'
+
 import necklace from '../../../../public/assets/images/necklace.png'
 import search from '../../../../public/assets/icons/search.svg'
 import filter from '../../../../public/assets/icons/filter.svg'
@@ -72,14 +72,13 @@ const Inventory = () => {
     title: 'Add Item to Store',
   }
 
-  
   const getStoreData = async () => {
     try {
       fetch(BASE_URL + `/inventory/stores/${id}/items`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
         },
       })
         .then((response) => response.json())
