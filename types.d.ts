@@ -151,13 +151,15 @@ type SalesOverview = {
 
 type Sales = {
   data: {
-    message: string
-    result: {
-      metadata: {}
-      sales: []
+    data: {
+      message: string
+      result: {
+        metadata: {}
+        sales: []
+      }
     }
+    status: string
   }
-  status: string
 }
 
 type Store = {
@@ -195,4 +197,9 @@ type Stores = {
       }
     }
   }
+}
+
+type CoOwner = {
+  account_id: string
+  new_access_level: number
 }

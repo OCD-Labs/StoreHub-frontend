@@ -61,7 +61,7 @@ const ProductItem = (props: IproductProps) => {
       <TableCell className="md:w-[15%] w-[90px]">{supply_quantity}</TableCell>
       <TableCell className="md:w-[15%] w-[90px]">{price}</TableCell>
       <TableCell className="md:w-[15%] w-[90px]">
-        {discount_percentage}
+        {status.toLowerCase()}
       </TableCell>
       <TableCell>
         <ProductDropdown itemid={id}></ProductDropdown>

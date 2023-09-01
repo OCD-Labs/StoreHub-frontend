@@ -68,7 +68,6 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
                   query: {
                     id: store.store.id,
                     name: store.store.name,
-                    token: token,
                     user: user_id,
                   },
                 }}
