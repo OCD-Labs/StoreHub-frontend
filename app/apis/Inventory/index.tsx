@@ -66,3 +66,13 @@ export const AddStoreCoOwner = (
   )
   return res
 }
+
+export const GetAllReviews = (
+  store_id: string | null,
+  GET_OPTIONS: OPTIONS
+): Promise<any> => {
+  const res = fetch(BASE_URL + `/inventory/stores/${store_id}/reviews`, GET_OPTIONS).then(
+    (response) => response.json()
+  );
+  return res;
+};
