@@ -22,7 +22,7 @@ module.exports = {
       colors: {
         black: 'rgba(0, 0, 0, 0.6)',
         lightgray: 'rgba(238, 233, 233, 1)',
-        dark: 'black',
+        dark: 'hsl(222.2 47.4% 11.2%)',
         'primary-orange': '#FF5722',
         blue: 'rgba(192, 225, 233, 1)',
         border: 'hsl(var(--border))',

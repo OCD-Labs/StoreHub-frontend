@@ -62,6 +62,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
       category: formData.category,
       discount_percentage: formData.discount_percentage,
       supply_quantity: parseInt(formData.supply_quantity),
+      status: 'VISIBLE',
     }
     const method = options.title == 'update store' ? 'PATCH' : 'POST'
     debugger

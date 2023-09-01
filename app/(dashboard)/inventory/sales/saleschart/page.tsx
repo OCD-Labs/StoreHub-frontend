@@ -61,12 +61,12 @@ const SalesChart = () => {
 
   async function getSalesHistroy() {
     try {
-      const sales: Sales = await GetSalesHistory(id, GET_OPTIONS)
-      console.log(sales)
+      const { data }: Sales = await GetSalesHistory(id)
 
-      setSalesHistory(sales.data.result.sales)
+      console.log(data, 'imsales')
+      setSalesHistory(data?.data.result.sales)
     } catch (error) {
-      throw new Error('Error while fetching overview')
+      throw new Error(error + 'failed to fetch saleshistory')
     }
   }
 
