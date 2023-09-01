@@ -72,7 +72,7 @@ const Settings = () => {
                     <div className="flex flex-col gap-3">
                       <span className="relative w-[100%] sm:w-[100%]">
                         <input
-                          className="border w-full h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
+                          className="border w-[350px] h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
                           placeholder="Search full name, username or email"
                         />
                         <Image

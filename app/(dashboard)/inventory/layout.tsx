@@ -198,7 +198,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
                 sideBar ? 'flex' : 'hidden'
               } fixed bg-white z-50`}
             >
-              <p className="text-[20px] text-black">{name}</p>
+              {/* <p className="text-[20px] text-black">{name}</p> */}
               <div>
                 <Link
                   onClick={() => handleItmeClick('home')}

@@ -23,7 +23,6 @@ export const EditStoreItem = (
   return res;
 };
 
-
 export const GetSalesOverview = (
   userID: string | null,
   id: string | null,
@@ -31,30 +30,38 @@ export const GetSalesOverview = (
 ): Promise<any> => {
   const res = fetch(
     BASE_URL + `/inventory/stores/${id}/sales-overview`,
-    GET_OPTIONS,
-  ).then((response) => response.json())
-  return res
-}
-
+    GET_OPTIONS
+  ).then((response) => response.json());
+  return res;
+};
 
 export const GetSalesHistory = (
   id: string | null,
   GET_OPTIONS: OPTIONS
 ): Promise<any> => {
   const res = fetch(
-
     BASE_URL + `/inventory/stores/${id}/sales`,
-    GET_OPTIONS,
-  ).then((response) => response.json())
-  return res
-}
-   
+    GET_OPTIONS
+  ).then((response) => response.json());
+  return res;
+};
 
 export const FetchOrdersOverview = (
   store_id: string | null,
   GET_OPTIONS: OPTIONS
 ): Promise<any> => {
-  const res = fetch(BASE_URL + `/inventory/stores/${store_id}/orders`, GET_OPTIONS).then(
+  const res = fetch(
+    BASE_URL + `/inventory/stores/${store_id}/orders`,
+    GET_OPTIONS
+  ).then((response) => response.json());
+  return res;
+};
+
+export const GetAllReviews = (
+  store_id: string | null,
+  GET_OPTIONS: OPTIONS
+): Promise<any> => {
+  const res = fetch(BASE_URL + `/inventory/stores/${store_id}/reviews`, GET_OPTIONS).then(
     (response) => response.json()
   );
   return res;
