@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Button } from '@components/ui/Button'
 import search from '../../../public/assets/icons/search.svg'
 import useSWR from 'swr'
+import { Loader2 } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { AddStoreCoOwner } from '@app/apis/Inventory'
 
@@ -13,7 +14,7 @@ const PRODUCTINVENTORYACCESS = 2
 const SALESACCESS = 3
 const ORDERSACCESS = 4
 
-const AccessModal = () => {
+const AccessModal = ({ accessModal }: { accessModal: any }) => {
   const id: string | null = useSearchParams().get('id')
   const [loading, setLoading] = useState<boolean>(false)
   const [coowner, setCoowner] = useState<CoOwner>({
@@ -29,11 +30,14 @@ const AccessModal = () => {
   }
   console.log(coowner)
 
-  const { isLoading, data, error, mutate } = useSWR('invitation')
   const sendInvitation = async () => {
     debugger
     setLoading(true)
-    await AddStoreCoOwner(id, coowner).then(() => setLoading(false))
+    const res = await AddStoreCoOwner(id, coowner)
+    console.log(res)
+    
+
+    accessModal(res.data.status)
   }
   return (
     <div>
@@ -72,9 +76,15 @@ const AccessModal = () => {
             </span>
           </form>
         </div>
-        <button onClick={sendInvitation}>
-          {loading ? 'spinner' : 'Add as co-owner'}
-        </button>
+        <Button variant="default" onClick={sendInvitation}>
+          {loading ? (
+            <div className="flex">
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" /> please wait...
+            </div>
+          ) : (
+            'Add as co-owner'
+          )}
+        </Button>
       </div>
     </div>
   )

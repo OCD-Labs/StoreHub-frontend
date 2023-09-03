@@ -203,3 +203,18 @@ type CoOwner = {
   account_id: string
   new_access_level: number
 }
+
+type InvitationResponse = {
+  status: string
+  data: {
+    message: string
+    result: {
+      co_owner_access: {
+        account_id: string
+        profile_img_url: string
+        access_levels: Number[]
+        added_at: string
+      }
+    }
+  }
+}

@@ -1,13 +1,15 @@
+'use client'
 import React, { useState } from 'react'
 import AccessLevel from '@components/stores/storesettings/AccessLevel'
 import fullaccess from '../../../../public/assets/icons/Inventory/fullaccess.svg'
 import inventoryaccess from '../../../../public/assets/icons/Inventory/inventoryaccess.svg'
 import salesaccess from '../../../../public/assets/icons/Inventory/salesaccess.svg'
+import { ToastContainer, toast } from 'react-toastify'
 
+import 'react-toastify/dist/ReactToastify.css'
 import coown from '../../../../public/assets/icons/Inventory/coown.svg'
 import Image from 'next/image'
 import { Button } from '@components/ui/Button'
-
 
 import {
   Dialog,
@@ -20,6 +22,16 @@ import {
 import AccessModal from '@components/stores/storesettings/AccessModal'
 
 const Settings = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  function setupModal(status: string) {
+    debugger
+    setIsOpen(!isOpen)
+    if (status == 'success') {
+      toast('Invitation has been sent out')
+    } else if (status == 'error') {
+      toast.error('failed to send out invite. Try again')
+    }
+  }
   return (
     <div>
       <div className="flex sm:flex-nowrap flex-wrap gap-3 text-white">
@@ -44,6 +56,7 @@ const Settings = () => {
           access="Sales access"
         />
       </div>
+      <ToastContainer />
       <div>
         <div className="mt-8">
           <h2 className="text-lg font-bold mb-4">Manage Co-ownership Access</h2>
@@ -57,12 +70,19 @@ const Settings = () => {
               ></Image>
               <p>No Co-owners Yet</p>
 
-              <Dialog>
+              <Dialog open={isOpen} onOpenChange={setupModal}>
                 <DialogTrigger>
-                  <Button variant="default">Add people</Button>
+                  <Button
+                    variant="default"
+                    onClick={() => {
+                      setIsOpen(!isOpen)
+                    }}
+                  >
+                    Add people
+                  </Button>
                 </DialogTrigger>
                 <DialogContent>
-                  <AccessModal />
+                  <AccessModal accessModal={setupModal} />
                 </DialogContent>
               </Dialog>
             </div>
