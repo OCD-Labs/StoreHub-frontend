@@ -46,7 +46,7 @@ const AccessModal = () => {
               <input
                 name="account_id"
                 onChange={handleChange}
-                className="border w-full h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
+                className="border w-[350px] mb-3 h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
                 placeholder="Search full name, username or email"
               />
               <Image
@@ -62,7 +62,7 @@ const AccessModal = () => {
                 onChange={handleChange}
                 name="new_access_level"
                 typeof="number"
-                className="border w-full h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px] text-gray-400"
+                className="border w-[350px] h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px] text-gray-400"
               >
                 <option>Select Access</option>
                 <option label="full access">1</option>

@@ -167,10 +167,13 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
 
           <div className="md:flex">
             <section
-              className={`averagescreen:flex gap-5 flex-col mb-6 md:py-6 pr-[20px]  w-fit border-r-2 h-[100vh] ${
+              className={`averagescreen:flex gap-5 flex-col mb-6 md:py-6 pr-[20px] w-fit border-r-2 h-[100vh] top-0 ${
                 sideBar ? 'flex' : 'hidden'
               } fixed bg-white z-50`}
             >
+              <p className="text-black font-bold leading-tight text-opacity-30 text-[20px] mt-[15px] md:mt-0 averagescreen:block">
+              StoreHub
+            </p>
               {/* <p className="text-[20px] text-black">{name}</p> */}
               <div>
                 <Link
