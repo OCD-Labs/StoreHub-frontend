@@ -203,3 +203,48 @@ type CoOwner = {
   account_id: string
   new_access_level: number
 }
+
+type InvitationResponse = {
+  status: string
+  data: {
+    message: string
+    result: {
+      co_owner_access: {
+        account_id: string
+        profile_img_url: string
+        access_levels: Number[]
+        added_at: string
+      }
+    }
+  }
+}
+
+type UserInfo = {
+  first_name: string
+  last_name: string
+  password: string
+  email: string
+  account_id: string
+  profile_image_url: string
+}
+
+type UserResponse = {
+  status: string
+  data: {
+    message: string
+    result: {
+      user: {
+        user_id: number
+        first_name: string
+        last_name: string
+        account_id: string
+        email: string
+        profil_image_url: string
+        created_at: string
+        password_changed_at: string
+        is_active: boolean
+        is_email_verified: boolean
+      }
+    }
+  }
+}

@@ -1,13 +1,26 @@
-"use client";
-import Link from "next/link";
-import React, { useState } from "react";
+'use client'
+import Link from 'next/link'
+import React, { useState } from 'react'
+import { storehubAPI } from '@app/(dashboard)/inventory/page'
 
 const SignIn = () => {
-  const [checked, setChecked] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false)
+  const [user, setUser] = useState<{ email: string; password: string }>({
+    email: 'mrvic5869@gmail.com',
+    password: 'umacv.123',
+  })
 
   const handleRadioChange = (): void => {
-    setChecked(!checked);
-  };
+    setChecked(!checked)
+  }
+
+
+  const signIn = async (e: any) => {
+    e.preventdefault()
+    debugger
+    const res = await storehubAPI.post('/auth/login', user)
+    console.log(res.data, 'user')
+  }
 
   return (
     <div className="sm:flex sm:justify-between mb-3 sm:mb-6">
@@ -70,7 +83,7 @@ const SignIn = () => {
                   {/* Checked state indicator (checkmark) */}
                   <div
                     className={`w-4 h-4 bg-black rounded ${
-                      checked ? "opacity-100 scale-100" : "opacity-0 scale-0"
+                      checked ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
                     } transition-opacity duration-300`}
                   >
                     {/* Checkmark SVG */}
@@ -91,7 +104,10 @@ const SignIn = () => {
               <span className="ml-4">Remember me</span>
             </div>
 
-            <button className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white bg-[#161616] text-lg w-full my-3 md:my-6">
+            <button
+              onClick={signIn}
+              className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white bg-[#161616] text-lg w-full my-3 md:my-6"
+            >
               Login
             </button>
           </div>
@@ -125,7 +141,7 @@ const SignIn = () => {
         </form>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default SignIn;
+export default SignIn
