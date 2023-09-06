@@ -53,7 +53,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
   const addStoreProducts = async () => {
     debugger
 
-    const addItemData = {
+    const itemData = {
       name: formData.name,
       description: formData.description,
       price: formData.price,
@@ -62,11 +62,9 @@ const AddItemModal: React.FC<PropsInterface> = ({
       category: formData.category,
       discount_percentage: formData.discount_percentage,
       supply_quantity: parseInt(formData.supply_quantity),
+      status: 'VISIBLE',
     }
-    const updateItemData = { ...addItemData, status: 'VISIBLE' }
     const method = options.title == 'update store' ? 'PATCH' : 'POST'
-    const itemData =
-      options.title == 'update store' ? updateItemData : addItemData
     debugger
     try {
       fetch(options.url, {
