@@ -1,13 +1,31 @@
-"use client";
-import Link from "next/link";
-import React, { useState } from "react";
+'use client'
+import Link from 'next/link'
+import React, { useState } from 'react'
+
+import { storehubAPI } from '@app/(dashboard)/inventory/page'
+import { log } from 'console'
 
 const SignUp = () => {
-  const [checked, setChecked] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false)
+  const [user, setUser] = useState<UserInfo>({
+    first_name: 'mr',
+    last_name: 'Vic',
+    password: 'stringst',
+    email: 'user@example.com',
+    account_id: 'string',
+    profile_image_url: 'string',
+  })
 
   const handleRadioChange = (): void => {
-    setChecked(!checked);
-  };
+    setChecked(!checked)
+  }
+  function handleChange(e: any) {
+    setUser({ ...user, [e.target.name]: e.target.value })
+  }
+
+  const signup = () => {
+  
+  }
 
   return (
     <div className="sm:flex sm:justify-between mb-3 sm:mb-6">
@@ -27,7 +45,7 @@ const SignUp = () => {
       <section className="sm:w-[55%] sm:px-6">
         <form>
           <p className="text-end">
-            Already have an account?{" "}
+            Already have an account?{' '}
             <Link href="/signin">
               <span className="text-blue">Sign In</span>
             </Link>
@@ -86,7 +104,7 @@ const SignUp = () => {
                   {/* Checked state indicator (checkmark) */}
                   <div
                     className={`w-4 h-4 bg-black rounded ${
-                      checked ? "opacity-100 scale-100" : "opacity-0 scale-0"
+                      checked ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
                     } transform rotate-45 transition-opacity duration-300`}
                   >
                     {/* Checkmark SVG */}
@@ -143,7 +161,7 @@ const SignUp = () => {
         </form>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default SignUp;
+export default SignUp

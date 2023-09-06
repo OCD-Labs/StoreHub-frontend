@@ -31,7 +31,7 @@ import {
 } from '../../../components/ui/NavDropdown'
 import '@styles/globals.css'
 
-// import NavDropDown from '@components/stores/Inventory/NavDropDown'
+
 
 const Inventory = ({ children }: { children: React.ReactNode }) => {
   const [activeItem, setActiveItem] = useState<string>('home')
@@ -56,15 +56,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
     // Add other properties of a store item as needed
   }
 
-  type UserStores = {
-    data: {
-      message: string
-      result: {
-        stores: Store[]
-      }
-    }
-    status: string
-  }
+
 
   const [session, setSession] = useState<Session>()
 

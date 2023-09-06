@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+debugger
 
 interface IUsesProfile {
   setSession: (session: Session) => void

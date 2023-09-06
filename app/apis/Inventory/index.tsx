@@ -82,10 +82,18 @@ export const acceptInvitaion = (
   confirmationToken: string | null,
   GET_OPTIONS: OPTIONS,
 ): Promise<InvitationResponse> => {
+  console.log(confirmationToken)
   const res = fetch(
     BASE_URL +
       `/inventory/stores/${store_id}/accept-access-invitation?sth_code=${confirmationToken}`,
     GET_OPTIONS,
   ).then((response) => response.json())
   return res
+}
+
+export const GetStoreDetails = async (
+  store_name: string | null,
+): Promise<any> => {
+  const res = await storehubAPI.get(`/stores?store_name=${store_name}`)
+  return res.data
 }

@@ -23,7 +23,7 @@ import AccessModal from '@components/stores/storesettings/AccessModal'
 
 const Settings = () => {
   const [isOpen, setIsOpen] = useState(false)
-  function setupModal(status: string) {
+  function setupModal(status: any) {
     debugger
     setIsOpen(!isOpen)
     if (status == 'success') {

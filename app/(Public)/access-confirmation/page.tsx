@@ -6,7 +6,8 @@ import { Loader2 } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify'
-import useProfile from '@app/hooks/useProfile'
+import { storehubAPI } from '@app/(dashboard)/inventory/page'
+import { getSession, setSession } from '@components/util/session'
 import 'react-toastify/dist/ReactToastify.css'
 
 const AccessConfirmation = () => {
@@ -16,13 +17,26 @@ const AccessConfirmation = () => {
   const confirmationToken = useSearchParams().get('sth_code')
   const Router = useRouter()
 
+  const [user, setUser] = useState<{ email: string; password: string }>({
+    email: 'mrvic5869@gmail.com',
+    password: 'umacv.123',
+  })
+
+  const signIn = async (e: any) => {
+    debugger
+    const res = await storehubAPI.post('/auth/login', user)
+    console.log(res.data, 'user')
+    setSession(res.data.data.result)
+  }
+
   debugger // accept invitation from store
+  const token = getSession()?.access_token
 
   const GET_OPTIONS = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
+      Authorization: `Bearer ${token}`,
     },
   }
   const acceptInvitation = async () => {
@@ -55,12 +69,7 @@ const AccessConfirmation = () => {
           Accept Co-ownership Request for <b>{storeName}</b> store.
         </div>
         <div className="flex gap-4">
-          <Button
-            variant="destructive"
-            onClick={() => {
-              Router.push('./stores')
-            }}
-          >
+          <Button variant="destructive" onClick={signIn}>
             Decline
           </Button>
           <Button
