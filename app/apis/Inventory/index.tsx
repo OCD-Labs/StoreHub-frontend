@@ -3,6 +3,7 @@ import { BASE_URL } from '@components/util/config'
 import { GET_OPTIONS, OPTIONS, POST_OPTION } from '..'
 
 import { storehubAPI } from '@app/(dashboard)/inventory/page'
+import { AxiosResponse } from 'axios'
 
 export const GetStoreItems = (
   userID: string | null,
@@ -76,3 +77,23 @@ export const GetAllReviews = (
   );
   return res;
 };
+export const acceptInvitaion = (
+  store_id: string | null,
+  confirmationToken: string | null,
+  GET_OPTIONS: OPTIONS,
+): Promise<InvitationResponse> => {
+  console.log(confirmationToken)
+  const res = fetch(
+    BASE_URL +
+      `/inventory/stores/${store_id}/accept-access-invitation?sth_code=${confirmationToken}`,
+    GET_OPTIONS,
+  ).then((response) => response.json())
+  return res
+}
+
+export const GetStoreDetails = async (
+  store_name: string | null,
+): Promise<any> => {
+  const res = await storehubAPI.get(`/stores?store_name=${store_name}`)
+  return res.data
+}
