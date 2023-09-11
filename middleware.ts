@@ -10,17 +10,4 @@ export function middleware(request: NextRequest) {
     url.pathname = '/home'
     return NextResponse.redirect(url)
   }
-
-  const requestHeaders = new Headers(request.headers)
-  requestHeaders.set('headers', 'uma victor')
-
-  // You can also set request headers in NextResponse.rewrite
-  const response = NextResponse.next({
-    request: {
-      // New request headers
-      headers: requestHeaders,
-    },
-  })
-
-  return response
 }

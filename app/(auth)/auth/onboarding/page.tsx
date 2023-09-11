@@ -30,7 +30,7 @@ const Onboarding = () => {
   }
 
   return (
-    <div className="h-screen">
+    <div className="h-screen z-10">
       <div className="">
         <section className="flex justify-between p-8">
           <div className="font-bold">
