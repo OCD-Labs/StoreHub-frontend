@@ -14,7 +14,6 @@ const SignIn = () => {
     setChecked(!checked)
   }
 
-
   const signIn = async (e: any) => {
     e.preventdefault()
     debugger
@@ -23,7 +22,7 @@ const SignIn = () => {
   }
 
   return (
-    <div className="sm:flex sm:justify-between mb-3 sm:mb-6">
+    <div className="sm:flex sm:justify-between mb-3 sm:mb-6 z-10 p-8">
       <section className="border sm:px-4 lg:px-12 py-4 w-[40%] hidden sm:block rounded-[10px]">
         <h3 className="text-black font-bold">StoreHub</h3>
 
@@ -42,7 +41,7 @@ const SignIn = () => {
           <p className="text-end">
             Don't have an account?
             <Link href="/signup">
-              <span className="text-blue"> Create Account</span>
+              <span className="text-dark"> Create Account</span>
             </Link>
           </p>
           <p className="text-2xl font-bold py-4">Login</p>
@@ -65,43 +64,7 @@ const SignIn = () => {
 
             <div className="flex items-center">
               {/* Hidden default radio input */}
-              <div>
-                <input
-                  type="radio"
-                  id="customRadio"
-                  name="radioGroup"
-                  className="hidden"
-                  checked={checked}
-                  onClick={handleRadioChange}
-                />
-
-                {/* Custom radio button */}
-                <label
-                  htmlFor="customRadio"
-                  className="w-6 h-6 border-2 border-black rounded-md flex items-center justify-center cursor-pointer transition-colors duration-300 hover:border-gray-600"
-                >
-                  {/* Checked state indicator (checkmark) */}
-                  <div
-                    className={`w-4 h-4 bg-black rounded ${
-                      checked ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
-                    } transition-opacity duration-300`}
-                  >
-                    {/* Checkmark SVG */}
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="white"
-                      strokeWidth="2"
-                    >
-                      <path d="M6 12l4 4 10-10"></path>
-                    </svg>
-                  </div>
-                </label>
-              </div>
-
-              {/* Label text */}
-              <span className="ml-4">Remember me</span>
+              <div>{/* Custom radio button */}</div>
             </div>
 
             <button
@@ -110,6 +73,12 @@ const SignIn = () => {
             >
               Login
             </button>
+            <Link
+              href={'/auth/forgot-password'}
+              className="ml-4 text-yellow-500 font-light text-sm"
+            >
+              Forgot Pasword?
+            </Link>
           </div>
 
           <div className="py-2 sm:py-1 md:py-3">

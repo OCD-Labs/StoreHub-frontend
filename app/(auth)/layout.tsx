@@ -1,5 +1,5 @@
-'use client'
 import '@styles/globals.css'
+
 
 const Inventory = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,8 +10,12 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
             {children}
           </div>
         </div>
-
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        
+        <svg
+          className="z-[-1]"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 1440 320"
+        >
           <path
             fill="#B0A4DB1F"
             fill-opacity="1"
