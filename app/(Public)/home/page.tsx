@@ -1,14 +1,14 @@
 'use client'
 import Link from 'next/link'
 import React from 'react'
-import { InitContract } from '@components/util/config'
+// import { InitContract } from '@components/util/config'
 
 const Page = () => {
-  const createUserAcc = async () => {
-    const { createWalletAccount } = await InitContract()
-    const account = await createWalletAccount('viky')
-    console.log(account, 'new user')
-  }
+  // const createUserAcc = async () => {
+  //   const { createWalletAccount } = await InitContract()
+  //   const account = await createWalletAccount('viky')
+  //   console.log(account, 'new user')
+  // }
   return (
     <div className="text-black">
       <div className="border border-black">
@@ -25,7 +25,7 @@ const Page = () => {
             <Link href="/stores" className="outline_btn mt-6 font-medium w-20">
               Stores
             </Link>
-            <button onClick={createUserAcc}>Create account</button>
+            {/* <button onClick={createUserAcc}>Create account</button> */}
           </div>
         </div>
       </div>

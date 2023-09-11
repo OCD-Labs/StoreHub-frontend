@@ -1,5 +1,5 @@
-import '@styles/globals.css'
 
+import '@styles/globals.css'
 
 const Inventory = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,7 +10,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
             {children}
           </div>
         </div>
-        
+
         <svg
           className="z-[-1]"
           xmlns="http://www.w3.org/2000/svg"
