@@ -1,10 +1,12 @@
+'use client'
+
 import necklace from "../../../public/assets/images/Pngitem_2678115 1.png";
 import Image from "next/image";
 import { useState } from "react";
 
 const Cart = () => {
   const [quantity, setQuantity] = useState<number>(0);
-  
+
   return (
     <div className="max-w-4xl mx-auto flex flex-col gap-3">
       <section className="flex border py-2 justify-between pl-3">

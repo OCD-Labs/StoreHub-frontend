@@ -257,3 +257,9 @@
     width: calc(100% - 250px);
   }
 }
+
+@media screen and (min-width: 900px) {
+  .calculated-account-width {
+    width: calc(100% - 220px);
+  }
+}
