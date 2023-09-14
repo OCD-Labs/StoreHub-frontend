@@ -1,17 +1,25 @@
-'use client'
+import { getServerSession } from 'next-auth'
+import { authOptions } from '@app/api/auth/[...nextauth]/route'
 import Link from 'next/link'
 import React from 'react'
+
 // import { InitContract } from '@components/util/config'
 
-const Page = () => {
+const Page = async () => {
   // const createUserAcc = async () => {
   //   const { createWalletAccount } = await InitContract()
   //   const account = await createWalletAccount('viky')
   //   console.log(account, 'new user')
   // }
+
+  const session = await getServerSession(authOptions)
+  console.log(session)
+
+  const authenticated = !!session
   return (
     <div className="text-black">
       <div className="border border-black">
+        {JSON.stringify(session?.user)} {authenticated ? 'true' : 'false'}
         <div className="bg-blue p-6 flex w-[90%] m-auto items-center justify-center my-10">
           <div>
             <div className="leading-10 w-[70%] text-black text-opacity-70 text-[64px] font-medium">

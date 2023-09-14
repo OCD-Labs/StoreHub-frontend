@@ -1,5 +1,5 @@
 import { userWallet } from '@app/StoreManager'
-import { storehubAPI } from '@app/(dashboard)/inventory/page'
+import { storehubAPI, StorehubClient } from '@app/(dashboard)/inventory/page'
 import { BASE_URL } from '@components/util/config'
 
 const { user } = userWallet.getState()
@@ -58,4 +58,16 @@ export const deleteStoreItem = async (
   }
 }
 
+export const signUp = async (data: UserInfo) => {
+  const body = JSON.stringify(data)
+  const res = await fetch(`${BASE_URL}/users`, {
+    method: 'POST',
+    body: body,
+  })
 
+  //   StorehubClient.post('/users', data)
+  // debugger
+  // console.log(res, 'response')
+
+  return res.json()
+}

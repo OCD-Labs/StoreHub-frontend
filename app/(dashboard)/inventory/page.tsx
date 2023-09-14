@@ -13,6 +13,13 @@ export const storehubAPI = axios.create({
   },
 })
 
+export const StorehubClient = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+
 const page = () => {
   return <div>page</div>
 }
