@@ -1,6 +1,6 @@
 'use client'
 
-import necklace from "../../../public/assets/images/Pngitem_2678115 1.png";
+import necklace from "../../../public/assets/images/PngItem_2678115 1.png";
 import Image from "next/image";
 import { useState } from "react";
 
