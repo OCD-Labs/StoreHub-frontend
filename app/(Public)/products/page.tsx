@@ -69,7 +69,8 @@ const Products = () => {
         img: "../../assets/images/necklace.png",
         name: "Enchanted Halo",
         amount: 500,
-
+    },
+    {
       img: "../../assets/images/jewellery2.png",
       name: "Enchanted Halo",
       amount: 500,
@@ -147,7 +148,7 @@ const Products = () => {
           <img
             className="w-[200px] mx-auto md:w-[270px]"
 
-            src="../../assets/images/necklace.png"
+            // src="../../assets/images/necklace.png"
 
             src={
               retrievedItem?.image_urls[0]
