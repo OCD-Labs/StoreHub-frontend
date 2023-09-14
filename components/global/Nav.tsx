@@ -10,6 +10,7 @@ import { setSession } from '@components/util/session'
 import { BASE_URL } from '@components/util/config'
 import { Button } from '@components/ui/Button'
 import logo from '@public/assets/images/storehublogo.svg'
+import { signOut } from 'next-auth/react'
 
 // import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
@@ -105,12 +106,19 @@ const Nav = () => {
         </div>
         {!isSignedIn ? (
           <>
-            <Link href="/signin">Login</Link>
+            <Link href="/auth/signin">Login</Link>
             <Button variant="default">
               <Link href={'/auth/onboarding'} className="font-light">
                 Sign up
               </Link>
             </Button>
+            <button
+              onClick={() => {
+                signOut()
+              }}
+            >
+              Sign out
+            </button>
           </>
         ) : (
           <>

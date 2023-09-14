@@ -1,4 +1,3 @@
-
 import '@styles/globals.css'
 
 const Inventory = ({ children }: { children: React.ReactNode }) => {
@@ -6,7 +5,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
     <html lang="en">
       <body>
         <div className="bg-graybrand">
-          <div className="max-w-7xl h-72 flex justify-center m-auto">
+          <div className="max-w-7xl h-72 flex justify-center m-auto font-light">
             {children}
           </div>
         </div>

@@ -22,7 +22,7 @@ const Screen2 = () => {
             </p>
             <div className="z-100 flex gap-4 mt-8">
               <Button variant="default">
-                <Link href={'/signup'}>Get Started</Link>
+                <Link href={'/auth/signup'}>Get Started</Link>
               </Button>
               <Button variant="outline">Watch Demo</Button>
             </div>

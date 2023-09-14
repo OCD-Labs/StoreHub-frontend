@@ -17,6 +17,7 @@ interface UserData {
 }
 
 type UserResponse = {
+  error?: string
   status: string
   data: {
     message: string
@@ -247,4 +248,9 @@ type UserResponse = {
       }
     }
   }
+}
+
+interface IUserCredential {
+  email: string
+  password: string
 }
