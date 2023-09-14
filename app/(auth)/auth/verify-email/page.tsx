@@ -1,50 +1,80 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { BASE_URL } from '@components/util/config'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { setSession } from '@components/util/session'
+import Link from 'next/link'
 
 const page = () => {
+  const [loading, setloading] = useState(false)
+  const [error, setError] = useState(false)
   const router = useRouter()
   const EMAIL = useSearchParams().get('email')
   const SECRET_CODE = useSearchParams().get('secret_code')
   useEffect(() => {
-    fetch(`${BASE_URL}/users/verify-email`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        secret_code: SECRET_CODE, // Replace with the actual secret code
-        email: EMAIL, // Replace with the user's email
-      }),
-    })
-      .then((response) => {
-        if (response.status === 200) {
-          // Successful verification
-          return response.json()
-        } else {
-          // Handle errors, e.g., invalid token or server error
-          throw new Error('Verification failed')
-        }
+    try {
+      setloading(true)
+      fetch(`${BASE_URL}/users/verify-email`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          secret_code: SECRET_CODE, // Replace with the actual secret code
+          email: EMAIL, // Replace with the user's email
+        }),
       })
-      .then((data) => {
-        console.log(data, 'data')
-        debugger
-        // Save the user and token response to localStorage or sessionStorage
-        setSession(data.result)
-        // Redirect the user to a choose role page
+        .then((response) => {
+          setloading(false)
+          if (response.status === 200) {
+            // Successful verification
 
-        router.push('/auth/choose-role')
-      })
-      .catch((error) => {
-        // Handle and log any errors
-        console.error('Verification error:', error)
-      })
-  })
-  return <div>Loading...</div>
+            return response.json()
+          } else {
+            // Handle errors, e.g., invalid token or server error
+            setError(true)
+            throw new Error('Verification failed')
+          }
+        })
+        .then((data) => {
+          debugger
+          // Save the user and token response to localStorage or sessionStorage
+          setSession(data.result)
+          // Redirect the user to a choose role page
+
+          router.push('/auth/choose-role')
+        })
+        .catch((error) => {
+          // Handle and log any errors
+          console.error('Verification error:', error)
+        })
+        .finally(() => {
+          setloading(false)
+        })
+    } catch (error) {}
+  }, [2])
+  return (
+    <div>
+      <div>
+        {loading ? 'Loading...' : ''}
+
+        <div>
+          {error ? (
+            <div className="text-red-800 flex flex-col items-center">
+              <div>Couldn't verify your email</div>
+              <span className="text-purple-600">
+                <Link href={'/home'}>Go back</Link>
+              </span>
+            </div>
+          ) : (
+            ''
+          )}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default page
