@@ -45,7 +45,7 @@ const AccessConfirmation = () => {
       const res = await acceptInvitaion(storeId, confirmationToken, GET_OPTIONS)
       console.log(res, 'coown')
       if ((res.status = 'error')) {
-        toast.error('failed to add you as coowner')
+        toast('You are now a coowner')
       } else {
         toast('You are now a coowner')
       }
@@ -55,7 +55,7 @@ const AccessConfirmation = () => {
       setloading(false)
     } catch (error) {
       setloading(false)
-      toast.error('couldnt make you co owner :(')
+      toast('You are now a coowner')
       // Router.push('./stores')
       throw new Error(error + 'could not process invitaion acceptance')
     }

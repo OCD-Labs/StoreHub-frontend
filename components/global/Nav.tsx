@@ -8,6 +8,8 @@ import useProfile from '@app/hooks/useProfile'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { setSession } from '@components/util/session'
 import { BASE_URL } from '@components/util/config'
+import { Button } from '@components/ui/Button'
+import logo from '@public/assets/images/storehublogo.svg'
 
 // import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 
@@ -89,33 +91,26 @@ const Nav = () => {
   // console.log(wallet, useGlobalContext())
 
   return (
-    <nav className="flex-between items-baseline w-full mt-0 mb-8 sticky top-0 py-[10px] bg-white">
+    <nav className="flex-between items-baseline w-full mt-0 mb-8 sticky top-0 py-[10px] font-light bg-white">
       <Link href="/">
-        <p className="text-black font-bold leading-tight text-opacity-30 text-[20px]">
-          StoreHub
-        </p>
+        <Image src={logo} width={100} height={100} alt="logo"></Image>
       </Link>
       {/* Navigation*/}
       <div className="flex gap-3 items-baseline">
         <div className="sm:flex hidden">
-          <div className="flex gap-3 md:gap-5 font-normal items-baseline leading-tight text-black text-[18px]">
+          <div className="flex gap-3 md:gap-5 items-baseline leading-tight text-dark">
             <Link href="/features">Features</Link>
             <Link href="/stores">Stores</Link>
-            <Link href="/contacts">Contacts</Link>
           </div>
         </div>
         {!isSignedIn ? (
           <>
-            {' '}
-            <button
-              type="button"
-              onClick={() => handleSignIn()}
-              className="outline_btn font-medium"
-            >
-              <p className="hover:text-white items-baseline leading-tight text-black text-[18px]">
-                Connect Wallet
-              </p>
-            </button>
+            <Link href="/signin">Login</Link>
+            <Button variant="default">
+              <Link href={'/auth/onboarding'} className="font-light">
+                Sign up
+              </Link>
+            </Button>
           </>
         ) : (
           <>
@@ -132,9 +127,9 @@ const Nav = () => {
                   //   setMenuOpen(!isMenuOpened)
                   // }}
                 >
-                  <button type="button" className="outline_btn font-medium">
+                  <Button variant="outline" className="font-light">
                     {wallet.accountId}
-                  </button>
+                  </Button>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu

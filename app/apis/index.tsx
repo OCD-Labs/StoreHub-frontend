@@ -1,5 +1,5 @@
 import { userWallet } from '@app/StoreManager'
-
+import { storehubAPI } from '@app/(dashboard)/inventory/page'
 import { BASE_URL } from '@components/util/config'
 
 const { user } = userWallet.getState()
@@ -57,3 +57,5 @@ export const deleteStoreItem = async (
     if (error) throw new Error(error + '')
   }
 }
+
+

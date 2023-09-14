@@ -1,12 +1,21 @@
 'use client'
 import Link from 'next/link'
-import React, { useState } from 'react'
-
+import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@components/ui/Dialog'
 import { storehubAPI } from '@app/(dashboard)/inventory/page'
-import { log } from 'console'
+import email from '@public/assets/images/carbon_email.png'
 
 const SignUp = () => {
   const [checked, setChecked] = useState<boolean>(false)
+  const [seconds, setSeconds] = useState(30)
   const [user, setUser] = useState<UserInfo>({
     first_name: 'mr',
     last_name: 'Vic',
@@ -23,12 +32,24 @@ const SignUp = () => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
 
-  const signup = () => {
-  
-  }
+  const signup = () => {}
+
+  // timer code
+
+  useEffect(() => {
+    const timerInterval = setInterval(() => {
+      if (seconds === 0) {
+        clearInterval(timerInterval)
+      } else {
+        setSeconds((prevSeconds) => prevSeconds - 1)
+      }
+    }, 1000)
+
+    return () => clearInterval(timerInterval)
+  }, [seconds])
 
   return (
-    <div className="sm:flex sm:justify-between mb-3 sm:mb-6">
+    <div className="sm:flex sm:justify-between mb-3 sm:mb-6 z-10 p-8">
       <section className="border sm:px-4 lg:px-12 py-4 w-[40%] hidden sm:block rounded-[10px]">
         <h3 className="text-black font-bold">StoreHub</h3>
 
@@ -45,9 +66,9 @@ const SignUp = () => {
       <section className="sm:w-[55%] sm:px-6">
         <form>
           <p className="text-end">
-            Already have an account?{' '}
+            Already have an account?
             <Link href="/signin">
-              <span className="text-blue">Sign In</span>
+              <span className="text-dark">Sign In</span>
             </Link>
           </p>
           <p className="text-2xl font-bold py-4">Create Account</p>
@@ -132,6 +153,35 @@ const SignUp = () => {
             </button>
           </div>
 
+          <Dialog open={false}>
+            <DialogTrigger></DialogTrigger>
+            <DialogContent>
+              <div className="flex flex-col gap-5 justify-center items-center font-light">
+                <Image
+                  src={email}
+                  width={100}
+                  height={100}
+                  alt="email logo"
+                ></Image>
+                <p className="font-medium text-2xl">Verify Email</p>
+                <p className="text-sm leading-7">
+                  Thank you for signing up with{' '}
+                  <b className="font-bold">StoreHub</b>! To get started, please
+                  verify your email for security reasons. Check your inbox (and
+                  spam/junk folder) at{' '}
+                  <b className="font-bold">[Recipient's Email Address]</b> for
+                  our verification email.
+                </p>
+                <p className="flex flex-col items-center text-xs">
+                  You didn’t receive email? Request a new email in
+                  <p>
+                    {' '}
+                    <span className="text-purple-800">{seconds} seconds</span>
+                  </p>
+                </p>
+              </div>
+            </DialogContent>
+          </Dialog>
           <div className="py-2 sm:py-1 md:py-3">
             <span className="flex items-center justify-between">
               <hr className="font-bold w-[45%] border-t-1 border-black" />
