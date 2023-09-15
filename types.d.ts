@@ -101,10 +101,10 @@ type StoreResponse = {
   }
 }
 
-type Session = {
-  access_token: string
-  user: User
-}
+// type Session = {
+//   access_token: string
+//   user: User
+// }
 
 type storeData = {
   store_id: string
@@ -253,4 +253,28 @@ type UserResponse = {
 interface IUserCredential {
   email: string
   password: string
+}
+
+interface Session {
+  user: {
+    name: unknown
+    email: unknown
+    image: unknown
+    user: {
+      user_id: number
+      first_name: string
+      last_name: string
+      account_id: string
+      status: string
+      about: string
+      email: string
+      socials: string[]
+      profil_image_url: string
+      created_at: string
+      password_changed_at: string
+      is_active: boolean
+      is_email_verified: boolean
+    }
+    token: string
+  }
 }

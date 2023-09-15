@@ -37,7 +37,7 @@ const SignIn = () => {
           toast.error('Wrong email or password. Try again')
         } else {
           debugger
-          router.push('http://localhost:3000/home')
+          router.push('/home')
         }
       }
     } catch (error) {}

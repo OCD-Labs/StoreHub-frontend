@@ -3,6 +3,7 @@ import Nav from '@components/global/Nav'
 import Footer from '@components/global/Footer'
 import { ErrorBoundary } from 'react-error-boundary'
 import Error from './error'
+import { AuthProvider } from '@app/AuthProvider'
 
 export const metadata = {
   title: 'storehub',
@@ -22,19 +23,17 @@ export default function RootLayout({
         </div>
 
         <main className="h-screen flex flex-col justify-between">
+          <AuthProvider>
           <div>
             <div className="max-w-7xl text-sm m-auto sm:px-16 px-6">
               <Nav />
-              
-              <ErrorBoundary
-                fallback={
-                  <Error error="something went wrong" />
-                }
-              >
+
+              <ErrorBoundary fallback={<Error error="something went wrong" />}>
                 {children}
               </ErrorBoundary>
             </div>
-          </div>
+            </div>
+            </AuthProvider>
           <Footer />
         </main>
       </body>
