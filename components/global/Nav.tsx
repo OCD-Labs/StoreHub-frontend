@@ -92,7 +92,7 @@ const Nav = () => {
   // console.log(wallet, useGlobalContext())
 
   return (
-    <nav className="flex-between items-baseline w-full mt-0 mb-8 sticky top-0 py-[10px] font-light bg-white">
+    <nav className="flex-between items-baseline w-full mt-0 mb-8 sticky top-0 py-[10px] font-light bg-white text-base">
       <Link href="/">
         <Image src={logo} width={100} height={100} alt="logo"></Image>
       </Link>
