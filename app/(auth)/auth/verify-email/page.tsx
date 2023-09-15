@@ -6,6 +6,11 @@ import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { setSession } from '@components/util/session'
 import Link from 'next/link'
+import { setCookie } from '@components/util/cookie'
+import { getCookie } from '@components/util/cookie'
+import { userWallet } from '@app/StoreManager'
+import { signIn } from 'next-auth/react'
+import { clearCookie } from '@components/util/cookie'
 
 const page = () => {
   const [loading, setloading] = useState(false)
@@ -13,6 +18,23 @@ const page = () => {
   const router = useRouter()
   const EMAIL = useSearchParams().get('email')
   const SECRET_CODE = useSearchParams().get('secret_code')
+  const setUser = userWallet((state) => state.setUser)
+
+  const handleSignIn = async () => {
+    const userCookie = getCookie('credential') as string
+    const credential: IUserCredential = JSON.parse(userCookie)
+
+
+    // sign in with NEXTAUTH
+    await signIn('credentials', {
+      email: credential.email,
+      password: credential.password,
+      redirect: false,
+    }).then(() => {
+      clearCookie('credential') // clear cookie from cookie storage
+    })
+  }
+
   useEffect(() => {
     try {
       setloading(true)
@@ -22,8 +44,8 @@ const page = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          secret_code: SECRET_CODE, // Replace with the actual secret code
-          email: EMAIL, // Replace with the user's email
+          secret_code: SECRET_CODE,
+          email: EMAIL,
         }),
       })
         .then((response) => {
@@ -40,8 +62,13 @@ const page = () => {
         })
         .then((data) => {
           debugger
-          // Save the user and token response to localStorage or sessionStorage
-          setSession(data.result)
+          console.log(data.data.result, 'data')
+
+          //handle signin from NextAuth
+          handleSignIn()
+
+          //save user data in global state
+          setUser(data.data.result)
           // Redirect the user to a choose role page
 
           router.push('/auth/choose-role')

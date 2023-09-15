@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Loader2 } from 'lucide-react'
 import { toast, ToastContainer } from 'react-toastify'
 import { Button } from '@components/ui/Button'
+import { setCookie } from '@components/util/cookie'
 import {
   Dialog,
   DialogContent,
@@ -69,11 +70,17 @@ const SignUp = () => {
       if (res) setloading(false)
       debugger
       if (res.status !== 'error') {
+        console.log(data, 'ggggg')
+        const credential = JSON.stringify({
+          email: data.email,
+          password: data.password,
+        })
+        setCookie('credential', credential, 1)
+        debugger
         setModal(true)
         setSeconds(30)
       } else {
         toast.error('User exists already')
-       
       }
 
       console.log(res, 'respon')
