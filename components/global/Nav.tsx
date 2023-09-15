@@ -1,3 +1,4 @@
+
 'use client'
 
 import Link from 'next/link'
@@ -21,7 +22,7 @@ const Nav = () => {
   const [isMenuOpened, setMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const { data: session } = useSession()
-  session as any
+  session as any;
   console.log(session?.user.user.first_name, 'user')
 
   // useEffect(() => {
@@ -116,7 +117,8 @@ const Nav = () => {
             </Button>
           </>
         ) : (
-          <>
+            <>
+              
             <div>
               <Dropdown
                 onToggle={toggleDropdown}
