@@ -1,14 +1,16 @@
 import '@styles/globals.css'
-import DefaultNav from '@components/global/DefaultNav'
+
+import Nav from '@components/global/Nav'
 import Footer from '@components/global/Footer'
-import { ErrorBoundary } from 'react-error-boundary'
+
+import { AuthProvider } from '@app/AuthProvider'
 
 export const metadata = {
   title: 'storehub',
   description: 'One click deployable e-commerce store',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
@@ -22,7 +24,10 @@ export default function RootLayout({
 
         <main className="h-screen flex flex-col justify-between">
           <div>
-            <DefaultNav />
+                      <div className="bg-graybrand">
+                          <AuthProvider><Nav /></AuthProvider>
+             
+            </div>
 
             <div className="text-sm m-auto">{children}</div>
           </div>
