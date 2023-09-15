@@ -39,7 +39,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
             </div> */}
 
               <section
-                className={`averagescreen:flex flex-col mb-6 w-fit border-2 rounded-[10px] h-[83vh] ${
+                className={`averagescreen:flex flex-col w-fit border-2 rounded-[10px] h-[83vh] mt-6 ${
                   // sideBar ? 'flex' : 'hidden'
                   "flex"
                 } fixed bg-white z-50`}
@@ -137,24 +137,6 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                       },
                     }}
                   >
-                    {/* <span
-                    className={`${
-                      activeItem === "notification"
-                        ? "bg-[#000000] text-white"
-                        : ""
-                    } flex px-4 w-[170px] md:w-[190px] pt-7 pb-4 font-bold`}
-                  > */}
-                    {/* <Link
-                    onClick={() => handleItmeClick('notification')}
-                    className="flex cursor-pointer"
-                    href={{
-                      pathname: '/userdashboard/home',
-                      query: {
-                        id: id,
-                        name: name,
-                        user: userID,
-                      },
-                    }} */}
                     <span
                       className={`${
                         activeItem === "notification"
@@ -223,16 +205,16 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                     </span>
                   </Link>
                 </div>
-              </section>
-
               <div className="flex items-center gap-3 absolute left-0 bottom-0 px-4 py-3 cursor-pointer bg-gray-100 w-full">
                 <Image src={signoutIcon} width={30} alt="sign out" />
                 <p className="text-black text-base">Sign Out</p>
               </div>
-            </div>
+              </section>
 
-            <div className="w-full averagescreen:ml-[220px] calculated-account-width border-2 rounded-[10px] h-[83vh]">
+
+            <div className="w-full averagescreen:ml-[220px] calculated-account-width border-2 rounded-[10px] h-[83vh] mt-6">
               {children}
+            </div>
             </div>
           </main>
         </AuthProvider>

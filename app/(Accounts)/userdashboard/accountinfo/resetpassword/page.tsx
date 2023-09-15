@@ -1,7 +1,7 @@
 "use client";
 const ResetPassword = () => {
   return (
-    <main className="averagescreen:w-[60%] mx-auto my-8 px-4">
+    <main className="averagescreen:w-[60%] mx-auto py-8 px-4">
       <form className="flex flex-col gap-6">
         <input
           type="password"
