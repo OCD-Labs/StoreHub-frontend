@@ -13,7 +13,6 @@ const EnterCode = () => {
     <div className="h-screen block w-full p-8 z-10 font-light">
       <div>
         <div className="flex justify-between">
-    
           <Image src={logo} width={100} height={100} alt="logo"></Image>
           <BackButton></BackButton>
         </div>
@@ -33,7 +32,12 @@ const EnterCode = () => {
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
-                inputStyle={{ width: 50, height: 50 }}
+                inputStyle={{
+                  width: 50,
+                  height: 50,
+                  border: '1px solid black',
+                  borderRadius: '8px',
+                }}
                 inputType={'tel'}
                 // @ts-ignore
                 value={otp}

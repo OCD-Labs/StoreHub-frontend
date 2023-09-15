@@ -23,68 +23,72 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
   }, [2])
   console.log(Session)
   return (
-    <Card className="border p-2">
-      <div>
-        <div>
-          <div className="flex flex-row gap-3 ">
-            <div className="border-[1px] rounded border-black">
-              <Image
-                className="p-1 rounded"
-                src={
-                  store.store.profile_image_url
-                    ? store.store.profile_image_url
-                    : pfpic
-                }
-                width={60}
-                height={60}
-                alt="storepic"
-              ></Image>
-            </div>
-
-            <div className="flex flex-col">
-              <h2 className="text-dark opacity-80 font-semibold leading-4 ">
-                <Link href="/stores/1">{store.store.name}</Link>
-              </h2>
-              <ul className="flex gap-3 font-thin">
-                <li>cloth</li>
-                <li>fashion</li>
-                <li>toy</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-between">
-          <div className="flex gap-3 font-thin">
-            <button>cloth</button>
-            <button>fashion</button>
-            <button>hardware</button>
-          </div>
-          <div className="flex items-center gap-2">
-            <p>owner</p>
+    <>
+      <Link href={`/stores/${store.store.id}`}>
+        <Card className="border p-2">
+          <div>
             <div>
-              <Link
-                href={{
-                  pathname: '/inventory/Itemsdashboard',
-                  query: {
-                    id: store.store.id,
-                    name: store.store.name,
-                    user: user_id,
-                  },
-                }}
-              >
-                <Image
-                  className="rounded-full"
-                  src={owner}
-                  width={40}
-                  height={40}
-                  alt="owner"
-                ></Image>
-              </Link>
+              <div className="flex flex-row gap-3 ">
+                <div className="border-[1px] rounded border-black">
+                  <Image
+                    className="p-1 rounded"
+                    src={
+                      store.store.profile_image_url
+                        ? store.store.profile_image_url
+                        : pfpic
+                    }
+                    width={60}
+                    height={60}
+                    alt="storepic"
+                  ></Image>
+                </div>
+
+                <div className="flex flex-col">
+                  <h2 className="text-dark opacity-80 font-semibold leading-4 ">
+                    {store.store.name}
+                  </h2>
+                  <ul className="flex gap-3 font-thin">
+                    <li>cloth</li>
+                    <li>fashion</li>
+                    <li>toy</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-between">
+              <div className="flex gap-3 font-thin">
+                <button>cloth</button>
+                <button>fashion</button>
+                <button>hardware</button>
+              </div>
+              <div className="flex items-center gap-2">
+                <p>owner</p>
+                <div>
+                  <Link
+                    href={{
+                      pathname: '/inventory/Itemsdashboard',
+                      query: {
+                        id: store.store.id,
+                        name: store.store.name,
+                        user: user_id,
+                      },
+                    }}
+                  >
+                    <Image
+                      className="rounded-full"
+                      src={owner}
+                      width={40}
+                      height={40}
+                      alt="owner"
+                    ></Image>
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </Card>
+        </Card>
+      </Link>
+    </>
   )
 }
 

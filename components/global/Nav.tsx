@@ -1,3 +1,4 @@
+
 'use client'
 
 import Link from 'next/link'
@@ -10,79 +11,82 @@ import { setSession } from '@components/util/session'
 import { BASE_URL } from '@components/util/config'
 import { Button } from '@components/ui/Button'
 import logo from '@public/assets/images/storehublogo.svg'
-
-// import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
+import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/Avatar'
 
 const Nav = () => {
   // const [providers, setProviders] = useState(null)
   const { wallet } = userWallet.getState()
   const setUser = userWallet((state) => state.setUser)
-  const [isSignedIn, setIsSignedIn] = useState()
+
   const [isMenuOpened, setMenuOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const { data: session } = useSession()
+  session as any;
+  console.log(session?.user.user.first_name, 'user')
 
-  useEffect(() => {
-    ;(async () => {
-      const loginState = await wallet.startUp()
-      setIsSignedIn(loginState)
-      console.log(loginState, 'login state')
-    })()
+  // useEffect(() => {
+  //   ;(async () => {
+  //     const loginState = await wallet.startUp()
+  //     setIsSignedIn(loginState)
+  //     console.log(loginState, 'login state')
+  //   })()
 
-    return () => {}
-  })
+  //   return () => {}
+  // })
 
-  useEffect(() => {
-    if (wallet.accountId) {
-      signIn()
-    }
-  })
+  // useEffect(() => {
+  //   if (wallet.accountId) {
+  //     signIn()
+  //   }
+  // })
 
-  const signIn = () => {
-    try {
-      // debugger
-      if (wallet.accountId) {
-        fetch(BASE_URL + '/auth/login', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: 'ikehfavourdeveloper@gmail.com',
-            password: 'faVour#0001',
-          }),
-        })
-          .then((response) => response.json())
+  // const signIn = () => {
+  //   try {
+  //     // debugger
+  //     if (wallet.accountId) {
+  //       fetch(BASE_URL + '/auth/login', {
+  //         method: 'POST',
+  //         headers: {
+  //           'Content-Type': 'application/json',
+  //         },
+  //         body: JSON.stringify({
+  //           email: 'ikehfavourdeveloper@gmail.com',
+  //           password: 'faVour#0001',
+  //         }),
+  //       })
+  //         .then((response) => response.json())
 
-          .then(({ data }: UserResponse) => {
-            console.log(data, 'data from api')
-            setUser({
-              access_token: data.result.access_token,
-              user: data.result.user,
-            })
-            setSession({
-              access_token: data.result.access_token,
-              user: data.result.user,
-            })
-            useProfile().setSession({
-              access_token: data.result.access_token,
-              user: data.result.user,
-            })
-          })
-      }
-    } catch (error) {
-      throw new Error('Couldnt sign in')
-      console.log(error)
-    }
-  }
+  //         .then(({ data }: UserResponse) => {
+  //           console.log(data, 'data from api')
+  //           setUser({
+  //             access_token: data.result.access_token,
+  //             user: data.result.user,
+  //           })
+  //           setSession({
+  //             access_token: data.result.access_token,
+  //             user: data.result.user,
+  //           })
+  //           useProfile().setSession({
+  //             access_token: data.result.access_token,
+  //             user: data.result.user,
+  //           })
+  //         })
+  //     }
+  //   } catch (error) {
+  //     throw new Error('Couldnt sign in')
+  //     console.log(error)
+  //   }
+  // }
 
-  //wallet sign in
-  const handleSignIn = async () => {
-    try {
-      await wallet.signIn()
-    } catch (error) {
-      console.log(error)
-    }
-  }
+  // //wallet sign in
+  // const handleSignIn = async () => {
+  //   try {
+  //     await wallet.signIn()
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
 
   const toggleDropdown = () => {
     setMenuOpen(!isMenuOpened)
@@ -91,7 +95,7 @@ const Nav = () => {
   // console.log(wallet, useGlobalContext())
 
   return (
-    <nav className="flex-between items-baseline w-full mt-0 mb-8 sticky top-0 py-[10px] font-light bg-white">
+    <nav className="flex-between max-w-6xl m-auto items-baseline w-full mt-0 sticky top-0 py-[10px] font-light text-base">
       <Link href="/">
         <Image src={logo} width={100} height={100} alt="logo"></Image>
       </Link>
@@ -103,9 +107,9 @@ const Nav = () => {
             <Link href="/stores">Stores</Link>
           </div>
         </div>
-        {!isSignedIn ? (
+        {!session ? (
           <>
-            <Link href="/signin">Login</Link>
+            <Link href="/auth/signin">Login</Link>
             <Button variant="default">
               <Link href={'/auth/onboarding'} className="font-light">
                 Sign up
@@ -113,23 +117,25 @@ const Nav = () => {
             </Button>
           </>
         ) : (
-          <>
+            <>
+              
             <div>
               <Dropdown
                 onToggle={toggleDropdown}
                 className="flex flex-col static"
                 style={{ position: 'static', padding: 0, minWidth: 'auto' }}
               >
-                <Dropdown.Toggle
-                  variant="success"
-                  id="dropdown-basic"
-                  // onClick={() => {
-                  //   setMenuOpen(!isMenuOpened)
-                  // }}
-                >
-                  <Button variant="outline" className="font-light">
-                    {wallet.accountId}
-                  </Button>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                  <div className="flex gap-2 justify-center items-center bg-graybrand">
+                    <div>{session?.user.user.first_name}</div>
+                    <Avatar>
+                      <AvatarImage src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2960&q=80" />
+                      <AvatarFallback>
+                        {session?.user.user.first_name[0]}
+                        {session?.user.user.last_name[0]}
+                      </AvatarFallback>
+                    </Avatar>
+                  </div>
                 </Dropdown.Toggle>
 
                 <Dropdown.Menu
@@ -144,8 +150,19 @@ const Nav = () => {
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Divider />
-                  <Dropdown.Item href="#/action-3">
-                    <div onClick={() => wallet.signOut()}> Sign Out</div>
+                  <Dropdown.Item>
+                    <button
+                      onClick={() => {
+                        signOut()
+                      }}
+                    >
+                      Sign out
+                    </button>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                    <Link href={'/userdashboard'}>Account</Link>
+                      
+                 
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

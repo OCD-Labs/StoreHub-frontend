@@ -1,8 +1,8 @@
 import '@styles/globals.css'
+
 import Nav from '@components/global/Nav'
 import Footer from '@components/global/Footer'
-import { ErrorBoundary } from 'react-error-boundary'
-import Error from './error'
+
 import { AuthProvider } from '@app/AuthProvider'
 
 export const metadata = {
@@ -10,7 +10,7 @@ export const metadata = {
   description: 'One click deployable e-commerce store',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
@@ -23,17 +23,14 @@ export default function RootLayout({
         </div>
 
         <main className="h-screen flex flex-col justify-between">
-          <AuthProvider>
           <div>
-            <div className="max-w-7xl text-sm m-auto sm:px-16 px-6">
-              <Nav />
+                      <div className="bg-graybrand">
+                          <AuthProvider><Nav /></AuthProvider>
+             
+            </div>
 
-              <ErrorBoundary fallback={<Error error="something went wrong" />}>
-                {children}
-              </ErrorBoundary>
-            </div>
-            </div>
-            </AuthProvider>
+            <div className="text-sm m-auto">{children}</div>
+          </div>
           <Footer />
         </main>
       </body>
