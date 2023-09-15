@@ -12,7 +12,7 @@ import notification from "@public/assets/icons/Notification 2.svg";
 import notificationWhite from "@public/assets/icons/notification-white.svg";
 import saved from "@public/assets/icons/saved.svg";
 import savedWhite from "@public/assets/icons/saved-white.svg";
-import signoutIcon from "@public/assets/icons/signoutIcon.svg.svg";
+import signoutIcon from "@public/assets/icons/signoutIcon.svg";
 
 import "@styles/globals.css";
 
@@ -127,7 +127,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                   onClick={() => handleItmeClick("notification")}
                   className="flex cursor-pointer"
                   href={{
-                    pathname: "/userdashboard/home",
+                    pathname: "/userdashboard/notifications/notificationinfo",
                     query: {
                       id: id,
                       name: name,
@@ -202,6 +202,11 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                     <p>Saved</p>
                   </span>
                 </Link>
+              </div>
+
+              <div className="flex items-center gap-3 absolute left-0 bottom-0 px-4 py-3 cursor-pointer bg-gray-100 w-full">
+                <Image src={signoutIcon} width={30} alt='sign out' />
+                <p className="text-black text-base">Sign Out</p>
               </div>
             </section>
 
