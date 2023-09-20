@@ -1,5 +1,5 @@
 import { userWallet } from '@app/StoreManager'
-import { storehubAPI, StorehubClient } from '@app/(dashboard)/inventory/page'
+
 import { BASE_URL } from '@components/util/config'
 
 const { user } = userWallet.getState()
@@ -8,7 +8,7 @@ export interface OPTIONS {
   method: string
   headers: {
     'Content-Type': string
-    Authorization: string
+    Authorization?: string
   }
 }
 

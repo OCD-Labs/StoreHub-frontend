@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify'
-
+import { useSession } from 'next-auth/react'
 import 'react-toastify/dist/ReactToastify.css'
 import Link from 'next/link'
 // @ts-nocheck
@@ -15,11 +15,11 @@ import { userWallet } from '@app/StoreManager'
 import ImageUploader from '@components/global/ImageUploader'
 
 const CreateStore = () => {
+  const { data: session } = useSession()
   const { wallet } = userWallet.getState()
   const searchParams = useSearchParams()
   const router = useRouter()
   const [imageData, setImageData] = useState<any>()
-  const [session, setSession] = useState<Session>()
   const [inputTag, setTagInput] = useState<string>('')
 
   const [formData, setFormData] = useState({
@@ -37,9 +37,9 @@ const CreateStore = () => {
 
   const storeData: StoreDataInterface = {
     store_id: formData.store_account_id,
-    user_id: session ? session.user.user_id : '',
+    user_id: session ? session.user.user.user_id : '',
   }
-  console.log(formData, 'storeData')
+  console.log(session, 'session')
   formData.profile_image_url = imageData?.secure_url
   const handleChange = (e: any) => {
     setFormData({
@@ -53,7 +53,6 @@ const CreateStore = () => {
     // debugger
     createNewStore()
   }
-  console.log(session, 'session')
 
   // set Image data
   const handleImageData = (data: ImageData) => {
@@ -62,6 +61,7 @@ const CreateStore = () => {
   }
   console.log(imageData?.secure_url, 'image data at')
 
+
   //crete new store
   const createNewStore = (): void => {
     formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`
@@ -69,17 +69,14 @@ const CreateStore = () => {
     if (session) {
       try {
         localStorage.setItem('storeData', JSON.stringify(storeData))
-        fetch(
-          BASE_URL + `/inventory/stores`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${session ? session.access_token : ''}`,
-            },
-            body: JSON.stringify(formData),
+        fetch(BASE_URL + `/inventory/stores`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${session ? session.user.token : ''}`,
           },
-        )
+          body: JSON.stringify(formData),
+        })
           .then((response) => {
             return response.json()
           })
@@ -90,7 +87,7 @@ const CreateStore = () => {
               toast('Successfully created your store!')
               setTimeout(() => {
                 router.push(
-                  `/inventory/Itemsdashboard?id=${data.data.result.store.id}&name=${data.data.result.store.name}&user=${session?.user.user_id}`,
+                  `/inventory/Itemsdashboard?id=${data.data.result.store.id}&name=${data.data.result.store.name}&user=${session?.user.user.user_id}`,
                 )
               }, 2000)
             } else {
@@ -113,11 +110,6 @@ const CreateStore = () => {
       }
     }
   }
-
-  useEffect(() => {
-    let session = getSession()
-    setSession(session)
-  }, [])
 
   //handle form validation
 

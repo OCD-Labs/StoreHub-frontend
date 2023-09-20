@@ -17,6 +17,7 @@ const nextConfig = {
       'www.gravatar.com',
       'res.cloudinary.com',
       'www.greengrove.com',
+      'plus.unsplash.com',
       'big-7.png',
     ],
   },

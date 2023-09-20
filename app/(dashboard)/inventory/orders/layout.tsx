@@ -1,14 +1,16 @@
 'use client'
 
-import React from "react";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
-
+import React, { useEffect, useState } from 'react'
+import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
+import { AuthProvider } from '@app/AuthProvider'
+import { BASE_URL } from '@components/util/config'
 const Order = ({ children }: { children: React.ReactNode }) => {
-  const token = useSearchParams().get("token");
-  const userID = useSearchParams().get("user");
-  const id = useSearchParams().get("id");
-  const name = useSearchParams().get("name");
+  const token = useSearchParams().get('token')
+  const userID = useSearchParams().get('user')
+  const id = useSearchParams().get('id')
+  const name = useSearchParams().get('name')
+
 
   return (
     <div>
@@ -22,11 +24,10 @@ const Order = ({ children }: { children: React.ReactNode }) => {
               <ul>
                 <Link
                   href={{
-                    pathname: "/inventory/orders/ordersoverview",
+                    pathname: '/inventory/orders/ordersoverview',
                     query: {
                       id: id,
                       name: name,
-                      token: token,
                       user: userID,
                     },
                   }}
@@ -37,11 +38,10 @@ const Order = ({ children }: { children: React.ReactNode }) => {
               <ul>
                 <Link
                   href={{
-                    pathname: "/inventory/orders/ordersinsight",
+                    pathname: '/inventory/orders/ordersinsight',
                     query: {
                       id: id,
                       name: name,
-                      token: token,
                       user: userID,
                     },
                   }}
@@ -63,10 +63,12 @@ const Order = ({ children }: { children: React.ReactNode }) => {
           </div>
           <hr className="py-3" />
         </section>
-        <section>{children}</section>
+        <AuthProvider>
+          <section>{children}</section>
+        </AuthProvider>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Order;
+export default Order

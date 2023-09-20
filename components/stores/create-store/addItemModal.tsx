@@ -4,6 +4,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { BASE_URL } from '@components/util/config'
 import { ModalOptions, modalstore } from '@app/StoreManager/modalstore'
 import useProfile from '@app/hooks/useProfile'
+import { useSession } from 'next-auth/react'
 
 interface PropsInterface {
   userID: string | null
@@ -29,6 +30,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
     supply_quantity: number
   }
   const [images, setImages] = useState<string[]>([])
+  const {data:session}= useSession()
   const updateImage = (imgurl: string) => {
     images.push(imgurl)
     console.log(images)
@@ -47,8 +49,8 @@ const AddItemModal: React.FC<PropsInterface> = ({
   })
 
   const toggleModal = modalstore((state) => state.toggleModal)
-  const user: Session | undefined = useProfile().getSession()
-  console.log(user, 'user oo')
+ 
+  console.log(session, 'user oo')
 
   const addStoreProducts = async () => {
     debugger
@@ -71,7 +73,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
         method: method,
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${user ? user.access_token : ''}`,
+          Authorization: `Bearer ${session ? session.user.token : ''}`,
         },
         body: JSON.stringify(itemData),
       })

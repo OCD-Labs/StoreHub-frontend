@@ -1,15 +1,16 @@
-
+// @ts-nocheck
 'use client'
-import Image from "next/image";
-import { Key, useState, useEffect } from "react";
-import search from "../../../../../public/assets/icons/search.svg";
-import filter from "../../../../../public/assets/icons/filter.svg";
+import Image from 'next/image'
+import { Key, useState, useEffect } from 'react'
+import search from '../../../../../public/assets/icons/search.svg'
+import filter from '../../../../../public/assets/icons/filter.svg'
 import { OPTIONS } from '@app/apis'
 import useProfile from '@app/hooks/useProfile'
 import { useSearchParams } from 'next/navigation'
-import { FetchOrdersOverview } from "@app/apis/Inventory";
-import Skeleton from "react-loading-skeleton";
-import OrdersOverviewTable from "@components/stores/orders/OrdersOverviewTable";
+import { FetchOrdersOverview } from '@app/apis/Inventory'
+import Skeleton from 'react-loading-skeleton'
+import OrdersOverviewTable from '@components/stores/orders/OrdersOverviewTable'
+import { useSession } from 'next-auth/react'
 import {
   Table,
   TableBody,
@@ -18,59 +19,55 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-
 } from '../../../../../components/ui/Table'
 
 const OrdersOverview = () => {
+  const { data: session } = useSession()
   const [loading, setloading] = useState<boolean>(true)
   const [ordersOverview, setOrdersOverview] = useState<[]>([])
 
   const store_id: string | null = useSearchParams().get('id')
+  console.log(session, 'ordesession')
 
+  const token = session?.user.token
   const GET_OPTIONS: OPTIONS = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
+      Authorization: `Bearer ${token}`,
     },
   }
 
   type OrdersOverviewType = {
-    status: string;
+    status: string
     data: {
-        message: string;
-        result: {
-          order: [];
-          metadata: {};
-        };
-    };
-}
-
+      message: string
+      result: {
+        order: []
+        metadata: {}
+      }
+    }
+  }
 
   async function GetOrdersOverview() {
     try {
       const orders: OrdersOverviewType = await FetchOrdersOverview(
         store_id,
-        GET_OPTIONS
-
+        GET_OPTIONS,
       )
       setOrdersOverview(orders.data.result.order)
       console.log(orders)
     } catch (error) {
       throw new Error('Error while fetching overview')
-
     }
   }
 
   useEffect(() => {
     GetOrdersOverview().then(() => {
-
       setloading(false)
     })
-  }, [1])
+  }, [1, session])
   console.log(ordersOverview, 'orders')
-
-
 
   return (
     <div>
@@ -98,15 +95,12 @@ const OrdersOverview = () => {
       </section>
 
       <div className="md:flex mt-4 averagescreen:mt-6">
-
-      <section className="md:flex-1 w-full">
-
+        <section className="md:flex-1 w-full">
           <div className="flex flex-col overflow-x-scroll scroll-smooth">
             <Table>
               <TableCaption>View your order overview</TableCaption>
               <TableHeader>
                 <TableRow>
-
                   <TableHead>Product Name</TableHead>
                   <TableHead>Order ID</TableHead>
                   <TableHead>Customer Name</TableHead>
@@ -118,7 +112,6 @@ const OrdersOverview = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-
                 {loading ? (
                   <Skeleton count={10} />
                 ) : ordersOverview?.length < 1 ? (
@@ -134,16 +127,13 @@ const OrdersOverview = () => {
                     ),
                   )
                 )}
-
               </TableBody>
             </Table>
           </div>
         </section>
-
-        </div>
-
+      </div>
     </div>
-  );
-};
+  )
+}
 
-export default OrdersOverview;
+export default OrdersOverview

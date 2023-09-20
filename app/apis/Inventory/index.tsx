@@ -2,7 +2,7 @@
 import { BASE_URL } from '@components/util/config'
 import { GET_OPTIONS, OPTIONS, POST_OPTION } from '..'
 
-import { storehubAPI } from '@app/(dashboard)/inventory/page'
+
 import { AxiosResponse } from 'axios'
 
 export const GetStoreItems = (
@@ -39,10 +39,10 @@ export const GetSalesOverview = (
   return res
 }
 
-export const GetSalesHistory = (id: string | null): Promise<any> => {
-  const res = storehubAPI.get(`/inventory/stores/${id}/sales`)
-  return res
-}
+// export const GetSalesHistory = (id: string | null): Promise<any> => {
+//   const res = storehubAPI.get(`/inventory/stores/${id}/sales`)
+//   return res
+// }
 
 export const FetchOrdersOverview = (
   store_id: string | null,
@@ -55,28 +55,34 @@ export const FetchOrdersOverview = (
   return res
 }
 
-export const AddStoreCoOwner = (
-  store_id: string | null,
-  data: CoOwner,
-): Promise<any> => {
-  debugger
-  const body = { ...data, new_access_level: Number(data.new_access_level) }
-  const res = storehubAPI.post(
-    `/inventory/stores/${store_id}/send-access-invitation`,
-    body,
-  )
-  return res
-}
+// export const AddStoreCoOwner = (
+//   store_id: string | null,
+//   data: CoOwner,
+// ): Promise<any> => {
+//   debugger
+//   const body = { ...data, new_access_level: Number(data.new_access_level) }
+//   const res = fetch(
+//     `/inventory/stores/${store_id}/send-access-invitation`, {
+//       method: 'POST',
+//       headers: {
+
+//       }
+//     }
+//     body,
+//   )
+//   return res
+// }
 
 export const GetAllReviews = (
   store_id: string | null,
-  GET_OPTIONS: OPTIONS
+  GET_OPTIONS: OPTIONS,
 ): Promise<any> => {
-  const res = fetch(BASE_URL + `/inventory/stores/${store_id}/reviews`, GET_OPTIONS).then(
-    (response) => response.json()
-  );
-  return res;
-};
+  const res = fetch(
+    BASE_URL + `/inventory/stores/${store_id}/reviews`,
+    GET_OPTIONS,
+  ).then((response) => response.json())
+  return res
+}
 export const acceptInvitaion = (
   store_id: string | null,
   confirmationToken: string | null,
@@ -91,9 +97,9 @@ export const acceptInvitaion = (
   return res
 }
 
-export const GetStoreDetails = async (
-  store_name: string | null,
-): Promise<any> => {
-  const res = await storehubAPI.get(`/stores?store_name=${store_name}`)
-  return res.data
-}
+// export const GetStoreDetails = async (
+//   store_name: string | null,
+// ): Promise<any> => {
+//   const res = await storehubAPI.get(`/stores?store_name=${store_name}`)
+//   return res.data
+// }
