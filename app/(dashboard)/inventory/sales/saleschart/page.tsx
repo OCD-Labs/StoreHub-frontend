@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 
 import Image from 'next/image'
@@ -28,6 +29,7 @@ import useProfile from '@app/hooks/useProfile'
 import { OPTIONS } from '@app/apis'
 import { GetSalesHistory } from '@app/apis/Inventory'
 import { modalstore } from '@app/StoreManager/modalstore'
+import { useSession } from 'next-auth/react'
 import Skeleton from 'react-loading-skeleton'
 import {
   Dialog,
@@ -45,7 +47,7 @@ const SalesChart = () => {
   const percent = '10'
   const [loading, setloading] = useState<boolean>(true)
   const [salesHistory, setSalesHistory] = useState([])
-
+  const { data: session } = useSession()
   const userID: string | null = useSearchParams().get('user')
 
   const id: string | null = useSearchParams().get('id')
@@ -55,7 +57,7 @@ const SalesChart = () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
+      Authorization: `Bearer ${session?.user.token}`,
     },
   }
 
@@ -74,7 +76,7 @@ const SalesChart = () => {
     getSalesHistroy().then(() => {
       setloading(false)
     })
-  }, [1])
+  }, [1, session])
 
   // handle sale info display
   const handleSaleInfoDisplay = (sale: ISalesHistory) => {

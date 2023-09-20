@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 import React, { Key, useEffect, useState } from 'react'
 import { GetSalesOverview } from '@app/apis/Inventory'
@@ -10,6 +11,7 @@ import ProductItem from '@components/stores/productitem'
 import Skeleton from 'react-loading-skeleton'
 import { ToastContainer } from 'react-toastify'
 import { OPTIONS } from '@app/apis'
+import { useSession } from 'next-auth/react'
 import SalesOverviewTable from '@components/stores/sales/SalesOverviewTable'
 import {
   Table,
@@ -24,7 +26,7 @@ import {
 const SalesOverview: React.FC = () => {
   const [loading, setloading] = useState<boolean>(true)
   const [SalesOverview, setSalesOverview] = useState<[]>([])
-
+  const { data: session } = useSession()
   const userID: string | null = useSearchParams().get('user')
 
   const id: string | null = useSearchParams().get('id')
@@ -33,7 +35,7 @@ const SalesOverview: React.FC = () => {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
+      Authorization: `Bearer ${session?.user.token}`,
     },
   }
 
@@ -56,7 +58,7 @@ const SalesOverview: React.FC = () => {
     getSales().then(() => {
       setloading(false)
     })
-  }, [1])
+  }, [1, session])
   console.log(SalesOverview, 'sales')
 
   return (

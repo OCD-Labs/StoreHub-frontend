@@ -1,4 +1,4 @@
-
+// @ts-nocheck
 'use client'
 
 import Link from 'next/link'
@@ -11,19 +11,43 @@ import { setSession } from '@components/util/session'
 import { BASE_URL } from '@components/util/config'
 import { Button } from '@components/ui/Button'
 import logo from '@public/assets/images/storehublogo.svg'
+import useSWR from 'swr'
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react'
 import { Avatar, AvatarFallback, AvatarImage } from '../../components/ui/Avatar'
 
 const Nav = () => {
   // const [providers, setProviders] = useState(null)
-  const { wallet } = userWallet.getState()
-  const setUser = userWallet((state) => state.setUser)
-
+  // const { wallet } = userWallet.getState()
+  // const setUser = userWallet((state) => state.setUser)
+  const [store, setStore] = useState<any>()
   const [isMenuOpened, setMenuOpen] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
+  // const [isMobile, setIsMobile] = useState(false)
   const { data: session } = useSession()
-  session as any;
+
+  // @ts-ignore
   console.log(session?.user.user.first_name, 'user')
+
+  const fetcher = (url: string) =>
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session?.user.token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        return data
+      })
+
+  const { data, error, isLoading } = useSWR(
+    session ? `${BASE_URL}/inventory/stores` : null,
+    fetcher,
+  )
+
+  if (!error) {
+    console.log(data?.data.result.stores, 'store swr')
+  }
 
   // useEffect(() => {
   //   ;(async () => {
@@ -95,7 +119,7 @@ const Nav = () => {
   // console.log(wallet, useGlobalContext())
 
   return (
-    <nav className="flex-between max-w-6xl m-auto items-baseline w-full mt-0 sticky top-0 py-[10px] font-light text-base">
+    <nav className="flex-between max-w-6xl m-auto items-baseline w-full mt-0 sticky top-0 py-[10px] px-4 lg:px-0 font-light text-base">
       <Link href="/">
         <Image src={logo} width={100} height={100} alt="logo"></Image>
       </Link>
@@ -117,8 +141,7 @@ const Nav = () => {
             </Button>
           </>
         ) : (
-            <>
-              
+          <>
             <div>
               <Dropdown
                 onToggle={toggleDropdown}
@@ -127,10 +150,11 @@ const Nav = () => {
               >
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
                   <div className="flex gap-2 justify-center items-center bg-graybrand">
-                    <div>{session?.user.user.first_name}</div>
+                    <div></div>
                     <Avatar>
-                      <AvatarImage src="https://images.unsplash.com/photo-1628157588553-5eeea00af15c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2960&q=80" />
-                      <AvatarFallback>
+                      <AvatarImage src="" />
+
+                      <AvatarFallback className="border-4 border-dark">
                         {session?.user.user.first_name[0]}
                         {session?.user.user.last_name[0]}
                       </AvatarFallback>
@@ -149,7 +173,30 @@ const Nav = () => {
                       <button className="black_btn">Create Store</button>
                     </Link>
                   </Dropdown.Item>
+
                   <Dropdown.Divider />
+
+                  <Dropdown.Item>
+                    <Link href={'/userdashboard'}>Account</Link>
+                  </Dropdown.Item>
+                  <Dropdown.Item>
+                    {!error && data?.data.result.stores.length ? (
+                      <Link
+                        href={{
+                          pathname: '/inventory/Itemsdashboard',
+                          query: {
+                            id: data?.data.result.stores[0].store_id,
+                            name: data?.data.result.stores[0].store_name,
+                            user: session?.user.user.user_id,
+                          },
+                        }}
+                      >
+                        Dashboard
+                      </Link>
+                    ) : (
+                      ''
+                    )}
+                  </Dropdown.Item>
                   <Dropdown.Item>
                     <button
                       onClick={() => {
@@ -158,11 +205,6 @@ const Nav = () => {
                     >
                       Sign out
                     </button>
-                    </Dropdown.Item>
-                    <Dropdown.Item>
-                    <Link href={'/userdashboard'}>Account</Link>
-                      
-                 
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

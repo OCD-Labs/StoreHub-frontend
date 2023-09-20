@@ -71,7 +71,7 @@ const page = () => {
           setUser(data.data.result)
           // Redirect the user to a choose role page
 
-          router.push('/auth/choose-role')
+          router.push('/auth/choose-role') 
         })
         .catch((error) => {
           // Handle and log any errors

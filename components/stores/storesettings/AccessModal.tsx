@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 import React, { useState } from 'react'
 import coown from '../../../public/assets/icons/Inventory/coown.svg'
@@ -8,13 +9,14 @@ import useSWR from 'swr'
 import { Loader2 } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { AddStoreCoOwner } from '@app/apis/Inventory'
-
+import { useSession } from 'next-auth/react'
 const FULLACCESS = 1
 const PRODUCTINVENTORYACCESS = 2
 const SALESACCESS = 3
 const ORDERSACCESS = 4
 
 const AccessModal = ({ accessModal }: { accessModal: any }) => {
+  const { data: session } = useSession()
   const id: string | null = useSearchParams().get('id')
   const [loading, setLoading] = useState<boolean>(false)
   const [coowner, setCoowner] = useState<CoOwner>({
@@ -33,11 +35,25 @@ const AccessModal = ({ accessModal }: { accessModal: any }) => {
   const sendInvitation = async () => {
     debugger
     setLoading(true)
-    const res = await AddStoreCoOwner(id, coowner)
-    console.log(res)
-    
+    console.log(coowner, 'own')
+    const body = {
+      ...coowner,
+      new_access_level: Number(coowner.new_access_level),
+    }
+    const res = await fetch(`/inventory/stores/${id}/send-access-invitation`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session?.user.token}`,
+      },
+      body: JSON.stringify(body),
+    }).then((res) => {
+      setLoading(false)
+      return res.json()
+    })
+    console.log(res, 'res')
 
-    accessModal(res.data.status)
+    accessModal(res?.data.status)
   }
   return (
     <div>

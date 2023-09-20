@@ -23,14 +23,15 @@ export default async function RootLayout({
         </div>
 
         <main className="h-screen flex flex-col justify-between">
-          <div>
-                      <div className="bg-graybrand">
-                          <AuthProvider><Nav /></AuthProvider>
-             
-            </div>
+          
+            <div>
+              <div className="bg-graybrand">
+                <AuthProvider><Nav /></AuthProvider> 
+              </div>
 
-            <div className="text-sm m-auto">{children}</div>
-          </div>
+              <div className="text-sm m-auto"><AuthProvider>{children}</AuthProvider></div>
+            </div>
+          
           <Footer />
         </main>
       </body>

@@ -1,19 +1,20 @@
+// @ts-nocheck
 'use client'
 import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
 import '../styles/inventory.css'
-import { userWallet } from '@app/StoreManager'
+
 import ProductItem from '@components/stores/productitem'
 import AddItemModal from '@components/stores/create-store/addItemModal'
-import { getSession } from '@components/util/session'
+
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { BASE_URL } from '@components/util/config'
 import { ToastContainer, toast } from 'react-toastify'
 import { Key, Suspense, useEffect, useState } from 'react'
 import { ModalOptions, modalstore } from '@app/StoreManager/modalstore'
-import useProfile from '@app/hooks/useProfile'
 
+import { useSession } from 'next-auth/react'
 import necklace from '../../../../public/assets/images/necklace.png'
 import search from '../../../../public/assets/icons/search.svg'
 import filter from '../../../../public/assets/icons/filter.svg'
@@ -32,19 +33,19 @@ import 'react-toastify/dist/ReactToastify.css'
 const Inventory = () => {
   const isOpen = modalstore((state) => state.isOpen)
   const toggleModal = modalstore((state) => state.toggleModal)
+  const { data: session } = useSession()
   const ID = '123PDWD'
   const [storeItems, setStoreItems] = useState<any>([])
   const [refNo, setRefNo] = useState<number>(1)
-  const [session, setSession] = useState<UserData | null>()
+
   const modaloptions = modalstore((state) => state.modalOptions)
   const [loading, setloading] = useState<boolean>(true)
 
   const userID: string | null = useSearchParams().get('user')
 
   const id: string | null = useSearchParams().get('id')
-  const token: string | null = useSearchParams().get('token')
   const name: string | null = useSearchParams().get('name')
-
+  console.log(session, 'session')
   const setAddItemStatus = (data: string, action: string) => {
     if (action == 'update store') {
       if (data !== 'error') {
@@ -73,12 +74,14 @@ const Inventory = () => {
   }
 
   const getStoreData = async () => {
+    const token = session?.user.token
+    console.log(token, 'token')
     try {
       fetch(BASE_URL + `/inventory/stores/${id}/items`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => response.json())
@@ -94,7 +97,7 @@ const Inventory = () => {
 
   useEffect(() => {
     getStoreData()
-  }, [refNo])
+  }, [refNo, session])
 
   return (
     <Suspense>

@@ -6,7 +6,7 @@ import { Loader2 } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify'
-import { storehubAPI } from '@app/(dashboard)/inventory/page'
+import { storehubAPI } from '@app/(dashboard)/Home/page'
 import { getSession, setSession } from '@components/util/session'
 import 'react-toastify/dist/ReactToastify.css'
 
