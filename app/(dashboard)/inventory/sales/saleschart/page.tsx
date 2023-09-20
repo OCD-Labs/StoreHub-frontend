@@ -39,8 +39,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../../../../../components/ui/Dialog'
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json())
+import { BASE_URL } from '@components/util/config'
 
 const SalesChart = () => {
   const amount = '3,765.88'
@@ -53,30 +52,25 @@ const SalesChart = () => {
   const id: string | null = useSearchParams().get('id')
   const setSaleInfoStatus = modalstore((state) => state.setSaleInfoStatus)
   const setSaleInfo = modalstore((state) => state.setSaleInfo)
-  const GET_OPTIONS: OPTIONS = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${session?.user.token}`,
-    },
-  }
 
-  async function getSalesHistroy() {
-    try {
-      const { data }: Sales = await GetSalesHistory(id)
-
-      console.log(data, 'imsales')
-      setSalesHistory(data?.data.result.sales)
-    } catch (error) {
-      throw new Error(error + 'failed to fetch saleshistory')
-    }
-  }
-
-  useEffect(() => {
-    getSalesHistroy().then(() => {
-      setloading(false)
+  const fetcher = (url: string) =>
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session?.user.token}`,
+      },
     })
-  }, [1, session])
+      .then((response) => response.json())
+      .then((data) => {
+        return data
+      })
+
+  const { data, error, isLoading } = useSWR(
+    session ? `${BASE_URL}/inventory/stores/${id}/sales` : null,
+    fetcher,
+  )
+  console.log(data?.data.result.sales, 'salesdata')
 
   // handle sale info display
   const handleSaleInfoDisplay = (sale: ISalesHistory) => {
@@ -239,14 +233,14 @@ const SalesChart = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {loading ? (
+                {isLoading ? (
                   <Skeleton count={10} />
-                ) : salesHistory?.length < 1 ? (
+                ) : !data?.data.result.sales.length ? (
                   <h1 className="text-black sm:text-5xl text-4xl text-center mt-[20%]">
-                    No Overview Yet!
+                    No Sales History Yet!
                   </h1>
                 ) : (
-                  salesHistory?.map(
+                  data?.data.result.sales.map(
                     (product: ISalesHistory, key: Key | null | undefined) => (
                       <TableRow onClick={() => handleSaleInfoDisplay(product)}>
                         <SalesHistoryTable key={key} sales={product} />

@@ -10,6 +10,7 @@ import { Loader2 } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { AddStoreCoOwner } from '@app/apis/Inventory'
 import { useSession } from 'next-auth/react'
+import { BASE_URL } from '@components/util/config'
 const FULLACCESS = 1
 const PRODUCTINVENTORYACCESS = 2
 const SALESACCESS = 3
@@ -40,20 +41,23 @@ const AccessModal = ({ accessModal }: { accessModal: any }) => {
       ...coowner,
       new_access_level: Number(coowner.new_access_level),
     }
-    const res = await fetch(`/inventory/stores/${id}/send-access-invitation`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${session?.user.token}`,
+    const res = await fetch(
+      `${BASE_URL}/inventory/stores/${id}/send-access-invitation`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session?.user.token}`,
+        },
+        body: JSON.stringify(body),
       },
-      body: JSON.stringify(body),
-    }).then((res) => {
+    ).then((res) => {
       setLoading(false)
       return res.json()
     })
-    console.log(res, 'res')
+    console.log(res?.status, 'ressss')
 
-    accessModal(res?.data.status)
+    accessModal(res?.status)
   }
   return (
     <div>

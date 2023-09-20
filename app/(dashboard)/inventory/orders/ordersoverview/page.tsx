@@ -11,6 +11,8 @@ import { FetchOrdersOverview } from '@app/apis/Inventory'
 import Skeleton from 'react-loading-skeleton'
 import OrdersOverviewTable from '@components/stores/orders/OrdersOverviewTable'
 import { useSession } from 'next-auth/react'
+import useSWR from 'swr'
+import { BASE_URL } from '@components/util/config'
 import {
   Table,
   TableBody,
@@ -48,26 +50,24 @@ const OrdersOverview = () => {
       }
     }
   }
-
-  async function GetOrdersOverview() {
-    try {
-      const orders: OrdersOverviewType = await FetchOrdersOverview(
-        store_id,
-        GET_OPTIONS,
-      )
-      setOrdersOverview(orders.data.result.order)
-      console.log(orders)
-    } catch (error) {
-      throw new Error('Error while fetching overview')
-    }
-  }
-
-  useEffect(() => {
-    GetOrdersOverview().then(() => {
-      setloading(false)
+  const fetcher = (url: string) =>
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${session?.user.token}`,
+      },
     })
-  }, [1, session])
-  console.log(ordersOverview, 'orders')
+      .then((response) => response.json())
+      .then((data) => {
+        return data
+      })
+
+  const { data, error, isLoading } = useSWR(
+    session ? `${BASE_URL}/inventory/stores/${store_id}/orders` : null,
+    fetcher,
+  )
+  console.log(data?.data.result.order, 'orderdata')
 
   return (
     <div>
@@ -112,14 +112,14 @@ const OrdersOverview = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {loading ? (
-                  <Skeleton count={10} />
-                ) : ordersOverview?.length < 1 ? (
+                {isLoading ? (
+                  <div>Loading...</div>
+                ) : !data?.data.result.order.length ? (
                   <h1 className="text-black sm:text-5xl text-4xl text-center mt-[20%]">
-                    No Overview Yet!
+                    No Orders Yet!
                   </h1>
                 ) : (
-                  ordersOverview?.map(
+                  data?.data.result.order.map(
                     (order: any, key: Key | null | undefined) => (
                       <TableRow>
                         <OrdersOverviewTable key={key} orders={order} />
