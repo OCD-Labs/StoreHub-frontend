@@ -21,10 +21,62 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
 } from "@/components/ui/AlertDialog";
+import { useState } from "react";
 
 const Pending = () => {
+  const [trackOrder, setTrackOrder] = useState(false);
+
   return (
     <main className="p-3 sm:p-6 flex flex-col gap-3">
+      <AlertDialog open={trackOrder} onOpenChange={setTrackOrder}>
+        <AlertDialogTrigger></AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogDescription>
+            <div>
+              <div className="flex justify-between border rounded-[10px] p-2 sm:p-4">
+                <div>
+                  <p className="font-semibold text-base mb-2">
+                    Butter Cream Cakes
+                  </p>
+                  <div className="flex gap-2 sm:gap-3">
+                    <Image
+                      src={schoolbag}
+                      alt="product"
+                      className="sm:w-[100px]"
+                    />
+                    <div className="flex flex-col gap-0 sm:gap-2">
+                      <span className="flex items-center gpa-2 sm:gap-3">
+                        <p className="font-semibold text-base">Order Update</p>
+                        <p className="text-black ml-1">x1</p>
+                        <span className="text-[8px] bg-green-300 text-green-900 ml-2 px-6 py-0 h-5 rounded-[39px]">
+                          completed
+                        </span>
+                      </span>
+                      <p className="text-[10px] text-black">
+                        Choco, nude & white
+                      </p>
+                      <p className="text-sm text-black">$249</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-end flex-col justify-between">
+                  <p className="hidden sm:block">May 22, 2024</p>
+                  <p className="hidden sm:block text-green-600 font-semi-bold cursor-pointer underline">
+                    Review Product
+                  </p>
+                </div>
+              </div>
+
+              <div></div>
+            </div>
+          </AlertDialogDescription>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
       <div className="flex justify-between border rounded-[10px] p-2 sm:p-4">
         <div>
           <p className="font-semibold text-base mb-2">Butter Cream Cakes</p>
@@ -51,61 +103,16 @@ const Pending = () => {
             <DropdownMenuContent>
               <div>
                 <DropdownMenuItem>
-                  <AlertDialog>
-                    <AlertDialogTrigger>
-                      <p className="text-sm cursor-pointer">Track Order </p>
-                    </AlertDialogTrigger>
-                    <AlertDialogContent>
-                      <AlertDialogDescription>
-                        <div>
-                          <div className="flex justify-between border rounded-[10px] p-2 sm:p-4">
-                            <div>
-                              <p className="font-semibold text-base mb-2">
-                                Butter Cream Cakes
-                              </p>
-                              <div className="flex gap-2 sm:gap-3">
-                                <Image
-                                  src={schoolbag}
-                                  alt="product"
-                                  className="sm:w-[100px]"
-                                />
-                                <div className="flex flex-col gap-0 sm:gap-2">
-                                  <span className="flex items-center gpa-2 sm:gap-3">
-                                    <p className="font-semibold text-base">
-                                      Order Update
-                                    </p>
-                                    <p className="text-black ml-1">x1</p>
-                                    <span className="text-[8px] bg-green-300 text-green-900 ml-2 px-6 py-0 h-5 rounded-[39px]">
-                                      completed
-                                    </span>
-                                  </span>
-                                  <p className="text-[10px] text-black">
-                                    Choco, nude & white
-                                  </p>
-                                  <p className="text-sm text-black">$249</p>
-                                </div>
-                              </div>
-                            </div>
-                            <div className="flex items-end flex-col justify-between">
-                              <p className="hidden sm:block">May 22, 2024</p>
-                              <p className="hidden sm:block text-green-600 font-semi-bold cursor-pointer underline">
-                                Review Product
-                              </p>
-                            </div>
-                          </div>
-
-                          <div></div>
-                          {/* ask victor for help  */}
-                        </div>
-                      </AlertDialogDescription>
-                      <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction>Continue</AlertDialogAction>
-                      </AlertDialogFooter>
-                    </AlertDialogContent>
-                  </AlertDialog>
-                  {/* alert dialog ends here */}
+                  <p
+                    className="text-sm cursor-pointer"
+                    onClick={() => {
+                      setTrackOrder(!trackOrder);
+                    }}
+                  >
+                    Track Order{" "}
+                  </p>
                 </DropdownMenuItem>
+                {/* alert dialog ends here */}
 
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>

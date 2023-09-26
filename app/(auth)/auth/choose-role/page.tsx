@@ -19,7 +19,7 @@ const ChooseRole = () => {
                 Store Owner
               </Button>
             </Link>
-            <Link href={'/userdashboard'}>
+            <Link href={'/userdashboard/accountinfo/accountdetails'}>
               <Button variant="outline" className="w-60">
                 Shopper
               </Button>
