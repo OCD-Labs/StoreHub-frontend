@@ -11,6 +11,7 @@ import coown from '../../../../public/assets/icons/Inventory/coown.svg'
 import Image from 'next/image'
 import { Button } from '@components/ui/Button'
 
+
 import {
   Dialog,
   DialogContent,
@@ -19,12 +20,42 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '../../../../components/ui/Dialog'
+import { useSession } from 'next-auth/react'
 import AccessModal from '@components/stores/storesettings/AccessModal'
+import { BASE_URL } from '@components/util/config'
+import { useSearchParams } from 'next/navigation'
 
 const Settings = () => {
   // get stores from state
   const stores = Inventory((state) => state.stores)
   console.log(stores, 'zusstores')
+  const storeId = useSearchParams().get('id')
+  const { data: session } = useSession()
+  //revoke access to store
+  const revokeAccess = async(account_id: string) => {
+    const token = session?.user.token
+    const data = {
+      account_id: account_id,
+    }
+    const res = await fetch(
+      `${BASE_URL}/inventory/stores/${storeId}/revoke-all-access`,
+      {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      },
+    )
+    
+    if (res.status == 200)
+    {
+      toast('co-owner removed successfully')
+      
+    }
+    console.log(res, 'resrevoke')
+  }
 
   const [isOpen, setIsOpen] = useState(false)
   function setupModal(status: any) {
@@ -116,7 +147,11 @@ const Settings = () => {
                         ''
                       ) : (
                         <>
-                          <div>Remove</div>
+                          <Button
+                            onClick={() => revokeAccess(owner.account_id)}
+                          >
+                            Remove
+                          </Button>
                           <div>Edit</div>
                         </>
                       )}
