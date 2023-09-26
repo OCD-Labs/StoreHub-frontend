@@ -23,6 +23,7 @@ import status from '@public/assets/icons/Inventory/status.svg'
 import 'react-toastify/dist/ReactToastify.css'
 import { BASE_URL } from '@components/util/config'
 import { useRouter } from 'next/navigation'
+import { Inventory } from '@app/StoreManager/inventory'
 
 import {
   DropdownMenu,
@@ -38,20 +39,12 @@ import { useSession } from 'next-auth/react'
 const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   const { data: session, status } = useSession()
   const [activeItem, setActiveItem] = useState<string>('home')
-  const [store, setStore] = useState<any>()
+  const [store, setCurrentStore] = useState<any>()
   const [sideBar, setSideBar] = useState<boolean>(false)
   const router = useRouter()
-
-  const textRef = useRef(null)
-
-  const handleCopy = () => {
-    const textElement = textRef.current
-
-    if (textElement) {
-      textElement.select()
-      navigator.clipboard.writeText('text to be copied')
-    }
-  }
+  const setStore = Inventory((state) => state.setStores)
+  const stores = Inventory((state) => state.stores)
+  // const store = stores[0]
   const handleSideBar = () => {
     setSideBar(!sideBar)
   }
@@ -75,14 +68,14 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
       .then((data) => {
         if (data.data) {
           const stores = data.data.result.stores
-          setStore(stores[0])
+          setStore(stores)
+          setCurrentStore(stores[0])
         }
       })
   }
   useEffect(() => {
     getAllStoresOwnedByUser()
   }, [session])
-  console.log(store, 'lsstore')
 
   // check if there is a user logged in
   if (status === 'unauthenticated') {
@@ -123,8 +116,6 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
 
         <div className="flex items-center">
           <div
-            ref={textRef}
-            defaultValue="Text to be copied"
             onClick={() => {
               navigator.clipboard.writeText(session?.user.user.account_id)
             }}
@@ -143,7 +134,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 <span className="flex px-3 items-center">
                   {session?.user.user.first_name} .
                   {session?.user.user.last_name[0]}
-                  <Image src={arrow} alt="user details" className="ml-2" />
+                  {/* <Image src={arrow} alt="user details" className="ml-2" /> */}
                 </span>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -168,12 +159,12 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                   <div className="text-xs flex gap-2">
                     Switch User
                     <span>
-                      <Image
+                      {/* <Image
                         src={duplicate}
                         width={15}
                         height={15}
                         alt="inventory"
-                      ></Image>
+                      ></Image> */}
                     </span>
                   </div>
                 </DropdownMenuItem>
@@ -182,12 +173,12 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                   <div className="text-xs flex gap-2">
                     Sign Out
                     <span>
-                      <Image
+                      {/* <Image
                         src={status}
                         width={15}
                         height={15}
                         alt="inventory"
-                      ></Image>
+                      ></Image> */}
                     </span>
                   </div>
                 </DropdownMenuItem>
