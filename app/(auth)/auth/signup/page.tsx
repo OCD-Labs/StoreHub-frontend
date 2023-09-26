@@ -183,6 +183,7 @@ const SignUp = () => {
                   >
                     {/* Checkmark SVG */}
                     <svg
+                    className='transform -rotate-90'
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="none"
