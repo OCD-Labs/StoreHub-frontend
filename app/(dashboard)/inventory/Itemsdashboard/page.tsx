@@ -6,7 +6,7 @@ import '../styles/inventory.css'
 
 import ProductItem from '@components/stores/productitem'
 import AddItemModal from '@components/stores/create-store/addItemModal'
-
+import { Inventory } from '@app/StoreManager/inventory'
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { BASE_URL } from '@components/util/config'
@@ -30,14 +30,14 @@ import {
 
 import 'react-toastify/dist/ReactToastify.css'
 
-const Inventory = () => {
+const StoreInventory = () => {
   const isOpen = modalstore((state) => state.isOpen)
   const toggleModal = modalstore((state) => state.toggleModal)
   const { data: session } = useSession()
   const ID = '123PDWD'
   const [storeItems, setStoreItems] = useState<any>([])
   const [refNo, setRefNo] = useState<number>(1)
-
+  const stores = Inventory((state) => state.stores)
   const modaloptions = modalstore((state) => state.modalOptions)
   const [loading, setloading] = useState<boolean>(true)
 
@@ -133,8 +133,16 @@ const Inventory = () => {
         <div className="flex mb-12">
           <span className="mr-4 flex items-center">
             {/* <img src='../../assets/images/necklace.png' alt='Product' className='border'/> */}
+
             <Image
-              src={necklace}
+              src={
+                stores[0] && stores[0].store_image
+                  ? stores[0]?.store_image
+                  : necklace
+              }
+              width={200}
+              
+              height={200}
               alt="product"
               className="border rounded-full w-[110px] h-[110px] my-auto"
             />
@@ -142,7 +150,7 @@ const Inventory = () => {
           <span className="w-[65%]">
             <div className="flex justify-between items-center">
               <p className="text-black font-semibold text-lg">
-                {name ? name : 'Shine, Shimmer, Glimmer'}
+                {stores[0] ? stores[0]?.store_name : 'Shine, Shimmer, Glimmer'}
               </p>
               <p className="bg-[#7AB74A8C] px-2 h-fit text-[12px] rounded-lg">
                 Verified
@@ -169,9 +177,13 @@ const Inventory = () => {
                 All Products
               </p>
               <select>
-                <option>Dalu test stores</option>
+                <option>select store</option>
+                {stores.map((store) => {
+                  return <option>{store.store_name}</option>
+                })}
+                {/* <option>Dalu test stores</option>
                 <option>Hi</option>
-                <option>there</option>
+                <option>there</option> */}
               </select>
             </div>
 
@@ -261,4 +273,4 @@ const Inventory = () => {
   )
 }
 
-export default Inventory
+export default StoreInventory

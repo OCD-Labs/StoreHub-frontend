@@ -18,6 +18,7 @@ const nextConfig = {
       'res.cloudinary.com',
       'www.greengrove.com',
       'plus.unsplash.com',
+      'beforeigosolutions.com',
       'big-7.png',
     ],
   },

@@ -5,7 +5,7 @@ import fullaccess from '../../../../public/assets/icons/Inventory/fullaccess.svg
 import inventoryaccess from '../../../../public/assets/icons/Inventory/inventoryaccess.svg'
 import salesaccess from '../../../../public/assets/icons/Inventory/salesaccess.svg'
 import { ToastContainer, toast } from 'react-toastify'
-
+import { Inventory } from '@app/StoreManager/inventory'
 import 'react-toastify/dist/ReactToastify.css'
 import coown from '../../../../public/assets/icons/Inventory/coown.svg'
 import Image from 'next/image'
@@ -22,6 +22,10 @@ import {
 import AccessModal from '@components/stores/storesettings/AccessModal'
 
 const Settings = () => {
+  // get stores from state
+  const stores = Inventory((state) => state.stores)
+  console.log(stores, 'zusstores')
+
   const [isOpen, setIsOpen] = useState(false)
   function setupModal(status: any) {
     debugger
@@ -58,36 +62,104 @@ const Settings = () => {
       </div>
       <ToastContainer />
       <div>
-        <div className="mt-8">
-          <h2 className="text-lg font-bold mb-4">Manage Co-ownership Access</h2>
-          <section className="border-dashed border-2 p-4 h-60 rounded-lg flex justify-center items-center">
-            <div className="flex flex-col justify-center items-center gap-4">
-              <Image
-                src={coown}
-                width={60}
-                height={60}
-                alt="fullaccess"
-              ></Image>
-              <p>No Co-owners Yet</p>
-
-              <Dialog open={isOpen} onOpenChange={setupModal}>
-                <DialogTrigger>
-                  <Button
-                    variant="default"
-                    onClick={() => {
-                      setIsOpen(!isOpen)
-                    }}
-                  >
-                    Add people
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <AccessModal accessModal={setupModal} />
-                </DialogContent>
-              </Dialog>
+        {stores[0] && stores[0]?.store_owners.length > 1 ? (
+          <>
+            <div className="w-full flex flex-between mt-10 mb-10">
+              <h2 className="text-lg font-bold mb-4">
+                Manage Co-ownership Access
+              </h2>
+              <Button
+                variant="default"
+                onClick={() => {
+                  setIsOpen(!isOpen)
+                }}
+              >
+                Add people
+              </Button>
             </div>
-          </section>
-        </div>
+            <section>
+              <div className="bg-graybrand flex flex-between p-6">
+                <p>select all</p>
+                <p>filter</p>
+              </div>
+
+              {stores[0].store_owners.map((owner) => {
+                return (
+                  <div key={owner.account_id}>
+                    <div className="p-6 flex flex-between border w-full">
+                      <div className="flex gap-8">
+                        <div className="flex gap-4">
+                          <div>
+                            <img
+                              className="h-8 w-8 rounded-full"
+                              src="https://beforeigosolutions.com/wp-content/uploads/2021/12/dummy-profile-pic-300x300-1.png"
+                              alt=""
+                            />
+                          </div>
+
+                          <div>
+                            <p>{owner.email}</p>
+
+                            <p>
+                              {' '}
+                              {owner.is_original_owner ? 'Owner' : 'Co-owner'}
+                            </p>
+                          </div>
+                        </div>
+                        <div>
+                          {stores[0].store_owners.map((owner) => {
+                            return <div key={owner.account_id}></div>
+                          })}
+                        </div>
+                      </div>
+                      {owner.is_original_owner ? (
+                        ''
+                      ) : (
+                        <>
+                          <div>Remove</div>
+                          <div>Edit</div>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                )
+              })}
+            </section>
+          </>
+        ) : (
+          <div className="mt-8">
+            <h2 className="text-lg font-bold mb-4">
+              Manage Co-ownership Access
+            </h2>
+            <section className="border-dashed border-2 p-4 h-60 rounded-lg flex justify-center items-center">
+              <div className="flex flex-col justify-center items-center gap-4">
+                <Image
+                  src={coown}
+                  width={60}
+                  height={60}
+                  alt="fullaccess"
+                ></Image>
+                <p>No Co-owners Yet</p>
+
+                <Dialog open={isOpen} onOpenChange={setupModal}>
+                  <DialogTrigger>
+                    <Button
+                      variant="default"
+                      onClick={() => {
+                        setIsOpen(!isOpen)
+                      }}
+                    >
+                      Add people
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <AccessModal accessModal={setupModal} />
+                  </DialogContent>
+                </Dialog>
+              </div>
+            </section>
+          </div>
+        )}
       </div>
     </div>
   )
