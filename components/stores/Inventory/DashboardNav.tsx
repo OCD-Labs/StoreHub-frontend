@@ -2,8 +2,8 @@
 'use client'
 import '@styles/globals.css'
 import { useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
-
+import { useEffect, useState, useRef } from 'react'
+import { Button } from '@components/ui/Button'
 import { ToastContainer, toast } from 'react-toastify'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -22,6 +22,7 @@ import Edit from '@public/assets/icons/Inventory/Edit.svg'
 import status from '@public/assets/icons/Inventory/status.svg'
 import 'react-toastify/dist/ReactToastify.css'
 import { BASE_URL } from '@components/util/config'
+import { useRouter } from 'next/navigation'
 
 import {
   DropdownMenu,
@@ -35,11 +36,22 @@ import '@styles/globals.css'
 import { useSession } from 'next-auth/react'
 
 const DashboardNav = ({ children }: { children: React.ReactNode }) => {
-  const { data: session } = useSession()
+  const { data: session, status } = useSession()
   const [activeItem, setActiveItem] = useState<string>('home')
   const [store, setStore] = useState<any>()
   const [sideBar, setSideBar] = useState<boolean>(false)
+  const router = useRouter()
 
+  const textRef = useRef(null)
+
+  const handleCopy = () => {
+    const textElement = textRef.current
+
+    if (textElement) {
+      textElement.select()
+      navigator.clipboard.writeText('text to be copied')
+    }
+  }
   const handleSideBar = () => {
     setSideBar(!sideBar)
   }
@@ -72,6 +84,21 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   }, [session])
   console.log(store, 'lsstore')
 
+  // check if there is a user logged in
+  if (status === 'unauthenticated') {
+    return (
+      <>
+        <div className="h-64 flex flex-col gap-4 justify-center items-center">
+          <p>Please login first :(</p>
+          {/* login user */}
+          <Button variant="default" onClick={() => router.push('/auth/signin')}>
+            Login
+          </Button>
+        </div>
+      </>
+    )
+  }
+
   return (
     <main className="mb-6">
       <nav className="flex justify-between sticky top-0 border-b py-3 bg-white z-50">
@@ -95,11 +122,20 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
         )}
 
         <div className="flex items-center">
-          <img
-            className="h-8 w-8 rounded-full"
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
+          <div
+            ref={textRef}
+            defaultValue="Text to be copied"
+            onClick={() => {
+              navigator.clipboard.writeText(session?.user.user.account_id)
+            }}
+          >
+            <img
+              className="h-8 w-8 rounded-full"
+              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+              alt=""
+            />
+          </div>
+
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger>

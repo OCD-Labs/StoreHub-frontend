@@ -1,3 +1,4 @@
+// @ts-nocheck
 'use client'
 import React, { useState } from 'react'
 import { Button } from '@components/ui/Button'
@@ -6,8 +7,8 @@ import { Loader2 } from 'lucide-react'
 import { useSearchParams } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { ToastContainer, toast } from 'react-toastify'
-
-import { getSession, setSession } from '@components/util/session'
+import { BASE_URL } from '@components/util/config'
+import { useSession } from 'next-auth/react'
 import 'react-toastify/dist/ReactToastify.css'
 
 const AccessConfirmation = () => {
@@ -16,11 +17,7 @@ const AccessConfirmation = () => {
   const storeId = useSearchParams().get('store_id')
   const confirmationToken = useSearchParams().get('sth_code')
   const Router = useRouter()
-
-  const [user, setUser] = useState<{ email: string; password: string }>({
-    email: 'mrvic5869@gmail.com',
-    password: 'umacv.123',
-  })
+  const { data: session } = useSession()
 
   // const signIn = async (e: any) => {
   //   debugger
@@ -31,21 +28,25 @@ const AccessConfirmation = () => {
 
   // debugger // accept invitation from store
   // const token = getSession()?.access_token
-
+  const token = session?.user.token
   const GET_OPTIONS = {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
-      Authorization: `Bearer `,
+      Authorization: `Bearer ${token}`,
     },
   }
   const acceptInvitation = async () => {
     try {
       setloading(true)
-      const res = await acceptInvitaion(storeId, confirmationToken, GET_OPTIONS)
+      const res = await fetch(
+        BASE_URL +
+          `/inventory/stores/${storeId}/accept-access-invitation?sth_code=${confirmationToken}`,
+        GET_OPTIONS,
+      ).then((response) => response.json())
       console.log(res, 'coown')
-      if ((res.status = 'error')) {
-        toast('You are now a coowner')
+      if (!res.data) {
+        toast.error('could not add you as coowner')
       } else {
         toast('You are now a coowner')
       }
