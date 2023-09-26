@@ -1,3 +1,5 @@
+import { AuthProvider } from '@app/AuthProvider'
+
 import '@styles/globals.css'
 
 const Inventory = ({ children }: { children: React.ReactNode }) => {
@@ -6,7 +8,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
       <body>
         <div className="bg-graybrand">
           <div className="max-w-7xl h-72 flex justify-center m-auto font-light">
-            {children}
+            <AuthProvider> {children}</AuthProvider>
           </div>
         </div>
 
