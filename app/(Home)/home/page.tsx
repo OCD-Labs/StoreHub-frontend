@@ -79,12 +79,12 @@ const Page = async () => {
       </div>
       <div className="mb-20">
         <div>
-          <div className="flex flex-col-reverse lg:flex-row max-w-6xl m-auto lg:gap-40 gap-20 lg:p-0 p-4">
+          <div className="flex flex-col-reverse lg:flex-row max-w-6xl items-center m-auto lg:gap-40 gap-20 lg:p-0 p-4">
             <div className="lg:mt-24">
               <h2 className="max-w-lg text-xl leading-normal mb-4">
                 Analytics and Insight
               </h2>
-              <p className="max-w-lg leading-normal font-light">
+              <p className="max-w-lg leading-normal text-xl font-light">
                 Our comprehensive analytics empower data-driven decisions,
                 enhancing your business strategy. By revealing trends and
                 customer behaviors, these insights guide improvements in sales,
@@ -99,19 +99,19 @@ const Page = async () => {
 
             <div>
               <Image
-                src={homeside}
+                src={homefirst}
                 width={500}
                 height={500}
                 alt="onboardimage"
               ></Image>
             </div>
           </div>
-          <div className="flex flex-col-reverse lg:flex-row lg:flex-row-reverse max-w-6xl m-auto lg:gap-40 gap-20 lg:p-0 p-4">
+          <div className="flex flex-col-reverse items-center lg:flex-row lg:flex-row-reverse max-w-6xl m-auto lg:gap-40 gap-20 lg:p-0 p-4">
             <div className="lg:mt-24">
               <h2 className="max-w-lg text-xl leading-normal mb-4">
                 Social Media Integration
               </h2>
-              <p className="max-w-lg leading-normal font-light">
+              <p className="max-w-lg text-xl leading-normal font-light">
                 Effortlessly launch and manage your store, receive real-time
                 WhatsApp order notifications, and effortlessly share updates on
                 your WhatsApp Status. Embrace the future of e-commerce with
@@ -126,19 +126,19 @@ const Page = async () => {
 
             <div>
               <Image
-                src={homeside}
+                src={homesecond}
                 width={500}
                 height={500}
                 alt="onboardimage"
               ></Image>
             </div>
           </div>
-          <div className="flex flex-col-reverse lg:flex-row max-w-6xl m-auto lg:gap-40 gap-20 lg:p-0 p-4">
+          <div className="flex flex-col-reverse items-center lg:flex-row max-w-6xl m-auto lg:gap-40 gap-20 lg:p-0 p-4">
             <div className="lg:mt-24">
               <h2 className="max-w-lg text-xl leading-normal mb-4">
                 Store Co-Ownership
               </h2>
-              <p className="max-w-lg leading-normal font-light">
+              <p className="max-w-lg text-xl leading-normal font-light">
                 Experience effortless collaboration with friends or valued
                 business partners through our co-ownership feature. As you
                 embark on this cooperative journey, you'll find yourselves in a
@@ -154,7 +154,7 @@ const Page = async () => {
 
             <div>
               <Image
-                src={homeside}
+                src={homethird}
                 width={500}
                 height={500}
                 alt="onboardimage"
