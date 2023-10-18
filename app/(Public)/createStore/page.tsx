@@ -14,7 +14,9 @@ import { BASE_URL, CONTRACT_ADDRESS } from '@components/util/config'
 import { userWallet } from '@app/StoreManager'
 import ImageUploader from '@components/global/ImageUploader'
 
-const CreateStore = () => {
+const CreateStore = () =>
+{
+  
   const { data: session } = useSession()
   const { wallet } = userWallet.getState()
   const searchParams = useSearchParams()
@@ -55,11 +57,10 @@ const CreateStore = () => {
   }
 
   // set Image data
-  const handleImageData = (data: ImageData) => {
+  const handleImageData = (data: string) => {
     setImageData(data)
     console.log(data, 'image data at store')
   }
-  console.log(imageData?.secure_url, 'image data at')
 
 
   //crete new store
@@ -94,6 +95,7 @@ const CreateStore = () => {
               toast('failed to create your store. Try again!')
             }
             // debugger
+            
             wallet
               .callMethod({
                 contractId: CONTRACT_ADDRESS,

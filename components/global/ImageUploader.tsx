@@ -5,6 +5,7 @@ import { AdvancedImage } from '@cloudinary/react'
 import { Cloudinary } from '@cloudinary/url-gen'
 import { fill } from '@cloudinary/url-gen/actions/resize'
 import { handleImageUpload } from '@app/services/uploadService'
+import { validateFile } from '@app/services/uploadService'
 
 export interface UploadImageProp {
   onUpdateImage: (value: any) => void
@@ -14,20 +15,30 @@ const ImageUploader: FC<UploadImageProp> = ({
   onUpdateImage,
 }: UploadImageProp) => {
   const [selectedImage, setSelectedImage] = useState<any>(null)
+  const [error, setError] = useState<string|null>(null)
 
   const handleChange = (event: any) => {
     const file: File = event.target.files[0]
+    try {
+    validateFile(file)
     UploadImage(file)
     if (file) {
       setSelectedImage(file)
+      setError('')
     }
+    } catch (error) {
+      setError(error+'')
+    }
+
   }
-  const UploadImage = async (file: File) => {
+  const UploadImage = async (file: File) =>
+  {
+    
     await handleImageUpload(file)
       .then((data) => {
         onUpdateImage(data)
       })
-      .catch((err) => console.log(err))
+      .catch((err) => { throw new Error(err) })
   }
   return (
     <div className="w-[100%] md:w-[40%] mt-5">
@@ -81,7 +92,7 @@ const ImageUploader: FC<UploadImageProp> = ({
               </label>
             )}
           </div>
-
+          {error ? <div className='text-red-400'>{error}</div>: ""}
           <div className="flex justify-around md:justify-between mt-6">
             {/* <button>Edit Photo</button> */}
             <input
