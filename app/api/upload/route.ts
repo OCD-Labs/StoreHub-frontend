@@ -4,6 +4,7 @@ import { NextApiRequest } from "next";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { validateFile } from "@app/services/uploadService";
+import { convertFile } from "@lib/convertfile";
 
 // Store environment variables in your .env.local file
 cloudinary.config({
@@ -12,24 +13,6 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-async function convertFile(file: File) {
-  const FileBuffer = await new Response(file).arrayBuffer(); //fil array buffer
-  var base64 = btoa(
-    new Uint8Array(FileBuffer).reduce(
-      (data, byte) => data + String.fromCharCode(byte),
-      ""
-    )
-  );
-  const dataURI = "data:" + file.type + ";base64," + base64;
-  return dataURI;
-}
 
 export async function POST(req: NextRequest, res: Response) {
   try {
