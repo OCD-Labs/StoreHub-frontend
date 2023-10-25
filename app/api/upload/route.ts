@@ -21,6 +21,10 @@ export async function POST(req: NextRequest, res: Response) {
     // if (!session)
     //   return new Response("Unauthorized access detected", { status: 401 });
     const formData = await req.formData();
+
+    const images = formData.getAll("file") as File[];
+    console.log(images, "images");
+
     const file = formData.get("file") as File;
     validateFile(file);
     const imageData = await convertFile(file);
