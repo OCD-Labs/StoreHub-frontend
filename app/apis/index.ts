@@ -1,73 +1,76 @@
-import { userWallet } from '@app/StoreManager'
+import { userWallet } from "@app/StoreManager";
+import { getCookie } from "@components/util/cookie";
+import { BASE_URL } from "@components/util/config";
 
-import { BASE_URL } from '@components/util/config'
-
-const { user } = userWallet.getState()
+const { user } = userWallet.getState();
 
 export interface OPTIONS {
-  method: string
+  method: string;
   headers: {
-    'Content-Type': string
-    Authorization?: string
-  }
+    "Content-Type": string;
+    Authorization?: string;
+  };
 }
 
 export const GET_OPTIONS: OPTIONS = {
-  method: 'GET',
+  method: "GET",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     Authorization: `Bearer ${user?.access_token}`,
   },
-}
+};
 
 export const POST_OPTION: OPTIONS = {
-  method: 'POST',
+  method: "POST",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
     Authorization: `Bearer ${user?.access_token}`,
   },
-}
+};
 
 export const fetchAllStores = (
   page: string,
-  page_size: string,
+  page_size: string
 ): Promise<any> => {
   const res = fetch(
     `${BASE_URL}/stores/?page=${Number(page)}&page_size=${page_size}`,
-    GET_OPTIONS,
-  ).then((response) => response.json())
+    GET_OPTIONS
+  ).then((response) => response.json());
 
-  return res
-}
+  return res;
+};
 
 export const deleteStoreItem = async (
   option: OPTIONS,
   userID: string | null,
   storeId: string | null,
-  itemId: number,
+  itemId: number
 ) => {
   try {
-    debugger
+    debugger;
     const res = await fetch(
       `${BASE_URL}/inventory/stores/${storeId}/items/${itemId}`,
-      option,
-    )
-    return await res.status
+      option
+    );
+    return await res.status;
   } catch (error) {
-    if (error) throw new Error(error + '')
+    if (error) throw new Error(error + "");
   }
-}
+};
 
 export const signUp = async (data: UserInfo) => {
-  const body = JSON.stringify(data)
+  const body = JSON.stringify(data);
   const res = await fetch(`${BASE_URL}/users`, {
-    method: 'POST',
+    method: "POST",
     body: body,
-  })
+  });
 
   //   StorehubClient.post('/users', data)
   // debugger
   // console.log(res, 'response')
 
-  return res.json()
-}
+  return res.json();
+};
+
+//get all stores owned by user
+

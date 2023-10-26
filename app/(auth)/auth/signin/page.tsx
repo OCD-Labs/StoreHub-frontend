@@ -1,47 +1,49 @@
-'use client'
-import Link from 'next/link'
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import Image from 'next/image'
-import { Loader2 } from 'lucide-react'
-import { toast, ToastContainer } from 'react-toastify'
-import { Button } from '@components/ui/Button'
-import Router, { useRouter } from 'next/navigation'
-import 'react-toastify/dist/ReactToastify.css'
-import { signIn } from 'next-auth/react'
+"use client";
+import Link from "next/link";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import Image from "next/image";
+import { Loader2 } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
+import { Button } from "@components/ui/Button";
+import Router, { useRouter } from "next/navigation";
+import "react-toastify/dist/ReactToastify.css";
+import { signIn } from "next-auth/react";
 
 const SignIn = () => {
-  const [loading, setloading] = useState(false)
-  const router = useRouter()
+  const [loading, setloading] = useState(false);
+  const router = useRouter();
   const [user, setUser] = useState<IUserCredential>({
-    password: '',
-    email: '',
-  })
+    password: "",
+    email: "",
+  });
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IUserCredential>()
+  } = useForm<IUserCredential>();
   const onSubmit = async (data: IUserCredential) => {
-    setloading(true)
+    setloading(true);
     try {
-      const user = await signIn('credentials', {
+      const user = await signIn("credentials", {
         email: data.email,
         password: data.password,
         redirect: false,
-      })
+      });
       if (user) {
-        setloading(false)
+        console.log(user);
+        debugger;
+        setloading(false);
         if (user?.error) {
-          toast.error('Wrong email or password. Try again')
+          toast.error("Wrong email or password. Try again");
         } else {
-          debugger
-          router.push('/home')
+          debugger;
+          router.push("/home");
         }
       }
     } catch (error) {}
-  }
+  };
 
   return (
     <div className="sm:flex sm:justify-between mb-3 sm:mb-6 z-10 p-8 font-light">
@@ -73,7 +75,7 @@ const SignIn = () => {
               className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               type="email"
               placeholder="Email"
-              {...register('email', {
+              {...register("email", {
                 required: true,
                 pattern: /[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i,
               })}
@@ -82,7 +84,7 @@ const SignIn = () => {
               className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               type="text"
               placeholder="password"
-              {...register('password', { required: true, min: 9 })}
+              {...register("password", { required: true, min: 9 })}
             />
 
             <div className="flex items-center">
@@ -101,7 +103,7 @@ const SignIn = () => {
                   ...
                 </div>
               ) : (
-                'Login'
+                "Login"
               )}
             </Button>
           </div>
@@ -127,7 +129,7 @@ const SignIn = () => {
         </span>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
