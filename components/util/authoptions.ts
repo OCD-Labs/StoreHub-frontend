@@ -1,6 +1,6 @@
 import { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-
+import { cookies } from "next/headers";
 const A_DAY = 86400; // a day
 const AuthOptions: NextAuthOptions = {
   session: {
@@ -44,14 +44,17 @@ const AuthOptions: NextAuthOptions = {
             headers: { "Content-Type": "application/json" },
           }
         ).then((res) => res.json());
-        console.log(user);
+        console.log(user, "user");
 
         if (!user?.error) {
+          const token = user.data.result.access_token;
           const User = user.data.result.user;
+          const oneDay = 24 * 60 * 60 * 1000;
+          cookies().set("token", token, { expires: Date.now() + oneDay });
           // Any object returned will be saved in `user` property of the JWT
           return {
             user: User,
-            access_token: user.data.result.access_token,
+            access_token: token,
           };
         } else {
           // If you return null then an error will be displayed advising the user to check their details.

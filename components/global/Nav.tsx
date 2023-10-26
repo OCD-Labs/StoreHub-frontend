@@ -4,10 +4,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { userWallet } from "@app/StoreManager";
-import useProfile from "@app/hooks/useProfile";
+import { z } from "zod";
 import Dropdown from "react-bootstrap/Dropdown";
-import { setSession } from "@components/util/session";
+import { getAllStores } from "@app/apis";
 import { BASE_URL } from "@components/util/config";
 import { Button } from "@components/ui/Button";
 import logo from "@public/assets/images/storehublogo.svg";
@@ -32,27 +31,10 @@ const Nav = () => {
   // @ts-ignore
   console.log(session?.user.user.first_name, "user");
 
-  const fetcher = (url: string) =>
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.user.token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        return data;
-      });
-
   const { data, error, isLoading } = useSWR(
     session ? `${BASE_URL}/inventory/stores` : null,
-    fetcher
+    getAllStores
   );
-
-  if (!error) {
-    console.log(data?.data.result.stores, "store swr");
-  }
 
   const toggleDropdown = () => {
     setMenuOpen(!isMenuOpened);
@@ -140,7 +122,10 @@ const Nav = () => {
                   <Dropdown.Item>
                     <button
                       onClick={() => {
-                        signOut();
+                        signOut().then(() => {
+                          document.cookie =
+                            "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                        });
                       }}
                     >
                       Sign out
