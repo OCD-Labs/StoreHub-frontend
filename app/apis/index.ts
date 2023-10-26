@@ -2,8 +2,6 @@ import { userWallet } from "@app/StoreManager";
 import { getCookie } from "@components/util/cookie";
 import { BASE_URL } from "@components/util/config";
 
-const token = getCookie("token");
-
 const { user } = userWallet.getState();
 
 export interface OPTIONS {
@@ -75,16 +73,4 @@ export const signUp = async (data: UserInfo) => {
 };
 
 //get all stores owned by user
-export const getAllStores = (url: string) =>
-  fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // validate data with zod
-      return data;
-    });
+

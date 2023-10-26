@@ -11,7 +11,7 @@ import { BASE_URL } from "@components/util/config";
 import { Button } from "@components/ui/Button";
 import logo from "@public/assets/images/storehublogo.svg";
 import useSWR from "swr";
-
+import { clearCookie, getCookie } from "@components/util/cookie";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 import {
   Avatar,
@@ -30,6 +30,19 @@ const Nav = () => {
 
   // @ts-ignore
   console.log(session?.user.user.first_name, "user");
+  const getAllStores = (url: string) =>
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getCookie("token")}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // validate data with zod
+        return data;
+      });
 
   const { data, error, isLoading } = useSWR(
     session ? `${BASE_URL}/inventory/stores` : null,
@@ -123,8 +136,7 @@ const Nav = () => {
                     <button
                       onClick={() => {
                         signOut().then(() => {
-                          document.cookie =
-                            "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                          clearCookie("token");
                         });
                       }}
                     >
