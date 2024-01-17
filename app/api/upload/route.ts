@@ -1,7 +1,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest } from "next/server";
 import { NextApiRequest } from "next";
-import { authOptions } from "../auth/[...nextauth]/route";
+// import { authOptions } from "../auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { validateFile } from "@app/services/uploadService";
 import { convertFile } from "@lib/convertfile";
