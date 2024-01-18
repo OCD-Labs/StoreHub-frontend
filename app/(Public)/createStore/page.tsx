@@ -1,159 +1,156 @@
-'use client'
-import { log } from 'console'
-import { useForm } from 'react-hook-form'
-import { useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/navigation'
-import { ToastContainer, toast } from 'react-toastify'
-import { useSession } from 'next-auth/react'
-import 'react-toastify/dist/ReactToastify.css'
-import Link from 'next/link'
+"use client";
+import { log } from "console";
+import { useForm } from "react-hook-form";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+import "react-toastify/dist/ReactToastify.css";
+import Link from "next/link";
 // @ts-nocheck
-import { useState, useEffect, useRef, useContext } from 'react'
-import { getSession } from '@components/util/session'
-import { BASE_URL, CONTRACT_ADDRESS } from '@components/util/config'
-import { userWallet } from '@app/StoreManager'
-import ImageUploader from '@components/global/ImageUploader'
+import { useState, useEffect, useRef, useContext } from "react";
+import { getSession } from "@components/util/session";
+import { BASE_URL, CONTRACT_ADDRESS } from "@components/util/config";
+import { userWallet } from "@app/StoreManager";
+import ImageUploader from "@components/global/ImageUploader";
 
-const CreateStore = () =>
-{
-  
-  const { data: session } = useSession()
-  const { wallet } = userWallet.getState()
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const [imageData, setImageData] = useState<any>()
-  const [inputTag, setTagInput] = useState<string>('')
+const CreateStore = () => {
+  const { data: session } = useSession();
+  const { wallet } = userWallet.getState();
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const [imageData, setImageData] = useState<any>();
+  const [inputTag, setTagInput] = useState<string>("");
 
   const [formData, setFormData] = useState({
-    name: '',
-    description: '',
-    store_account_id: '',
-    profile_image_url: '',
-    category: 'fashion',
-  })
+    name: "",
+    description: "",
+    store_account_id: "",
+    profile_image_url: "",
+    category: "fashion",
+  });
 
   interface StoreDataInterface {
-    store_id: string
-    user_id: string | number
+    store_id: string;
+    user_id: string | number;
   }
 
   const storeData: StoreDataInterface = {
     store_id: formData.store_account_id,
-    user_id: session ? session.user.user.user_id : '',
-  }
-  console.log(session, 'session')
-  formData.profile_image_url = imageData?.secure_url
+    user_id: session ? session.user.user.user_id : "",
+  };
+  console.log(session, "session");
+  formData.profile_image_url = imageData?.fileUrl;
   const handleChange = (e: any) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-  }
+    });
+  };
 
   const onSubmit = (): void => {
-    console.log(formData, 'formData')
+    console.log(formData, "formData");
     // debugger
-    createNewStore()
-  }
+    createNewStore();
+  };
 
   // set Image data
   const handleImageData = (data: string) => {
-    setImageData(data)
-    console.log(data, 'image data at store')
-  }
-
+    setImageData(data);
+    console.log(data, "image data at store");
+  };
 
   //crete new store
   const createNewStore = (): void => {
-    formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`
+    formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`;
     // debugger
     if (session) {
       try {
-        localStorage.setItem('storeData', JSON.stringify(storeData))
+        localStorage.setItem("storeData", JSON.stringify(storeData));
         fetch(BASE_URL + `/inventory/stores`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${session ? session.user.token : ''}`,
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${session ? session.user.token : ""}`,
           },
           body: JSON.stringify(formData),
         })
           .then((response) => {
-            return response.json()
+            return response.json();
           })
           .then((data: StoreResult) => {
             // TODO: Store data in Context or Redux
-            console.log(data)
-            if (data?.status !== 'error') {
-              toast('Successfully created your store!')
+            console.log(data);
+            if (data?.status !== "error") {
+              toast("Successfully created your store!");
               setTimeout(() => {
                 router.push(
-                  `/inventory/Itemsdashboard?id=${data.data.result.store.id}&name=${data.data.result.store.name}&user=${session?.user.user.user_id}`,
-                )
-              }, 2000)
+                  `/inventory/Itemsdashboard?id=${data.data.result.store.id}&name=${data.data.result.store.name}&user=${session?.user.user.user_id}`
+                );
+              }, 2000);
             } else {
-              toast('failed to create your store. Try again!')
+              toast("failed to create your store. Try again!");
             }
             // debugger
-            
+
             wallet
               .callMethod({
                 contractId: CONTRACT_ADDRESS,
-                method: 'create_store',
+                method: "create_store",
                 args: { store_id: formData.store_account_id },
               })
               .then((data: any) => {
-                console.log(data)
+                console.log(data);
               })
-              .catch((error: any) => console.log(error))
-          })
+              .catch((error: any) => console.log(error));
+          });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
-  }
+  };
 
   //handle form validation
 
   interface IFormInputs {
-    name: string
-    category: string
-    description: string
+    name: string;
+    category: string;
+    description: string;
   }
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IFormInputs>()
+  } = useForm<IFormInputs>();
 
   // handle add tag
-  const [tags, setTags] = useState<string[]>([])
-  const inputRef = useRef<HTMLInputElement>(null)
+  const [tags, setTags] = useState<string[]>([]);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleAddTagDivClick = (): void => {
     if (inputRef.current) {
-      inputRef.current.focus()
+      inputRef.current.focus();
     }
-  }
+  };
 
   const removeTag = (tag: string): void => {
-    const updatedTags = tags.filter((t) => t !== tag)
-    setTags(updatedTags)
-  }
+    const updatedTags = tags.filter((t) => t !== tag);
+    setTags(updatedTags);
+  };
 
   const addTag = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === ' ' && tags.length < 6) {
-      let tag = e.currentTarget.value.replace(/\$+/g, ' ').trim()
+    if (e.key === " " && tags.length < 6) {
+      let tag = e.currentTarget.value.replace(/\$+/g, " ").trim();
       if (tag.length > 1 && !tags.includes(tag)) {
-        tag.split(',').forEach((tag) => {
-          setTags([...tags, tag])
-          console.log(tags)
-          setTagInput('')
-        })
+        tag.split(",").forEach((tag) => {
+          setTags([...tags, tag]);
+          console.log(tags);
+          setTagInput("");
+        });
       }
     }
-  }
+  };
 
   //rendering list of tags
   const renderedItems = tags?.map((tag: string) => {
@@ -170,8 +167,8 @@ const CreateStore = () =>
           onClick={() => removeTag(tag)}
         />
       </li>
-    )
-  })
+    );
+  });
 
   return (
     <main>
@@ -187,15 +184,15 @@ const CreateStore = () =>
               <label>Store Name</label>
               <div className="md:w-[75%] w-full">
                 <input
-                  {...register('name', {
-                    required: 'Store name is required',
+                  {...register("name", {
+                    required: "Store name is required",
                     minLength: {
                       value: 3,
-                      message: 'Store name must be at least 3 characters',
+                      message: "Store name must be at least 3 characters",
                     },
                     maxLength: {
                       value: 50,
-                      message: 'Store name cannot exceed 50 characters',
+                      message: "Store name cannot exceed 50 characters",
                     },
                   })}
                   name="name"
@@ -245,15 +242,15 @@ const CreateStore = () =>
               <label>Description</label>
               <div className="w-full md:w-[75%]">
                 <textarea
-                  {...register('description', {
-                    required: 'Description is required',
+                  {...register("description", {
+                    required: "Description is required",
                     minLength: {
                       value: 10,
-                      message: 'Description must be at least 10 characters',
+                      message: "Description must be at least 10 characters",
                     },
                     maxLength: {
                       value: 200,
-                      message: 'Description cannot exceed 200 characters',
+                      message: "Description cannot exceed 200 characters",
                     },
                   })}
                   name="description"
@@ -284,13 +281,13 @@ const CreateStore = () =>
                       <p className="absolute mt-[0.65rem] md:mt-[0.5rem] text-gray-400">
                         Press space after each word to add a tag
                       </p>
-                    )}{' '}
+                    )}{" "}
                     {renderedItems}
                     <input
                       onKeyUp={addTag}
                       type="text"
                       className={`outline-none py-2 flex flex-1 text-base ${
-                        tags.length >= 6 ? 'hidden' : 'block'
+                        tags.length >= 6 ? "hidden" : "block"
                       }`}
                       onChange={(e) => setTagInput(e.target.value)}
                       value={inputTag.toLocaleLowerCase()}
@@ -323,7 +320,7 @@ const CreateStore = () =>
         </div>
       </form>
     </main>
-  )
-}
+  );
+};
 
-export default CreateStore
+export default CreateStore;

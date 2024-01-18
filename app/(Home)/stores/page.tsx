@@ -1,32 +1,32 @@
-'use client'
-import React from 'react'
-import sorticon from 'public/assets/icons/sorticon.svg'
-import Image from 'next/image'
-import { Stack } from 'react-bootstrap'
-import { useState, useEffect } from 'react'
-import Storecard from '@components/stores/storecard'
-import AppLoader from '@components/global/AppLoader'
-import StoresSkeleton from '@components/stores/storesSkeleton'
-import { Button } from '@components/ui/Button'
-import storeimg from '@public/assets/images/storeimg.png'
-import Link from 'next/link'
+"use client";
+import React from "react";
+import sorticon from "public/assets/icons/sorticon.svg";
+import Image from "next/image";
+import { Stack } from "react-bootstrap";
+import { useState, useEffect } from "react";
+import Storecard from "@components/stores/storecard";
+import AppLoader from "@components/global/AppLoader";
+import StoresSkeleton from "@components/stores/storesSkeleton";
+import { Button } from "@components/ui/Button";
+import storeimg from "@public/assets/images/storeimg.png";
+import Link from "next/link";
 // import { userWallet } from '@app/StoreManager'
-import { BASE_URL } from '@components/util/config'
-import useSWR from 'swr'
-import { GET_OPTIONS } from '@app/apis'
-
-import PaginationControls from '@components/stores/PaginationControls'
+import { BASE_URL } from "@components/util/config";
+import useSWR from "swr";
+import { GET_OPTIONS } from "@app/apis";
+import search from "@/public/assets/icons/search.svg";
+import PaginationControls from "@components/stores/PaginationControls";
 const Storepage = ({
   searchParams,
 }: {
-  searchParams: { [key: string]: string | string[] | undefined }
+  searchParams: { [key: string]: string | string[] | undefined };
 }) => {
-  const [allStores, setAllStores] = useState<Store[]>([])
-  const [loading, setLoading] = useState(true)
+  const [allStores, setAllStores] = useState<Store[]>([]);
+  const [loading, setLoading] = useState(true);
   // const { wallet } = userWallet.getState()
 
-  const page = searchParams['page'] ?? '1'
-  const page_size = searchParams['per_page'] ?? '15'
+  const page = searchParams["page"] ?? "1";
+  const page_size = searchParams["per_page"] ?? "15";
 
   // Get all store
 
@@ -40,30 +40,30 @@ const Storepage = ({
   // console.log(data, 'useswr data')
 
   const handlePageLoading = () => {
-    setLoading(true)
-  }
+    setLoading(true);
+  };
 
   const fetchAllStores = () => {
     try {
       fetch(
         `${BASE_URL}/stores/?page=${Number(page)}&page_size=${page_size}`,
-        GET_OPTIONS,
+        GET_OPTIONS
       )
         .then((response) => response.json())
         .then((data: Stores) => {
-          console.log(data, 'all stores')
-          setAllStores(data.data.result.stores)
-          setLoading(false)
-        })
+          console.log(data, "all stores");
+          setAllStores(data.data.result.stores);
+          setLoading(false);
+        });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
-  console.log('stores', allStores)
+  };
+  console.log("stores", allStores);
 
   useEffect(() => {
-    fetchAllStores()
-  }, [page])
+    fetchAllStores();
+  }, [page]);
 
   return (
     <div>
@@ -83,7 +83,7 @@ const Storepage = ({
                 </p>
                 <div className="z-100 flex gap-4 mt-8">
                   <Button variant="default">
-                    <Link href={'/auth/signup'}>Get Started</Link>
+                    <Link href={"/auth/signup"}>Get Started</Link>
                   </Button>
                   <Button variant="outline">Watch Demo</Button>
                 </div>
@@ -102,7 +102,7 @@ const Storepage = ({
           <svg
             className="z-[-1]"
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1440 320"
+            viewBox="0 0 1440 235"
           >
             <path
               fill="#B0A4DB1F"
@@ -133,12 +133,33 @@ const Storepage = ({
           )} */}
           <div className="max-w-6xl m-auto">
             <div>
-              <div className="flex justify-between pt-8 mx-2">
-                <div>{allStores.length} stores</div>
-                <div>
-                  <Image src={sorticon} width={30} height={30} alt="sorticon" />
+              <div className="flex justify-between pt-8">
+                <div className="text-sm font-medium leading-relaxed mb-2">
+                  {allStores.length} stores
                 </div>
               </div>
+            </div>
+            <div className="w-full">
+              <span className="relative">
+                <input
+                  className="border w-full h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
+                  placeholder="Search stores"
+                ></input>
+                <Image
+                  src={search}
+                  alt="search product"
+                  height={20}
+                  width={20}
+                  className="absolute top-0 left-2 sm:left-3"
+                />
+                <Image
+                  src={sorticon}
+                  height={20}
+                  width={20}
+                  className="absolute top-0 right-2 sm:right-3"
+                  alt="sorticon"
+                />
+              </span>
             </div>
             {loading ? (
               <div>
@@ -167,7 +188,7 @@ const Storepage = ({
         handlePaginationLoading={handlePageLoading}
       />
     </div>
-  )
-}
+  );
+};
 
-export default Storepage
+export default Storepage;
