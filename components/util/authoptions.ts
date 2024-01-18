@@ -96,7 +96,4 @@ const AuthOptions: NextAuthOptions = {
   },
 };
 
-const name = "uma victor";
-const age = 22;
-
-export { AuthOptions as default, name, age };
+export { AuthOptions as default };
