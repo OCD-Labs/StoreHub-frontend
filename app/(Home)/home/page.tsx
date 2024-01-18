@@ -1,14 +1,14 @@
-import { getServerSession } from 'next-auth'
-import { authOptions } from '@app/api/auth/[...nextauth]/route'
-import Link from 'next/link'
-import React from 'react'
-import { Button } from '@components/ui/Button'
-import Image from 'next/image'
-import homeside from '@public/assets/images/homeside.png'
-import homefirst from '@public/assets/images/homefirst.png'
-import homesecond from '@public/assets/images/homesecond.png'
-import homethird from '@public/assets/images/homethird.png'
-import near from '@public/assets/images/near.png'
+import { getServerSession } from "next-auth";
+import { authOptions } from "@app/api/auth/[...nextauth]/route";
+import Link from "next/link";
+import React from "react";
+import { Button } from "@components/ui/Button";
+import Image from "next/image";
+import homeside from "@public/assets/images/homeside.png";
+import homefirst from "@public/assets/images/homefirst.png";
+import homesecond from "@public/assets/images/homesecond.png";
+import homethird from "@public/assets/images/homethird.png";
+import near from "@public/assets/images/near.png";
 
 // import { InitContract } from '@components/util/config'
 
@@ -19,17 +19,17 @@ const Page = async () => {
   //   console.log(account, 'new user')
   // }
 
-  const session = await getServerSession(authOptions)
-  console.log(session)
+  const session = await getServerSession(authOptions);
+  console.log(session);
 
-  const authenticated = !!session
+  const authenticated = !!session;
   return (
     <div className="text-dark">
       <div className="bg-graybrand">
         <div className="flex flex-col-reverse lg:flex-row max-w-6xl m-auto lg:gap-40 gap-20 lg:p-0 p-4">
           <div className="lg:mt-24">
             <h2 className="max-w-lg text-5xl leading-normal mb-8">
-              Your <span className="bg-yellow-200 p-4">One-Click</span>{' '}
+              Your <span className="bg-yellow-200 p-4">One-Click</span>{" "}
               Ecommerce Solution!
             </h2>
             <p className="max-w-lg leading-normal font-light text-lg mb-8">
@@ -39,7 +39,7 @@ const Page = async () => {
             </p>
             <div className="z-100 flex gap-4 mt-8">
               <Button variant="default">
-                <Link href={'/auth/signup'}>Get Started</Link>
+                <Link href={"/auth/signup"}>Get Started</Link>
               </Button>
               <Button variant="outline">Watch Demo</Button>
             </div>
@@ -58,7 +58,8 @@ const Page = async () => {
       <svg
         className="z-[-1]"
         xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 1440 320"
+        viewBox="0 0 1440 235
+        "
       >
         <path
           fill="#B0A4DB1F"
@@ -91,7 +92,7 @@ const Page = async () => {
                 inventory, and market response, ensuring strategic excellence."
               </p>
               <div className="z-100 flex gap-4 mt-8">
-                <Link href={''} className="underline">
+                <Link href={""} className="underline">
                   Learn More
                 </Link>
               </div>
@@ -118,7 +119,7 @@ const Page = async () => {
                 StoreHub and simplify your path to growth.
               </p>
               <div className="z-100 flex gap-4 mt-8">
-                <Link href={''} className="underline">
+                <Link href={""} className="underline">
                   Learn More
                 </Link>
               </div>
@@ -146,7 +147,7 @@ const Page = async () => {
                 in the rewards of collective achievements.
               </p>
               <div className="z-100 flex gap-4 mt-8">
-                <Link href={''} className="underline">
+                <Link href={""} className="underline">
                   Learn More
                 </Link>
               </div>
@@ -182,7 +183,7 @@ const Page = async () => {
         </section>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;
