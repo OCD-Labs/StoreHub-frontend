@@ -52,7 +52,7 @@ const AccountNav = () => {
 					className={`flex justify-center ${navbar ? "block" : "hidden"}`}
 				>
 					<ul
-						className="bg-white absolute justify-center h-[40vh] w-[60vh] z-10 text-left shadow-lg"
+						className="bg-white absolute justify-center h-[39vh] w-[100%] z-10 text-left shadow-lg"
 						style={{ animation: "slideInFromRight 0.5s ease-out forwards" }}
 					>
 						<li className="rounded-t-[10px] bg-[#000000] text-white p-4">
