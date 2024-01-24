@@ -16,6 +16,7 @@ import useSWR from "swr";
 import { GET_OPTIONS } from "@app/apis";
 import search from "@/public/assets/icons/search.svg";
 import PaginationControls from "@components/stores/PaginationControls";
+
 const Storepage = ({
   searchParams,
 }: {
@@ -132,35 +133,36 @@ const Storepage = ({
             </>
           )} */}
           <div className="max-w-6xl m-auto">
-            <div>
+            <div className="lg:mx-0 mx-4 m-auto">
               <div className="flex justify-between pt-8">
                 <div className="text-sm font-medium leading-relaxed mb-2">
                   {allStores.length} stores
                 </div>
               </div>
+              <div className="w-full">
+                <span className="relative">
+                  <input
+                    className="border w-full h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
+                    placeholder="Search stores"
+                  ></input>
+                  <Image
+                    src={search}
+                    alt="search product"
+                    height={20}
+                    width={20}
+                    className="absolute top-0 left-2 sm:left-3"
+                  />
+                  <Image
+                    src={sorticon}
+                    height={20}
+                    width={20}
+                    className="absolute top-0 right-2 sm:right-3"
+                    alt="sorticon"
+                  />
+                </span>
+              </div>
             </div>
-            <div className="w-full">
-              <span className="relative">
-                <input
-                  className="border w-full h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
-                  placeholder="Search stores"
-                ></input>
-                <Image
-                  src={search}
-                  alt="search product"
-                  height={20}
-                  width={20}
-                  className="absolute top-0 left-2 sm:left-3"
-                />
-                <Image
-                  src={sorticon}
-                  height={20}
-                  width={20}
-                  className="absolute top-0 right-2 sm:right-3"
-                  alt="sorticon"
-                />
-              </span>
-            </div>
+
             {loading ? (
               <div>
                 <StoresSkeleton />

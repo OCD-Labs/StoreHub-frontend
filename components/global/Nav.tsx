@@ -13,6 +13,7 @@ import logo from "@public/assets/images/storehublogo.svg";
 import useSWR from "swr";
 import { clearCookie, getCookie } from "@components/util/cookie";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { ShoppingCart } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -59,11 +60,20 @@ const Nav = () => {
         <Image src={logo} width={100} height={100} alt="logo"></Image>
       </Link>
       {/* Navigation*/}
-      <div className="flex gap-3 items-baseline">
-        <div className="sm:flex hidden">
-          <div className="flex gap-3 md:gap-5 items-baseline leading-tight text-dark">
+      <div className="flex gap-3 items-center">
+        <div className="sm:flex">
+          <div className="flex gap-3 md:gap-5 items-center leading-tight text-dark">
             {/* <Link href="/features">Features</Link> */}
-            <Link href="/stores">Stores</Link>
+            <div className="relative">
+              <ShoppingCart size={24} />
+              <span className="absolute top-[-10px] right-[-8px] font-medium text-sm">
+                4
+              </span>
+            </div>
+
+            <Link className="sm:block hidden" href="/stores">
+              Stores
+            </Link>
           </div>
         </div>
         {!session ? (
