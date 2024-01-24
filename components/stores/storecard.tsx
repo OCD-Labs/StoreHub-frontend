@@ -18,7 +18,7 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
 
   return (
     <>
-      <div className="group m-auto my-10 flex w-full max-w-xs flex-col overflow-hidden border border-dark-100 bg-white rounded-lg">
+      <div className="group m-auto my-10 flex w-full max-w-xs flex-col overflow-hidden border border-dark-200 bg-white rounded-lg">
         <Link href={`/stores/${store.store.id}`}>
           <a className="relative flex h-80 overflow-hidden" href="#">
             <Image
