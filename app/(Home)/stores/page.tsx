@@ -164,7 +164,8 @@ const Storepage = ({
             </div>
 
             {loading ? (
-              <div>
+              <div className="w-full grid lg:grid-cols-3 sm:grid-cols-2 sm:mt-0 grid-cols-1 gap-4">
+                <StoresSkeleton />
                 <StoresSkeleton />
                 <StoresSkeleton />
                 <StoresSkeleton />
