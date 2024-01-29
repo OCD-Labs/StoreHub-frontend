@@ -122,7 +122,9 @@ const Nav = () => {
                   <Dropdown.Divider />
 
                   <Dropdown.Item>
-                    <Link href={"/userdashboard"}>Account</Link>
+                    <Link href={"/userdashboard/accountinfo/accountdetails"}>
+                      Account
+                    </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
                     {!error && data?.data.result.stores.length ? (
