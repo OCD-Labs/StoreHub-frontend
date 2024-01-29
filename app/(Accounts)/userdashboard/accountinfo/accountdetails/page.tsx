@@ -7,7 +7,7 @@ const AccountDetails = () => {
 	return (
 		<main>
 			<section className="sm:flex-row flex flex-col justify-between my-8 px-4 gap-4">
-				<div className="inline-block border-dashed border-2 border-gray-400 p-3 h-20 w-20 rounded-3xl flex items-center justify-center">
+				<div className=" sm:justify-center border-dashed border-2 border-gray-400 p-3 h-20 w-20 rounded-3xl flex items-center justify-center">
 					<Image
 						src={galleryadd}
 						width={20}
@@ -60,12 +60,12 @@ const AccountDetails = () => {
 
 					<div className="flex flex-col gap-3">
 						<label>Shipping Adress</label>
-						<textarea className="border-2 rounded-[10px] h-[150px]" />
+						<textarea className="border-2 rounded-[10px] max-h-[120px]" />
 					</div>
 				</div>
 			</section>
 			<div className="w-full justify-center flex">
-				<button className="rounded-[10px] px-14 py-2 text-white bg-[#161616] mx-auto mb-15">
+				<button className="rounded-[10px]  px-14 py-2 text-white bg-[#161616] mx-auto  mb-[35px]">
 					Update Profile
 				</button>
 			</div>

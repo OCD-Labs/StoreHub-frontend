@@ -9,14 +9,14 @@ const Saved = ({ children }: { children: React.ReactNode }) => {
 //   const id = useSearchParams().get("id");
 //   const name = useSearchParams().get("name");
   return (
-    <div>
+    <div >
       <section>
         <div className="font-bold text-lg p-3">
           Saved Item
         </div>
         <hr className="w-full" />
       </section>
-      <section>{children}</section>
+      <section className="">{children}</section>
     </div>
   );
 };
