@@ -9,8 +9,8 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
   const id = useSearchParams().get("id");
   const name = useSearchParams().get("name");
   return (
-    <div>
-      <section>
+    <div className="h-[100%] w-[100%]">
+      <section className=" ">
         <div className="font-bold text-lg p-3">
           Account Information
         </div>
@@ -19,6 +19,7 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
           <li className="flex gap-5">
             <ul>
               <Link
+              className="md:mb-[35px]"
                 href={{
                   pathname: "/userdashboard/accountinfo/accountdetails",
                   query: {

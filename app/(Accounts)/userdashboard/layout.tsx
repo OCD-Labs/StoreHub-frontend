@@ -16,6 +16,7 @@ import signoutIcon from "@public/assets/icons/signoutIcon.svg";
 import { AuthProvider } from "@app/AuthProvider";
 import AccountNav from "./AccountNav";
 
+
 import "@styles/globals.css";
 
 const Accounts = ({ children }: { children: React.ReactNode }) => {
@@ -167,7 +168,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
 
 									<Link
 										onClick={() => handleItmeClick("saved")}
-										className="flex cursor-pointer"
+										className="flex md:border-none cursor-pointer"
 										href={{
 											pathname: "/userdashboard/saved/saveditems",
 											query: {
@@ -210,7 +211,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
 								</div>
 							</section>
 
-							<div className="w-full averagescreen:ml-[220px] calculated-account-width border-2 rounded-[10px] h-[83vh] mt-6">
+							<div className="w-full averagescreen:ml-[220px] calculated-account-width md:border-2  rounded-[10px] h-[83vh] mt-6">
 								{children}
 							</div>
 						</div>
