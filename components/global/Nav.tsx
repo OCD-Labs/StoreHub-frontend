@@ -19,6 +19,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "../../components/ui/Avatar";
+import { log } from "console";
 
 const Nav = () => {
   // const [providers, setProviders] = useState(null)
@@ -49,6 +50,8 @@ const Nav = () => {
     session ? `${BASE_URL}/inventory/stores` : null,
     getAllStores
   );
+
+  console.log(data, error, "navdata");
 
   const toggleDropdown = () => {
     setMenuOpen(!isMenuOpened);
@@ -127,7 +130,9 @@ const Nav = () => {
                     </Link>
                   </Dropdown.Item>
                   <Dropdown.Item>
-                    {!error && data?.data.result.stores.length ? (
+                    {!error &&
+                    !data?.error &&
+                    data?.data.result.stores.length ? (
                       <Link
                         href={{
                           pathname: "/inventory/Itemsdashboard",

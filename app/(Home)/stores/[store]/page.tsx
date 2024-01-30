@@ -10,6 +10,7 @@ import useSWR from "swr";
 import { BASE_URL } from "@components/util/config";
 import search from "@/public/assets/icons/search.svg";
 import sorticon from "@/public/assets/icons/sorticon.svg";
+import StoresSkeleton from "@components/stores/storesSkeleton";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -114,15 +115,25 @@ export default function Page({ params }: { params: { store: number } }) {
             </span>
           </div>
         </div>
-        <div className="w-full grid lg:grid-cols-3 sm:grid-cols-2 sm:mt-0 grid-cols-1 gap-4 max-w-6xl m-auto">
-          {isLoading ? "loading..." : ""}
-          {!error
-            ? data?.data.result.items.map((product: any, key: Key) => (
-                <>
+        <div className="max-w-6xl m-auto">
+          {!error && !isLoading ? (
+            data?.data.result.items.map((product: any, key: Key) => (
+              <>
+                <div className="w-full grid lg:grid-cols-3 sm:grid-cols-2 sm:mt-0 grid-cols-1 gap-4 max-w-6xl m-auto">
                   <StoreItem key={key} product={product} />
-                </>
-              ))
-            : "error occured while fetching storesx"}
+                </div>
+              </>
+            ))
+          ) : (
+            <div className="w-full grid lg:grid-cols-3 sm:grid-cols-2 sm:mt-0 grid-cols-1 gap-4">
+              <StoresSkeleton />
+              <StoresSkeleton />
+              <StoresSkeleton />
+              <StoresSkeleton />
+              <StoresSkeleton />
+              <StoresSkeleton />
+            </div>
+          )}
         </div>
       </section>
     </div>
