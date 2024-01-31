@@ -8,32 +8,10 @@ import necklace from "../../public/assets/images/necklace.png";
 import nearico from "../../public/assets/icons/nearicon.png";
 
 export default function StoreItem({ product }: { product: StoreItem }) {
-  console.log(product);
+  console.log(product, "storeitemproduct");
 
   return (
     <div>
-      {/* <Link href="/products">
-
-        <div className=" flex flex-col items-center text-center group md:lg:xl:border-r md:lg:xl:border-b hover:bg-slate-50 cursor-pointer">
-          <Image
-            src={product.image_urls[0]}
-            width={1000}
-            height={1000}
-            alt="necklace"
-          ></Image>
-          <div className="w-full flex justify-between mt-4 border-t p-3">
-            <div>
-              <p className=" text-black">{product.name}</p>
-
-              <p className=" text-xs">{product.price}</p>
-            </div>
-            <div>
-              <Image src={cartico} alt="cartico" width={20} height={20}></Image>
-            </div>
-          </div>
-        </div>
-      </Link> */}
-      <section></section>
       <div className="group m-auto my-10 flex w-full max-w-xs flex-col overflow-hidden border-2 relative border-gray-100 bg-white rounded-lg">
         <Link href={`/products`}>
           <Image
