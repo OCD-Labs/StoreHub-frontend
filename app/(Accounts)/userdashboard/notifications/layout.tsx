@@ -27,7 +27,7 @@ const ShopperNotifications = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span>Notifications</span>
+                <span className=" hover:underline">Notifications</span>
               </Link>
             </ul>
             <ul>
@@ -42,7 +42,7 @@ const ShopperNotifications = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span>Notification Settings</span>
+                <span className="hover:underline">Notification Settings</span>
               </Link>
             </ul>
           </li>
