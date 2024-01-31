@@ -28,8 +28,6 @@ export default function RootLayout({
 							<div className="max-w-7xl  text-sm m-auto sm:px-16 px-6">
 								
 									<Nav />
-							
-
 								<ErrorBoundary
 									fallback={<Error error="something went wrong" />}
 								>

@@ -175,12 +175,12 @@ const Products = () => {
 						alt="like button"
 					/>
 				</div>
-				{/*This Button is for the mobile*/}
-				<div className="">
-					<div className="flex justify-between w-[80%] my-7 md:my-0">
+				{/*The mobile starts here*/}
+				<div className="md:hidden ">
+					<div className="flex justify-between  w-[80%] my-7 md:my-0">
 						<button
 							disabled
-							className="rounded-[10px] px-2 border  text-white bg-[#161616] text-lg w-[40%]"
+							className="rounded-[10px] px-1 border  text-white bg-[#161616] text-sm w-[40%]"
 						>
 							Add to Cart
 						</button>
@@ -271,93 +271,93 @@ const Products = () => {
 				</div>
 
 				{/*This mobile, stops here*/}
+
 				{/*The big screen, starts here*/}
-				<div className="hidden md:block">
-					<div className="flex flex-col gap-3 md:w-[45%] md:h-[27rem]">
-						<p className="font-semibold text-[17px] text-black">
-							{retrievedItem?.name ? retrievedItem.name : productName}
-						</p>
-						<span className="flex text-[17px] items-center justify-start">
-							<img
-								className="w-[27px]"
-								src="../../assets/icons/near.svg"
-								alt="amount"
-							/>
-							{retrievedItem?.price ? retrievedItem.price : amount}
+
+				<div className="hidden md:flex  flex-col gap-3 md:w-[45%] md:h-[27rem]">
+					<p className="font-semibold text-[17px] text-black">
+						{retrievedItem?.name ? retrievedItem.name : productName}
+					</p>
+					<span className="flex text-[17px] items-center justify-start">
+						<img
+							className="w-[27px]"
+							src="../../assets/icons/near.svg"
+							alt="amount"
+						/>
+						{retrievedItem?.price ? retrievedItem.price : amount}
+					</span>
+					<p className="text-sm flex gap-3 ">
+						<span className="font-bold">Availablity:</span>
+						<span className="text-black">
+							{retrievedItem?.supply_quantity ? stockStatus : " out of stock"}
 						</span>
-						<p className="text-sm flex gap-3 ">
-							<span className="font-bold">Availablity:</span>
-							<span className="text-black">
-								{retrievedItem?.supply_quantity ? stockStatus : " out of stock"}
-							</span>
-						</p>
-						<hr className="" />
-						<p className="flex gap-3">
-							<span className="text-[#000000] font-bold">Product Id:</span>
-							<span className="text-black">
-								{retrievedItem?.id
-									? `${retrievedItem?.id}-wdst-${retrievedItem?.store_id}`
-									: productId}
-							</span>
-						</p>
-						<p className="flex gap-3">
+					</p>
+					<hr className="" />
+					<p className="flex gap-3">
+						<span className="text-[#000000] font-bold">Product Id:</span>
+						<span className="text-black">
+							{retrievedItem?.id
+								? `${retrievedItem?.id}-wdst-${retrievedItem?.store_id}`
+								: productId}
+						</span>
+					</p>
+					<p className="flex gap-3">
+						{" "}
+						<span className="text-[#000000] font-bold mb-6">
+							Discount:
+						</span>{" "}
+						<span className="text-black">20% off</span>
+					</p>
+
+					<hr className="" />
+
+					<div className="mt-5">
+						<p className=" flex gap-3">
 							{" "}
-							<span className="text-[#000000] font-bold mb-6">
-								Discount:
-							</span>{" "}
-							<span className="text-black">20% off</span>
+							<span className="text-[14px] text-black">Color:</span>{" "}
+							<span> The colors</span>
 						</p>
-
-						<hr className="" />
-
-						<div className="mt-5">
-							<p className=" flex gap-3">
-								{" "}
-								<span className="text-[14px] text-black">Color:</span>{" "}
-								<span> The colors</span>
-							</p>
-							<div className="flex items-center gap-4 my-4">
-								<label className="text-[14px] text-black">Size:</label>
-								<select className="block py-2 rounded-md border-0 px-1 md:px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 md:my-0">
-									<option>Option 1</option>
-									<option>Option 2</option>
-									<option>Option 3</option>
-									<option>Option 4</option>
-								</select>
-							</div>
-							<div className="flex items-center gap-4 my-4">
-								<p className="text-[14px] text-black">Quantity:</p>
-								<span
-									className="text-[17px] border py-2 px-4"
-									onClick={countDecrement}
-								>
-									-
-								</span>
-								<span className="text-[17px] border py-2 px-4">{count}</span>
-								<span
-									className="text-[17px] border py-2 px-4"
-									onClick={() => setCount(count + 1)}
-								>
-									+
-								</span>
-							</div>
+						<div className="flex items-center gap-4 my-4">
+							<label className="text-[14px] text-black">Size:</label>
+							<select className="block py-2 rounded-md border-0 px-1 md:px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 md:my-0">
+								<option>Option 1</option>
+								<option>Option 2</option>
+								<option>Option 3</option>
+								<option>Option 4</option>
+							</select>
 						</div>
-						<div className="flex justify-between my-2 md:my-0">
-							<button
-								disabled
-								className="rounded-[10px] px-2 border text-lg w-[40%]"
+						<div className="flex items-center gap-4 my-4">
+							<p className="text-[14px] text-black">Quantity:</p>
+							<span
+								className="text-[17px] border py-2 px-4"
+								onClick={countDecrement}
 							>
-								Add to Cart
-							</button>
-							<button className="rounded-[10px] py-2 text-white bg-[#161616] text-lg w-[40%]">
-								Buy Now
-							</button>
+								-
+							</span>
+							<span className="text-[17px] border py-2 px-4">{count}</span>
+							<span
+								className="text-[17px] border py-2 px-4"
+								onClick={() => setCount(count + 1)}
+							>
+								+
+							</span>
 						</div>
+					</div>
+					<div className="flex justify-between my-2 md:my-0">
+						<button
+							disabled
+							className="rounded-[10px] px-2 border text-lg w-[40%]"
+						>
+							Add to Cart
+						</button>
+						<button className="rounded-[10px] py-2 text-white bg-[#161616] text-lg w-[40%]">
+							Buy Now
+						</button>
 					</div>
 				</div>
 			</section>
-			<hr className="md:hidden mb-2" />
 
+			{/*Large screen ends here*/}
 			<section>
 				<div className="flex justify-between mt-[50px] mb-[50px] md:w-[45%]">
 					<button className="rounded-[10px] py-2  text-white bg-[#161616] w-[30%] text-sm">
