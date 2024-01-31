@@ -115,25 +115,28 @@ export default function Page({ params }: { params: { store: number } }) {
             </span>
           </div>
         </div>
+
         <div className="max-w-6xl m-auto">
-          {!error && !isLoading ? (
-            data?.data.result.items.map((product: any, key: Key) => (
+          <section className="w-full grid lg:grid-cols-3 sm:grid-cols-2 sm:mt-0 grid-cols-1 gap-4">
+            {data && !error ? (
+              data?.data.result.items.map((product: any, key: Key) => (
+                <>
+                  <div className="">
+                    <StoreItem key={key} product={product} />
+                  </div>
+                </>
+              ))
+            ) : (
               <>
-                <div className="w-full grid lg:grid-cols-3 sm:grid-cols-2 sm:mt-0 grid-cols-1 gap-4 max-w-6xl m-auto">
-                  <StoreItem key={key} product={product} />
-                </div>
+                <StoresSkeleton />
+                <StoresSkeleton />
+                <StoresSkeleton />
+                <StoresSkeleton />
+                <StoresSkeleton />
+                <StoresSkeleton />
               </>
-            ))
-          ) : (
-            <div className="w-full grid lg:grid-cols-3 sm:grid-cols-2 sm:mt-0 grid-cols-1 gap-4">
-              <StoresSkeleton />
-              <StoresSkeleton />
-              <StoresSkeleton />
-              <StoresSkeleton />
-              <StoresSkeleton />
-              <StoresSkeleton />
-            </div>
-          )}
+            )}
+          </section>
         </div>
       </section>
     </div>
