@@ -1,34 +1,35 @@
-import { useState, FC } from 'react'
-import { handleImageUpload } from '@app/services/uploadService'
+import { useState, FC } from "react";
+import { handleImageUpload } from "@app/services/uploadService";
 
 export interface UpdateImageProp {
-  updateImage: (url: string) => void
+  updateImage: (url: string) => void;
 }
 
 const AddImageUpload: FC<UpdateImageProp> = ({
   updateImage,
 }: UpdateImageProp) => {
-  const [image, setImage] = useState<any>(null)
+  const [image, setImage] = useState<any>(null);
 
   //image upload code
   const handleImageChange = (event: any) => {
-    const file: File = event.target.files[0]
+    const file: File = event.target.files[0];
 
     if (file) {
-      setImage(file)
+      setImage(file);
     }
-    uploadItemImage(file)
-  }
+    uploadItemImage(file);
+  };
 
   const uploadItemImage = async (file: File) => {
     await handleImageUpload(file).then((data: void | ImageData) => {
       if (data) {
-        console.log(data.url, 'item image')
-
-        updateImage(data.url)
+        // @ts-ignore
+        console.log(data.fileUrl, "item image");
+        // @ts-ignore
+        updateImage(data.fileUrl);
       }
-    })
-  }
+    });
+  };
 
   return (
     <div>
@@ -36,7 +37,7 @@ const AddImageUpload: FC<UpdateImageProp> = ({
         <div>
           <img
             alt="not found"
-            width={'80px'}
+            width={"80px"}
             src={URL.createObjectURL(image)}
           />
           <br />
@@ -58,7 +59,7 @@ const AddImageUpload: FC<UpdateImageProp> = ({
         </label>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default AddImageUpload
+export default AddImageUpload;
