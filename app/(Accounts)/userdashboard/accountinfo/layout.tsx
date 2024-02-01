@@ -1,5 +1,5 @@
 "use client";
-
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -8,6 +8,12 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
   const userID = useSearchParams().get("user");
   const id = useSearchParams().get("id");
   const name = useSearchParams().get("name");
+
+ 
+   
+   
+  
+
   return (
     <div className="h-[100%] w-[100%]">
       <section className=" ">
@@ -30,7 +36,7 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span>Account Details</span>
+                <span   className=" hover:underline "> Account Details </span>
               </Link>
             </ul>
             <ul>
@@ -45,7 +51,7 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span>Reset Password</span>
+                <span  className=" hover:underline">Reset Password</span>
               </Link>
             </ul>
             <ul>
@@ -58,7 +64,7 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
                     token: token,
                     user: userID,
                   },
-                }}
+                }} className=" hover:underline"
               >
                 Payment Information
               </Link>

@@ -29,7 +29,7 @@ const ShopperOrders = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span>Pending Orders</span>
+                <span className="hover:underline">Pending Orders</span>
               </Link>
             </ul>
             <ul>
@@ -44,11 +44,12 @@ const ShopperOrders = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span>Completed</span>
+                <span className="hover:underline">Completed</span>
               </Link>
             </ul>
             <ul>
               <Link
+              className="hover:underline"
                 href={{
                   pathname: "/userdashboard/orders/reviews",
                   query: {

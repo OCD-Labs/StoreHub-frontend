@@ -1,7 +1,7 @@
 import Image from "next/image";
 import arrowleft from "@public/assets/icons/arrow.svg";
 import near from "@public/assets/icons/near.svg";
-import jewellery from "@public/assets/images/jewellery-13325 1.png";
+import jewellery from "@public/assets/images/jewellery.png";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import { ArrowLeftIcon } from "@radix-ui/react-icons";
 
