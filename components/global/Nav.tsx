@@ -58,116 +58,118 @@ const Nav = () => {
   };
 
   return (
-    <nav className="flex-between max-w-6xl m-auto items-baseline w-full mt-0 sticky top-0 py-[10px] px-4 lg:px-0 font-light text-base">
-      <Link href="/">
-        <Image src={logo} width={100} height={100} alt="logo"></Image>
-      </Link>
-      {/* Navigation*/}
-      <div className="flex gap-3 items-center">
-        <div className="sm:flex">
-          <div className="flex gap-3 md:gap-5 items-center leading-tight text-dark">
-            {/* <Link href="/features">Features</Link> */}
-            <div className="relative">
-              <ShoppingCart size={24} />
-              <span className="absolute top-[-10px] right-[-8px] font-medium text-sm">
-                4
-              </span>
-            </div>
+		<nav className="flex-between max-w-6xl m-auto items-baseline w-full mt-0 sticky top-0 py-[10px] px-4 lg:px-0 font-light text-base">
+			<Link href="/">
+				<Image src={logo} width={100} height={100} alt="logo"></Image>
+			</Link>
+			{/* Navigation*/}
+			<div className="flex gap-3 items-center">
+				<div className="sm:flex">
+					<div className="flex gap-3 md:gap-5 items-center leading-tight text-dark">
+						{/* <Link href="/features">Features</Link> */}
+						<div className="relative">
+							<Link href="/cart">
+								<ShoppingCart size={24} className="" />
+							</Link>
+							<span className="absolute top-[-10px] right-[-8px] font-medium text-sm">
+								4
+							</span>
+						</div>
 
-            <Link className="sm:block hidden" href="/stores">
-              Stores
-            </Link>
-          </div>
-        </div>
-        {!session ? (
-          <>
-            <Link href="/auth/signin">Login</Link>
-            <Button variant="default">
-              <Link href={"/auth/onboarding"} className="font-light">
-                Sign up
-              </Link>
-            </Button>
-          </>
-        ) : (
-          <>
-            <div>
-              <Dropdown
-                onToggle={toggleDropdown}
-                className="flex flex-col static"
-                style={{ position: "static", padding: 0, minWidth: "auto" }}
-              >
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <div className="flex gap-2 justify-center items-center bg-graybrand">
-                    <div></div>
-                    <Avatar>
-                      <AvatarImage src="" />
+						<Link className="" href="/stores">
+							Stores
+						</Link>
+					</div>
+				</div>
+				{!session ? (
+					<>
+						<Link href="/auth/signin">Login</Link>
+						<Button variant="default">
+							<Link href={"/auth/onboarding"} className="font-light">
+								Sign up
+							</Link>
+						</Button>
+					</>
+				) : (
+					<>
+						<div>
+							<Dropdown
+								onToggle={toggleDropdown}
+								className="flex flex-col static"
+								style={{ position: "static", padding: 0, minWidth: "auto" }}
+							>
+								<Dropdown.Toggle variant="success" id="dropdown-basic">
+									<div className="flex gap-2 justify-center items-center bg-graybrand">
+										<div></div>
+										<Avatar>
+											<AvatarImage src="" />
 
-                      <AvatarFallback className="border-4 border-dark">
-                        {session?.user.user.first_name[0]}
-                        {session?.user.user.last_name[0]}
-                      </AvatarFallback>
-                    </Avatar>
-                  </div>
-                </Dropdown.Toggle>
+											<AvatarFallback className="border-4 border-dark">
+												{session?.user.user.first_name[0]}
+												{session?.user.user.last_name[0]}
+											</AvatarFallback>
+										</Avatar>
+									</div>
+								</Dropdown.Toggle>
 
-                <Dropdown.Menu
-                  className={`flex flex-col z-20 border border-black text-sm p-4 gap-3 bg-white rounded-lg ${
-                    isMenuOpened === false ? "hidden" : ""
-                  }`}
-                >
-                  {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item> */}
-                  <Dropdown.Item href="#/action-2">
-                    <Link href="/createStore">
-                      <button className="black_btn">Create Store</button>
-                    </Link>
-                  </Dropdown.Item>
+								<Dropdown.Menu
+									className={`flex flex-col z-20 border border-black text-sm p-4 gap-3 bg-white rounded-lg ${
+										isMenuOpened === false ? "hidden" : ""
+									}`}
+								>
+									{/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item> */}
+									<Dropdown.Item href="#/action-2">
+										<Link href="/createStore">
+											<button className="black_btn">Create Store</button>
+										</Link>
+									</Dropdown.Item>
 
-                  <Dropdown.Divider />
+									<Dropdown.Divider />
 
-                  <Dropdown.Item>
-                    <Link href={"/userdashboard/accountinfo/accountdetails"}>
-                      Account
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    {!error &&
-                    !data?.error &&
-                    data?.data.result.stores.length ? (
-                      <Link
-                        href={{
-                          pathname: "/inventory/Itemsdashboard",
-                          query: {
-                            id: data?.data.result.stores[0].store_id,
-                            name: data?.data.result.stores[0].store_name,
-                            user: session?.user.user.user_id,
-                          },
-                        }}
-                      >
-                        Dashboard
-                      </Link>
-                    ) : (
-                      ""
-                    )}
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <button
-                      onClick={() => {
-                        signOut().then(() => {
-                          clearCookie("token");
-                        });
-                      }}
-                    >
-                      Sign out
-                    </button>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </>
-        )}
-      </div>
-    </nav>
-  );
+									<Dropdown.Item>
+										<Link href={"/userdashboard/accountinfo/accountdetails"}>
+											Account
+										</Link>
+									</Dropdown.Item>
+									<Dropdown.Item>
+										{!error &&
+										!data?.error &&
+										data?.data.result.stores.length ? (
+											<Link
+												href={{
+													pathname: "/inventory/Itemsdashboard",
+													query: {
+														id: data?.data.result.stores[0].store_id,
+														name: data?.data.result.stores[0].store_name,
+														user: session?.user.user.user_id,
+													},
+												}}
+											>
+												Dashboard
+											</Link>
+										) : (
+											""
+										)}
+									</Dropdown.Item>
+									<Dropdown.Item>
+										<button
+											onClick={() => {
+												signOut().then(() => {
+													clearCookie("token");
+												});
+											}}
+										>
+											Sign out
+										</button>
+									</Dropdown.Item>
+								</Dropdown.Menu>
+							</Dropdown>
+						</div>
+					</>
+				)}
+			</div>
+		</nav>
+	);
 };
 
 export default Nav;
