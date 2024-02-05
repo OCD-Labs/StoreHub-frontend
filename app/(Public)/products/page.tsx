@@ -158,14 +158,14 @@ const Products = () => {
 			<section className="md:flex items-center justify-between">
 				<div className="border rounded-[7px] flex items-center justify-between md:mx-0 md:p-6 pb-16 w-[80%] relative my-4 md:w-[45%] md:h-[27rem]">
 					<Image
-						className=""
+						className="p-2 w-[300px] flex justify-center items-center"
 						src={
 							retrievedItem?.image_urls[0]
 								? retrievedItem?.image_urls[0]
 								: jewellery
 						}
-						width={400}
-						height={300}
+						width={300}
+						height={200}
 						alt="products-image"
 					/>
 
