@@ -217,7 +217,7 @@ const Products = () => {
 										<option>Option 4</option>
 									</select>
 								</div>
-								<div className="flex items-center gap-4 my-4">
+								<div className="flex  items-center gap-4 my-4">
 									<p className="text-[14px] text-[#000000]">Quantity:</p>
 									<div className="border rounded-[10px]">
 										<span
