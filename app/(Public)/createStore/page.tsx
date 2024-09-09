@@ -1,21 +1,23 @@
 "use client";
-import { log } from "console";
+
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
-import { useSession } from "next-auth/react";
+
 import "react-toastify/dist/ReactToastify.css";
 import Link from "next/link";
 // @ts-nocheck
 import { useState, useEffect, useRef, useContext } from "react";
-import { getSession } from "@components/util/session";
+import { getSession, getUser } from "@components/util/session";
 import { BASE_URL, CONTRACT_ADDRESS } from "@components/util/config";
 import { userWallet } from "@app/StoreManager";
 import ImageUploader from "@components/global/ImageUploader";
+import { getCookie } from "@components/util/cookie";
 
 const CreateStore = () => {
-  const { data: session } = useSession();
+  const session = getCookie("token");
+  const user = getUser("user");
   const { wallet } = userWallet.getState();
   const searchParams = useSearchParams();
   const router = useRouter();

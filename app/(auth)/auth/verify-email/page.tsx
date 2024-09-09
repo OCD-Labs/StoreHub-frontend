@@ -1,47 +1,48 @@
-'use client'
-import React, { useState } from 'react'
-import { useEffect } from 'react'
-import { BASE_URL } from '@components/util/config'
-import { useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/navigation'
-import { setSession } from '@components/util/session'
-import Link from 'next/link'
-import { setCookie } from '@components/util/cookie'
-import { getCookie } from '@components/util/cookie'
-import { userWallet } from '@app/StoreManager'
-import { signIn } from 'next-auth/react'
-import { clearCookie } from '@components/util/cookie'
+"use client";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { BASE_URL } from "@components/util/config";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { setSession } from "@components/util/session";
+import Link from "next/link";
+import { setCookie } from "@components/util/cookie";
+import { getCookie } from "@components/util/cookie";
+import { userWallet } from "@app/StoreManager";
+import { signinAction } from "@app/actions/auth-action";
+import { clearCookie } from "@components/util/cookie";
+import { signIn } from "@app/apis/auth";
 
 const page = () => {
-  const [loading, setloading] = useState(false)
-  const [error, setError] = useState(false)
-  const router = useRouter()
-  const EMAIL = useSearchParams().get('email')
-  const SECRET_CODE = useSearchParams().get('secret_code')
-  const setUser = userWallet((state) => state.setUser)
+  const [loading, setloading] = useState(false);
+  const [error, setError] = useState(false);
+  const router = useRouter();
+  const EMAIL = useSearchParams().get("email");
+  const SECRET_CODE = useSearchParams().get("secret_code");
+  const setUser = userWallet((state) => state.setUser);
 
   const handleSignIn = async () => {
-    const userCookie = getCookie('credential') as string
-    const credential: IUserCredential = JSON.parse(userCookie)
+    const userCookie = getCookie("credential") as string;
+    const credential: IUserCredential = JSON.parse(userCookie);
 
-
-    // sign in with NEXTAUTH
-    await signIn('credentials', {
-      email: credential.email,
-      password: credential.password,
-      redirect: false,
-    }).then(() => {
-      clearCookie('credential') // clear cookie from cookie storage
-    })
-  }
-
+    useEffect(() => {
+      async function signin(user: IUserCredential) {
+        await signinAction(user);
+        clearCookie("credential");
+      }
+      signin({
+        email: credential.email,
+        password: credential.password,
+      });
+    });
+  };
   useEffect(() => {
     try {
-      setloading(true)
+      setloading(true);
       fetch(`${BASE_URL}/users/verify-email`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           secret_code: SECRET_CODE,
@@ -49,59 +50,59 @@ const page = () => {
         }),
       })
         .then((response) => {
-          setloading(false)
+          setloading(false);
           if (response.status === 200) {
             // Successful verification
 
-            return response.json()
+            return response.json();
           } else {
             // Handle errors, e.g., invalid token or server error
-            setError(true)
-            throw new Error('Verification failed')
+            setError(true);
+            throw new Error("Verification failed");
           }
         })
         .then((data) => {
-          debugger
-          console.log(data.data.result, 'data')
+          debugger;
+          console.log(data.data.result, "data");
 
           //handle signin from NextAuth
-          handleSignIn()
+          handleSignIn();
 
           //save user data in global state
-          setUser(data.data.result)
+          setUser(data.data.result);
           // Redirect the user to a choose role page
 
-          router.push('/auth/choose-role') 
+          router.push("/auth/choose-role");
         })
         .catch((error) => {
           // Handle and log any errors
-          console.error('Verification error:', error)
+          console.error("Verification error:", error);
         })
         .finally(() => {
-          setloading(false)
-        })
+          setloading(false);
+        });
     } catch (error) {}
-  }, [2])
+  }, [2]);
   return (
     <div>
       <div>
-        {loading ? 'Loading...' : ''}
+        {loading ? "Loading..." : ""}
 
         <div>
           {error ? (
             <div className="text-red-800 flex flex-col items-center">
               <div>Couldn't verify your email</div>
               <span className="text-purple-600">
-                <Link href={'/home'}>Go back</Link>
+                <Link href={"/home"}>Go back</Link>
               </span>
             </div>
           ) : (
-            ''
+            ""
           )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;

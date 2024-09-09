@@ -12,16 +12,20 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  experimental: {
+    serverActions: true,
+  },
+
   images: {
     domains: [
-      'www.gravatar.com',
-      'res.cloudinary.com',
-      'www.greengrove.com',
-      'plus.unsplash.com',
-      'beforeigosolutions.com',
-      'big-7.png',
+      "www.gravatar.com",
+      "res.cloudinary.com",
+      "www.greengrove.com",
+      "plus.unsplash.com",
+      "beforeigosolutions.com",
+      "big-7.png",
     ],
   },
-}
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

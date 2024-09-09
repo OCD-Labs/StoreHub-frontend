@@ -32,3 +32,17 @@ export function getItemID(): string | undefined {
     return parsedStoreId as string;
   }
 }
+
+export function getUser(name: string) {
+  if (!name) return null;
+  const user = localStorage.getItem(name);
+  if (user) {
+    return JSON.parse(user);
+  }
+}
+
+export function removeUser(name: string) {
+  if (!name) return null;
+
+  localStorage.removeItem(name);
+}

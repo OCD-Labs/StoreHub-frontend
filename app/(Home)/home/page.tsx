@@ -1,5 +1,4 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@app/api/auth/[...nextauth]/route";
+import { getSession } from "../../actions/auth-action";
 import Link from "next/link";
 import React from "react";
 import { Button } from "@components/ui/Button";
@@ -19,7 +18,7 @@ const Page = async () => {
   //   console.log(account, 'new user')
   // }
 
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   console.log(session);
 
   const authenticated = !!session;

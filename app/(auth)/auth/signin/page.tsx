@@ -8,7 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { Button } from "@components/ui/Button";
 import Router, { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
-import { signIn } from "next-auth/react";
+import { signinAction } from "@app/actions/auth-action";
 
 const SignIn = () => {
   const [loading, setloading] = useState(false);
@@ -21,27 +21,44 @@ const SignIn = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    setError,
+    formState: { errors, isSubmitting },
   } = useForm<IUserCredential>();
+
+  /**
+   * submit logic
+   * @param data
+   */
   const onSubmit = async (data: IUserCredential) => {
     setloading(true);
     try {
-      const user = await signIn("credentials", {
-        email: data.email,
-        password: data.password,
-        redirect: false,
-      });
-      if (user) {
-        console.log(user);
-        debugger;
-        setloading(false);
-        if (user?.error) {
-          toast.error("Wrong email or password. Try again");
-        } else {
-          debugger;
-          router.push("/home");
-        }
+      const userData = await signinAction(data);
+      console.log(userData?.user, "user");
+      if (!userData) {
+        setError("root", {
+          type: "server",
+          message: "Incorrect email or password",
+        });
+      } else {
+        localStorage.setItem("user", JSON.stringify(userData?.user));
+        router.push("/home");
       }
+      // const user = await signIn("credentials", {
+      //   email: data.email,
+      //   password: data.password,
+      //   redirect: false,
+      // });
+      // if (user) {
+      //   console.log(user);
+      //   debugger;
+      //   setloading(false);
+      //   if (user?.error) {
+      //     toast.error("Wrong email or password. Try again");
+      //   } else {
+      //     debugger;
+      //     router.push("/home");
+      //   }
+      // }
     } catch (error) {}
   };
 
@@ -86,18 +103,20 @@ const SignIn = () => {
               placeholder="password"
               {...register("password", { required: true, min: 9 })}
             />
-
+            {errors.root && (
+              <p className="text-sm text-red-500">{errors.root.message}</p>
+            )}
             <div className="flex items-center">
               {/* Hidden default radio input */}
             </div>
 
             <Button
               type="submit"
-              disabled={loading}
+              disabled={isSubmitting}
               onClick={handleSubmit(onSubmit)}
               className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white bg-[#161616] text-lg w-full my-3 md:my-6"
             >
-              {loading ? (
+              {isSubmitting ? (
                 <div className="flex justify-center">
                   <Loader2 className="mr-2 h-4 w-6 animate-spin" /> Logging in
                   ...
@@ -108,7 +127,7 @@ const SignIn = () => {
             </Button>
           </div>
         </form>
-
+        {/* 
         <span className="flex justify-between pt-2 sm:pt-1 md:pt-2">
           <button className="flex items-center justify-center py-1 md:py-2 w-[44%] rounded-[10px] border cursor-pointer">
             <img
@@ -126,7 +145,7 @@ const SignIn = () => {
             />
             <p className="ml-3">Google</p>
           </button>
-        </span>
+        </span> */}
       </section>
     </div>
   );

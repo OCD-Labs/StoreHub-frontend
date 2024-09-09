@@ -1,12 +1,13 @@
-'use client'
-import Link from 'next/link'
-import React, { useState, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import Image from 'next/image'
-import { Loader2 } from 'lucide-react'
-import { toast, ToastContainer } from 'react-toastify'
-import { Button } from '@components/ui/Button'
-import { setCookie } from '@components/util/cookie'
+"use client";
+import Link from "next/link";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import Image from "next/image";
+import { Loader2 } from "lucide-react";
+import { toast, ToastContainer } from "react-toastify";
+import { Button } from "@components/ui/Button";
+import { setCookie } from "@components/util/cookie";
+import { signupAction } from "@app/actions/auth-action";
 import {
   Dialog,
   DialogContent,
@@ -14,94 +15,92 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@components/ui/Dialog'
-import email from '@public/assets/images/carbon_email.png'
-import 'react-toastify/dist/ReactToastify.css'
-import { signUp } from '@app/apis'
-import { signIn } from 'next-auth/react'
+} from "@components/ui/Dialog";
+import email from "@public/assets/images/carbon_email.png";
+import "react-toastify/dist/ReactToastify.css";
+import { signUp } from "@app/apis";
 
 const SignUp = () => {
-  const [checked, setChecked] = useState<boolean>(false)
-  const [modal, setModal] = useState(false)
-  const [loading, setloading] = useState(false)
-  const [seconds, setSeconds] = useState(30)
+  const [checked, setChecked] = useState<boolean>(false);
+  const [modal, setModal] = useState(false);
+  const [loading, setloading] = useState(false);
+  const [seconds, setSeconds] = useState(30);
   const [user, setUser] = useState<UserInfo>({
-    first_name: '',
-    last_name: '',
-    password: '',
-    email: '',
-    account_id: '',
-    profile_image_url: '',
-  })
+    first_name: "",
+    last_name: "",
+    password: "",
+    email: "",
+    account_id: "",
+    profile_image_url: "",
+  });
 
   const handleRadioChange = (): void => {
-    setChecked(!checked)
-  }
+    setChecked(!checked);
+  };
   const toggleModal = () => {
-    setModal(!modal)
-  }
+    setModal(!modal);
+  };
 
   interface IUserForm {
-    first_name: ''
-    last_name: ''
-    email: ''
-    password: ''
+    first_name: "";
+    last_name: "";
+    email: "";
+    password: "";
   }
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<IUserForm>()
-  const onSubmit = (data: IUserForm) => {
-    let r = (Math.random() + 1).toString(36).substring(7)
+    formState: { errors, isSubmitting },
+  } = useForm<IUserForm>();
+  const onSubmit = async (data: IUserForm) => {
+    let r = (Math.random() + 1).toString(36).substring(7);
 
-    setloading(true)
+    setloading(true);
     const userInfo = {
       ...data,
       account_id: `${r}.testnet`,
-      profile_image_url: '',
-    }
-    createAccount(userInfo)
-  }
+      profile_image_url: "",
+    };
+    await createAccount(userInfo);
+  };
 
   const createAccount = async (data: UserInfo) => {
     try {
-      const res = await signUp(data)
-      if (res) setloading(false)
-      debugger
-      if (res.status !== 'error') {
-        console.log(data, 'ggggg')
+      const res = await signupAction(data);
+      console.log(res);
+
+      if (res.status !== "error") {
+        console.log(data, "ggggg");
         const credential = JSON.stringify({
           email: data.email,
           password: data.password,
-        })
-        setCookie('credential', credential, 1)
-        debugger
-        setModal(true)
-        setSeconds(30)
+        });
+        setCookie("credential", credential, 1);
+        setModal(true);
+        setSeconds(30);
       } else {
-        toast.error('User exists already')
+        toast.error("User exists already");
       }
 
-      console.log(res, 'respon')
+      console.log(res, "respon");
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   // timer code
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
       if (seconds === 0) {
-        clearInterval(timerInterval)
+        clearInterval(timerInterval);
       } else {
-        setSeconds((prevSeconds) => prevSeconds - 1)
+        setSeconds((prevSeconds) => prevSeconds - 1);
       }
-    }, 1000)
+    }, 1000);
 
-    return () => clearInterval(timerInterval)
-  }, [seconds])
+    return () => clearInterval(timerInterval);
+  }, [seconds]);
 
   return (
     <div className="sm:flex sm:justify-between mb-3 sm:mb-6 z-10 p-8 font-light">
@@ -133,29 +132,39 @@ const SignUp = () => {
               className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               type="text"
               placeholder="First name"
-              {...register('first_name', { required: true, maxLength: 80 })}
+              {...register("first_name", { required: true, maxLength: 80 })}
             />
 
             <input
               className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               type="text"
               placeholder="Last name"
-              {...register('last_name', { required: true, maxLength: 100 })}
+              {...register("last_name", { required: true, maxLength: 100 })}
             />
-            <input
-              className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="email"
-              placeholder="Email"
-              {...register('email', {
-                required: true,
-                pattern: /[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i,
-              })}
-            />
+            <div>
+              {" "}
+              <input
+                className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                type="email"
+                placeholder="Email"
+                {...register("email", {
+                  required: true,
+
+                  pattern: {
+                    value: /[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i,
+                    message: "provide valid email address",
+                  },
+                })}
+              />
+              {errors.email && (
+                <p className="text-xs text-red-500">{errors.email.message}</p>
+              )}
+            </div>
             <input
               className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               type="text"
               placeholder="password"
-              {...register('password', { required: true, min: 9 })}
+              {...register("password", { required: true, min: 9 })}
             />
 
             <div className="flex items-center">
@@ -178,12 +187,12 @@ const SignUp = () => {
                   {/* Checked state indicator (checkmark) */}
                   <div
                     className={`w-4 h-4 bg-black rounded ${
-                      checked ? 'opacity-100 scale-100' : 'opacity-0 scale-0'
+                      checked ? "opacity-100 scale-100" : "opacity-0 scale-0"
                     } transform rotate-45 transition-opacity duration-300`}
                   >
                     {/* Checkmark SVG */}
                     <svg
-                    className='transform -rotate-90'
+                      className="transform -rotate-90"
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="none"
@@ -206,17 +215,17 @@ const SignUp = () => {
 
             <Button
               type="submit"
-              disabled={loading}
+              disabled={isSubmitting}
               onClick={handleSubmit(onSubmit)}
               className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white bg-[#161616] text-lg w-full my-3 md:my-6"
             >
-              {loading ? (
+              {isSubmitting ? (
                 <div className="flex justify-center">
                   <Loader2 className="mr-2 h-4 w-6 animate-spin" /> Creating
                   User...
                 </div>
               ) : (
-                'Create Account'
+                "Create Account"
               )}
             </Button>
           </div>
@@ -234,17 +243,17 @@ const SignUp = () => {
               ></Image>
               <p className="font-medium text-2xl">Verify Email</p>
               <p className="text-sm leading-7">
-                Thank you for signing up with{' '}
+                Thank you for signing up with{" "}
                 <b className="font-bold">StoreHub</b>! To get started, please
                 verify your email for security reasons. Check your inbox (and
-                spam/junk folder) at{' '}
+                spam/junk folder) at{" "}
                 <b className="font-bold">[Recipient's Email Address]</b> for our
                 verification email.
               </p>
               <p className="flex flex-col items-center text-xs">
                 You didn’t receive email? Request a new email in
                 <p>
-                  {' '}
+                  {" "}
                   <span className="text-purple-800">{seconds} seconds</span>
                 </p>
               </p>
@@ -279,7 +288,7 @@ const SignUp = () => {
         </div>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

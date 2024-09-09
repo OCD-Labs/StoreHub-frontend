@@ -6,7 +6,7 @@ import Link from "next/link";
 import { FC } from "react";
 import { useState, useEffect } from "react";
 import goto from "@public/assets/icons/goto.svg";
-import { useSession } from "next-auth/react";
+
 import { WidthIcon } from "@radix-ui/react-icons";
 
 export interface StoreProps {
@@ -14,8 +14,6 @@ export interface StoreProps {
 }
 
 const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
-  const { data: session } = useSession();
-
   return (
     <>
       <div className="group m-auto my-10 flex w-full max-w-xs flex-col overflow-hidden border border-dark-200 bg-white rounded-lg">
