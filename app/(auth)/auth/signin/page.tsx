@@ -9,7 +9,7 @@ import { Button } from "@components/ui/Button";
 import Router, { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { signinAction } from "@app/actions/auth-action";
-
+import { setUser as storeUser } from "@components/util/session";
 const SignIn = () => {
   const [loading, setloading] = useState(false);
   const router = useRouter();
@@ -40,7 +40,8 @@ const SignIn = () => {
           message: "Incorrect email or password",
         });
       } else {
-        localStorage.setItem("user", JSON.stringify(userData?.user));
+        storeUser("user", JSON.stringify(userData?.user));
+
         router.push("/home");
       }
       // const user = await signIn("credentials", {

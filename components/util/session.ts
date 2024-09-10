@@ -33,16 +33,33 @@ export function getItemID(): string | undefined {
   }
 }
 
+export function setUser(name: string, data: string) {
+  const isBrowser = typeof window !== "undefined";
+  if (isBrowser) {
+    if (!name) return null;
+    localStorage.setItem(name, data);
+  }
+  return null;
+}
+
 export function getUser(name: string) {
   if (!name) return null;
-  const user = localStorage.getItem(name);
-  if (user) {
-    return JSON.parse(user);
+  const isBrowser = typeof window !== "undefined";
+  if (isBrowser) {
+    const user = localStorage.getItem(name);
+    if (user) {
+      return JSON.parse(user);
+    }
   }
+  return null;
 }
 
 export function removeUser(name: string) {
-  if (!name) return null;
+  const isBrowser = typeof window !== "undefined";
+  if (isBrowser) {
+    if (!name) return null;
 
-  localStorage.removeItem(name);
+    localStorage.removeItem(name);
+  }
+  return null;
 }

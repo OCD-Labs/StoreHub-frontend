@@ -1,4 +1,3 @@
-"use client";
 import { Switch } from "@components/ui/SwitchButton";
 
 const NotificationSettings = () => {

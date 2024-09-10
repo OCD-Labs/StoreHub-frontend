@@ -21,6 +21,7 @@ const AddImageUpload: FC<UpdateImageProp> = ({
   };
 
   const uploadItemImage = async (file: File) => {
+    //@ts-ignore
     await handleImageUpload(file).then((data: void | ImageData) => {
       if (data) {
         // @ts-ignore

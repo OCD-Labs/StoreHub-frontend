@@ -1,36 +1,36 @@
 // @ts-nocheck
-'use client'
+"use client";
 
-import Image from 'next/image'
-import search from '../../../../../public/assets/icons/search.svg'
-import filter from '../../../../../public/assets/icons/filter.svg'
-import salesicon from '../../../../../public/assets/icons/salesicon.svg'
-import downtrend from '../../../../../public/assets/icons/downtrend.svg'
-import uptrend from '../../../../../public/assets/icons/uptrend.svg'
-import totalitems from '../../../../../public/assets/icons/totalitems.svg'
-import totalcustomers from '../../../../../public/assets/icons/contacts.svg'
-import SalesTrend from '@components/stores/sales/SalesTrend'
-import useSWR from 'swr'
-import SaleInfo from '@components/stores/sales/SaleInfo'
-import { ISalesHistory } from '@components/stores/sales/SalesHistoryTable'
-import SalesHistoryTable from '@components/stores/sales/SalesHistoryTable'
+import Image from "next/image";
+import search from "../../../../../public/assets/icons/search.svg";
+import filter from "../../../../../public/assets/icons/filter.svg";
+import salesicon from "../../../../../public/assets/icons/salesicon.svg";
+import downtrend from "../../../../../public/assets/icons/downtrend.svg";
+import uptrend from "../../../../../public/assets/icons/uptrend.svg";
+import totalitems from "../../../../../public/assets/icons/totalitems.svg";
+import totalcustomers from "../../../../../public/assets/icons/contacts.svg";
+import SalesTrend from "@components/stores/sales/SalesTrend";
+import useSWR from "swr";
+import SaleInfo from "@components/stores/sales/SaleInfo";
+import { ISalesHistory } from "@components/stores/sales/SalesHistoryTable";
+import SalesHistoryTable from "@components/stores/sales/SalesHistoryTable";
 import {
   TableCaption,
   TableHeader,
   TableRow,
   TableHead,
   TableBody,
-} from '@components/ui/Table'
-import { Table } from 'react-bootstrap'
-import Chart from '@components/stores/sales/SalesChart'
-import { Key, useEffect, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
-import useProfile from '@app/hooks/useProfile'
-import { OPTIONS } from '@app/apis'
-import { GetSalesHistory } from '@app/apis/Inventory'
-import { modalstore } from '@app/StoreManager/modalstore'
-import { useSession } from 'next-auth/react'
-import Skeleton from 'react-loading-skeleton'
+} from "@components/ui/Table";
+import { Table } from "react-bootstrap";
+import Chart from "@components/stores/sales/SalesChart";
+import { Key, useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import useProfile from "@app/hooks/useProfile";
+import { OPTIONS } from "@app/apis";
+import { GetSalesHistory } from "@app/apis/Inventory";
+import { modalstore } from "@app/StoreManager/modalstore";
+
+import Skeleton from "react-loading-skeleton";
 import {
   Dialog,
   DialogContent,
@@ -38,44 +38,44 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../../../../../components/ui/Dialog'
-import { BASE_URL } from '@components/util/config'
+} from "../../../../../components/ui/Dialog";
+import { BASE_URL } from "@components/util/config";
 
 const SalesChart = () => {
-  const amount = '3,765.88'
-  const percent = '10'
-  const [loading, setloading] = useState<boolean>(true)
-  const [salesHistory, setSalesHistory] = useState([])
-  const { data: session } = useSession()
-  const userID: string | null = useSearchParams().get('user')
+  const amount = "3,765.88";
+  const percent = "10";
+  const [loading, setloading] = useState<boolean>(true);
+  const [salesHistory, setSalesHistory] = useState([]);
+  const session = getCookie("token");
+  const userID: string | null = useSearchParams().get("user");
 
-  const id: string | null = useSearchParams().get('id')
-  const setSaleInfoStatus = modalstore((state) => state.setSaleInfoStatus)
-  const setSaleInfo = modalstore((state) => state.setSaleInfo)
+  const id: string | null = useSearchParams().get("id");
+  const setSaleInfoStatus = modalstore((state) => state.setSaleInfoStatus);
+  const setSaleInfo = modalstore((state) => state.setSaleInfo);
 
   const fetcher = (url: string) =>
     fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${session?.user.token}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${""}`,
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        return data
-      })
+        return data;
+      });
 
   const { data, error, isLoading } = useSWR(
     session ? `${BASE_URL}/inventory/stores/${id}/sales` : null,
-    fetcher,
-  )
-  console.log(data?.data.result.sales, 'salesdata')
+    fetcher
+  );
+  console.log(data?.data.result.sales, "salesdata");
 
   // handle sale info display
   const handleSaleInfoDisplay = (sale: ISalesHistory) => {
-    setSaleInfo(sale), setSaleInfoStatus()
-  }
+    setSaleInfo(sale), setSaleInfoStatus();
+  };
 
   return (
     <div>
@@ -212,7 +212,7 @@ const SalesChart = () => {
               <option>Year</option>
             </select>
             <button className="px-2 py-1 flex items-center border ml-2">
-              <p className="mr-2 rounded">Filter</p>{' '}
+              <p className="mr-2 rounded">Filter</p>{" "}
               <Image src={filter} alt="filter by" />
             </button>
           </div>
@@ -245,7 +245,7 @@ const SalesChart = () => {
                       <TableRow onClick={() => handleSaleInfoDisplay(product)}>
                         <SalesHistoryTable key={key} sales={product} />
                       </TableRow>
-                    ),
+                    )
                   )
                 )}
               </TableBody>
@@ -254,7 +254,7 @@ const SalesChart = () => {
         </section>
       </section>
     </div>
-  )
-}
+  );
+};
 
-export default SalesChart
+export default SalesChart;

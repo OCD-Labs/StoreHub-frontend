@@ -1,29 +1,29 @@
 // @ts-nocheck
-'use client'
-import '@styles/globals.css'
-import { useSearchParams } from 'next/navigation'
-import { useEffect, useState, useRef } from 'react'
-import { Button } from '@components/ui/Button'
-import { ToastContainer, toast } from 'react-toastify'
-import Image from 'next/image'
-import Link from 'next/link'
-import Home from '@public/assets/icons/Inventory/home.svg'
-import Products from '@public/assets/icons/Inventory/products.svg'
-import Sales from '@public/assets/icons/Inventory/cart-sale.svg'
-import logo from '@public/assets/images/storehublogo.svg'
-import Orders from '@public/assets/icons/Inventory/orders.svg'
-import settings from '@public/assets/icons/Inventory/settings.svg'
-import notification from '../../../public/assets/icons/Notification 2.svg'
-import arrow from '../../../public/assets/icons/arrow.svg'
-import hambuger from '../../../public/assets/icons/align-justify.svg'
-import cancel from '../../../public/assets/icons/x 2.svg'
-import duplicate from '@public/assets/icons/Inventory/duplicate.svg'
-import Edit from '@public/assets/icons/Inventory/Edit.svg'
-import status from '@public/assets/icons/Inventory/status.svg'
-import 'react-toastify/dist/ReactToastify.css'
-import { BASE_URL } from '@components/util/config'
-import { useRouter } from 'next/navigation'
-import { Inventory } from '@app/StoreManager/inventory'
+"use client";
+import "@styles/globals.css";
+import { useSearchParams } from "next/navigation";
+import { useEffect, useState, useRef } from "react";
+import { Button } from "@components/ui/Button";
+import { ToastContainer, toast } from "react-toastify";
+import Image from "next/image";
+import Link from "next/link";
+import Home from "@public/assets/icons/Inventory/home.svg";
+import Products from "@public/assets/icons/Inventory/products.svg";
+import Sales from "@public/assets/icons/Inventory/cart-sale.svg";
+import logo from "@public/assets/images/storehublogo.svg";
+import Orders from "@public/assets/icons/Inventory/orders.svg";
+import settings from "@public/assets/icons/Inventory/settings.svg";
+import notification from "../../../public/assets/icons/Notification 2.svg";
+import arrow from "../../../public/assets/icons/arrow.svg";
+import hambuger from "../../../public/assets/icons/align-justify.svg";
+import cancel from "../../../public/assets/icons/x 2.svg";
+import duplicate from "@public/assets/icons/Inventory/duplicate.svg";
+import Edit from "@public/assets/icons/Inventory/Edit.svg";
+import status from "@public/assets/icons/Inventory/status.svg";
+import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from "@components/util/config";
+import { useRouter } from "next/navigation";
+import { Inventory } from "@app/StoreManager/inventory";
 
 import {
   DropdownMenu,
@@ -32,64 +32,64 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '../../../components/ui/NavDropdown'
-import '@styles/globals.css'
-import { useSession } from 'next-auth/react'
+} from "../../../components/ui/NavDropdown";
+import "@styles/globals.css";
+import { getCookie } from "@components/util/cookie";
 
 const DashboardNav = ({ children }: { children: React.ReactNode }) => {
-  const { data: session, status } = useSession()
-  const [activeItem, setActiveItem] = useState<string>('home')
-  const [store, setCurrentStore] = useState<any>()
-  const [sideBar, setSideBar] = useState<boolean>(false)
-  const router = useRouter()
-  const setStore = Inventory((state) => state.setStores)
-  const stores = Inventory((state) => state.stores)
+  const session = getCookie("token");
+  const [activeItem, setActiveItem] = useState<string>("home");
+  const [store, setCurrentStore] = useState<any>();
+  const [sideBar, setSideBar] = useState<boolean>(false);
+  const router = useRouter();
+  const setStore = Inventory((state) => state.setStores);
+  const stores = Inventory((state) => state.stores);
   // const store = stores[0]
   const handleSideBar = () => {
-    setSideBar(!sideBar)
-  }
+    setSideBar(!sideBar);
+  };
 
   const handleItmeClick = (item: string): void => {
-    setActiveItem(item)
-  }
-  const userID = useSearchParams().get('user')
-  const id = useSearchParams().get('id')
-  const name = useSearchParams().get('name')
+    setActiveItem(item);
+  };
+  const userID = useSearchParams().get("user");
+  const id = useSearchParams().get("id");
+  const name = useSearchParams().get("name");
 
   const getAllStoresOwnedByUser = () => {
     fetch(BASE_URL + `/inventory/stores`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${session?.user.token}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${session}`,
       },
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.data) {
-          const stores = data.data.result.stores
-          setStore(stores)
-          setCurrentStore(stores[0])
+          const stores = data.data.result.stores;
+          setStore(stores);
+          setCurrentStore(stores[0]);
         }
-      })
-  }
+      });
+  };
   useEffect(() => {
-    getAllStoresOwnedByUser()
-  }, [session])
+    getAllStoresOwnedByUser();
+  }, [session]);
 
   // check if there is a user logged in
-  if (status === 'unauthenticated') {
+  if (!session) {
     return (
       <>
         <div className="h-64 flex flex-col gap-4 justify-center items-center">
           <p>Please login first :(</p>
           {/* login user */}
-          <Button variant="default" onClick={() => router.push('/auth/signin')}>
+          <Button variant="default" onClick={() => router.push("/auth/signin")}>
             Login
           </Button>
         </div>
       </>
-    )
+    );
   }
 
   return (
@@ -117,7 +117,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
         <div className="flex items-center">
           <div
             onClick={() => {
-              navigator.clipboard.writeText(session?.user.user.account_id)
+              navigator.clipboard.writeText(session?.user.user.account_id);
             }}
           >
             <img
@@ -130,7 +130,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                {' '}
+                {" "}
                 <span className="flex px-3 items-center">
                   {session?.user.user.first_name} .
                   {session?.user.user.last_name[0]}
@@ -193,7 +193,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
       <div className="md:flex">
         <section
           className={`averagescreen:flex gap-5 flex-col mb-6 md:py-6 pr-[20px] w-fit border-r-2 h-[100vh] top-0 ${
-            sideBar ? 'flex' : 'hidden'
+            sideBar ? "flex" : "hidden"
           } fixed bg-white z-50`}
         >
           <p className="text-black  font-semibold leading-tight mt-[15px] md:mt-0 averagescreen:block">
@@ -235,10 +235,10 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 </Link> */}
 
             <Link
-              onClick={() => handleItmeClick('products')}
+              onClick={() => handleItmeClick("products")}
               className="flex mb-6 cursor-pointer"
               href={{
-                pathname: '/inventory/Itemsdashboard',
+                pathname: "/inventory/Itemsdashboard",
                 query: {
                   id: store?.store_id,
                   name: store?.store_name,
@@ -249,7 +249,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               <Image src={Products} alt="user" width={20} height={20} />
               <span
                 className={`${
-                  activeItem === 'products' ? 'bg-[#000000] text-white' : ''
+                  activeItem === "products" ? "bg-[#000000] text-white" : ""
                 } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-medium rounded-[5px]`}
               >
                 Products Inventory
@@ -257,10 +257,10 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
             </Link>
 
             <Link
-              onClick={() => handleItmeClick('sales')}
+              onClick={() => handleItmeClick("sales")}
               className="flex mb-6 cursor-pointer"
               href={{
-                pathname: '/inventory/sales/salesoverview',
+                pathname: "/inventory/sales/salesoverview",
                 query: {
                   id: store?.store_id,
                   name: store?.store_name,
@@ -268,21 +268,21 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 },
               }}
             >
-              {' '}
-              <Image src={Sales} alt="Dashboard" width={20} height={20} />{' '}
+              {" "}
+              <Image src={Sales} alt="Dashboard" width={20} height={20} />{" "}
               <span
                 className={`${
-                  activeItem === 'sales' ? 'bg-[#000000] text-white' : ''
+                  activeItem === "sales" ? "bg-[#000000] text-white" : ""
                 } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-medium rounded-[5px]`}
               >
                 Sales Management
               </span>
             </Link>
             <Link
-              onClick={() => handleItmeClick('orders')}
+              onClick={() => handleItmeClick("orders")}
               className="flex mb-6"
               href={{
-                pathname: '/inventory/orders/ordersoverview',
+                pathname: "/inventory/orders/ordersoverview",
                 query: {
                   id: store?.store_id,
                   name: store?.store_name,
@@ -290,21 +290,21 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 },
               }}
             >
-              {' '}
-              <Image src={Orders} alt="Dashboard" width={20} height={20} />{' '}
+              {" "}
+              <Image src={Orders} alt="Dashboard" width={20} height={20} />{" "}
               <span
                 className={`${
-                  activeItem === 'orders' ? 'bg-[#000000] text-white' : ''
+                  activeItem === "orders" ? "bg-[#000000] text-white" : ""
                 } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-medium rounded-[5px]`}
               >
                 Order Management
               </span>
             </Link>
             <Link
-              onClick={() => handleItmeClick('settings')}
+              onClick={() => handleItmeClick("settings")}
               className="flex mb-6 cursor-pointer"
               href={{
-                pathname: '/inventory/storesettings',
+                pathname: "/inventory/storesettings",
                 query: {
                   id: store?.store_id,
                   name: store?.store_name,
@@ -312,16 +312,16 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 },
               }}
             >
-              {' '}
+              {" "}
               <Image
                 src={settings}
                 alt="Dashboard"
                 width={20}
                 height={20}
-              />{' '}
+              />{" "}
               <span
                 className={`${
-                  activeItem === 'settings' ? 'bg-[#000000] text-white' : ''
+                  activeItem === "settings" ? "bg-[#000000] text-white" : ""
                 } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-medium rounded-[5px]`}
               >
                 Settings
@@ -335,7 +335,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
     </main>
-  )
-}
+  );
+};
 
-export default DashboardNav
+export default DashboardNav;

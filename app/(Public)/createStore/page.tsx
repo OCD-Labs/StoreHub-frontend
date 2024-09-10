@@ -4,9 +4,9 @@ import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
-
+import { setUser } from "@components/util/session";
 import "react-toastify/dist/ReactToastify.css";
-import Link from "next/link";
+
 // @ts-nocheck
 import { useState, useEffect, useRef, useContext } from "react";
 import { getSession, getUser } from "@components/util/session";
@@ -36,10 +36,11 @@ const CreateStore = () => {
     store_id: string;
     user_id: string | number;
   }
+  console.log(user);
 
   const storeData: StoreDataInterface = {
     store_id: formData.store_account_id,
-    user_id: session ? session.user.user.user_id : "",
+    user_id: session ? "user.user.user_id" : "",
   };
   console.log(session, "session");
   formData.profile_image_url = imageData?.fileUrl;
@@ -68,12 +69,12 @@ const CreateStore = () => {
     // debugger
     if (session) {
       try {
-        localStorage.setItem("storeData", JSON.stringify(storeData));
+        setUser("storeData", JSON.stringify(storeData));
         fetch(BASE_URL + `/inventory/stores`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${session ? session.user.token : ""}`,
+            Authorization: `Bearer ${session}`,
           },
           body: JSON.stringify(formData),
         })
@@ -87,7 +88,11 @@ const CreateStore = () => {
               toast("Successfully created your store!");
               setTimeout(() => {
                 router.push(
-                  `/inventory/Itemsdashboard?id=${data.data.result.store.id}&name=${data.data.result.store.name}&user=${session?.user.user.user_id}`
+                  `/inventory/Itemsdashboard?id=${
+                    data.data.result.store.id
+                  }&name=${data.data.result.store.name}&user=${
+                    session ? "user.user_id" : ""
+                  }`
                 );
               }, 2000);
             } else {

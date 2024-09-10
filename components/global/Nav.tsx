@@ -20,7 +20,7 @@ import {
   AvatarImage,
 } from "../../components/ui/Avatar";
 import { getSession } from "@app/actions/auth-action";
-import { getUser, removeUser } from "@components/util/session";
+// import { getUser, removeUser } from "@components/util/session";
 
 const Nav = () => {
   const [store, setStore] = useState<any>();
@@ -28,8 +28,7 @@ const Nav = () => {
 
   const session = getCookie("token");
 
-  const user = getUser("user");
-  console.log(user);
+  // const user = getUser("user");
 
   // @ts-ignore
   console.log(session, "user");
@@ -106,8 +105,8 @@ const Nav = () => {
                       <AvatarImage src="" />
 
                       <AvatarFallback className="border-4 border-dark">
-                        {user.first_name[0]}
-                        {user.last_name[0]}
+                        {/* {user.first_name[0]}
+                        {user.last_name[0]} */}
                       </AvatarFallback>
                     </Avatar>
                   </div>
@@ -142,7 +141,7 @@ const Nav = () => {
                           query: {
                             id: data?.data.result.stores[0].store_id,
                             name: data?.data.result.stores[0].store_name,
-                            user: session?.user.user.user_id,
+                            // user: session?.user.user.user_id,
                           },
                         }}
                       >
@@ -156,7 +155,7 @@ const Nav = () => {
                     <button
                       onClick={() => {
                         clearCookie("token");
-                        removeUser("user");
+                        // removeUser("user");
                       }}
                     >
                       Sign out

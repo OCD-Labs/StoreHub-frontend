@@ -1,16 +1,15 @@
-'use client'
-import React, { useState } from 'react'
-import AccessLevel from '@components/stores/storesettings/AccessLevel'
-import fullaccess from '../../../../public/assets/icons/Inventory/fullaccess.svg'
-import inventoryaccess from '../../../../public/assets/icons/Inventory/inventoryaccess.svg'
-import salesaccess from '../../../../public/assets/icons/Inventory/salesaccess.svg'
-import { ToastContainer, toast } from 'react-toastify'
-import { Inventory } from '@app/StoreManager/inventory'
-import 'react-toastify/dist/ReactToastify.css'
-import coown from '../../../../public/assets/icons/Inventory/coown.svg'
-import Image from 'next/image'
-import { Button } from '@components/ui/Button'
-
+"use client";
+import React, { useState } from "react";
+import AccessLevel from "@components/stores/storesettings/AccessLevel";
+import fullaccess from "../../../../public/assets/icons/Inventory/fullaccess.svg";
+import inventoryaccess from "../../../../public/assets/icons/Inventory/inventoryaccess.svg";
+import salesaccess from "../../../../public/assets/icons/Inventory/salesaccess.svg";
+import { ToastContainer, toast } from "react-toastify";
+import { Inventory } from "@app/StoreManager/inventory";
+import "react-toastify/dist/ReactToastify.css";
+import coown from "../../../../public/assets/icons/Inventory/coown.svg";
+import Image from "next/image";
+import { Button } from "@components/ui/Button";
 
 import {
   Dialog,
@@ -19,52 +18,51 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../../../../components/ui/Dialog'
-import { useSession } from 'next-auth/react'
-import AccessModal from '@components/stores/storesettings/AccessModal'
-import { BASE_URL } from '@components/util/config'
-import { useSearchParams } from 'next/navigation'
+} from "../../../../components/ui/Dialog";
+import { getCookie } from "@components/util/cookie";
+// import { getUser } from "@components/util/session";
+import AccessModal from "@components/stores/storesettings/AccessModal";
+import { BASE_URL } from "@components/util/config";
+import { useSearchParams } from "next/navigation";
 
 const Settings = () => {
   // get stores from state
-  const stores = Inventory((state) => state.stores)
-  console.log(stores, 'zusstores')
-  const storeId = useSearchParams().get('id')
-  const { data: session } = useSession()
+  const stores = Inventory((state) => state.stores);
+  console.log(stores, "zusstores");
+  const storeId = useSearchParams().get("id");
+  const session = getCookie("token");
   //revoke access to store
-  const revokeAccess = async(account_id: string) => {
-    const token = session?.user.token
+  const revokeAccess = async (account_id: string) => {
+    const token = session;
     const data = {
       account_id: account_id,
-    }
+    };
     const res = await fetch(
       `${BASE_URL}/inventory/stores/${storeId}/revoke-all-access`,
       {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
-      },
-    )
-    
-    if (res.status == 200)
-    {
-      toast('co-owner removed successfully')
-      
-    }
-    console.log(res, 'resrevoke')
-  }
+      }
+    );
 
-  const [isOpen, setIsOpen] = useState(false)
+    if (res.status == 200) {
+      toast("co-owner removed successfully");
+    }
+    console.log(res, "resrevoke");
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
   function setupModal(status: any) {
-    debugger
-    setIsOpen(!isOpen)
-    if (status == 'success') {
-      toast('Invitation has been sent out')
-    } else if (status == 'error') {
-      toast.error('failed to send out invite. Try again')
+    debugger;
+    setIsOpen(!isOpen);
+    if (status == "success") {
+      toast("Invitation has been sent out");
+    } else if (status == "error") {
+      toast.error("failed to send out invite. Try again");
     }
   }
   return (
@@ -102,7 +100,7 @@ const Settings = () => {
               <Button
                 variant="default"
                 onClick={() => {
-                  setIsOpen(!isOpen)
+                  setIsOpen(!isOpen);
                 }}
               >
                 Add people
@@ -132,19 +130,19 @@ const Settings = () => {
                             <p>{owner.email}</p>
 
                             <p>
-                              {' '}
-                              {owner.is_original_owner ? 'Owner' : 'Co-owner'}
+                              {" "}
+                              {owner.is_original_owner ? "Owner" : "Co-owner"}
                             </p>
                           </div>
                         </div>
                         <div>
                           {stores[0].store_owners.map((owner) => {
-                            return <div key={owner.account_id}></div>
+                            return <div key={owner.account_id}></div>;
                           })}
                         </div>
                       </div>
                       {owner.is_original_owner ? (
-                        ''
+                        ""
                       ) : (
                         <>
                           <Button
@@ -157,7 +155,7 @@ const Settings = () => {
                       )}
                     </div>
                   </div>
-                )
+                );
               })}
             </section>
           </>
@@ -181,7 +179,7 @@ const Settings = () => {
                     <Button
                       variant="default"
                       onClick={() => {
-                        setIsOpen(!isOpen)
+                        setIsOpen(!isOpen);
                       }}
                     >
                       Add people
@@ -197,7 +195,7 @@ const Settings = () => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Settings
+export default Settings;

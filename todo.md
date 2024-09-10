@@ -11,3 +11,11 @@ This codebase can be greatly improved by doing a few things
 3.  File structure in a bit of shambles. FIX
 4.  **use a consistent naming convention**: camelCase for variable names, PascalCase for component names, kebab for file names.
 5.  **linting**: There should be eslint and prettier config file for more organized code across teams
+
+## steps for auth
+
+1.  **create a new user**: create a new user on the backend
+2.  **verify**: user is taken to verify page after email has been sent
+3.  when the user clicks the link session is added and they are taken to /page
+    if not they can resend verification
+4.  **login**: user can login with email and password

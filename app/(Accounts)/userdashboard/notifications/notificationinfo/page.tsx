@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import {
   DropdownMenu,
@@ -15,7 +14,7 @@ const NotificationInfo = () => {
     <main className="p-3 sm:p-6 flex flex-col gap-3">
       <div className="flex justify-between border rounded-[10px] p-2 sm:p-4">
         <div className="flex gap-2 sm:gap-3">
-          <Image src={schoolbag} alt="product" className="sm:w-[70px]"/>
+          <Image src={schoolbag} alt="product" className="sm:w-[70px]" />
           <div className="flex flex-col gap-2">
             <span className="flex items-center">
               <p className="font-semibold text-base">Order Update</p>
@@ -53,7 +52,7 @@ const NotificationInfo = () => {
 
       <div className="flex justify-between border rounded-[10px] p-2 sm:p-4">
         <div className="flex gap-2 sm:gap-3">
-          <Image src={schoolbag} alt="product" className="sm:w-[70px]"/>
+          <Image src={schoolbag} alt="product" className="sm:w-[70px]" />
           <div className="flex flex-col gap-2">
             <span className="flex items-center">
               <p className="font-semibold text-base">Order Update</p>

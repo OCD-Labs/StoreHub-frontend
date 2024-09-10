@@ -1,16 +1,16 @@
-import { Dispatch, SetStateAction, useState } from 'react'
-import AddImageUpload from './addImageUpload'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { BASE_URL } from '@components/util/config'
-import { ModalOptions, modalstore } from '@app/StoreManager/modalstore'
-import useProfile from '@app/hooks/useProfile'
-import { useSession } from 'next-auth/react'
+import { Dispatch, SetStateAction, useState } from "react";
+import AddImageUpload from "./addImageUpload";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { BASE_URL } from "@components/util/config";
+import { ModalOptions, modalstore } from "@app/StoreManager/modalstore";
+import useProfile from "@app/hooks/useProfile";
+import { getCookie } from "@components/util/cookie";
 
 interface PropsInterface {
-  userID: string | null
-  id: string | null
-  addItemStatus: any
-  options: ModalOptions
+  userID: string | null;
+  id: string | null;
+  addItemStatus: any;
+  options: ModalOptions;
 }
 
 const AddItemModal: React.FC<PropsInterface> = ({
@@ -20,114 +20,114 @@ const AddItemModal: React.FC<PropsInterface> = ({
   options,
 }) => {
   type FormData = {
-    name: string
-    description: string
-    price: string
-    image_urls: string[]
-    cover_img_url: string
-    category: string
-    discount_percentage: string
-    supply_quantity: number
-  }
-  const [images, setImages] = useState<string[]>([])
-  const {data:session}= useSession()
+    name: string;
+    description: string;
+    price: string;
+    image_urls: string[];
+    cover_img_url: string;
+    category: string;
+    discount_percentage: string;
+    supply_quantity: number;
+  };
+  const [images, setImages] = useState<string[]>([]);
+  const session = getCookie("token");
   const updateImage = (imgurl: string) => {
-    images.push(imgurl)
-    console.log(images)
-  }
+    images.push(imgurl);
+    console.log(images);
+  };
   const [formData, setFormData] = useState<any>({
-    name: '',
-    description: '',
-    price: '',
+    name: "",
+    description: "",
+    price: "",
     image_urls: [
-      'https://res.cloudinary.com/duxnx9n5t/image/upload/v1689930570/bh8ys2dnwq7ttaxs3gpz.jpg',
+      "https://res.cloudinary.com/duxnx9n5t/image/upload/v1689930570/bh8ys2dnwq7ttaxs3gpz.jpg",
     ],
-    cover_img_url: 'string',
-    category: 'Fashion',
-    discount_percentage: '',
+    cover_img_url: "string",
+    category: "Fashion",
+    discount_percentage: "",
     supply_quantity: 1,
-  })
+  });
 
-  const toggleModal = modalstore((state) => state.toggleModal)
- 
-  console.log(session, 'user oo')
+  const toggleModal = modalstore((state) => state.toggleModal);
+
+  console.log(session, "user oo");
 
   const addStoreProducts = async () => {
-    debugger
+    debugger;
 
     const itemData = {
       name: formData.name,
       description: formData.description,
       price: formData.price,
       image_urls: images,
-      cover_img_url: 'string',
+      cover_img_url: "string",
       category: formData.category,
       discount_percentage: formData.discount_percentage,
       supply_quantity: parseInt(formData.supply_quantity),
-      status: 'VISIBLE',
-    }
-    const method = options.title == 'update store' ? 'PATCH' : 'POST'
-    debugger
+      status: "VISIBLE",
+    };
+    const method = options.title == "update store" ? "PATCH" : "POST";
+    debugger;
     try {
       fetch(options.url, {
         method: method,
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session ? session.user.token : ''}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${""}`,
         },
         body: JSON.stringify(itemData),
       })
         .then((response) => {
-          console.log(response.clone().json())
+          console.log(response.clone().json());
 
-          return response.json()
+          return response.json();
         })
         .then((data: any) => {
-          addItemStatus(data?.status, options.title)
-          console.log(data, 'store items')
-        })
+          addItemStatus(data?.status, options.title);
+          console.log(data, "store items");
+        });
     } catch (error) {
-      console.log(error, 'error from call')
-      addItemStatus('error')
+      console.log(error, "error from call");
+      addItemStatus("error");
     }
-  }
+  };
 
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>
-      | React.ChangeEvent<HTMLTextAreaElement>,
+      | React.ChangeEvent<HTMLTextAreaElement>
   ): void => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
-    })
-    console.log(formData, 'formData')
-  }
+    });
+    console.log(formData, "formData");
+  };
 
   const handleFormSubmit: SubmitHandler<IFormInputs> = () => {
     // e.preventDefault();
     // debugger;
-    toggleModal(options)
-    addStoreProducts()
-  }
+    toggleModal(options);
+    addStoreProducts();
+  };
 
   //form validation
   interface IFormInputs {
-    name: string
-    description: string
-    price: string
-    image_urls: string[]
-    category: string
-    discount_percentage: string
-    supply_quantity: number
+    name: string;
+    description: string;
+    price: string;
+    image_urls: string[];
+    category: string;
+    discount_percentage: string;
+    supply_quantity: number;
   }
 
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<IFormInputs>()
+  } = useForm<IFormInputs>();
 
   return (
     <>
@@ -138,15 +138,15 @@ const AddItemModal: React.FC<PropsInterface> = ({
               <label>Item Name</label>
               <div className="lg:w-[75%] w-full">
                 <input
-                  {...register('name', {
-                    required: 'Store name is required',
+                  {...register("name", {
+                    required: "Store name is required",
                     minLength: {
                       value: 3,
-                      message: 'Store name must be at least 3 characters',
+                      message: "Store name must be at least 3 characters",
                     },
                     maxLength: {
                       value: 50,
-                      message: 'Store name cannot exceed 50 characters',
+                      message: "Store name cannot exceed 50 characters",
                     },
                   })}
                   name="name"
@@ -166,15 +166,15 @@ const AddItemModal: React.FC<PropsInterface> = ({
               <label>Description</label>
               <div className="w-full lg:w-[75%]">
                 <textarea
-                  {...register('description', {
-                    required: 'Description is required',
+                  {...register("description", {
+                    required: "Description is required",
                     minLength: {
                       value: 10,
-                      message: 'Description must be at least 10 characters',
+                      message: "Description must be at least 10 characters",
                     },
                     maxLength: {
                       value: 200,
-                      message: 'Description cannot exceed 200 characters',
+                      message: "Description cannot exceed 200 characters",
                     },
                   })}
                   name="description"
@@ -196,15 +196,15 @@ const AddItemModal: React.FC<PropsInterface> = ({
               <label>Price</label>
               <div className="lg:w-[75%] w-full">
                 <input
-                  {...register('price', {
-                    required: 'Store name is required',
+                  {...register("price", {
+                    required: "Store name is required",
                     minLength: {
                       value: 3,
-                      message: 'Store name must be at least 3 characters',
+                      message: "Store name must be at least 3 characters",
                     },
                     maxLength: {
                       value: 50,
-                      message: 'Store name cannot exceed 50 characters',
+                      message: "Store name cannot exceed 50 characters",
                     },
                   })}
                   name="price"
@@ -312,7 +312,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
         </form>
       </div>
     </>
-  )
-}
+  );
+};
 
-export default AddItemModal
+export default AddItemModal;

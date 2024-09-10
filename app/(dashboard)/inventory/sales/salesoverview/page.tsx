@@ -1,18 +1,18 @@
 // @ts-nocheck
-'use client'
-import React, { Key, useEffect, useState } from 'react'
-import { GetSalesOverview } from '@app/apis/Inventory'
-import Image from 'next/image'
-import { useSearchParams } from 'next/navigation'
-import useProfile from '@app/hooks/useProfile'
-import search from '../../../../../public/assets/icons/search.svg'
-import filter from '../../../../../public/assets/icons/filter.svg'
-import ProductItem from '@components/stores/productitem'
-import Skeleton from 'react-loading-skeleton'
-import { ToastContainer } from 'react-toastify'
-import { OPTIONS } from '@app/apis'
-import { useSession } from 'next-auth/react'
-import SalesOverviewTable from '@components/stores/sales/SalesOverviewTable'
+"use client";
+import React, { Key, useEffect, useState } from "react";
+import { GetSalesOverview } from "@app/apis/Inventory";
+import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import useProfile from "@app/hooks/useProfile";
+import search from "../../../../../public/assets/icons/search.svg";
+import filter from "../../../../../public/assets/icons/filter.svg";
+import ProductItem from "@components/stores/productitem";
+import Skeleton from "react-loading-skeleton";
+import { ToastContainer } from "react-toastify";
+import { OPTIONS } from "@app/apis";
+import { getCookie } from "@components/util/cookie";
+import SalesOverviewTable from "@components/stores/sales/SalesOverviewTable";
 import {
   Table,
   TableBody,
@@ -21,45 +21,45 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../../../../components/ui/Table'
+} from "../../../../../components/ui/Table";
 
 const SalesOverview: React.FC = () => {
-  const [loading, setloading] = useState<boolean>(true)
-  const [SalesOverview, setSalesOverview] = useState<[]>([])
-  const { data: session } = useSession()
-  const userID: string | null = useSearchParams().get('user')
+  const [loading, setloading] = useState<boolean>(true);
+  const [SalesOverview, setSalesOverview] = useState<[]>([]);
+  const session = getCookie("token");
+  const userID: string | null = useSearchParams().get("user");
 
-  const id: string | null = useSearchParams().get('id')
+  const id: string | null = useSearchParams().get("id");
 
   const GET_OPTIONS: OPTIONS = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${session?.user.token}`,
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${""}`,
     },
-  }
+  };
 
   async function getSales() {
     try {
       const sales: SalesOverview = await GetSalesOverview(
         userID,
         id,
-        GET_OPTIONS,
-      )
-      console.log(sales)
+        GET_OPTIONS
+      );
+      console.log(sales);
 
-      setSalesOverview(sales.data.result.sales_overview)
+      setSalesOverview(sales.data.result.sales_overview);
     } catch (error) {
-      throw new Error('Error while fetching overview')
+      throw new Error("Error while fetching overview");
     }
   }
 
   useEffect(() => {
     getSales().then(() => {
-      setloading(false)
-    })
-  }, [1, session])
-  console.log(SalesOverview, 'sales')
+      setloading(false);
+    });
+  }, [1, session]);
+  console.log(SalesOverview, "sales");
 
   return (
     <div>
@@ -114,7 +114,7 @@ const SalesOverview: React.FC = () => {
                       <TableRow>
                         <SalesOverviewTable key={key} sales={product} />
                       </TableRow>
-                    ),
+                    )
                   )
                 )}
               </TableBody>
@@ -123,7 +123,7 @@ const SalesOverview: React.FC = () => {
         </section>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default SalesOverview
+export default SalesOverview;

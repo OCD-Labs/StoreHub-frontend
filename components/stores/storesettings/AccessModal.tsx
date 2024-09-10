@@ -1,64 +1,64 @@
 // @ts-nocheck
-'use client'
-import React, { useState } from 'react'
-import coown from '../../../public/assets/icons/Inventory/coown.svg'
-import Image from 'next/image'
-import { Button } from '@components/ui/Button'
-import search from '../../../public/assets/icons/search.svg'
-import useSWR from 'swr'
-import { Loader2 } from 'lucide-react'
-import { useSearchParams } from 'next/navigation'
-import { AddStoreCoOwner } from '@app/apis/Inventory'
-import { useSession } from 'next-auth/react'
-import { BASE_URL } from '@components/util/config'
-const FULLACCESS = 1
-const PRODUCTINVENTORYACCESS = 2
-const SALESACCESS = 3
-const ORDERSACCESS = 4
+"use client";
+import React, { useState } from "react";
+import coown from "../../../public/assets/icons/Inventory/coown.svg";
+import Image from "next/image";
+import { Button } from "@components/ui/Button";
+import search from "../../../public/assets/icons/search.svg";
+import useSWR from "swr";
+import { Loader2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { AddStoreCoOwner } from "@app/apis/Inventory";
+import { getCookie } from "@components/util/cookie";
+import { BASE_URL } from "@components/util/config";
+const FULLACCESS = 1;
+const PRODUCTINVENTORYACCESS = 2;
+const SALESACCESS = 3;
+const ORDERSACCESS = 4;
 
 const AccessModal = ({ accessModal }: { accessModal: any }) => {
-  const { data: session } = useSession()
-  const id: string | null = useSearchParams().get('id')
-  const [loading, setLoading] = useState<boolean>(false)
+  const session = getCookie("token");
+  const id: string | null = useSearchParams().get("id");
+  const [loading, setLoading] = useState<boolean>(false);
   const [coowner, setCoowner] = useState<CoOwner>({
-    account_id: '',
+    account_id: "",
     new_access_level: FULLACCESS,
-  })
+  });
 
   const handleChange = (e: any) => {
     setCoowner({
       ...coowner,
       [e.target.name]: e.target.value,
-    })
-  }
-  console.log(coowner)
+    });
+  };
+  console.log(coowner);
 
   const sendInvitation = async () => {
-    debugger
-    setLoading(true)
-    console.log(coowner, 'own')
+    debugger;
+    setLoading(true);
+    console.log(coowner, "own");
     const body = {
       ...coowner,
       new_access_level: Number(coowner.new_access_level),
-    }
+    };
     const res = await fetch(
       `${BASE_URL}/inventory/stores/${id}/send-access-invitation`,
       {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${session?.user.token}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session}`,
         },
         body: JSON.stringify(body),
-      },
+      }
     ).then((res) => {
-      setLoading(false)
-      return res.json()
-    })
-    console.log(res?.status, 'ressss')
+      setLoading(false);
+      return res.json();
+    });
+    console.log(res?.status, "ressss");
 
-    accessModal(res?.status)
-  }
+    accessModal(res?.status);
+  };
   return (
     <div>
       <div className="flex flex-col justify-center items-center gap-4">
@@ -102,12 +102,12 @@ const AccessModal = ({ accessModal }: { accessModal: any }) => {
               <Loader2 className="mr-2 h-4 w-4 animate-spin" /> please wait...
             </div>
           ) : (
-            'Add as co-owner'
+            "Add as co-owner"
           )}
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AccessModal
+export default AccessModal;

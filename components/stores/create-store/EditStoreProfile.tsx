@@ -80,7 +80,7 @@ export const EditStoreProfile: React.FC<EditStoreProfileProps> = ({
   // set Image data
   const handleChange = (e: any) => {
     formData.profile_image_url = imageData?.secure_url;
-    
+
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -99,27 +99,23 @@ export const EditStoreProfile: React.FC<EditStoreProfileProps> = ({
   //handle form submit
   const handleSubmit = async (e: React.FormEvent) => {
     formData.tags = tags;
-    setloading(true)
+    setloading(true);
     e.preventDefault();
     // submitting formdata to the server.
     try {
-      fetch(
-        BASE_URL +
-          `/users/${session ? session.user.user_id : ""}/stores/${store_id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${session ? session.access_token : ""}`,
-          },
-          body: JSON.stringify(formData),
-        }
-      )
+      fetch(BASE_URL + `/users/${""}/stores/${store_id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${""}`,
+        },
+        body: JSON.stringify(formData),
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log(data);
-          setloading(false)
-          hideModal(false)
+          setloading(false);
+          hideModal(false);
         })
         .catch((error) => console.log(error));
     } catch (error) {
@@ -249,7 +245,7 @@ export const EditStoreProfile: React.FC<EditStoreProfileProps> = ({
               onClick={handleSubmit}
               className="rounded-[10px] py-4 text-white bg-[#161616] text-lg w-full sm:w-3/4 sm:mx-auto my-6 sm:my-12"
             >
-              {loading ? 'Loading...' : 'Update Store Profile'}
+              {loading ? "Loading..." : "Update Store Profile"}
             </button>
           </div>
         </form>

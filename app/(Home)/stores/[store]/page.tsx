@@ -5,7 +5,7 @@ import owner from "../../../../public/assets/images/owner.jpg";
 import { Button } from "@components/ui/Button";
 import StoreItem from "@components/stores/StoreItem";
 import { Key, useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
+
 import useSWR from "swr";
 import { BASE_URL } from "@components/util/config";
 import search from "@/public/assets/icons/search.svg";
@@ -18,9 +18,10 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/NavDropdown";
+import { getCookie } from "@components/util/cookie";
 export default function Page({ params }: { params: { store: number } }) {
   const [products, setProducts] = useState<[]>([]);
-  const { data: session } = useSession();
+  const session = getCookie("token");
   console.log(session, "session");
 
   const fetcher = (url: string) =>
@@ -28,7 +29,7 @@ export default function Page({ params }: { params: { store: number } }) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${session?.user.token}`,
+        Authorization: `Bearer ${""}`,
       },
     })
       .then((response) => response.json())

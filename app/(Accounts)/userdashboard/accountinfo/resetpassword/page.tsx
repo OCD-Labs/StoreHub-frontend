@@ -1,4 +1,3 @@
-"use client";
 const ResetPassword = () => {
   return (
     <main className="averagescreen:w-[60%] mx-auto py-8 px-4">

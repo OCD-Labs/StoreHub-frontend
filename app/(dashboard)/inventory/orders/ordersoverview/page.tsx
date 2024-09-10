@@ -1,18 +1,18 @@
 // @ts-nocheck
-'use client'
-import Image from 'next/image'
-import { Key, useState, useEffect } from 'react'
-import search from '../../../../../public/assets/icons/search.svg'
-import filter from '../../../../../public/assets/icons/filter.svg'
-import { OPTIONS } from '@app/apis'
-import useProfile from '@app/hooks/useProfile'
-import { useSearchParams } from 'next/navigation'
-import { FetchOrdersOverview } from '@app/apis/Inventory'
-import Skeleton from 'react-loading-skeleton'
-import OrdersOverviewTable from '@components/stores/orders/OrdersOverviewTable'
-import { useSession } from 'next-auth/react'
-import useSWR from 'swr'
-import { BASE_URL } from '@components/util/config'
+"use client";
+import Image from "next/image";
+import { Key, useState, useEffect } from "react";
+import search from "../../../../../public/assets/icons/search.svg";
+import filter from "../../../../../public/assets/icons/filter.svg";
+import { OPTIONS } from "@app/apis";
+import useProfile from "@app/hooks/useProfile";
+import { useSearchParams } from "next/navigation";
+import { FetchOrdersOverview } from "@app/apis/Inventory";
+import Skeleton from "react-loading-skeleton";
+import OrdersOverviewTable from "@components/stores/orders/OrdersOverviewTable";
+
+import useSWR from "swr";
+import { BASE_URL } from "@components/util/config";
 import {
   Table,
   TableBody,
@@ -21,53 +21,53 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../../../../components/ui/Table'
+} from "../../../../../components/ui/Table";
 
 const OrdersOverview = () => {
-  const { data: session } = useSession()
-  const [loading, setloading] = useState<boolean>(true)
-  const [ordersOverview, setOrdersOverview] = useState<[]>([])
+  const session = getCookie("token");
+  const [loading, setloading] = useState<boolean>(true);
+  const [ordersOverview, setOrdersOverview] = useState<[]>([]);
 
-  const store_id: string | null = useSearchParams().get('id')
-  console.log(session, 'ordesession')
+  const store_id: string | null = useSearchParams().get("id");
+  console.log(session, "ordesession");
 
-  const token = session?.user.token
+  const token = "session?.user.token";
   const GET_OPTIONS: OPTIONS = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
-  }
+  };
 
   type OrdersOverviewType = {
-    status: string
+    status: string;
     data: {
-      message: string
+      message: string;
       result: {
-        order: []
-        metadata: {}
-      }
-    }
-  }
+        order: [];
+        metadata: {};
+      };
+    };
+  };
   const fetcher = (url: string) =>
     fetch(url, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${session?.user.token}`,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${""}`,
       },
     })
       .then((response) => response.json())
       .then((data) => {
-        return data
-      })
+        return data;
+      });
 
   const { data, error, isLoading } = useSWR(
     session ? `${BASE_URL}/inventory/stores/${store_id}/orders` : null,
-    fetcher,
-  )
-  console.log(data?.data.result.order, 'orderdata')
+    fetcher
+  );
+  console.log(data?.data.result.order, "orderdata");
 
   return (
     <div>
@@ -124,7 +124,7 @@ const OrdersOverview = () => {
                       <TableRow>
                         <OrdersOverviewTable key={key} orders={order} />
                       </TableRow>
-                    ),
+                    )
                   )
                 )}
               </TableBody>
@@ -133,7 +133,7 @@ const OrdersOverview = () => {
         </section>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default OrdersOverview
+export default OrdersOverview;

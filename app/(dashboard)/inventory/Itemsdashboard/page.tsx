@@ -1,23 +1,22 @@
 // @ts-nocheck
-'use client'
-import { useSearchParams } from 'next/navigation'
-import Image from 'next/image'
-import '../styles/inventory.css'
+"use client";
+import { useSearchParams } from "next/navigation";
+import Image from "next/image";
+import "../styles/inventory.css";
 
-import ProductItem from '@components/stores/productitem'
-import AddItemModal from '@components/stores/create-store/addItemModal'
-import { Inventory } from '@app/StoreManager/inventory'
-import Skeleton, { SkeletonTheme } from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-import { BASE_URL } from '@components/util/config'
-import { ToastContainer, toast } from 'react-toastify'
-import { Key, Suspense, useEffect, useState } from 'react'
-import { ModalOptions, modalstore } from '@app/StoreManager/modalstore'
+import ProductItem from "@components/stores/productitem";
+import AddItemModal from "@components/stores/create-store/addItemModal";
+import { Inventory } from "@app/StoreManager/inventory";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { BASE_URL } from "@components/util/config";
+import { ToastContainer, toast } from "react-toastify";
+import { Key, Suspense, useEffect, useState } from "react";
+import { ModalOptions, modalstore } from "@app/StoreManager/modalstore";
 
-import { useSession } from 'next-auth/react'
-import necklace from '../../../../public/assets/images/necklace.png'
-import search from '../../../../public/assets/icons/search.svg'
-import filter from '../../../../public/assets/icons/filter.svg'
+import necklace from "../../../../public/assets/images/necklace.png";
+import search from "../../../../public/assets/icons/search.svg";
+import filter from "../../../../public/assets/icons/filter.svg";
 import {
   Table,
   TableBody,
@@ -26,93 +25,93 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../../../../components/ui/Table'
+} from "../../../../components/ui/Table";
 
-import 'react-toastify/dist/ReactToastify.css'
+import "react-toastify/dist/ReactToastify.css";
 
 const StoreInventory = () => {
-  const isOpen = modalstore((state) => state.isOpen)
-  const toggleModal = modalstore((state) => state.toggleModal)
-  const { data: session } = useSession()
-  const ID = '123PDWD'
-  const [storeItems, setStoreItems] = useState<any>([])
-  const [refNo, setRefNo] = useState<number>(1)
-  const stores = Inventory((state) => state.stores)
-  const modaloptions = modalstore((state) => state.modalOptions)
-  const [loading, setloading] = useState<boolean>(true)
+  const isOpen = modalstore((state) => state.isOpen);
+  const toggleModal = modalstore((state) => state.toggleModal);
+  const session = getCookie("token");
+  const ID = "123PDWD";
+  const [storeItems, setStoreItems] = useState<any>([]);
+  const [refNo, setRefNo] = useState<number>(1);
+  const stores = Inventory((state) => state.stores);
+  const modaloptions = modalstore((state) => state.modalOptions);
+  const [loading, setloading] = useState<boolean>(true);
 
-  const userID: string | null = useSearchParams().get('user')
+  const userID: string | null = useSearchParams().get("user");
 
-  const id: string | null = useSearchParams().get('id')
-  const name: string | null = useSearchParams().get('name')
-  console.log(session, 'session')
+  const id: string | null = useSearchParams().get("id");
+  const name: string | null = useSearchParams().get("name");
+  console.log(session, "session");
   const setAddItemStatus = (data: string, action: string) => {
-    if (action == 'update store') {
-      if (data !== 'error') {
-        toast('Store item updated successfully!')
+    if (action == "update store") {
+      if (data !== "error") {
+        toast("Store item updated successfully!");
         setRefNo(() => {
-          return refNo + 1
-        })
+          return refNo + 1;
+        });
       } else {
-        toast.error('Error while updating item. Try again')
+        toast.error("Error while updating item. Try again");
       }
     } else {
-      if (data !== 'error') {
-        toast('Store item added successfully!')
+      if (data !== "error") {
+        toast("Store item added successfully!");
         setRefNo(() => {
-          return refNo + 1
-        })
+          return refNo + 1;
+        });
       } else {
-        toast.error('Error while adding item. Try again')
+        toast.error("Error while adding item. Try again");
       }
     }
-  }
+  };
 
   const options: ModalOptions = {
     url: BASE_URL + `/inventory/stores/${id}/items`,
-    title: 'Add Item to Store',
-  }
+    title: "Add Item to Store",
+  };
 
   const getStoreData = async () => {
-    const token = session?.user.token
-    console.log(token, 'token')
+    const token = session?.user.token;
+    console.log(token, "token");
     try {
       fetch(BASE_URL + `/inventory/stores/${id}/items`, {
-        method: 'GET',
+        method: "GET",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data, 'store items')
-          setStoreItems(data ? data.data.result.items : [])
-          setloading(false)
-        })
+          console.log(data, "store items");
+          setStoreItems(data ? data.data.result.items : []);
+          setloading(false);
+        });
     } catch (error) {
-      console.log(error, 'error from call')
+      console.log(error, "error from call");
     }
-  }
+  };
 
   useEffect(() => {
-    getStoreData()
-  }, [refNo, session])
+    getStoreData();
+  }, [refNo, session]);
 
   return (
     <Suspense>
       <main className="w-full py-4 averagescreen:py-6">
         <div
           className={`modal ${
-            isOpen ? 'animate-animatefadeIn is-open' : 'animate-animatefadeOut'
-          } lg:px-[] ${isOpen ? 'is-open' : ''}`}
+            isOpen ? "animate-animatefadeIn is-open" : "animate-animatefadeOut"
+          } lg:px-[] ${isOpen ? "is-open" : ""}`}
         >
           <div className="modal-content w-[90%] md:w-[60%] h-[90vh]">
             <div className="flex justify-between items-center lg:px-20px">
               <div className="font-bold text-lg">Add Item</div>
               <span
                 onClick={() => {
-                  toggleModal(options)
+                  toggleModal(options);
                 }}
                 className="text-lg cursor-pointer p-2"
               >
@@ -141,7 +140,6 @@ const StoreInventory = () => {
                   : necklace
               }
               width={200}
-              
               height={200}
               alt="product"
               className="border rounded-full w-[110px] h-[110px] my-auto"
@@ -150,7 +148,7 @@ const StoreInventory = () => {
           <span className="w-[65%]">
             <div className="flex justify-between items-center">
               <p className="text-black font-semibold text-lg">
-                {stores[0] ? stores[0]?.store_name : 'Shine, Shimmer, Glimmer'}
+                {stores[0] ? stores[0]?.store_name : "Shine, Shimmer, Glimmer"}
               </p>
               <p className="bg-[#7AB74A8C] px-2 h-fit text-[12px] rounded-lg">
                 Verified
@@ -179,7 +177,7 @@ const StoreInventory = () => {
               <select>
                 <option>select store</option>
                 {stores.map((store) => {
-                  return <option>{store.store_name}</option>
+                  return <option>{store.store_name}</option>;
                 })}
                 {/* <option>Dalu test stores</option>
                 <option>Hi</option>
@@ -222,7 +220,7 @@ const StoreInventory = () => {
             </span>
             <button
               onClick={() => {
-                toggleModal(options)
+                toggleModal(options);
               }}
               className="bg-[#000000] text-white py-1 sm:py-2 px-2 rounded-[5px]"
             >
@@ -260,7 +258,7 @@ const StoreInventory = () => {
                         <TableRow>
                           <ProductItem key={key} product={product} />
                         </TableRow>
-                      ),
+                      )
                     )
                   )}
                 </TableBody>
@@ -270,7 +268,7 @@ const StoreInventory = () => {
         </div>
       </main>
     </Suspense>
-  )
-}
+  );
+};
 
-export default StoreInventory
+export default StoreInventory;

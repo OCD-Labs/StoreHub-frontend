@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -9,23 +9,16 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
   const id = useSearchParams().get("id");
   const name = useSearchParams().get("name");
 
- 
-   
-   
-  
-
   return (
     <div className="h-[100%] w-[100%]">
       <section className=" ">
-        <div className="font-bold text-lg p-3">
-          Account Information
-        </div>
+        <div className="font-bold text-lg p-3">Account Information</div>
         <hr className="w-full" />
         <div className="flex justify-between my-3 p-3">
           <li className="flex gap-5">
             <ul>
               <Link
-              className="md:mb-[35px]"
+                className="md:mb-[35px]"
                 href={{
                   pathname: "/userdashboard/accountinfo/accountdetails",
                   query: {
@@ -36,7 +29,7 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span   className=" hover:underline "> Account Details </span>
+                <span className=" hover:underline "> Account Details </span>
               </Link>
             </ul>
             <ul>
@@ -51,7 +44,7 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span  className=" hover:underline">Reset Password</span>
+                <span className=" hover:underline">Reset Password</span>
               </Link>
             </ul>
             <ul>
@@ -64,7 +57,8 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
                     token: token,
                     user: userID,
                   },
-                }} className=" hover:underline"
+                }}
+                className=" hover:underline"
               >
                 Payment Information
               </Link>
@@ -73,7 +67,9 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
         </div>
         <hr className="w-full" />
       </section>
-      <section>{children}</section>
+      <Suspense>
+        <section>{children}</section>
+      </Suspense>
     </div>
   );
 };
