@@ -40,7 +40,7 @@ const CreateStore = () => {
 
   const storeData: StoreDataInterface = {
     store_id: formData.store_account_id,
-    user_id: session ? "user.user.user_id" : "",
+    user_id: session ? user.user_id : "",
   };
   console.log(session, "session");
   formData.profile_image_url = imageData?.fileUrl;
@@ -91,7 +91,7 @@ const CreateStore = () => {
                   `/inventory/Itemsdashboard?id=${
                     data.data.result.store.id
                   }&name=${data.data.result.store.name}&user=${
-                    session ? "user.user_id" : ""
+                    session ? user.user_id : ""
                   }`
                 );
               }, 2000);

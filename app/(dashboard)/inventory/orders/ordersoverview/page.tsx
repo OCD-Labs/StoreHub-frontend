@@ -10,7 +10,7 @@ import { useSearchParams } from "next/navigation";
 import { FetchOrdersOverview } from "@app/apis/Inventory";
 import Skeleton from "react-loading-skeleton";
 import OrdersOverviewTable from "@components/stores/orders/OrdersOverviewTable";
-
+import { getCookie } from "@components/util/cookie";
 import useSWR from "swr";
 import { BASE_URL } from "@components/util/config";
 import {
@@ -67,7 +67,6 @@ const OrdersOverview = () => {
     session ? `${BASE_URL}/inventory/stores/${store_id}/orders` : null,
     fetcher
   );
-  console.log(data?.data.result.order, "orderdata");
 
   return (
     <div>
@@ -114,11 +113,12 @@ const OrdersOverview = () => {
               <TableBody>
                 {isLoading ? (
                   <div>Loading...</div>
-                ) : !data?.data.result.order.length ? (
+                ) : error && !data?.data.result.order.length ? (
                   <h1 className="text-black sm:text-5xl text-4xl text-center mt-[20%]">
                     No Orders Yet!
                   </h1>
                 ) : (
+                  error &&
                   data?.data.result.order.map(
                     (order: any, key: Key | null | undefined) => (
                       <TableRow>

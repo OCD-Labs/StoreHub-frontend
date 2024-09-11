@@ -24,6 +24,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "@components/util/config";
 import { useRouter } from "next/navigation";
 import { Inventory } from "@app/StoreManager/inventory";
+import { getUser } from "@components/util/session";
 
 import {
   DropdownMenu,
@@ -38,6 +39,7 @@ import { getCookie } from "@components/util/cookie";
 
 const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   const session = getCookie("token");
+  const user = getUser("user");
   const [activeItem, setActiveItem] = useState<string>("home");
   const [store, setCurrentStore] = useState<any>();
   const [sideBar, setSideBar] = useState<boolean>(false);
@@ -117,7 +119,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
         <div className="flex items-center">
           <div
             onClick={() => {
-              navigator.clipboard.writeText(session?.user.user.account_id);
+              navigator.clipboard.writeText(user.account_id);
             }}
           >
             <img
@@ -132,8 +134,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               <DropdownMenuTrigger>
                 {" "}
                 <span className="flex px-3 items-center">
-                  {session?.user.user.first_name} .
-                  {session?.user.user.last_name[0]}
+                  {user.first_name} .{user.last_name[0]}
                   {/* <Image src={arrow} alt="user details" className="ml-2" /> */}
                 </span>
               </DropdownMenuTrigger>
@@ -242,7 +243,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 query: {
                   id: store?.store_id,
                   name: store?.store_name,
-                  user: session?.user.user.user_id,
+                  user: user.user_id,
                 },
               }}
             >
@@ -264,7 +265,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 query: {
                   id: store?.store_id,
                   name: store?.store_name,
-                  user: session?.user.user.user_id,
+                  user: user.user_id,
                 },
               }}
             >
@@ -286,7 +287,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 query: {
                   id: store?.store_id,
                   name: store?.store_name,
-                  user: session?.user.user.user_id,
+                  user: user.user_id,
                 },
               }}
             >
@@ -308,7 +309,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 query: {
                   id: store?.store_id,
                   name: store?.store_name,
-                  user: session?.user.user.user_id,
+                  user: user.user_id,
                 },
               }}
             >

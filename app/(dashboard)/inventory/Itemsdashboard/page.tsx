@@ -26,7 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../../../components/ui/Table";
-
+import { getCookie } from "@components/util/cookie";
 import "react-toastify/dist/ReactToastify.css";
 
 const StoreInventory = () => {
