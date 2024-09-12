@@ -10,6 +10,8 @@ import Router, { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { signinAction } from "@app/actions/auth-action";
 import { setUser as storeUser } from "@components/util/session";
+import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
+
 const SignIn = () => {
   const [loading, setloading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -77,29 +79,40 @@ const SignIn = () => {
         {/* Left Section with Image or Graphics (Optional) */}
         <div className="hidden md:flex flex-col justify-center p-6 items-center w-1/2 ">
           <img
-            src="https://store-hub-frontend.vercel.app/assets/images/signup.svg"
-            alt="Login Illustration"
             className="w-full h-auto object-contain"
+            src="../../assets/images/signup.svg"
+            alt="sign up"
           />
         </div>
 
         {/* Right Section: Form */}
-        <section className="w-full md:w-1/2 p-[6%]">
+        <section className="w-full h-screen md:h-0 md:w-1/2 p-[6%]">
           <form autoComplete="on">
-            <p className="text-2xl font-bold py-4">Sign In</p>
+            <h1 className="text-3xl font-bold mb-9 py-4">
+              Sign in to Storehub
+            </h1>
+
+            {/*Pasword error Message  */}
+
+            {errors.root && (
+              <p className="w-full p-3 mb-6 text-red-500 bg-red-50 border border-gray-300 rounded-lg">
+                {errors.root.message}
+              </p>
+            )}
+
             <div className="flex flex-col gap-5 sm:gap-3 lg:gap-7">
               {/* Email Input */}
               <div className="">
                 <label
-                  className="block text-gray-700 text-sm font-medium mb-2"
+                  className="block text-gray-700 font-medium mb-2"
                   htmlFor="email"
                 >
-                  Email
+                  Work Email *
                 </label>
                 <input
-                  className=" w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                  className=" w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder="Enter email"
                   {...register("email", {
                     required: true,
                     pattern: /[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i,
@@ -110,23 +123,18 @@ const SignIn = () => {
               {/* Password Input */}
               <div className="mb-2">
                 <label
-                  className="block text-gray-700 text-sm font-medium mb-2"
+                  className="block text-gray-700 font-medium  mb-2"
                   htmlFor="password"
                 >
-                  Password
+                  Password *
                 </label>
                 <div className="relative w-full">
                   <input
-                    className=" w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 font-small  "
+                    className=" w-full p-3 border border-gray-300 rounded-lg focus:outline-none "
                     type={showPassword ? "text" : "password"}
-                    placeholder="Enter your password"
+                    placeholder="Enter password"
                     {...register("password", { required: true, min: 9 })}
                   />
-                  {errors.root && (
-                    <p className="text-sm text-red-500">
-                      {errors.root.message}
-                    </p>
-                  )}
 
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                     <button
@@ -134,16 +142,20 @@ const SignIn = () => {
                       className="text-gray-600"
                       onClick={togglePasswordVisibility}
                     >
-                      {showPassword ? "Hide" : "Show"}
+                      {showPassword ? (
+                        <EyeClosedIcon className="h-5 w-5" />
+                      ) : (
+                        <EyeOpenIcon className="h-5 w-5" />
+                      )}
                     </button>
                   </div>
                 </div>
 
                 {/* Forgot password */}
                 <div className="text-right mb-6">
-                  <a href="#" className="text-black-500 text-xs">
+                  <p className="text-[#1190e6] mt-4 cursor-pointer font-medium text-sm">
                     Forgot your password?
-                  </a>
+                  </p>
                 </div>
 
                 {/* Hidden default radio input */}
@@ -157,11 +169,11 @@ const SignIn = () => {
               >
                 {isSubmitting ? (
                   <div className="flex justify-center">
-                    <Loader2 className="mr-2 mt-1 h-6 w-6 animate-spin" /> Logging in
-                    ...
+                    <Loader2 className="mr-2 mt-1 h-6 w-6 animate-spin" />{" "}
+                    Signing in ...
                   </div>
                 ) : (
-                  "Log in"
+                  "Sign in"
                 )}
               </Button>
             </div>
@@ -191,11 +203,11 @@ const SignIn = () => {
           </div>
 
           {/* Signup Link */}
-          <p className="text-center text-l text-gray-600 mt-6">
+          <p className="text-center text-l font-semibold text-gray-600 mt-6">
             Don't have an account?{" "}
             <Link href="/auth/signup">
-              <span className="text-dark text-indigo-500 hover:underline">
-                Create Account
+              <span className=" underline text-[#1190e6] hover:underline">
+                Get Started
               </span>
             </Link>
           </p>
