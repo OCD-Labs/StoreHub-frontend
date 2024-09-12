@@ -12,6 +12,12 @@ import { signinAction } from "@app/actions/auth-action";
 import { setUser as storeUser } from "@components/util/session";
 const SignIn = () => {
   const [loading, setloading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   const router = useRouter();
   const [user, setUser] = useState<IUserCredential>({
     password: "",
@@ -64,90 +70,137 @@ const SignIn = () => {
   };
 
   return (
-    <div className="sm:flex sm:justify-between mb-3 sm:mb-6 z-10 p-8 font-light">
-      <ToastContainer></ToastContainer>
-      <section className="border sm:px-4 lg:px-12 py-4 w-[40%] hidden sm:block rounded-[10px]">
-        <h3 className="text-black font-bold">StoreHub</h3>
+    <div className="flex justify-center items-center h-screen w-screen z-10">
+      <div className="flex flex-col md:flex-row w-full md:p-12">
+        <ToastContainer></ToastContainer>
 
-        <h1 className="text-center text-3xl text-black pt-7">
-          Welcome to <span className="font-bold">StoreHub!!!</span>
-        </h1>
-        <img
-          className="py-11"
-          src="../../assets/images/signup.svg"
-          alt="sign up"
-        />
-      </section>
+        {/* Left Section with Image or Graphics (Optional) */}
+        <div className="hidden md:flex flex-col justify-center p-6 items-center w-1/2 ">
+          <img
+            src="https://store-hub-frontend.vercel.app/assets/images/signup.svg"
+            alt="Login Illustration"
+            className="w-full h-auto object-contain"
+          />
+        </div>
 
-      <section className="sm:w-[55%] sm:px-6">
-        <form autoComplete="on">
-          <p className="text-end">
-            Don't have an account?
+        {/* Right Section: Form */}
+        <section className="w-full md:w-1/2 p-[6%]">
+          <form autoComplete="on">
+            <p className="text-2xl font-bold py-4">Sign In</p>
+            <div className="flex flex-col gap-5 sm:gap-3 lg:gap-7">
+              {/* Email Input */}
+              <div className="">
+                <label
+                  className="block text-gray-700 text-sm font-medium mb-2"
+                  htmlFor="email"
+                >
+                  Email
+                </label>
+                <input
+                  className=" w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500"
+                  type="email"
+                  placeholder="Enter your email"
+                  {...register("email", {
+                    required: true,
+                    pattern: /[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i,
+                  })}
+                />
+              </div>
+
+              {/* Password Input */}
+              <div className="mb-2">
+                <label
+                  className="block text-gray-700 text-sm font-medium mb-2"
+                  htmlFor="password"
+                >
+                  Password
+                </label>
+                <div className="relative w-full">
+                  <input
+                    className=" w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 font-small  "
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Enter your password"
+                    {...register("password", { required: true, min: 9 })}
+                  />
+                  {errors.root && (
+                    <p className="text-sm text-red-500">
+                      {errors.root.message}
+                    </p>
+                  )}
+
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <button
+                      type="button"
+                      className="text-gray-600"
+                      onClick={togglePasswordVisibility}
+                    >
+                      {showPassword ? "Hide" : "Show"}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Forgot password */}
+                <div className="text-right mb-6">
+                  <a href="#" className="text-black-500 text-xs">
+                    Forgot your password?
+                  </a>
+                </div>
+
+                {/* Hidden default radio input */}
+              </div>
+
+              <Button
+                type="submit"
+                disabled={isSubmitting}
+                onClick={handleSubmit(onSubmit)}
+                className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white bg-[#161616] text-lg w-full "
+              >
+                {isSubmitting ? (
+                  <div className="flex justify-center">
+                    <Loader2 className="mr-2 mt-1 h-6 w-6 animate-spin" /> Logging in
+                    ...
+                  </div>
+                ) : (
+                  "Log in"
+                )}
+              </Button>
+            </div>
+          </form>
+          {/* 
+  <span className="flex justify-between pt-2 sm:pt-1 md:pt-2">
+    <button className="flex items-center justify-center py-1 md:py-2 w-[44%] rounded-[10px] border cursor-pointer">
+      <img
+        className="w-6"
+        src="../../assets/icons/google.svg"
+        alt="sign up with google"
+      />
+      <p className="ml-3">Google</p>
+    </button>
+    <button className="flex items-center justify-center py-1 md:py-2 w-[44%] rounded-[10px] border cursor-pointer">
+      <img
+        className="w-6"
+        src="../../assets/icons/google.svg"
+        alt="sign up with google"
+      />
+      <p className="ml-3">Google</p>
+    </button>
+  </span> */}
+          {/* Divider */}
+          <div className=" my-6">
+            <div className="flex-grow h-px bg-gray-300"></div>
+          </div>
+
+          {/* Signup Link */}
+          <p className="text-center text-l text-gray-600 mt-6">
+            Don't have an account?{" "}
             <Link href="/auth/signup">
-              <span className="text-dark ml-2">Create Account</span>
+              <span className="text-dark text-indigo-500 hover:underline">
+                Create Account
+              </span>
             </Link>
           </p>
-          <p className="text-2xl font-bold py-4">Login</p>
-          <div className="flex flex-col gap-5 sm:gap-3 lg:gap-7">
-            <input
-              className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="email"
-              placeholder="Email"
-              {...register("email", {
-                required: true,
-                pattern: /[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$/i,
-              })}
-            />
-            <input
-              className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              type="password"
-              placeholder="password"
-              {...register("password", { required: true, min: 9 })}
-            />
-            {errors.root && (
-              <p className="text-sm text-red-500">{errors.root.message}</p>
-            )}
-            <div className="flex items-center">
-              {/* Hidden default radio input */}
-            </div>
-
-            <Button
-              type="submit"
-              disabled={isSubmitting}
-              onClick={handleSubmit(onSubmit)}
-              className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white bg-[#161616] text-lg w-full my-3 md:my-6"
-            >
-              {isSubmitting ? (
-                <div className="flex justify-center">
-                  <Loader2 className="mr-2 h-4 w-6 animate-spin" /> Logging in
-                  ...
-                </div>
-              ) : (
-                "Login"
-              )}
-            </Button>
-          </div>
-        </form>
-        {/* 
-        <span className="flex justify-between pt-2 sm:pt-1 md:pt-2">
-          <button className="flex items-center justify-center py-1 md:py-2 w-[44%] rounded-[10px] border cursor-pointer">
-            <img
-              className="w-6"
-              src="../../assets/icons/google.svg"
-              alt="sign up with google"
-            />
-            <p className="ml-3">Google</p>
-          </button>
-          <button className="flex items-center justify-center py-1 md:py-2 w-[44%] rounded-[10px] border cursor-pointer">
-            <img
-              className="w-6"
-              src="../../assets/icons/google.svg"
-              alt="sign up with google"
-            />
-            <p className="ml-3">Google</p>
-          </button>
-        </span> */}
-      </section>
+        </section>
+      </div>
     </div>
   );
 };
