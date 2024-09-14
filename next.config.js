@@ -22,6 +22,7 @@ const nextConfig = {
       "res.cloudinary.com",
       "www.greengrove.com",
       "plus.unsplash.com",
+      "img.icons8.com",
       "beforeigosolutions.com",
       "big-7.png",
     ],
