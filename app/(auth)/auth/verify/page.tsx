@@ -1,8 +1,10 @@
+
 "use client";
 
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+
 
 function VerifyEmail() {
   const [seconds, setSeconds] = useState(60);
@@ -33,6 +35,7 @@ function VerifyEmail() {
       </div>
 
       {/*Right Section */}
+
       <div className="w-full max-w-md text-center">
         <Image
           src="https://img.icons8.com/?size=100&id=60688&format=png&color=000000"
@@ -61,6 +64,7 @@ function VerifyEmail() {
             className="text-gray-500 hover:text-gray-700 font-medium"
           >
             ← Back to sign in
+
           </Link>
         </div>
       </div>
