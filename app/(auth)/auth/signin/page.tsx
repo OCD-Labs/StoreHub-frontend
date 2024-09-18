@@ -178,6 +178,7 @@ const SignIn = () => {
               </Button>
             </div>
           </form>
+          
           {/* 
   <span className="flex justify-between pt-2 sm:pt-1 md:pt-2">
     <button className="flex items-center justify-center py-1 md:py-2 w-[44%] rounded-[10px] border cursor-pointer">
