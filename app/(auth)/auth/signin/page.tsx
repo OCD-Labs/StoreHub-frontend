@@ -21,10 +21,6 @@ const SignIn = () => {
   };
 
   const router = useRouter();
-  const [user, setUser] = useState<IUserCredential>({
-    password: "",
-    email: "",
-  });
 
   const {
     register,
@@ -169,7 +165,9 @@ const SignIn = () => {
                 {isSubmitting ? (
                   <div className="flex justify-center">
                     <Loader2 className="mr-2 mt-1 h-6 w-6 animate-spin" />{" "}
+
                     Signing in ...
+
                   </div>
                 ) : (
                   "Sign in"
