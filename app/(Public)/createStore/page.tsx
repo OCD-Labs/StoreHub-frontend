@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import { setUser } from "@components/util/session";
 import "react-toastify/dist/ReactToastify.css";
+import { Button } from "@components/ui/Button";
 
 // @ts-nocheck
 import { useState, useEffect, useRef, useContext } from "react";
@@ -23,6 +24,17 @@ const CreateStore = () => {
   const router = useRouter();
   const [imageData, setImageData] = useState<any>();
   const [inputTag, setTagInput] = useState<string>("");
+
+  //Select Category logic
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const categories = [
+    "Electronics",
+    "Clothing",
+    "Home & Garden",
+    "Books",
+    "Toys",
+  ];
 
   const [formData, setFormData] = useState({
     name: "",
@@ -178,152 +190,221 @@ const CreateStore = () => {
   });
 
   return (
-    <main>
+    <main className="container py-10">
       <ToastContainer />
-      <form className="text-dark" onSubmit={handleSubmit(onSubmit)}>
-        <p className="text-[20px] font-bold text-black">Create Store</p>
+      <form
+        className="max-w-4xl mx-auto bg- overflow-hidden"
+        onSubmit={handleSubmit(onSubmit)}
+      >
+        {/*Store Title */}
+        <div>
+          <h2 className="text-2xl font-bold mb-2">Create Your Store</h2>
+          <p className="text-gray-400 text-[16px] mb-4">
+            Fill in the details to set up your new store.
+          </p>
+        </div>
 
-        <div className="md:flex md:justify-between">
+        <div className="md:flex md:justify-between ">
+          {/*Image uploader component */}
+
           <ImageUploader onUpdateImage={handleImageData} />
 
-          <div className="mt-6 md:mt-0 md:w-[60%]">
-            <span className="md:flex gap-3 md:py-4 md:justify-end md:items-center">
-              <label>Store Name</label>
-              <div className="md:w-[75%] w-full">
-                <input
-                  {...register("name", {
-                    required: "Store name is required",
-                    minLength: {
-                      value: 3,
-                      message: "Store name must be at least 3 characters",
-                    },
-                    maxLength: {
-                      value: 50,
-                      message: "Store name cannot exceed 50 characters",
-                    },
-                  })}
-                  name="name"
-                  onInput={handleChange}
-                  value={formData.name}
-                  placeholder="Farmland Groceries Store"
-                  className="focus:border-blue block w-full md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
-                />
-                <span>
-                  {errors.name && (
-                    <p className="text-red-500 mb-2">{errors.name.message}</p>
-                  )}
-                </span>
-              </div>
-            </span>
-
-            <div className="flex justify-between md:justify-end">
-              <span className="flex flex-col md:flex-row md:items-center w-[45%] md:w-[48%] mr-4 md:py-4 md:justify-end">
-                <label className="mr-2 md:mr-4">Category</label>
-                <select
-                  name="category"
-                  value={formData.category}
-                  onChange={handleChange}
-                  className="md:w-[55%] lg:w-[57%] block rounded-md border-0 px-2.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
-                >
-                  <option>Fashion</option>
-                  <option>Books</option>
-                  <option>Electronics</option>
-                  <option>Apparels</option>
-                  <option>Food & Fruits</option>
-                </select>
-              </span>
-              <span className="flex flex-col md:flex-row md:items-center w-[45%] sm:w-[43%] md:w-[45%] md:py-4 md:justify-end mb-0">
-                <label className="mr-2 md:mr-4">Store Account ID</label>
-                <input
-                  name="store_account_id"
-                  value={formData.store_account_id}
-                  onChange={handleChange}
-                  placeholder="farm-land"
-                  className="md:w-[55%] lg:w-[57%] block rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
-                ></input>
+          {/*Store Form */}
+          <div className="mt-6 md:mt-0 md:w-[50%] ">
+            {/*Store Name Input */}
+            <label className="block text-sm font-medium mb-2 text-gray-700">
+              Store Name
+            </label>
+            <div className="mb-4">
+              <input
+                {...register("name", {
+                  required: "Store name is required",
+                  minLength: {
+                    value: 3,
+                    message: "Store name must be at least 3 characters",
+                  },
+                  maxLength: {
+                    value: 50,
+                    message: "Store name cannot exceed 50 characters",
+                  },
+                })}
+                name="name"
+                onInput={handleChange}
+                value={formData.name}
+                placeholder="Farmland Groceries Store"
+                className=" w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
+              />
+              <span>
+                {errors.name && (
+                  <p className="text-red-500 mb-2">{errors.name.message}</p>
+                )}
               </span>
             </div>
-            <span className="md:flex gap-3"></span>
 
-            <span className="md:flex gap-3 md:py-4 md:justify-end">
-              <label>Description</label>
-              <div className="w-full md:w-[75%]">
-                <textarea
-                  {...register("description", {
-                    required: "Description is required",
-                    minLength: {
-                      value: 10,
-                      message: "Description must be at least 10 characters",
-                    },
-                    maxLength: {
-                      value: 200,
-                      message: "Description cannot exceed 200 characters",
-                    },
-                  })}
-                  name="description"
-                  value={formData.description}
-                  onChange={handleChange}
-                  placeholder="Best farmland produces at your door step"
-                  className="block w-full md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
-                />
-                <span>
-                  {errors.description && (
-                    <p className="text-red-500 mb-2">
-                      {errors.description.message}
-                    </p>
+            {/*Category  */}
+            <div className="mb-4">
+                <label htmlFor="store-category" className="block text-sm font-medium text-gray-700">Store Category</label>
+                <div className="relative">
+                  <button
+                    type="button"
+                    className="mt-1 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-3 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  >
+                    <span className="block text-gray-400 truncate">{selectedCategory || "Select a category"}</span>
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                      <span className="border-4 border-transparent border-t-gray-400 ml-1"></span>
+                    </span>
+                  </button>
+                  {isDropdownOpen && (
+                    <ul className="absolute z-10 mt-1 w-full bg-white max-h-60 rounded-lg py-1 border-[0.5px] border-gray-700 text-base overflow-auto focus:outline-none sm:text-sm">
+                      {categories.map((category) => (
+                        <li
+                          key={category}
+                          className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-black hover:text-white"
+                          onClick={() => {
+                            setSelectedCategory(category)
+                            setIsDropdownOpen(false)
+                          }}
+                        >
+                          {category}
+                        </li>
+                      ))}
+                    </ul>
                   )}
-                </span>
-              </div>
-            </span>
-
-            <span className="md:flex gap-3 md:py-4 justify-end">
-              <label>Add Tags</label>
-              <div className="md:w-[75%]">
-                <div
-                  onClick={handleAddTagDivClick}
-                  className="flex w-full  md:gap-[30px] rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:mt-0 md:mb-2"
-                >
-                  <ul className="flex flex-wrap">
-                    {tags.length === 0 && inputTag.length === 0 && (
-                      <p className="absolute mt-[0.65rem] md:mt-[0.5rem] text-gray-400">
-                        Press space after each word to add a tag
-                      </p>
-                    )}{" "}
-                    {renderedItems}
-                    <input
-                      onKeyUp={addTag}
-                      type="text"
-                      className={`outline-none py-2 flex flex-1 text-base ${
-                        tags.length >= 6 ? "hidden" : "block"
-                      }`}
-                      onChange={(e) => setTagInput(e.target.value)}
-                      value={inputTag.toLocaleLowerCase()}
-                      ref={inputRef}
-                    />
-                  </ul>
                 </div>
-                {tags.includes(inputTag) && (
-                  <p className="text-red-500">
-                    {inputTag.toLocaleUpperCase()} already exists
-                  </p>
-                )}
-                {tags.length >= 6 && (
-                  <p className="text-yellow-500">
-                    Maximum tag limit reached (6)
-                  </p>
-                )}
               </div>
-            </span>
+
+            {/* <div className="mb-4">
+              <label
+                htmlFor="store-category"
+                className="block text-sm mb-2 font-medium text-gray-700"
+              >
+                Store Category
+              </label>
+              <select
+                name="category"
+                value={formData.category}
+                onChange={handleChange}
+                className=" w-full  bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-3 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
+              >
+                <option className="text-gray-300" value="select">
+                  Select a category
+                </option>
+                <option>Fashion</option>
+                <option>Books</option>
+                <option>Electronics</option>
+                <option>Apparels</option>
+                <option>Food & Fruits</option>
+              </select>
+            </div> */}
+
+            {/*Store ID  */}
+            <div className="mb-4">
+              <label
+                htmlFor="store-tags"
+                className="block text-sm mb-2 font-medium text-gray-700"
+              >
+                Store Account ID
+              </label>
+
+              <input
+                name="store_account_id"
+                value={formData.store_account_id}
+                onChange={handleChange}
+                placeholder="farm-land"
+                className="mt-1 block w-full px-3 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              ></input>
+            </div>
+
+            {/*Description  */}
+            <div className="mb-4">
+              <label
+                htmlFor="store-description"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Store Description
+              </label>
+
+              <textarea
+                {...register("description", {
+                  required: "Description is required",
+                  minLength: {
+                    value: 10,
+                    message: "Description must be at least 10 characters",
+                  },
+                  maxLength: {
+                    value: 200,
+                    message: "Description cannot exceed 200 characters",
+                  },
+                })}
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                // placeholder="Best farmland produces at your door step"
+                placeholder="Manually Describe Your Store or Utilize Our AI"
+                className="mt-2 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+              />
+              <span>
+                {errors.description && (
+                  <p className="text-red-500 mb-2">
+                    {errors.description.message}
+                  </p>
+                )}
+              </span>
+            </div>
+
+            {/*Add Tags  */}
+            <div className="">
+              <label
+                htmlFor="store-tags"
+                className="block mb-2 text-sm font-medium text-gray-700"
+              >
+                Store Tags
+              </label>
+
+              <div
+                onClick={handleAddTagDivClick}
+                className="flex w-full  rounded-md border-0 px-3.5 py-1 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:mt-0 md:mb-2"
+              >
+                <ul className="flex flex-wrap">
+                  {tags.length === 0 && inputTag.length === 0 && (
+                    <p className="absolute mt-[0.65rem] md:mt-[0.5rem] text-gray-400">
+                      Press space after each word to add a tag
+                    </p>
+                  )}{" "}
+                  {renderedItems}
+                  <input
+                    onKeyUp={addTag}
+                    type="text"
+                    className={`outline-none py-2 flex flex-1 text-base ${
+                      tags.length >= 6 ? "hidden" : "block"
+                    }`}
+                    onChange={(e) => setTagInput(e.target.value)}
+                    value={inputTag.toLocaleLowerCase()}
+                    ref={inputRef}
+                  />
+                </ul>
+              </div>
+              {tags.includes(inputTag) && (
+                <p className="text-red-500">
+                  {inputTag.toLocaleUpperCase()} already exists
+                </p>
+              )}
+              {tags.length >= 6 && (
+                <p className="text-yellow-500">Maximum tag limit reached (6)</p>
+              )}
+            </div>
           </div>
         </div>
 
+        {/*Submit Button */}
         <div className="flex justify-center items-center">
-          <button
+          <Button
             onClick={handleSubmit(onSubmit)}
             className="rounded-[10px] py-4 text-white bg-[#161616] text-lg w-full sm:w-3/4 sm:mx-auto my-6 sm:my-12"
           >
             Create Store
-          </button>
+          </Button>
         </div>
       </form>
     </main>

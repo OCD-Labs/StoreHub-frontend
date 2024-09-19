@@ -9,15 +9,6 @@ import { Button } from "@components/ui/Button";
 import { setCookie } from "@components/util/cookie";
 import { signupAction } from "@app/actions/auth-action";
 import "../../../../styles/signup.css";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@components/ui/Dialog";
-import email from "@public/assets/images/carbon_email.png";
 import "react-toastify/dist/ReactToastify.css";
 import { signUp } from "@app/apis";
 
@@ -227,8 +218,8 @@ const SignUp = () => {
             >
               {isSubmitting ? (
                 <div className="flex justify-center">
-                  <Loader2 className="mr-2 mt-1 h-6 w-6 animate-spin" /> Creating
-                  Your Account...
+                  <Loader2 className="mr-2 mt-1 h-6 w-6 animate-spin" />{" "}
+                  Creating Your Account...
                 </div>
               ) : (
                 "Create Account"
@@ -237,60 +228,6 @@ const SignUp = () => {
           </div>
         </form>
 
-        <Dialog open={modal} onOpenChange={toggleModal}>
-          <DialogTrigger></DialogTrigger>
-          <DialogContent>
-            <div className="flex flex-col gap-5 justify-center items-center font-light">
-              <Image
-                src={email}
-                width={100}
-                height={100}
-                alt="email logo"
-              ></Image>
-              <p className="font-medium text-2xl">Verify Email</p>
-              <p className="text-sm leading-7">
-                Thank you for signing up with{" "}
-                <b className="font-bold">StoreHub</b>! To get started, please
-                verify your email for security reasons. Check your inbox (and
-                spam/junk folder) at{" "}
-                <b className="font-bold">[Recipient's Email Address]</b> for our
-                verification email.
-              </p>
-              <p className="flex flex-col items-center text-xs">
-                You didn’t receive email? Request a new email in
-                <p>
-                  {" "}
-                  <span className="text-purple-800">{seconds} seconds</span>
-                </p>
-              </p>
-            </div>
-          </DialogContent>
-        </Dialog>
-        {/**<div className="py-2 sm:py-1 md:py-3">
-          <span className="flex items-center justify-between">
-            <hr className="font-bold w-[45%] border-t-1 border-black" />
-            <p className="px-2">or</p>
-            <hr className="font-bold w-[45%] border-t-1 border-black" />
-          </span> */}
-
-        {/**<span className="flex justify-between pt-2 sm:pt-1 md:pt-2">
-            <button className="flex items-center justify-center py-1 md:py-2 w-[44%] rounded-[10px] border cursor-pointer">
-              <img
-                className="w-6"
-                src="../../assets/icons/google.svg"
-                alt="sign up with google"
-              />
-              <p className="ml-3">Google</p>
-            </button>
-            <button className="flex items-center justify-center py-1 md:py-2 w-[44%] rounded-[10px] border cursor-pointer">
-              <img
-                className="w-6"
-                src="../../assets/icons/google.svg"
-                alt="sign up with google"
-              />
-              <p className="ml-3">Google</p>
-            </button>
-          </span> </div>*/}
       </section>
     </div>
   );
