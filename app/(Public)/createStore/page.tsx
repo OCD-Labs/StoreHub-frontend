@@ -7,6 +7,25 @@ import { ToastContainer, toast } from "react-toastify";
 import { setUser } from "@components/util/session";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@components/ui/Button";
+import { Input } from "@/components/ui/Input";
+import { Label } from "@/components/ui/Label";
+import { Textarea } from "@/components/ui/Textarea";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/Card";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/Select";
+import { Upload, X } from "lucide-react";
 
 // @ts-nocheck
 import { useState, useEffect, useRef, useContext } from "react";
@@ -190,7 +209,7 @@ const CreateStore = () => {
   });
 
   return (
-    <main className="container py-10">
+    <main className="container py-7">
       <ToastContainer />
       <form
         className="max-w-4xl mx-auto bg- overflow-hidden"
@@ -204,13 +223,15 @@ const CreateStore = () => {
           </p>
         </div>
 
-        <div className="md:flex md:justify-between ">
+        <div className="lg:flex lg:justify-between ">
           {/*Image uploader component */}
 
-          <ImageUploader onUpdateImage={handleImageData} />
+          <ImageUploader />
+
+          {/* <ImageUploader onUpdateImage={handleImageData} /> */}
 
           {/*Store Form */}
-          <div className="mt-6 md:mt-0 md:w-[50%] ">
+          <div className="mt-6 md:mt-0 lg:w-[50%] ">
             {/*Store Name Input */}
             <label className="block text-sm font-medium mb-2 text-gray-700">
               Store Name
@@ -243,36 +264,43 @@ const CreateStore = () => {
 
             {/*Category  */}
             <div className="mb-4">
-                <label htmlFor="store-category" className="block text-sm font-medium text-gray-700">Store Category</label>
-                <div className="relative">
-                  <button
-                    type="button"
-                    className="mt-1 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-3 text-left cursor-pointer focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  >
-                    <span className="block text-gray-400 truncate">{selectedCategory || "Select a category"}</span>
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                      <span className="border-4 border-transparent border-t-gray-400 ml-1"></span>
-                    </span>
-                  </button>
-                  {isDropdownOpen && (
-                    <ul className="absolute z-10 mt-1 w-full bg-white max-h-60 rounded-lg py-1 border-[0.5px] border-gray-700 text-base overflow-auto focus:outline-none sm:text-sm">
-                      {categories.map((category) => (
-                        <li
-                          key={category}
-                          className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-black hover:text-white"
-                          onClick={() => {
-                            setSelectedCategory(category)
-                            setIsDropdownOpen(false)
-                          }}
-                        >
-                          {category}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
+              <label
+                htmlFor="store-category"
+                className="block text-sm font-medium text-gray-700"
+              >
+                Store Category
+              </label>
+              <div className="relative">
+                <button
+                  type="button"
+                  className="mt-1 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-3 text-left cursor-pointer focus:outline-none focus:ring-1"
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                >
+                  <span className="block text-gray-400 truncate">
+                    {selectedCategory || "Select a category"}
+                  </span>
+                  <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                    <span className="border-4 border-transparent border-t-gray-400 ml-1"></span>
+                  </span>
+                </button>
+                {isDropdownOpen && (
+                  <ul className="absolute z-10 mt-1 w-full bg-white max-h-60 rounded-lg py-1 border-[0.5px] border-gray-700 text-base overflow-auto focus:outline-none sm:text-sm">
+                    {categories.map((category) => (
+                      <li
+                        key={category}
+                        className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-black hover:text-white"
+                        onClick={() => {
+                          setSelectedCategory(category);
+                          setIsDropdownOpen(false);
+                        }}
+                      >
+                        {category}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
+            </div>
 
             {/* <div className="mb-4">
               <label
