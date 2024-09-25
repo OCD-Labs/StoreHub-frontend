@@ -25,7 +25,7 @@ export default function RootLayout({
 				<main className="h-screen flex flex-col justify-between">
 					<AuthProvider>
 						<div>
-							<div className="max-w-7xl  text-sm m-auto sm:px-16 px-6">
+							<div className="">
 								
 									<Nav />
 								<ErrorBoundary

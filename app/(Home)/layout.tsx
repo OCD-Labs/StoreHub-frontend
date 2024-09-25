@@ -22,14 +22,14 @@ export default async function RootLayout({
           <div className="gradient"></div>
         </div>
 
-        <main className="h-screen flex flex-col justify-between">
+        <main className="">
           
             <div>
-              <div className="bg-graybrand">
+              <div className="">
                 <AuthProvider><Nav /></AuthProvider> 
               </div>
 
-              <div className="text-sm m-auto"><AuthProvider>{children}</AuthProvider></div>
+              <div className=""><AuthProvider>{children}</AuthProvider></div>
             </div>
           
           <Footer />

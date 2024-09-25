@@ -1,0 +1,59 @@
+.custom-bg {
+  background-image: url("../public/assets/images/MaskGroup.svg");
+  background-size: cover;
+  background-position: center;
+}
+
+
+
+@keyframes slide {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  
+  .slide-container {
+    overflow: hidden;
+    position: relative;
+    background: #1d2131;
+    white-space: nowrap;
+  }
+  
+  .logos-slide {
+    display: inline-block;
+    animation: 10s slide linear infinite;
+    /* Repeat the width to cover twice the container size */
+    width: 200%; /* Ensures continuous scroll */
+  }
+  
+  .slide-text {
+    margin: 0 40px;
+  }
+  
+  .slide-container::before,
+  .slide-container::after {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    content: "";
+    z-index: 2;
+  }
+  
+  .slide-container::before {
+    left: 0;
+    background: linear-gradient(to left, rgba(29, 33, 49, 0), #1d2131);
+  }
+  
+  .slide-container::after {
+    right: 0;
+    background: linear-gradient(to right, rgba(29, 33, 49, 0), #1d2131);
+  }
+  
+  .slide-container:hover .logos-slide {
+    animation-play-state: paused;
+  }
+  

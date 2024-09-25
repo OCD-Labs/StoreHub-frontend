@@ -42,11 +42,13 @@ const CreateStore = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [imageData, setImageData] = useState<any>();
+  console.log(imageData)
   const [inputTag, setTagInput] = useState<string>("");
 
   //Select Category logic
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  console.log(selectedCategory)
   const categories = [
     "Electronics",
     "Clothing",
@@ -60,7 +62,8 @@ const CreateStore = () => {
     description: "",
     store_account_id: "",
     profile_image_url: "",
-    category: "fashion",
+    category: "",
+    // category: "fashion",
   });
 
   interface StoreDataInterface {
@@ -264,13 +267,13 @@ const CreateStore = () => {
 
             {/*Category  */}
             <div className="mb-4">
-              <label
+              {/* <label
                 htmlFor="store-category"
                 className="block text-sm font-medium text-gray-700"
               >
                 Store Category
-              </label>
-              <div className="relative">
+              </label> */}
+              {/* <div className="relative">
                 <button
                   type="button"
                   className="mt-1 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-3 text-left cursor-pointer focus:outline-none focus:ring-1"
@@ -299,10 +302,10 @@ const CreateStore = () => {
                     ))}
                   </ul>
                 )}
-              </div>
+              </div> */}
             </div>
 
-            {/* <div className="mb-4">
+            <div className="mb-4">
               <label
                 htmlFor="store-category"
                 className="block text-sm mb-2 font-medium text-gray-700"
@@ -324,7 +327,7 @@ const CreateStore = () => {
                 <option>Apparels</option>
                 <option>Food & Fruits</option>
               </select>
-            </div> */}
+            </div>
 
             {/*Store ID  */}
             <div className="mb-4">

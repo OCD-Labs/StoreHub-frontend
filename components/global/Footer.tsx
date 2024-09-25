@@ -1,125 +1,132 @@
+// components/HeroSection.tsx
+import FooterImage from "@public/assets/images/FooterImage.png";
+import Image from "next/image";
+import storehubIcon from "@public/assets/images/storehubIcon.svg";
+import Link from "next/link";
 import twitter from "public/assets/icons/twitter.svg";
 import linkedin from "public/assets/icons/linkedin.svg";
 import github from "public/assets/icons/github.svg";
-import Image from "next/image";
-import Link from "next/link";
-import "../../styles/Footer.css" ;
 
-const Footer = () => {
-	const LINKS = [
-		{
-			title: "Comapnay",
-			items: ["About", "Get Wallet"],
-		},
-		{
-			title: "Explore",
-			items: ["Features, Store, Demo"],
-		},
-		{
-			title: "Location",
-			items: ["4 Privet Drive, Little Whinging, Surrey"],
-		},
-		{
-			title: "Location",
-			items: ["4 Privet Drive, Little Whinging, Surrey"],
-		},
-	];
+const Footer: React.FC = () => {
+  return (
+    <div className="bg-gray-900 py-16 ">
+      <div className=" max-w-[75rem] bg-[#FFE4D8] rounded-[40px] mx-auto text-black ">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center pl-[40px] gap-8">
+          <div className="flex-1">
+            <h2 className="text-3xl md:text-5xl font-bold mb-4">
+              Start Your Journey with StoreHub Today
+            </h2>
+            <p className="mb-6 text-black">
+              Ready to transform your e-commerce experience? Sign up now to
+              launch your store with StoreHub and harness the power of NEAR’s
+              blockchain technology.
+            </p>
+            <div className="space-x-4">
+              <button className="px-6 py-2 bg-orange-500 text-white font-semibold rounded-md">
+                Get Started
+              </button>
+              <button className="px-6 py-2 bg-white text-gray-900 font-semibold rounded-md">
+                Marketplace
+              </button>
+            </div>
+          </div>
+          <div className="flex-1">
+            <Image
+              src={FooterImage}
+              alt="StoreHub Overview"
+              className="mx-4 mt-9 "
+            />
+          </div>
+        </div>
+      </div>
 
-	return (
-		<div>
-			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-				<path
-					fill="#B0A4DB1F"
-					fill-opacity="1"
-					d="M0,224L80,197.3C160,171,320,117,480,122.7C640,128,800,192,960,186.7C1120,181,1280,107,1360,69.3L1440,32L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z"
-				></path>
-			</svg>
-			<footer>
-				<div className="container">
-					<div className="sec aboutus">
-						<h2>StoreHub</h2>
-						<p>
-							Embrace e-commerce's future with StoreHub. Simlify your growth
-							journey.
-						</p>
-						<div className="flex gap-3">
-							<Link href="/">
-								<Image src={twitter} alt="twitter"></Image>
-							</Link>
-							<Link href="/">
-								<Image src={linkedin} alt="twitter"></Image>
-							</Link>
-							<Link href="/">
-								<Image src={github} alt="twitter"></Image>
-							</Link>
-						</div>
-					</div>
+      {/* Navigation start here */}
 
-					<div className="sec quicklinks">
-						<h2>Company</h2>
-						<ul>
-							<li>
-								<a href="#">About</a>
-							</li>
-							<li>
-								<a href="#">Get Wallet</a>
-							</li>
-						</ul>
-					</div>
-					<div className="sec quicklinks">
-						<h2>Explore</h2>
-						<ul>
-							<li>
-								<a href="#">Features</a>
-							</li>
-							<li>
-								<a href="#">Store</a>
-							</li>
-							<li>
-								<a href="#">Demo</a>
-							</li>
-						</ul>
-					</div>
+      <div className="mt-[100px] mb-[65px] max-w-[70rem] container mx-auto px-6 md:px-10">
+        <div className="flex flex-col md:flex-row md:justify-between gap-10">
+          {/* Left Section */}
+          <div className="space-y-6">
+            <div>
+              {/* Replace with your logo path */}
+              <Link href="/">
+                <Image
+                  className=" w-[125px]
+          h-[30px]"
+                  src={storehubIcon}
+                  alt=" store hub Logo"
+                />{" "}
+              </Link>
+            </div>
+            <p className="text-sm text-gray-400">
+              Embrace e-commerce’s future with <br /> StoreHub. Simplify your
+              growth journey.
+            </p>
+            <div className="flex space-x-4 text-gray-500">
+              <Link href="/">
+                <Image
+                  className="hover:text-white cursor-pointer"
+                  src={twitter}
+                  alt="twitter"
+                ></Image>
+              </Link>
+              <Link href="/">
+                <Image
+                  className="hover:text-white cursor-pointer"
+                  src={linkedin}
+                  alt="twitter"
+                ></Image>
+              </Link>
+              <Link href="/">
+                <Image
+                  className="hover:text-white cursor-pointer"
+                  src={github}
+                  alt="twitter"
+                ></Image>
+              </Link>
+            </div>
+          </div>
 
-					<div className="sec quicklinks">
-						<h2>Support</h2>
-						<ul>
-							<li>
-								<a href="#">Getting Started</a>
-							</li>
-							<li>
-								<a href="#">FAQs</a>
-							</li>
-							<li>
-								<a href="#">Help Centre</a>
-							</li>
-							<li>
-								<a href="#">Report a Bug</a>
-							</li>
-						</ul>
-					</div>
-
-					<div className="sec quicklinks">
-						<h2>Contact</h2>
-						<ul>
-							<li>
-								<a href="#">+234 123-7652-765</a>
-							</li>
-							<li>
-								<a href="#">Support@storehub.com</a>
-							</li>
-							<li>
-								<a href="#">Sunshine Daisey-Milk and honey 14432</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-				<div className="copyrightText">
-					<p>Copyright 2023 Store Hub . All Rights Reserved</p>
-				</div>
-			</footer>
-		</div>
-	);
+          {/* Links Section */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
+            <div className="space-y-2">
+              <h3 className="font-semibold text-white">Company</h3>
+              <ul className="text-gray-400 space-y-1">
+                <li className="hover:text-white cursor-pointer">About</li>
+                <li className="hover:text-white cursor-pointer">Get Wallet</li>
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-white">Explore</h3>
+              <ul className="text-gray-400 space-y-1">
+                <li className="hover:text-white cursor-pointer">Features</li>
+                <li className="hover:text-white cursor-pointer">Marketplace</li>
+                <li className="hover:text-white cursor-pointer">Demo</li>
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-white">Support</h3>
+              <ul className="text-gray-400 space-y-1">
+                <li className="hover:text-white cursor-pointer">
+                  Getting Started
+                </li>
+                <li className="hover:text-white cursor-pointer">FAQs</li>
+                <li className="hover:text-white cursor-pointer">Help Center</li>
+                <li className="hover:text-white cursor-pointer">
+                  Report a Bug
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <h3 className="font-semibold text-white">Contact</h3>
+              <ul className="text-gray-400 space-y-1">
+                <li className="hover:text-white cursor-pointer">Contact Us</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Footer;

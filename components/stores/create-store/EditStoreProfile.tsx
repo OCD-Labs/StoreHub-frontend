@@ -28,6 +28,7 @@ export const EditStoreProfile: React.FC<EditStoreProfileProps> = ({
     profile_image_url: "",
     category: "",
   });
+
   const [loading, setloading] = useState<boolean>(false);
 
   //tag feature
@@ -179,7 +180,7 @@ export const EditStoreProfile: React.FC<EditStoreProfileProps> = ({
                     name="store_account_id"
                     // value={formData.store_account_id}
                     onChange={handleChange}
-                    placeholder="farm-land"
+                    placeholder="Leave here blank, it will auto generated after you create store"
                     className="md:w-[55%] lg:w-[57%] block rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6 my-2 md:my-0"
                   ></input>
                 </span>

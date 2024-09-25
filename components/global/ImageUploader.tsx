@@ -14,6 +14,8 @@ export default function ImageUploader() {
   const [storeImage, setStoreImage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
 
+  console.log(storeImage)
+
   const handleImageUpload = (file: File) => {
     if (file) {
       const reader = new FileReader();
