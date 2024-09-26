@@ -25,8 +25,7 @@
   .logos-slide {
     display: inline-block;
     animation: 10s slide linear infinite;
-    /* Repeat the width to cover twice the container size */
-    width: 200%; /* Ensures continuous scroll */
+    width: 200%; 
   }
   
   .slide-text {
