@@ -2,7 +2,7 @@
 import NearLogo from "@public/assets/images/NearLogo.png";
 import NearLogo1 from "@public/assets/images/NearLogo1.png";
 import React, { useEffect, useRef } from "react";
-import "../../../styles/MainSection.css";
+import "@/styles/mainsection.css";
 import Image from "next/image";
 import Link from "next/link";
 
