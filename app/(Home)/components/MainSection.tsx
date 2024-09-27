@@ -1,11 +1,8 @@
 // components/MainSection.tsx
 "use client";
 
-// import "../../../../styles/mainsection.css";
-// import nearlogo from '../images/nearlogo.jpg';
-// import Image from 'next/image';
 import React, { useEffect, useRef } from "react";
-import "../../../styles/MainSection.css";
+import "@/styles/mainsection.css";
 
 const MainSection = () => {
   const slideRef = useRef(null);
@@ -51,7 +48,6 @@ const MainSection = () => {
                 Near
               </span>
             ))}
-            
           </div>
         </div>
       </div>

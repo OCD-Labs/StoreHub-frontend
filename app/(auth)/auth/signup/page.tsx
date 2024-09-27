@@ -76,7 +76,7 @@ const SignUp = () => {
         />
       </section>
 
-      {/*Right Section */}
+      {/* Right Section */}
       <section className="sm:w-[55%] pb-6 md:px-6">
         <form autoComplete="on">
           <p className="text-end">
@@ -192,7 +192,6 @@ const SignUp = () => {
             </Button>
           </div>
         </form>
-
 
         {/* <Dialog open={modal} onOpenChange={toggleModal}>
           <DialogTrigger></DialogTrigger>
