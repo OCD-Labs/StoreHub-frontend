@@ -7,16 +7,9 @@
 import React, { useEffect, useRef } from "react";
 import "../../../styles/MainSection.css";
 
-const MainSection = () => {
-  const slideRef = useRef(null);
 
-  useEffect(() => {
-    // Cloning the content to make the animation seamless
-    if (slideRef.current) {
-      const clone = slideRef.current.cloneNode(true);
-      slideRef.current.parentNode.appendChild(clone);
-    }
-  }, []);
+const MainSection = () => {
+
 
   return (
     <main className="text-center py-20 px-8">
@@ -44,16 +37,33 @@ const MainSection = () => {
             Marketplace
           </button>
         </div>
-        <div className="slide-container flex justify-center mt-[250px] gap-8 rounded-lg items-center py-4 mx-[130px] bg-gray-800 text-white space-x-4">
-          <div className="logos-slide" ref={slideRef}>
-            {Array.from({ length: 12 }).map((_, i) => (
-              <span key={i} className="slide-text text-2xl font-bold">
-                Near
+        <div className=" flex justify-center mt-[250px] gap-8 rounded-lg items-center py-4 mx-[130px] bg-gray-800 text-white space-x-4">
+          <div className="logos-slide" >
+            
+              <span  className="slide-text text-2xl font-bold">
+              Near
               </span>
-            ))}
+              <span  className="slide-text text-2xl font-bold">
+              Near
+              </span>
+              <span  className="slide-text text-2xl font-bold">
+              Near
+              </span>
+              <span  className="slide-text text-2xl font-bold">
+              Near
+              </span>
+              <span  className="slide-text text-2xl font-bold">
+              Near
+              </span>
+              <span  className="slide-text text-2xl font-bold">
+              Near
+              </span>
+         
             
           </div>
         </div>
+        
+       
       </div>
     </main>
   );
