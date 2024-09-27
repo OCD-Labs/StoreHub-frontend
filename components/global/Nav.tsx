@@ -58,7 +58,7 @@ const Nav = () => {
   };
 
   return (
-    <nav className=" max-w-[90rem] mx-auto px-4 flex justify-between mt-2 mb-[60px] items-center space-x-6 py-4 ">
+    <nav className=" max-w-[90rem] mx-auto px-4 flex justify-between my-3 items-center ">
       <div>
         <Link href="/">
           {" "}
@@ -71,35 +71,34 @@ const Nav = () => {
         </Link>
       </div>
 
-      <div className="flex gap-[46px]">
-        <Link href="/" className="hover:text-[#FE5B13] font-[600]">
+      <div className="flex gap-[50px]">
+        <Link href="/" className="hover:text-[#FE5B13] font-semibold">
           Home
         </Link>
-        <Link href="/about" className="hover:text-[#FE5B13] font-[600]">
+        <a href="#video" className="hover:text-[#FE5B13] font-semibold">
           About Us
-        </Link>
-        <Link href="/features" className="hover:text-[#FE5B13] font-[600]">
+        </a>
+        <a href="#features" className="hover:text-[#FE5B13] font-semibold">
           Features
-        </Link>
-        <Link href="/contact" className="hover:text-[#FE5B13] font-[600]">
-          Contact
-        </Link>
-
-        <Link href="/stores" className="hover:text-[#FE5B13] font-[600]">
+        </a>
+        <a href="#faq" className="hover:text-[#FE5B13] font-semibold">
+          FAQ
+        </a>
+        <Link href="/stores" className="hover:text-[#FE5B13] font-semibold">
           Marketplace
         </Link>
       </div>
 
       <div className="flex gap-[38px]">
         {/* Shopping cart comes here*/}
-        <div className="relative mt-2">
+        {/* <div className="relative mt-2">
           <Link href="/cart">
             <ShoppingCart size={24} className="" />
           </Link>
           <span className="absolute top-[-10px] right-[-8px] font-medium text-sm">
             4
           </span>
-        </div>
+        </div> */}
 
         {/* this is where the login and get started auth logic comes in */}
 
@@ -127,7 +126,7 @@ const Nav = () => {
                 style={{ position: "static", padding: 0, minWidth: "auto" }}
               >
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <div className="flex gap-2 justify-center items-center bg-graybrand">
+                  <div className="flex gap-2 mb-3 justify-center items-center">
                     <div></div>
                     <Avatar>
                       <AvatarImage src="" />
@@ -155,7 +154,10 @@ const Nav = () => {
                   <Dropdown.Divider />
 
                   <Dropdown.Item>
-                    <Link href={"/userdashboard/accountinfo/accountdetails"}>
+                    <Link
+                      className="hover:text-[#FE5B13] font-[600]"
+                      href={"/userdashboard/accountinfo/accountdetails"}
+                    >
                       Account
                     </Link>
                   </Dropdown.Item>
@@ -181,6 +183,7 @@ const Nav = () => {
                   </Dropdown.Item>
                   <Dropdown.Item>
                     <button
+                      className="hover:text-[#FE5B13] font-[600]"
                       onClick={() => {
                         clearCookie("token");
                         removeUser("user");

@@ -3,6 +3,7 @@
 import { FC } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import AppLoader from '@components/global/AppLoader'
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons';
 
 interface PaginationControlsProps {
   hasNextPage: boolean
@@ -22,16 +23,17 @@ const PaginationControls: FC<PaginationControlsProps> = ({
   const page_size = searchParams.get('page_size') ?? '15'
 
   return (
-    <div className="flex gap-2 justify-center w-full my-8">
+    <div className="flex items-center gap-4 justify-center w-full my-8">
       <button
-        className="bg-black text-white p-1 rounded-md"
+        className=" text-black font-bold hover:text-[#FE5B13] rounded-lg  flex items-center justify-center"
         disabled={Number(page) == 1}
         onClick={() => {
           handlePaginationLoading()
           router.push(`stores/?page=${Number(page) - 1}&page_size=${page_size}`)
         }}
       >
-        prev page
+         <ChevronLeftIcon className="mr-1 h-4 w-4" /> {/* Radix left icon */}
+         Prev Page
       </button>
 
       <div>
@@ -39,14 +41,14 @@ const PaginationControls: FC<PaginationControlsProps> = ({
       </div>
 
       <button
-        className="bg-black text-white p-1 rounded-md"
-        disabled={!hasNextPage}
+        className="text-black hover:text-[#FE5B13] font-bold rounded-lg  flex items-center justify-center"
         onClick={() => {
           handlePaginationLoading()
           router.push(`stores/?page=${Number(page) + 1}&page_size=${page_size}`)
         }}
       >
-        next page
+          Next Page
+          <ChevronRightIcon className="ml-1 h-4 w-4" />
       </button>
     </div>
   )

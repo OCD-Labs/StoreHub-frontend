@@ -1,20 +1,12 @@
-// components/MainSection.tsx
 "use client";
-
+import NearLogo from "@public/assets/images/NearLogo.png";
+import NearLogo1 from "@public/assets/images/NearLogo1.png";
 import React, { useEffect, useRef } from "react";
 import "@/styles/mainsection.css";
+import Image from "next/image";
+import Link from "next/link";
 
 const MainSection = () => {
-  const slideRef = useRef(null);
-
-  useEffect(() => {
-    // Cloning the content to make the animation seamless
-    if (slideRef.current) {
-      const clone = slideRef.current.cloneNode(true);
-      slideRef.current.parentNode.appendChild(clone);
-    }
-  }, []);
-
   return (
     <main className="text-center py-20 px-8">
       <h1 className="text-[70px]  text-[#1D2131] font-bold">
@@ -34,20 +26,95 @@ const MainSection = () => {
         </p>
         {/* The buttons here, has to be a component */}
         <div className="space-x-4">
-          <button className="bg-[#FE5B13] text-white rounded-[15px] px-6 py-3 hover:bg-[#d46e43]">
-            Get Started
-          </button>
-          <button className="bg-[#ffffff] border  text-black px-6 py-3 rounded-[15px] hover:bg-gray-200">
-            Marketplace
-          </button>
+          <Link href={"/auth/onboarding"}>
+            <button className="bg-[#FE5B13] text-white rounded-[15px] px-6 py-3 hover:bg-[#d46e43]">
+              Get Started
+            </button>
+          </Link>
+
+          <Link href="/stores">
+            <button className="bg-[#ffffff] border  text-black px-6 py-3 rounded-[15px] hover:bg-gray-200">
+              Marketplace
+            </button>
+          </Link>
         </div>
-        <div className="slide-container flex justify-center mt-[250px] gap-8 rounded-lg items-center py-4 mx-[130px] bg-gray-800 text-white space-x-4">
-          <div className="logos-slide" ref={slideRef}>
-            {Array.from({ length: 12 }).map((_, i) => (
-              <span key={i} className="slide-text text-2xl font-bold">
-                Near
-              </span>
-            ))}
+        <div className=" flex justify-center mt-[250px] gap-8 rounded-lg items-center py-4 mx-[130px] bg-[#1D2131] text-white space-x-4">
+          <div className="flex justify-center gap-4">
+            <Image
+              className=""
+              src={NearLogo1}
+              alt=" Social Media Integration"
+            />
+            <Image
+              className=""
+              src={NearLogo}
+              alt=" Social Media Integration"
+            />
+          </div>
+
+          <div className="flex justify-center gap-4">
+            <Image
+              className=""
+              src={NearLogo1}
+              alt=" Social Media Integration"
+            />
+            <Image
+              className=""
+              src={NearLogo}
+              alt=" Social Media Integration"
+            />
+          </div>
+
+          <div className="flex justify-center gap-4">
+            <Image
+              className=""
+              src={NearLogo1}
+              alt=" Social Media Integration"
+            />
+            <Image
+              className=""
+              src={NearLogo}
+              alt=" Social Media Integration"
+            />
+          </div>
+
+          <div className="flex justify-center gap-4">
+            <Image
+              className=""
+              src={NearLogo1}
+              alt=" Social Media Integration"
+            />
+            <Image
+              className=""
+              src={NearLogo}
+              alt=" Social Media Integration"
+            />
+          </div>
+
+          <div className="flex justify-center gap-4">
+            <Image
+              className=""
+              src={NearLogo1}
+              alt=" Social Media Integration"
+            />
+            <Image
+              className=""
+              src={NearLogo}
+              alt=" Social Media Integration"
+            />
+          </div>
+
+          <div className="flex justify-center gap-4">
+            <Image
+              className=""
+              src={NearLogo1}
+              alt=" Social Media Integration"
+            />
+            <Image
+              className=""
+              src={NearLogo}
+              alt=" Social Media Integration"
+            />
           </div>
         </div>
       </div>

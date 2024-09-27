@@ -5,6 +5,7 @@ import FeaturesCard2 from "@public/assets/images/FeaturesCard2.png";
 import FeaturesCard3 from "@public/assets/images/FeaturesCard3.png";
 import CallToActionImage from "@public/assets/images/CallToActionImage.png";
 import LaunchStore1 from "@public/assets/images/LaunchStore1.png";
+import Link from "next/link";
 
 const Features = () => {
   return (
@@ -149,9 +150,10 @@ const Features = () => {
               Leverage cutting-edge technology and user-friendly tools designed
               to drive your store’s growth.
             </p>
-            <button className="px-6 py-3 my-5 bg-white text-[#000000] rounded-lg font-semibold hover:bg-gray-100 transition">
+            <Link href="/createStore" ><button className="px-6 py-3 my-5 bg-white text-[#000000] rounded-lg font-semibold hover:bg-gray-100 transition">
               Launch Store
-            </button>
+            </button></Link>
+            
             {/* Image placeholder - you can replace with your images later */}
             <div className="flex justify-center mt-6">
               <img
