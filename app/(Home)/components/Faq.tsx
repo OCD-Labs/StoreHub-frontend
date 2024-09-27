@@ -60,7 +60,7 @@ const FAQ: React.FC = () => {
           <div key={index} className="border-b border-gray-300">
             <button
               onClick={() => toggleFAQ(index)}
-              className="flex justify-between w-full font-bold py-3 text-left text-lg"
+              className="flex justify-between w-full font-semibold py-3 text-left text-lg"
             >
               {faq.question}
               <span className="text-xl">

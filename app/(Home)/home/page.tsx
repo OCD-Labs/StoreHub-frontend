@@ -4,6 +4,7 @@ import MainSection from "../../(Home)/components/MainSection";
 import Video from "../../(Home)/components/DemoVideo";
 import Features from "../../(Home)/components/Features";
 import FAQ from "../../(Home)/components/Faq";
+import Footer from "@components/global/Footer";
 
 // import { InitContract } from '@components/util/config'
 
@@ -21,11 +22,20 @@ const Page = async () => {
   return (
     <>
       <main className="max-w-[90rem] mx-auto px-4">
-        <MainSection />
-        <Video />
-        <Features />
-        <FAQ />
+        <section id="main-section">
+          <MainSection />
+        </section>
+        <section id="video">
+          <Video />
+        </section>
+        <section id="features">
+          <Features />
+        </section>
+        <section id="faq">
+          <FAQ />
+        </section>
       </main>
+      <Footer/>
     </>
   );
 };

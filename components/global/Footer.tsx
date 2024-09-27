@@ -21,13 +21,17 @@ const Footer: React.FC = () => {
               launch your store with StoreHub and harness the power of NEAR’s
               blockchain technology.
             </p>
-            <div className="space-x-4">
-              <button className="px-6 py-2 bg-orange-500 text-white font-semibold rounded-md">
-                Get Started
-              </button>
-              <button className="px-6 py-2 bg-white text-gray-900 font-semibold rounded-md">
-                Marketplace
-              </button>
+            <div className="space-x-7">
+              <Link href={"/auth/onboarding"}>
+                <button className="px-6 py-2 bg-orange-500 hover:bg-[#d46e43] text-white font-semibold rounded-md">
+                  Get Started
+                </button>
+              </Link>
+              <Link href="/stores">
+                <button className="px-6 py-2 bg-white hover:bg-gray-200 text-gray-900 font-semibold rounded-md">
+                  Marketplace
+                </button>
+              </Link>
             </div>
           </div>
           <div className="flex-1">

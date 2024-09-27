@@ -70,7 +70,8 @@ const Storepage = ({
     <div>
       <div className="">
         <div className="">
-          <div className="bg-graybrand">
+          {/* <div className="bg-graybrand"> */}
+          <div className="">
             <div className="flex flex-col-reverse lg:flex-row max-w-6xl m-auto lg:gap-40 gap-20 lg:p-0 p-4">
               <div className="lg:mt-24">
                 <h2 className="max-w-lg text-5xl leading-normal mb-8">
@@ -100,7 +101,7 @@ const Storepage = ({
               </div>
             </div>
           </div>
-          <svg
+          {/* <svg
             className="z-[-1]"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 1440 235"
@@ -110,7 +111,7 @@ const Storepage = ({
               fill-opacity="1"
               d="M0,0L40,37.3C80,75,160,149,240,154.7C320,160,400,96,480,69.3C560,43,640,53,720,64C800,75,880,85,960,122.7C1040,160,1120,224,1200,224C1280,224,1360,160,1400,128L1440,96L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"
             ></path>
-          </svg>
+          </svg> */}
           {/* {wallet.accountId ? (
             <>
               <div></div>
@@ -185,11 +186,15 @@ const Storepage = ({
           </div>
         </div>
       </div>
+
+    
       <PaginationControls
         hasNextPage={allStores.length > 1}
         hasPrevPage={true}
         handlePaginationLoading={handlePageLoading}
       />
+    
+     
     </div>
   );
 };
