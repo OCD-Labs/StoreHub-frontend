@@ -42,13 +42,13 @@ const CreateStore = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [imageData, setImageData] = useState<any>();
-  console.log(imageData)
+  console.log(imageData);
   const [inputTag, setTagInput] = useState<string>("");
 
   //Select Category logic
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-  console.log(selectedCategory)
+  console.log(selectedCategory);
   const categories = [
     "Electronics",
     "Clothing",
@@ -83,6 +83,30 @@ const CreateStore = () => {
       ...formData,
       [e.target.name]: e.target.value,
     });
+  };
+
+  // generate description with ai
+  const generateDesc = async () => {
+    try {
+      const response = await fetch("/api/generatetext", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          text: "list 10 cities",
+          model: "text-davinci-003",
+        }),
+      });
+      if (!response.ok) {
+        console.log(response, "response");
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log(data, "ai_response");
+    } catch (error) {
+      console.error(error, "error");
+    }
   };
 
   const onSubmit = (): void => {
@@ -356,25 +380,34 @@ const CreateStore = () => {
                 Store Description
               </label>
 
-              <textarea
-                {...register("description", {
-                  required: "Description is required",
-                  minLength: {
-                    value: 10,
-                    message: "Description must be at least 10 characters",
-                  },
-                  maxLength: {
-                    value: 200,
-                    message: "Description cannot exceed 200 characters",
-                  },
-                })}
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                // placeholder="Best farmland produces at your door step"
-                placeholder="Manually Describe Your Store or Utilize Our AI"
-                className="mt-2 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              />
+              <div className="relative h-20">
+                <div
+                  className="p-1 bg-[#FE5B13] text-white text-[12px] italic flex justify-center cursor-pointer hover:bg-[#FE5B13]/70 rounded-md absolute top-6 w-[15%] right-2"
+                  onClick={() => generateDesc()}
+                >
+                  Generate
+                </div>
+                <textarea
+                  {...register("description", {
+                    required: "Description is required",
+                    minLength: {
+                      value: 10,
+                      message: "Description must be at least 10 characters",
+                    },
+                    maxLength: {
+                      value: 200,
+                      message: "Description cannot exceed 200 characters",
+                    },
+                  })}
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  // placeholder="Best farmland produces at your door step"
+                  placeholder="Manually Describe Your Store or Utilize Our AI"
+                  className="mt-2 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+
               <span>
                 {errors.description && (
                   <p className="text-red-500 mb-2">
