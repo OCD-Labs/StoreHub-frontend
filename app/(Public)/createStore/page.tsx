@@ -48,6 +48,7 @@ const CreateStore = () => {
   //Select Category logic
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [aiDesc, setAiDesc] = useState("");
   console.log(selectedCategory);
   const categories = [
     "Electronics",
@@ -103,6 +104,7 @@ const CreateStore = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
+      setAiDesc(data.message);
       console.log(data, "ai_response");
     } catch (error) {
       console.error(error, "error");
@@ -400,7 +402,7 @@ const CreateStore = () => {
                     },
                   })}
                   name="description"
-                  value={formData.description}
+                  value={formData.description ? formData.description : aiDesc}
                   onChange={handleChange}
                   // placeholder="Best farmland produces at your door step"
                   placeholder="Manually Describe Your Store or Utilize Our AI"

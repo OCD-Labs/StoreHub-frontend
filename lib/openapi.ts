@@ -1,4 +1,5 @@
-import OpenAI from "openai";
-const openai = new OpenAI();
+import { HfInference } from "@huggingface/inference";
 
-export default openai;
+const inference = new HfInference(process.env.HUGGINGFACE_API_KEY);
+
+export default inference;
