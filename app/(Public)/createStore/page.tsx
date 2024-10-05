@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { set, useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/Select";
-import { Upload, X } from "lucide-react";
+import { Upload, Wand2, X } from "lucide-react";
 
 // @ts-nocheck
 import { useState, useEffect, useRef, useContext } from "react";
@@ -48,7 +48,8 @@ const CreateStore = () => {
   //Select Category logic
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [aiDesc, setAiDesc] = useState("");
+
+  const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   console.log(selectedCategory);
   const categories = [
     "Electronics",
@@ -87,6 +88,7 @@ const CreateStore = () => {
 
   // generate description with ai
   const generateDesc = async (name: string, category: string) => {
+    setIsGeneratingDescription(true);
     try {
       const response = await fetch("/api/generatetext", {
         method: "POST",
@@ -109,6 +111,8 @@ const CreateStore = () => {
       console.log(data, "ai_response");
     } catch (error) {
       console.error(error, "error");
+    } finally {
+      setIsGeneratingDescription(false);
     }
   };
 
@@ -383,17 +387,7 @@ const CreateStore = () => {
                 Store Description
               </label>
 
-              <div className="relative h-20">
-                {formData.name && formData.category ? (
-                  <div
-                    className="p-1 bg-[#FE5B13] text-white text-[12px] italic flex justify-center cursor-pointer hover:bg-[#FE5B13]/70 rounded-md absolute top-6 w-[15%] right-2"
-                    onClick={() =>
-                      generateDesc(formData.name, formData.category)
-                    }
-                  >
-                    Generate
-                  </div>
-                ) : null}
+              <div className="relative">
                 <textarea
                   {...register("description", {
                     required: "Description is required",
@@ -413,6 +407,26 @@ const CreateStore = () => {
                   placeholder="Manually Describe Your Store or Utilize Our AI"
                   className="mt-2 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
+                {formData.name && formData.category && !formData.description ? (
+                  <Button
+                    type="button"
+                    size="sm"
+                    className="absolute right-2 top-2"
+                    onClick={() =>
+                      generateDesc(formData.name, formData.category)
+                    }
+                    disabled={isGeneratingDescription}
+                  >
+                    {isGeneratingDescription ? (
+                      "Generating..."
+                    ) : (
+                      <>
+                        <Wand2 className="w-4 h-4 mr-2" />
+                        AI Generate
+                      </>
+                    )}
+                  </Button>
+                ) : null}
               </div>
 
               <span>
