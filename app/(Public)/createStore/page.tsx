@@ -48,7 +48,7 @@ const CreateStore = () => {
   //Select Category logic
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
-
+  const [generateTextError, setGenerateTextError] = useState("");
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   console.log(selectedCategory);
   const categories = [
@@ -88,6 +88,7 @@ const CreateStore = () => {
 
   // generate description with ai
   const generateDesc = async (name: string, category: string) => {
+    setGenerateTextError("");
     setIsGeneratingDescription(true);
     try {
       const response = await fetch("/api/generatetext", {
@@ -107,10 +108,12 @@ const CreateStore = () => {
       const data = await response.json();
 
       setFormData({ ...formData, description: data.message });
-      // setAiDesc(data.message);
+
       console.log(data, "ai_response");
     } catch (error) {
-      console.error(error, "error");
+      setGenerateTextError(
+        "An error occurred while generating the description. Please try again later."
+      );
     } finally {
       setIsGeneratingDescription(false);
     }
@@ -428,10 +431,16 @@ const CreateStore = () => {
                   </Button>
                 ) : null}
               </div>
-
+              <span>
+                {generateTextError && (
+                  <p className="text-red-500 mb-2 text-sm">
+                    {generateTextError}
+                  </p>
+                )}
+              </span>
               <span>
                 {errors.description && (
-                  <p className="text-red-500 mb-2">
+                  <p className="text-red-500 mb-2 text-sm">
                     {errors.description.message}
                   </p>
                 )}
