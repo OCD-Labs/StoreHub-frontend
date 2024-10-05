@@ -3,12 +3,12 @@ import inference from "@lib/openapi";
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest, res: NextResponse) {
-  const input = await req.json();
-  console.log(input, "input");
+  const { name, category } = await req.json();
+  console.log(name, category, "name");
   let message = "";
-  if (!input || !input.text) {
+  if (!name || !category) {
     return Response.json(
-      { message: "retry" },
+      { message: "provide a name or category" },
       {
         status: 400,
       }
@@ -20,8 +20,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     messages: [
       {
         role: "user",
-        content:
-          "write a very short description for my ecommerce store named kenedy, but limit to 50 words and the description should be a complete sentence",
+        content: `write a very short description for my ecommerce store named ${name}, and store category is ${category} but limit to 50 words and the description should be a complete sentence`,
       },
     ],
     max_tokens: 500,

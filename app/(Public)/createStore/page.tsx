@@ -63,8 +63,7 @@ const CreateStore = () => {
     description: "",
     store_account_id: "",
     profile_image_url: "",
-    category: "",
-    // category: "fashion",
+    category: "fashion",
   });
 
   interface StoreDataInterface {
@@ -87,7 +86,7 @@ const CreateStore = () => {
   };
 
   // generate description with ai
-  const generateDesc = async () => {
+  const generateDesc = async (name: string, category: string) => {
     try {
       const response = await fetch("/api/generatetext", {
         method: "POST",
@@ -95,8 +94,8 @@ const CreateStore = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          text: "list 10 cities",
-          model: "text-davinci-003",
+          name: name,
+          category: category,
         }),
       });
       if (!response.ok) {
@@ -104,7 +103,9 @@ const CreateStore = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      setAiDesc(data.message);
+
+      setFormData({ ...formData, description: data.message });
+      // setAiDesc(data.message);
       console.log(data, "ai_response");
     } catch (error) {
       console.error(error, "error");
@@ -383,12 +384,16 @@ const CreateStore = () => {
               </label>
 
               <div className="relative h-20">
-                <div
-                  className="p-1 bg-[#FE5B13] text-white text-[12px] italic flex justify-center cursor-pointer hover:bg-[#FE5B13]/70 rounded-md absolute top-6 w-[15%] right-2"
-                  onClick={() => generateDesc()}
-                >
-                  Generate
-                </div>
+                {formData.name && formData.category ? (
+                  <div
+                    className="p-1 bg-[#FE5B13] text-white text-[12px] italic flex justify-center cursor-pointer hover:bg-[#FE5B13]/70 rounded-md absolute top-6 w-[15%] right-2"
+                    onClick={() =>
+                      generateDesc(formData.name, formData.category)
+                    }
+                  >
+                    Generate
+                  </div>
+                ) : null}
                 <textarea
                   {...register("description", {
                     required: "Description is required",
@@ -402,7 +407,7 @@ const CreateStore = () => {
                     },
                   })}
                   name="description"
-                  value={formData.description ? formData.description : aiDesc}
+                  value={formData.description}
                   onChange={handleChange}
                   // placeholder="Best farmland produces at your door step"
                   placeholder="Manually Describe Your Store or Utilize Our AI"
