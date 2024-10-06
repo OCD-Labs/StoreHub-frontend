@@ -1,30 +1,13 @@
 "use client";
 
 import { set, useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
+
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import { setUser } from "@components/util/session";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@components/ui/Button";
-import { Input } from "@/components/ui/Input";
-import { Label } from "@/components/ui/Label";
-import { Textarea } from "@/components/ui/Textarea";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/Card";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/Select";
+
 import { Upload, Wand2, X } from "lucide-react";
 
 // @ts-nocheck
@@ -39,25 +22,17 @@ const CreateStore = () => {
   const session = getCookie("token");
   const user = getUser("user");
   const { wallet } = userWallet.getState();
-  const searchParams = useSearchParams();
+
   const router = useRouter();
   const [imageData, setImageData] = useState<any>();
   console.log(imageData);
   const [inputTag, setTagInput] = useState<string>("");
 
   //Select Category logic
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [generateTextError, setGenerateTextError] = useState("");
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   console.log(selectedCategory);
-  const categories = [
-    "Electronics",
-    "Clothing",
-    "Home & Garden",
-    "Books",
-    "Toys",
-  ];
 
   const [formData, setFormData] = useState({
     name: "",
@@ -77,7 +52,7 @@ const CreateStore = () => {
     store_id: formData.store_account_id,
     user_id: session ? user.user_id : "",
   };
-  console.log(session, "session");
+
   formData.profile_image_url = imageData?.fileUrl;
   const handleChange = (e: any) => {
     setFormData({
@@ -263,7 +238,7 @@ const CreateStore = () => {
         <div className="lg:flex lg:justify-between ">
           {/*Image uploader component */}
 
-          <ImageUploader />
+          <ImageUploader name={formData.name} category={formData.category} />
 
           {/* <ImageUploader onUpdateImage={handleImageData} /> */}
 
@@ -300,44 +275,7 @@ const CreateStore = () => {
             </div>
 
             {/*Category  */}
-            <div className="mb-4">
-              {/* <label
-                htmlFor="store-category"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Store Category
-              </label> */}
-              {/* <div className="relative">
-                <button
-                  type="button"
-                  className="mt-1 relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-3 text-left cursor-pointer focus:outline-none focus:ring-1"
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                >
-                  <span className="block text-gray-400 truncate">
-                    {selectedCategory || "Select a category"}
-                  </span>
-                  <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-                    <span className="border-4 border-transparent border-t-gray-400 ml-1"></span>
-                  </span>
-                </button>
-                {isDropdownOpen && (
-                  <ul className="absolute z-10 mt-1 w-full bg-white max-h-60 rounded-lg py-1 border-[0.5px] border-gray-700 text-base overflow-auto focus:outline-none sm:text-sm">
-                    {categories.map((category) => (
-                      <li
-                        key={category}
-                        className="text-gray-900 cursor-default select-none relative py-2 pl-3 pr-9 hover:bg-black hover:text-white"
-                        onClick={() => {
-                          setSelectedCategory(category);
-                          setIsDropdownOpen(false);
-                        }}
-                      >
-                        {category}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div> */}
-            </div>
+            <div className="mb-4"></div>
 
             <div className="mb-4">
               <label
@@ -399,7 +337,7 @@ const CreateStore = () => {
                       message: "Description must be at least 10 characters",
                     },
                     maxLength: {
-                      value: 200,
+                      value: 1000,
                       message: "Description cannot exceed 200 characters",
                     },
                   })}

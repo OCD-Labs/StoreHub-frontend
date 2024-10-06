@@ -1,22 +1,28 @@
-import React, { FC } from "react";
-import { useState, useCallback } from "react";
-// import { FileUploader } from "react-drag-drop-files";
-// import { AdvancedImage } from "@cloudinary/react";
-// import { Cloudinary } from "@cloudinary/url-gen";
-// import { fill } from "@cloudinary/url-gen/actions/resize";
-// import { handleImageUpload } from "@app/services/uploadService";
-// import { validateFile } from "@app/services/uploadService";
-// import { Button } from "@components/ui/Button";
-// import { Label } from "@/components/ui/Label";
-import { Upload, X } from "lucide-react";
+import React, { FC, useState } from "react";
 
-export default function ImageUploader() {
+import { Upload, X, Loader } from "lucide-react";
+import { Spinner } from "react-bootstrap";
+
+export default function ImageUploader({
+  name,
+  category,
+}: {
+  name: string;
+  category: string;
+}) {
   const [storeImage, setStoreImage] = useState<string | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isGeneratingImage, setIsGeneratingImage] = useState(false);
+  const [imageGenerationError, setImageGenerationError] = useState<
+    string | null
+  >(null);
 
-  console.log(storeImage)
+  console.log(storeImage);
+  console.log(name, category);
 
   const handleImageUpload = (file: File) => {
+    console.log(file, "filee");
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -26,36 +32,56 @@ export default function ImageUploader() {
     }
   };
 
-  const handleDragEnter = useCallback(
-    (e: React.DragEvent<HTMLLabelElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsDragging(true);
-    },
-    []
-  );
-
-  const handleDragLeave = useCallback(
-    (e: React.DragEvent<HTMLLabelElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setIsDragging(false);
-    },
-    []
-  );
-
-  const handleDragOver = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
-  }, []);
+    setIsDragging(true);
+  };
 
-  const handleDrop = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
     const file = e.dataTransfer.files[0];
     handleImageUpload(file);
-  }, []);
+  };
+
+  const generateImage = async () => {
+    setIsGeneratingImage(true);
+    setImageGenerationError(null);
+    try {
+      // Assuming there's a function to generate an image using an AI model
+      const res = await fetch("/api/generateAIStoreImage", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          category: category,
+        }),
+      });
+      const imageResponse = await res.json();
+      setStoreImage(imageResponse.image);
+    } catch (error) {
+      console.log(error, "imageerror");
+
+      setImageGenerationError("Unable to generate image. Please try again.");
+    } finally {
+      setIsGeneratingImage(false);
+    }
+  };
 
   return (
     <div className="w-full lg:w-1/3 md:mb-4 space-y-4">
@@ -116,132 +142,36 @@ export default function ImageUploader() {
             />
           </label>
         </div>
+        {name && category ? (
+          <button
+            type="button"
+            className="w-full py-2 px-4 bg-dark text-white rounded hover:bg-dark/70 transition duration-300"
+            onClick={generateImage}
+            disabled={isGeneratingImage}
+          >
+            {isGeneratingImage ? (
+              <div className="flex justify-center items-center gap-4">
+                {" "}
+                <Loader className="animate-spin">
+                  <span className="sr-only">Loading...</span>
+                </Loader>{" "}
+                <span>Generating image...</span>
+              </div>
+            ) : (
+              "Generate Image"
+            )}
+          </button>
+        ) : null}
+        {isGeneratingImage && (
+          <p className="text-sm text-gray-500 text-center">
+            This may take a while to finish :)
+          </p>
+        )}
+
+        {imageGenerationError && (
+          <p className="text-red-500">{imageGenerationError}</p>
+        )}
       </div>
     </div>
   );
 }
-
-// export interface handleImageProp {
-//   onUpdateImage: (value: any) => void;
-// }
-
-// const ImageUploader: FC<handleImageProp> = ({
-//   onUpdateImage,
-// }: handleImageProp) => {
-
-// const handleChange = (event: any) => {
-//   const file: File = event.target.files[0];
-//   try {
-//     validateFile(file);
-//     UploadImage(file);
-//     if (file) {
-//       setSelectedImage(file);
-//       setError("");
-//     }
-//   } catch (error) {
-//     setError(error + "");
-//   }
-// };
-// const UploadImage = async (file: File) => {
-//   console.log(await handleImageUpload(file), file);
-
-//   await handleImageUpload(file)
-//     .then((data) => {
-//       onUpdateImage(data);
-//     })
-//     .catch((err) => {
-//       throw new Error(err);
-//     });
-// };
-
-// <div className="w-[100%] md:w-[45%] mt-5">
-//   <div>
-//     <div>
-//       <div className="flex items-center justify-center w-full">
-//         {selectedImage ? (
-//           <div>
-//             <img
-//               alt="not found"
-//               width={"250px"}
-//               src={URL.createObjectURL(selectedImage)}
-//             />
-//             <br />
-//           </div>
-//         ) : (
-//           <label
-//             htmlFor="dropzone-file"
-//             className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-200 hover:bg-gray-100 dark:border-gray-400 dark:hover:border-gray-400 dark:hover:bg-gray-600"
-//           >
-//             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-//               <svg
-//                 className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-//                 aria-hidden="true"
-//                 xmlns="http://www.w3.org/2000/svg"
-//                 fill="none"
-//                 viewBox="0 0 20 16"
-//               >
-//                 <path
-//                   stroke="currentColor"
-//                   strokeLinecap="round"
-//                   strokeLinejoin="round"
-//                   strokeWidth="2"
-//                   d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-//                 />
-//               </svg>
-//               <p className="mb-2 text-sm text-gray-500 dark:text-gray-400">
-//                 <span className="font-semibold">Click to upload</span> or
-//                 drag and drop
-//               </p>
-//               <p className="text-xs text-gray-500 dark:text-gray-400">
-//                 SVG, PNG, JPG or GIF (MAX. 800x400px)
-//               </p>
-//             </div>
-//             <input
-//               id="dropzone-file"
-//               type="file"
-//               className="hidden"
-//               onChange={handleChange}
-//             />
-//           </label>
-//         )}
-//       </div>
-//       {error ? <div className="text-red-400">{error}</div> : ""}
-//       <div className="flex justify-around md:justify-between mt-6">
-
-//         {/* <button>Edit Photo</button> */}
-//         <input
-//           id="dropzone-file"
-//           type="file"
-//           className="hidden"
-//           onChange={handleChange}
-//         />
-//         <label
-//           className="flex justify-center rounded-[10px] py-2 border border-black w-[40%] hover:bg-slate-200 cursor-pointer"
-//           htmlFor="dropzone-file"
-//         >
-//           Edit Photo
-//         </label>
-//         <Button
-//           variant="default"
-//           onClick={() => setSelectedImage(null)}
-//           className="rounded-[10px] py-3 text-white bg-[#161616] w-[40%]"
-//         >
-//           Delete
-//         </Button>
-//         {/* <button
-//           onClick={() => setSelectedImage(null)}
-//           className="rounded-[10px] py-3 text-white bg-[#161616] w-[40%]"
-//         >
-//           Delete
-//         </button> */}
-//       </div>
-//     </div>
-
-//     <br />
-//     <br />
-//   </div>
-// </div>
-//   );
-// };
-
-// export default ImageUploader;
