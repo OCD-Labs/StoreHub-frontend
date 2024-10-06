@@ -18,7 +18,6 @@ export default function ImageUploader({
   >(null);
 
   console.log(storeImage);
-  console.log(name, category);
 
   const handleImageUpload = (file: File) => {
     console.log(file, "filee");
