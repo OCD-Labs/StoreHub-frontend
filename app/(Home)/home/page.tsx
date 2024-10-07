@@ -5,7 +5,7 @@ import Video from "../../(Home)/components/DemoVideo";
 import Features from "../../(Home)/components/Features";
 import FAQ from "../../(Home)/components/Faq";
 import Footer from "@components/global/Footer";
-
+import MobileLogoSlider from "../components/MobileLogoSlider";
 // import { InitContract } from '@components/util/config'
 
 const Page = async () => {
@@ -21,10 +21,11 @@ const Page = async () => {
   const authenticated = !!session;
   return (
     <>
-      <main className="max-w-[90rem] mx-auto px-4">
+      <main className="max-w-[90rem] mx-auto">
         <section id="main-section">
           <MainSection />
         </section>
+        <MobileLogoSlider/>
         <section id="video">
           <Video />
         </section>

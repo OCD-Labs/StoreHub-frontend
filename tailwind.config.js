@@ -106,6 +106,7 @@ module.exports = {
         poppins: ['Poppins', 'sans-serif'],
         satoshi: ['Satoshi', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
+        vietnam: ['"Be Vietnam Pro"', 'sans-serif'],
       },
       keyframes: {
         fadeIn: {

@@ -13,7 +13,7 @@ import logo from "@public/assets/images/storehublogo.svg";
 import useSWR from "swr";
 import { clearCookie, getCookie } from "@components/util/cookie";
 import storehubIcon from "@public/assets/images/storehubIcon.svg";
-import { ShoppingCart } from "lucide-react";
+import { Divide, ShoppingCart } from "lucide-react";
 import {
   Avatar,
   AvatarFallback,
@@ -21,10 +21,14 @@ import {
 } from "../../components/ui/Avatar";
 import { getSession } from "@app/actions/auth-action";
 import { getUser, removeUser } from "@components/util/session";
+import { Menu, X } from "lucide-react";
 
 const Nav = () => {
   const [store, setStore] = useState<any>();
+  const [Opened, setOpen] = useState(false);
   const [isMenuOpened, setMenuOpen] = useState(false);
+
+  console.log(isMenuOpened);
 
   const session = getCookie("token");
 
@@ -54,160 +58,292 @@ const Nav = () => {
   console.log(data, error, "navdata");
 
   const toggleDropdown = () => {
+    setOpen(!Opened);
+  };
+
+  const toggleNavdown = () => {
     setMenuOpen(!isMenuOpened);
   };
 
   return (
-    <nav className=" max-w-[90rem] mx-auto px-4 flex justify-between my-3 items-center ">
-      <div>
-        <Link href="/">
-          {" "}
-          <Image
-            className=" w-[125px]
+    <>
+      {/* Large Screen */}
+      <nav className="hidden max-w-[90rem] mx-auto px-4 lg:flex justify-between my-3 items-center ">
+        <div>
+          <Link href="/">
+            {" "}
+            <Image
+              className=" w-[125px]
           h-[30px]"
-            src={storehubIcon}
-            alt=" store hub Logo"
-          />{" "}
-        </Link>
-      </div>
-
-      <div className="flex gap-[50px]">
-        <Link href="/" className="hover:text-[#FE5B13] font-semibold">
-          Home
-        </Link>
-        <a href="#video" className="hover:text-[#FE5B13] font-semibold">
-          About Us
-        </a>
-        <a href="#features" className="hover:text-[#FE5B13] font-semibold">
-          Features
-        </a>
-        <a href="#faq" className="hover:text-[#FE5B13] font-semibold">
-          FAQ
-        </a>
-        <Link href="/stores" className="hover:text-[#FE5B13] font-semibold">
-          Marketplace
-        </Link>
-      </div>
-
-      <div className="flex gap-[38px]">
-        {/* Shopping cart comes here*/}
-        {/* <div className="relative mt-2">
-          <Link href="/cart">
-            <ShoppingCart size={24} className="" />
+              src={storehubIcon}
+              alt=" store hub Logo"
+            />{" "}
           </Link>
-          <span className="absolute top-[-10px] right-[-8px] font-medium text-sm">
-            4
-          </span>
-        </div> */}
+        </div>
 
-        {/* this is where the login and get started auth logic comes in */}
+        <div className="flex gap-[50px]">
+          <Link href="/" className="hover:text-[#FE5B13] font-vietnam font-medium">
+            Home
+          </Link>
+          <a href="#video" className="hover:text-[#FE5B13] font-vietnam font-medium">
+            About Us
+          </a>
+          <a href="#features" className="hover:text-[#FE5B13] font-vietnam font-medium">
+            Features
+          </a>
+          <a href="#faq" className="hover:text-[#FE5B13] font-vietnam font-medium">
+            FAQ
+          </a>
+          <Link href="/stores" className="hover:text-[#FE5B13] font-vietnam font-medium">
+            Marketplace
+          </Link>
+        </div>
 
-        {!session ? (
-          <>
-            <Link
-              href="/auth/signin"
-              className="hover:text-[#FE5B13] font-[600] mt-2"
-            >
-              Login
-            </Link>
+        <div className="flex gap-[38px]">
+          {/* this is where the login and get started auth logic comes in */}
 
-            <Link href={"/auth/onboarding"}>
-              <button className="bg-[#FE5B13] text-white px-4 py-2 rounded-lg hover:bg-[#d46e43] font-[600]">
-                Get Started
-              </button>
-            </Link>
-          </>
-        ) : (
-          <>
-            <div>
-              <Dropdown
-                onToggle={toggleDropdown}
-                className="flex flex-col static"
-                style={{ position: "static", padding: 0, minWidth: "auto" }}
+          {!session ? (
+            <>
+              <Link
+                href="/auth/signin"
+                className="hover:text-[#FE5B13] font-vietnam font-[600] mt-2"
               >
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <div className="flex gap-2 mb-3 justify-center items-center">
-                    <div></div>
-                    <Avatar>
-                      <AvatarImage src="" />
+                Login
+              </Link>
 
-                      <AvatarFallback className="border-4 border-dark">
-                        {user.first_name[0]}
-                        {user.last_name[0]}
-                      </AvatarFallback>
-                    </Avatar>
-                  </div>
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu
-                  className={`flex flex-col z-20 border border-black text-sm p-4 gap-3 bg-white rounded-lg ${
-                    isMenuOpened === false ? "hidden" : ""
-                  }`}
+              <Link href={"/auth/onboarding"}>
+                <button className="bg-[#FE5B13] font-vietnam text-white px-4 py-2 rounded-lg hover:bg-[#d46e43] font-[600]">
+                  Get Started
+                </button>
+              </Link>
+            </>
+          ) : (
+            <>
+              <div>
+                <Dropdown
+                  onToggle={toggleDropdown}
+                  className="flex flex-col static"
+                  style={{ position: "static", padding: 0, minWidth: "auto" }}
                 >
-                  {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item> */}
-                  <Dropdown.Item href="#/action-2">
-                    <Link href="/createStore">
-                      <button className="black_btn">Create Store</button>
-                    </Link>
-                  </Dropdown.Item>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <div className="flex gap-2 mb-3 justify-center items-center">
+                      <div></div>
+                      <Avatar>
+                        <AvatarImage src="" />
 
-                  <Dropdown.Divider />
+                        <AvatarFallback className="border-4 border-dark">
+                          {user.first_name[0]}
+                          {user.last_name[0]}
+                        </AvatarFallback>
+                      </Avatar>
+                    </div>
+                  </Dropdown.Toggle>
 
-                  <Dropdown.Item>
-                    <Link
-                      className="hover:text-[#FE5B13] font-[600]"
-                      href={"/userdashboard/accountinfo/accountdetails"}
-                    >
-                      Account
-                    </Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    {!error &&
-                    !data?.error &&
-                    data?.data.result.stores.length ? (
+                  <Dropdown.Menu
+                    className={`flex flex-col z-20 border border-black text-sm p-4 gap-3 bg-white rounded-lg ${
+                      Opened === false ? "hidden" : ""
+                    }`}
+                  >
+                    {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item> */}
+                    <Dropdown.Item href="#/action-2">
+                      <Link href="/createStore">
+                        <button className="black_btn">Create Store</button>
+                      </Link>
+                    </Dropdown.Item>
+
+                    <Dropdown.Divider />
+
+                    <Dropdown.Item>
                       <Link
-                        href={{
-                          pathname: "/inventory/Itemsdashboard",
-                          query: {
-                            id: data?.data.result.stores[0].store_id,
-                            name: data?.data.result.stores[0].store_name,
-                            user: user.user_id,
-                          },
+                        className="hover:text-[#FE5B13] font-[600]"
+                        href={"/userdashboard/accountinfo/accountdetails"}
+                      >
+                        Account
+                      </Link>
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      {!error &&
+                      !data?.error &&
+                      data?.data.result.stores.length ? (
+                        <Link
+                          href={{
+                            pathname: "/inventory/Itemsdashboard",
+                            query: {
+                              id: data?.data.result.stores[0].store_id,
+                              name: data?.data.result.stores[0].store_name,
+                              user: user.user_id,
+                            },
+                          }}
+                        >
+                          Dashboard
+                        </Link>
+                      ) : (
+                        ""
+                      )}
+                    </Dropdown.Item>
+                    <Dropdown.Item>
+                      <button
+                        className="hover:text-[#FE5B13] font-[600]"
+                        onClick={() => {
+                          clearCookie("token");
+                          removeUser("user");
                         }}
                       >
-                        Dashboard
-                      </Link>
-                    ) : (
-                      ""
-                    )}
-                  </Dropdown.Item>
-                  <Dropdown.Item>
-                    <button
-                      className="hover:text-[#FE5B13] font-[600]"
-                      onClick={() => {
-                        clearCookie("token");
-                        removeUser("user");
-                      }}
-                    >
-                      Sign out
-                    </button>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </>
-        )}
+                        Sign out
+                      </button>
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </div>
+            </>
+          )}
+        </div>
+      </nav>
 
-        {/* <Link href="/login" className="hover:text-[#FE5B13] font-[600] mt-2">
-          Login
-        </Link>
-        <Link href={"/auth/onboarding"}>
-          <button className="bg-[#FE5B13] text-white px-4 py-2 rounded-lg hover:bg-[#d46e43] font-[600]">
-            Get Started
-          </button>
-        </Link> */}
-      </div>
-    </nav>
+
+      {/* Mobile View  */}
+      <nav className=" lg:hidden max-w-[90rem] mx-auto px-4 flex justify-between relative my-3 items-center ">
+        {/* Storehub Icon*/}
+        <div>
+          <Link href="/">
+            <Image
+              className="w-[125px] h-[30px]"
+              src={storehubIcon}
+              alt="store hub Logo"
+            />
+          </Link>
+        </div>
+
+        {/* Hamburger icon for mobile */}
+        <button onClick={toggleNavdown}>
+          {isMenuOpened ? <X /> : <Menu />}
+        </button>
+
+        {/* For Nav link and login logic */}
+        <div
+          className={`absolute top-full left-0 transition-all mt-5 pl-5 bg-white h-[390px] w-full duration-500 ease-in-out transform ${
+            isMenuOpened
+              ? "opacity-100 visible translate-y-0"
+              : "opacity-0 invisible -translate-y-5"
+          } flex flex-col gap-5`}
+        >
+          {/* links Nav */}
+          <div className="flex flex-col gap-9 mt-5">
+            <Link href="/" className="hover:text-[#FE5B13] font-vietnam font-bold">
+              Home
+            </Link>
+            <a href="#video" className="hover:text-[#FE5B13] font-vietnam font-bold">
+              About Us
+            </a>
+            <a href="#features" className="hover:text-[#FE5B13] font-vietnam font-bold">
+              Features
+            </a>
+            <a href="#faq" className="hover:text-[#FE5B13] font-vietnam font-bold">
+              FAQ
+            </a>
+            <Link href="/stores" className="hover:text-[#FE5B13] font-vietnam font-bold">
+              Marketplace
+            </Link>
+          </div>
+
+          {/* Get started auth logic */}
+          <div className="my-3 justify-center flex gap-[38px] ">
+            {!session ? (
+              <>
+                <Link href="/auth/signin">
+                  <button className="font-bold bg[#FCF8F2] border mb-4  px-9 py-2 rounded-lg">
+                    Login
+                  </button>
+                </Link>
+
+                <Link href={"/auth/onboarding"}>
+                  <button className="bg-[#FE5B13] text-white px-4 py-2 rounded-lg font-bold">
+                    Get Started
+                  </button>
+                </Link>
+              </>
+            ) : (
+              <>
+                <div>
+                  <Dropdown
+                    onToggle={toggleDropdown}
+                    className="flex flex-col static"
+                    style={{ position: "static", padding: 0, minWidth: "auto" }}
+                  >
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                      <div className="flex gap-2 mb-3 justify-center items-center">
+                        <div></div>
+                        <Avatar>
+                          <AvatarImage src="" />
+                          <AvatarFallback className="border-4 border-dark">
+                            {user.first_name[0]}
+                            {user.last_name[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu
+                      className={`flex flex-col z-20 border border-black text-sm p-4 gap-3 bg-white rounded-lg ${
+                        Opened === false ? "hidden" : ""
+                      }`}
+                    >
+                      <Dropdown.Item href="#/action-2">
+                        <Link href="/createStore">
+                          <button className="black_btn">Create Store</button>
+                        </Link>
+                      </Dropdown.Item>
+
+                      <Dropdown.Divider />
+
+                      <Dropdown.Item>
+                        <Link
+                          className="hover:text-[#FE5B13] font-[600]"
+                          href={"/userdashboard/accountinfo/accountdetails"}
+                        >
+                          Account
+                        </Link>
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        {!error &&
+                        !data?.error &&
+                        data?.data.result.stores.length ? (
+                          <Link
+                            href={{
+                              pathname: "/inventory/Itemsdashboard",
+                              query: {
+                                id: data?.data.result.stores[0].store_id,
+                                name: data?.data.result.stores[0].store_name,
+                                user: user.user_id,
+                              },
+                            }}
+                          >
+                            Dashboard
+                          </Link>
+                        ) : (
+                          ""
+                        )}
+                      </Dropdown.Item>
+                      <Dropdown.Item>
+                        <button
+                          className="hover:text-[#FE5B13] font-[600]"
+                          onClick={() => {
+                            clearCookie("token");
+                            removeUser("user");
+                          }}
+                        >
+                          Sign out
+                        </button>
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </nav>
+    </>
   );
 };
 

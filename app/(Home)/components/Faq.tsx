@@ -49,18 +49,18 @@ const FAQ: React.FC = () => {
 
   return (
     <div className="max-w-2xl mx-auto p-4 mb-[100px]">
-      <h2 className="text-[45px] font-bold text-center mb-4">
-        Frequently Asked Questions
+      <h2 className="text-[45px] font-vietnam font-bold text-center mb-4">
+        <span className="hidden md:inline">Frequently Asked Questions</span><span className="lg:hidden">FAQs</span>
       </h2>
-      <p className="text-center mb-8">
+      <p className="text-center font-vietnam mb-8">
         Got Questions? Get the Answers You Need to Succeed with StoreHub
       </p>
       <div className="space-y-4">
         {faqs.map((faq, index) => (
-          <div key={index} className="border-b border-gray-300">
+          <div key={index} className="border-b  border-gray-300">
             <button
               onClick={() => toggleFAQ(index)}
-              className="flex justify-between w-full font-semibold py-3 text-left text-lg"
+              className="flex justify-between w-full font-vietnam font-semibold py-3 text-left text-lg"
             >
               {faq.question}
               <span className="text-xl">
