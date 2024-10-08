@@ -9,23 +9,23 @@ import Link from "next/link";
 const MainSection = () => {
   return (
     <main className="text-center py-20 px-8">
-      <h1 className="text-[70px]  text-[#1D2131] font-bold">
-        Effortless Store Launch
+      <h1 className="text-[40px] md:text-[70px] font-vietnam  text-[#1D2131] font-bold">
+        Effortless Store <span className="hidden md:inline">Launch</span> 
       </h1>
 
       {/* Backgroud image comes after this, also fix the margin bottom */}
-      <div className=" custom-bg ">
-        <h1 className="text-[70px] text-[#1D2131] font-bold mb-6">
-          with Blockchain Security
+      <div className="custom-bg ">
+        <h1 className="text-[40px] font-vietnam md:text-[70px] text-[#1D2131] font-bold mb-6">
+         <span className="lg:hidden">Launch</span> with Blockchain Security
         </h1>
-        <p className="text-lg text-[#414040] mb-8 max-w-2xl mx-auto">
+        <p className="font-vietnam text-base md:text-lg text-[#414040] mb-8 max-w-2xl mx-auto">
           Effortlessly launch your online store and co-own it with friends.
           Access valuable business insights to grow your venture while ensuring
           the integrity and security of your store through cutting-edge
           blockchain technology, powered by NEAR.
         </p>
         {/* The buttons here, has to be a component */}
-        <div className="space-x-4">
+        <div className=" space-x-4">
           <Link href={"/auth/onboarding"}>
             <button className="bg-[#FE5B13] text-white rounded-[15px] px-6 py-3 hover:bg-[#d46e43]">
               Get Started
@@ -38,7 +38,7 @@ const MainSection = () => {
             </button>
           </Link>
         </div>
-        <div className=" flex justify-center mt-[250px] gap-8 rounded-lg items-center py-4 mx-[130px] bg-[#1D2131] text-white space-x-4">
+        <div className="hidden md:flex justify-center mt-[90px] md:mt-[250px] gap-8 rounded-lg items-center py-4 mx-[130px] bg-[#1D2131] text-white space-x-4">
           <div className="flex justify-center gap-4">
             <Image
               className=""
@@ -117,6 +117,8 @@ const MainSection = () => {
             />
           </div>
         </div>
+
+        
       </div>
     </main>
   );

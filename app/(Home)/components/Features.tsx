@@ -5,6 +5,7 @@ import FeaturesCard2 from "@public/assets/images/FeaturesCard2.png";
 import FeaturesCard3 from "@public/assets/images/FeaturesCard3.png";
 import CallToActionImage from "@public/assets/images/CallToActionImage.png";
 import LaunchStore1 from "@public/assets/images/LaunchStore1.png";
+import LaunchStoreSectio2 from "@public/assets/images/LaunchStoreSectio2.png";
 import Link from "next/link";
 
 const Features = () => {
@@ -12,10 +13,10 @@ const Features = () => {
     <div className="container max-w-[90rem] mx-auto px-4 py-10">
       {/* <!-- Heading Section --> */}
       <div className="text-center mb-12">
-        <h2 className="text-3xl sm:text-4xl font-bold text-gray-800">
+        <h2 className="text-3xl font-vietnam sm:text-4xl font-bold text-gray-800">
           Empowering Your <span className="text-orange-500">Business</span>
         </h2>
-        <p className="mt-4 text-gray-600">
+        <p className="mt-4 font-vietnam text-gray-600">
           Explore the powerful features that make StoreHub the ultimate choice
           for launching and managing your online store.
         </p>
@@ -24,7 +25,7 @@ const Features = () => {
       {/* <!-- Feature Cards Section --> */}
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
         {/* <!-- Card 1 --> */}
-        <div className="bg-white shadow-md rounded-lg p-6 text-center border border-gray-200">
+        <div className="bg-white font-vietnam shadow-md rounded-lg p-6 text-center border border-gray-200">
           <div className="mb-4 flex justify-center">
             <Image
               className="h-10 bg-white"
@@ -32,10 +33,10 @@ const Features = () => {
               alt=" Collaborative Ownership"
             />
           </div>
-          <h3 className="text-xl font-semibold text-gray-800">
+          <h3 className="text-xl font-vietnam font-semibold text-gray-800">
             Collaborative Ownership
           </h3>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 font-vietnam text-gray-600">
             Invite friends or partners to co-own and manage your store. Enjoy
             seamless collaboration and shared responsibilities.
           </p>
@@ -50,10 +51,10 @@ const Features = () => {
               alt=" Insightful Analytics"
             />
           </div>
-          <h3 className="text-xl font-semibold text-gray-800">
+          <h3 className="text-xl font-vietnam font-semibold text-gray-800">
             Insightful Analytics
           </h3>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 font-vietnam text-gray-600">
             By revealing trends and customer behaviors, these insights guide
             improvements in sales, inventory, and market response.
           </p>
@@ -68,10 +69,10 @@ const Features = () => {
               alt=" Social Media Integration"
             />
           </div>
-          <h3 className="text-xl font-semibold text-gray-800">
+          <h3 className="text-xl font-vietnam font-semibold text-gray-800">
             Social Media Integration
           </h3>
-          <p className="mt-2 text-gray-600">
+          <p className="mt-2 font-vietnam text-gray-600">
             Receive real-time WhatsApp order notifications, and effortlessly
             share updates on your WhatsApp Status.
           </p>
@@ -82,12 +83,12 @@ const Features = () => {
 
       <div className="grid gap-6 sm:grid-cols-1 mb-5 rounded-lg border border-gray-200 lg:grid-cols-2">
         {/* Call To Action text */}
-        <div className="bg-white rounded-lg p-10 mt-[50px] text-left">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
+        <div className="bg-white rounded-lg p-10 mt-[50px] text-center md:text-left">
+          <h2 className="text-2xl sm:text-3xl font-vietnam font-bold text-gray-800">
             Launch your store with <br />
             <span className="text-orange-500">StoreHub</span> on NEAR BOS
           </h2>
-          <p className="mt-4 text-gray-600">
+          <p className="mt-4 font-vietnam text-gray-600">
             Our platform is built on NEAR BOS, providing you with a seamless,
             and scalable infrastructure to manage your store effortlessly.
           </p>
@@ -112,28 +113,28 @@ const Features = () => {
 
           <div className="w-full lg:w-[70%]">
             {/* Heading */}
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-8">
+            <h2 className="text-3xl font-vietnam sm:text-4xl text-center md:text-left font-bold text-gray-800 mb-8">
               StoreHub is designed <br /> for your{" "}
               <span className="text-orange-500">growth</span>
             </h2>
 
-            <div className="bg-gray-900 text-white px-8 pt-8 pb-0 rounded-lg">
-              <h3 className="text-2xl font-semibold mb-4">
+            <div className="bg-gray-900 text-white px-10 md:px-8  pt-8 pb-0 rounded-lg">
+              <h3 className="text-2xl font-vietnam font-semibold mb-4">
                 Launch, Grow, and Secure
               </h3>
-              <p className="text-gray-300 mb-6">
+              <p className="text-gray-300 font-vietnam mb-6">
                 From launch to scale, StoreHub equips you with everything you
-                need to succeed. Effortlessly set <br /> up your online store,
+                need to succeed. <span className="hidden md:inline">  Effortlessly set <br /> up your online store,
                 manage products, and streamline operations with our intuitive
                 platform. <br />
                 As your business grows, tap into advanced analytics, secure
                 blockchain technology, <br /> and collaborative tools that make
-                expansion easy and efficient.
+                expansion easy and efficient. </span>
               </p>
               {/* Image placeholder - you can replace with your images later */}
               <div className="flex justify-center">
                 <Image
-                  className="rounded-lg max-w-full ml-[190px]  xlg:ml-[100px] pb-0 h-auto"
+                  className="rounded-lg w-[90%] md:max-w-full ml-[100px] md:ml-[190px]  xlg:ml-[100px] pb-0 md:h-auto h-[200px]"
                   src={LaunchStore1}
                   alt=" StoreHub Features"
                 />
@@ -142,11 +143,11 @@ const Features = () => {
           </div>
 
           {/* Right Side - Orange Box */}
-          <div className="bg-orange-500 text-white text-center p-8 rounded-lg w-full lg:w-[30%]">
-            <h3 className="text-2xl font-semibold my-7">
+          <div className="bg-orange-500 text-white text-center  rounded-lg w-full lg:w-[30%]">
+            <h3 className="text-2xl font-vietnam px-8 pt-8 font-semibold my-7">
               Innovative Features, Seamless Experience
             </h3>
-            <p className="text-white mt-8 lg:mb-[60px]">
+            <p className="text-white font-vietnam px-8 pt-8 mt-8 lg:mb-[60px]">
               Leverage cutting-edge technology and user-friendly tools designed
               to drive your store’s growth.
             </p>
@@ -156,10 +157,10 @@ const Features = () => {
             
             {/* Image placeholder - you can replace with your images later */}
             <div className="flex justify-center mt-6">
-              <img
-                src="path/to/your-second-image.png"
+              <Image
+                src={LaunchStoreSectio2}
                 alt="StoreHub Dashboard"
-                className="rounded-lg max-w-full h-auto"
+                className="rounded-lg mx-3 max-w-full h-auto"
               />
             </div>
           </div>

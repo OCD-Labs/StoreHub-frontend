@@ -4,4 +4,9 @@
   background-position: center;
 }
 
-
+/* Media query for mobile devices (up to 640px) */
+@media (max-width: 640px) {
+  .custom-bg {
+    background-image: none;
+  }
+}
