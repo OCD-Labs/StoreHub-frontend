@@ -154,7 +154,7 @@ const SignIn = () => {
                   </p>
                 </div>
               </div>
-              
+
               {/* Submit Button */}
               <Button
                 type="submit"
@@ -165,9 +165,7 @@ const SignIn = () => {
                 {isSubmitting ? (
                   <div className="flex justify-center">
                     <Loader2 className="mr-2 mt-1 h-6 w-6 animate-spin" />{" "}
-
                     Signing in ...
-
                   </div>
                 ) : (
                   "Sign in"

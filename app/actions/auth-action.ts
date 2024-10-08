@@ -8,13 +8,18 @@ export const signinAction = async (data: IUserCredential) => {
   try {
     const user: UserResponse = await fetch(
       "https://store-hub-djxu.onrender.com/api/v1/auth/login",
+
       {
         method: "POST",
         body: JSON.stringify({
           email: data?.email,
           password: data?.password,
         }),
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        cache: "no-store",
       }
     ).then((res) => res.json());
     console.log(user);

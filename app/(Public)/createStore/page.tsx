@@ -11,12 +11,20 @@ import { Button } from "@components/ui/Button";
 import { Upload, Wand2, X } from "lucide-react";
 
 // @ts-nocheck
-import { useState, useEffect, useRef, useContext } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useContext,
+  useCallback,
+  useMemo,
+} from "react";
 import { getSession, getUser } from "@components/util/session";
 import { BASE_URL, CONTRACT_ADDRESS } from "@components/util/config";
 import { userWallet } from "@app/StoreManager";
 import ImageUploader from "@components/global/ImageUploader";
 import { getCookie } from "@components/util/cookie";
+import router from "next/router";
 
 const CreateStore = () => {
   const session = getCookie("token");
@@ -38,9 +46,11 @@ const CreateStore = () => {
     name: "",
     description: "",
     store_account_id: "",
-    profile_image_url: "",
+    profile_image_url:
+      "https://res.cloudinary.com/duxnx9n5t/image/upload/fl_preserve_transparency/v1728395460/shopopn_wisbzc.jpg?_s=public-apps",
     category: "fashion",
   });
+  console.log(formData, "formData");
 
   interface StoreDataInterface {
     store_id: string;
@@ -53,10 +63,22 @@ const CreateStore = () => {
     user_id: session ? user.user_id : "",
   };
 
-  formData.profile_image_url = imageData?.fileUrl;
+  // setform data
+
+  useMemo(() => {
+    setFormData({
+      ...formData,
+      store_account_id: `${
+        Math.random().toString(36) + formData.name
+      }.v2-storehub.testnet`,
+    });
+  }, [formData.name]);
+
+  // formData.profile_image_url = imageData?.fileUrl;
   const handleChange = (e: any) => {
     setFormData({
       ...formData,
+
       [e.target.name]: e.target.value,
     });
   };
@@ -81,7 +103,7 @@ const CreateStore = () => {
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-
+      setValue("description", data.message, { shouldValidate: true });
       setFormData({ ...formData, description: data.message });
 
       console.log(data, "ai_response");
@@ -108,7 +130,6 @@ const CreateStore = () => {
 
   //crete new store
   const createNewStore = (): void => {
-    formData.store_account_id = `${formData.store_account_id}.v2-storehub.testnet`;
     // debugger
     if (session) {
       try {
@@ -122,6 +143,7 @@ const CreateStore = () => {
           body: JSON.stringify(formData),
         })
           .then((response) => {
+            debugger;
             return response.json();
           })
           .then((data: StoreResult) => {
@@ -171,6 +193,7 @@ const CreateStore = () => {
   const {
     register,
     formState: { errors },
+    setValue,
     handleSubmit,
   } = useForm<IFormInputs>();
 
@@ -301,24 +324,6 @@ const CreateStore = () => {
               </select>
             </div>
 
-            {/*Store ID  */}
-            <div className="mb-4">
-              <label
-                htmlFor="store-tags"
-                className="block text-sm mb-2 font-medium text-gray-700"
-              >
-                Store Account ID
-              </label>
-
-              <input
-                name="store_account_id"
-                value={formData.store_account_id}
-                onChange={handleChange}
-                placeholder="farm-land"
-                className="mt-1 block w-full px-3 py-3 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-              ></input>
-            </div>
-
             {/*Description  */}
             <div className="mb-4">
               <label
@@ -342,7 +347,6 @@ const CreateStore = () => {
                     },
                   })}
                   name="description"
-                  value={formData.description}
                   onChange={handleChange}
                   // placeholder="Best farmland produces at your door step"
                   placeholder="Manually Describe Your Store or Utilize Our AI"

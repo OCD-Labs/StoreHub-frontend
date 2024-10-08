@@ -30,7 +30,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   }
 
   return Response.json(
-    { message: message },
+    { message: message.trim() },
     {
       status: 200,
     }
