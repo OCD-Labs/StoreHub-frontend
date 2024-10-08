@@ -19,3 +19,7 @@ This codebase can be greatly improved by doing a few things
 3.  when the user clicks the link session is added and they are taken to /page
     if not they can resend verification
 4.  **login**: user can login with email and password
+
+## Generate store image with ai
+
+- move the image generation to a background task
