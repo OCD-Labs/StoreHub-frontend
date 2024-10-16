@@ -12,7 +12,7 @@ import Skeleton from "react-loading-skeleton";
 import OrdersOverviewTable from "@components/stores/orders/OrdersOverviewTable";
 import { getCookie } from "@lib/cookie";
 import useSWR from "swr";
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 import {
   Table,
   TableBody,

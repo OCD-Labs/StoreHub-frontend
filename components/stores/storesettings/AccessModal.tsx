@@ -10,7 +10,7 @@ import { Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { AddStoreCoOwner } from "@app/apis/Inventory";
 import { getCookie } from "@lib/cookie";
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 const FULLACCESS = 1;
 const PRODUCTINVENTORYACCESS = 2;
 const SALESACCESS = 3;

@@ -39,7 +39,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../../../../components/ui/Dialog";
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 
 const SalesChart = () => {
   const amount = "3,765.88";

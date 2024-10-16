@@ -1,6 +1,6 @@
 "use client";
 
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 import { getItemID, getStoreID } from "@lib/session";
 import { useState, useEffect } from "react";
 import Image from "next/image";

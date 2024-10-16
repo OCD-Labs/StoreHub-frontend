@@ -22,7 +22,7 @@ import {
 import { getCookie } from "@lib/cookie";
 // import { getUser } from "@components/util/session";
 import AccessModal from "@components/stores/storesettings/AccessModal";
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 import { useSearchParams } from "next/navigation";
 
 const Settings = () => {
