@@ -25,10 +25,10 @@ import { Table } from "react-bootstrap";
 import Chart from "@components/stores/sales/SalesChart";
 import { Key, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import useProfile from "@app/hooks/useProfile";
+import useProfile from "@hooks/useProfile";
 import { OPTIONS } from "@app/apis";
 import { GetSalesHistory } from "@app/apis/Inventory";
-import { modalstore } from "@app/StoreManager/modalstore";
+import { modalstore } from "@StoreManager/modalstore";
 
 import Skeleton from "react-loading-skeleton";
 import {

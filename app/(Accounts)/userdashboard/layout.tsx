@@ -13,7 +13,7 @@ import notificationWhite from "@public/assets/icons/notification-white.svg";
 import saved from "@public/assets/icons/saved.svg";
 import savedWhite from "@public/assets/icons/saved-white.svg";
 import signoutIcon from "@public/assets/icons/signoutIcon.svg";
-import { AuthProvider } from "@app/AuthProvider";
+import { AuthProvider } from "@contexts/AuthProvider";
 import AccountNav from "./AccountNav";
 
 import "@styles/globals.css";

@@ -5,12 +5,12 @@ import { Key, useState, useEffect } from "react";
 import search from "../../../../../public/assets/icons/search.svg";
 import filter from "../../../../../public/assets/icons/filter.svg";
 import { OPTIONS } from "@app/apis";
-import useProfile from "@app/hooks/useProfile";
+import useProfile from "@hooks/useProfile";
 import { useSearchParams } from "next/navigation";
 import { FetchOrdersOverview } from "@app/apis/Inventory";
 import Skeleton from "react-loading-skeleton";
 import OrdersOverviewTable from "@components/stores/orders/OrdersOverviewTable";
-import { getCookie } from "@components/util/cookie";
+import { getCookie } from "@lib/cookie";
 import useSWR from "swr";
 import { BASE_URL } from "@components/util/config";
 import {

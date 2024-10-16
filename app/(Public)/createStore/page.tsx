@@ -4,7 +4,7 @@ import { set, useForm } from "react-hook-form";
 
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
-import { setUser } from "@components/util/session";
+import { setUser } from "@lib/session";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@components/ui/Button";
 
@@ -19,11 +19,11 @@ import {
   useCallback,
   useMemo,
 } from "react";
-import { getSession, getUser } from "@components/util/session";
-import { BASE_URL, CONTRACT_ADDRESS } from "@components/util/config";
-import { userWallet } from "@app/StoreManager";
+import { getSession, getUser } from "@lib/session";
+import { BASE_URL, CONTRACT_ADDRESS } from "@constants";
+import { userWallet } from "@StoreManager";
 import ImageUploader from "@components/global/ImageUploader";
-import { getCookie } from "@components/util/cookie";
+import { getCookie } from "@lib/cookie";
 import router from "next/router";
 
 const CreateStore = () => {

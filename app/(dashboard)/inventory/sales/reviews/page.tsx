@@ -7,7 +7,7 @@ import star from "../../../../../public/assets/icons/star.svg";
 import { GetAllReviews } from "@app/apis/Inventory";
 import { useSearchParams } from "next/navigation";
 import { OPTIONS } from "@app/apis";
-import useProfile from "@app/hooks/useProfile";
+import useProfile from "@hooks/useProfile";
 import { useEffect, useState } from "react";
 
 const Reviews = () => {

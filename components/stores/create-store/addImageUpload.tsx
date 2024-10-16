@@ -1,5 +1,5 @@
 import { useState, FC } from "react";
-import { handleImageUpload } from "@app/services/uploadService";
+import { handleImageUpload } from "@lib/uploadService";
 
 export interface UpdateImageProp {
   updateImage: (url: string) => void;

@@ -1,6 +1,6 @@
-import { AuthProvider } from '@app/AuthProvider'
+import { AuthProvider } from "@contexts/AuthProvider";
 
-import '@styles/globals.css'
+import "@styles/globals.css";
 
 const Inventory = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -25,7 +25,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
         </svg>
       </body>
     </html>
-  )
-}
+  );
+};
 
-export default Inventory
+export default Inventory;

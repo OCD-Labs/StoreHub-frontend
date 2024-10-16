@@ -6,12 +6,12 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { z } from "zod";
 import Dropdown from "react-bootstrap/Dropdown";
-import { getAllStores } from "@app/apis";
-import { BASE_URL } from "@components/util/config";
+import { getStores } from "@services/products";
+import { BASE_URL } from "@constants";
 import { Button } from "@components/ui/Button";
 import logo from "@public/assets/images/storehublogo.svg";
 import useSWR from "swr";
-import { clearCookie, getCookie } from "@components/util/cookie";
+import { clearCookie, getCookie } from "@lib/cookie";
 import storehubIcon from "@public/assets/images/storehubIcon.svg";
 import { Divide, ShoppingCart } from "lucide-react";
 import {
@@ -20,7 +20,7 @@ import {
   AvatarImage,
 } from "../../components/ui/Avatar";
 import { getSession } from "@app/actions/auth-action";
-import { getUser, removeUser } from "@components/util/session";
+import { getUser, removeUser } from "@lib/session";
 import { Menu, X } from "lucide-react";
 
 const Nav = () => {
@@ -52,7 +52,7 @@ const Nav = () => {
 
   const { data, error, isLoading } = useSWR(
     session ? `${BASE_URL}/inventory/stores` : null,
-    getAllStores
+    getStores
   );
 
   console.log(data, error, "navdata");
@@ -82,19 +82,34 @@ const Nav = () => {
         </div>
 
         <div className="flex gap-[50px]">
-          <Link href="/" className="hover:text-[#FE5B13] font-vietnam font-medium">
+          <Link
+            href="/"
+            className="hover:text-[#FE5B13] font-vietnam font-medium"
+          >
             Home
           </Link>
-          <a href="#video" className="hover:text-[#FE5B13] font-vietnam font-medium">
+          <a
+            href="#video"
+            className="hover:text-[#FE5B13] font-vietnam font-medium"
+          >
             About Us
           </a>
-          <a href="#features" className="hover:text-[#FE5B13] font-vietnam font-medium">
+          <a
+            href="#features"
+            className="hover:text-[#FE5B13] font-vietnam font-medium"
+          >
             Features
           </a>
-          <a href="#faq" className="hover:text-[#FE5B13] font-vietnam font-medium">
+          <a
+            href="#faq"
+            className="hover:text-[#FE5B13] font-vietnam font-medium"
+          >
             FAQ
           </a>
-          <Link href="/stores" className="hover:text-[#FE5B13] font-vietnam font-medium">
+          <Link
+            href="/stores"
+            className="hover:text-[#FE5B13] font-vietnam font-medium"
+          >
             Marketplace
           </Link>
         </div>
@@ -200,7 +215,6 @@ const Nav = () => {
         </div>
       </nav>
 
-
       {/* Mobile View  */}
       <nav className=" lg:hidden max-w-[90rem] mx-auto px-4 flex justify-between relative my-3 items-center ">
         {/* Storehub Icon*/}
@@ -229,19 +243,34 @@ const Nav = () => {
         >
           {/* links Nav */}
           <div className="flex flex-col gap-9 mt-5">
-            <Link href="/" className="hover:text-[#FE5B13] font-vietnam font-bold">
+            <Link
+              href="/"
+              className="hover:text-[#FE5B13] font-vietnam font-bold"
+            >
               Home
             </Link>
-            <a href="#video" className="hover:text-[#FE5B13] font-vietnam font-bold">
+            <a
+              href="#video"
+              className="hover:text-[#FE5B13] font-vietnam font-bold"
+            >
               About Us
             </a>
-            <a href="#features" className="hover:text-[#FE5B13] font-vietnam font-bold">
+            <a
+              href="#features"
+              className="hover:text-[#FE5B13] font-vietnam font-bold"
+            >
               Features
             </a>
-            <a href="#faq" className="hover:text-[#FE5B13] font-vietnam font-bold">
+            <a
+              href="#faq"
+              className="hover:text-[#FE5B13] font-vietnam font-bold"
+            >
               FAQ
             </a>
-            <Link href="/stores" className="hover:text-[#FE5B13] font-vietnam font-bold">
+            <Link
+              href="/stores"
+              className="hover:text-[#FE5B13] font-vietnam font-bold"
+            >
               Marketplace
             </Link>
           </div>

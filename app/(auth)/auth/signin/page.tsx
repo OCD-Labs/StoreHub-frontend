@@ -9,7 +9,7 @@ import { Button } from "@components/ui/Button";
 import Router, { useRouter } from "next/navigation";
 import "react-toastify/dist/ReactToastify.css";
 import { signinAction } from "@app/actions/auth-action";
-import { setUser as storeUser } from "@components/util/session";
+import { setUser as storeUser } from "@lib/session";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 const SignIn = () => {

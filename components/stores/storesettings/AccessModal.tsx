@@ -9,7 +9,7 @@ import useSWR from "swr";
 import { Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { AddStoreCoOwner } from "@app/apis/Inventory";
-import { getCookie } from "@components/util/cookie";
+import { getCookie } from "@lib/cookie";
 import { BASE_URL } from "@components/util/config";
 const FULLACCESS = 1;
 const PRODUCTINVENTORYACCESS = 2;

@@ -1,7 +1,7 @@
 "use client";
 // near api js
 import { providers } from "near-api-js";
-import { removeUser } from "@components/util/session";
+import { removeUser } from "@lib/session";
 // wallet selector UI
 import "@near-wallet-selector/modal-ui/styles.css";
 import { setupModal } from "@near-wallet-selector/modal-ui";

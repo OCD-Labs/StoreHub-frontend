@@ -1,16 +1,15 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
-import { AuthProvider } from '@app/AuthProvider'
-import { BASE_URL } from '@components/util/config'
+import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { AuthProvider } from "@contexts/AuthProvider";
+import { BASE_URL } from "@components/util/config";
 const Order = ({ children }: { children: React.ReactNode }) => {
-  const token = useSearchParams().get('token')
-  const userID = useSearchParams().get('user')
-  const id = useSearchParams().get('id')
-  const name = useSearchParams().get('name')
-
+  const token = useSearchParams().get("token");
+  const userID = useSearchParams().get("user");
+  const id = useSearchParams().get("id");
+  const name = useSearchParams().get("name");
 
   return (
     <div>
@@ -24,7 +23,7 @@ const Order = ({ children }: { children: React.ReactNode }) => {
               <ul>
                 <Link
                   href={{
-                    pathname: '/inventory/orders/ordersoverview',
+                    pathname: "/inventory/orders/ordersoverview",
                     query: {
                       id: id,
                       name: name,
@@ -38,7 +37,7 @@ const Order = ({ children }: { children: React.ReactNode }) => {
               <ul>
                 <Link
                   href={{
-                    pathname: '/inventory/orders/ordersinsight',
+                    pathname: "/inventory/orders/ordersinsight",
                     query: {
                       id: id,
                       name: name,
@@ -68,7 +67,7 @@ const Order = ({ children }: { children: React.ReactNode }) => {
         </AuthProvider>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Order
+export default Order;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import {
   Dialog,
   DialogContent,
@@ -6,13 +6,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '../../../components/ui/Dialog'
-import { ModalOptions, modalstore } from '@app/StoreManager/modalstore'
+} from "../../../components/ui/Dialog";
+import { ModalOptions, modalstore } from "@StoreManager/modalstore";
 
 const SaleInfo = () => {
-  const saleInfoStatus = modalstore((state) => state.isSaleInfoOpen)
-  const setStateInfoStatus = modalstore((state) => state.setSaleInfoStatus)
-  const saleInfo = modalstore((state) => state.saleInfo)
+  const saleInfoStatus = modalstore((state) => state.isSaleInfoOpen);
+  const setStateInfoStatus = modalstore((state) => state.setSaleInfoStatus);
+  const saleInfo = modalstore((state) => state.saleInfo);
 
   return (
     <div>
@@ -24,7 +24,7 @@ const SaleInfo = () => {
             </div>
             <div className="text-xs p-2">
               <p>
-                Product name:{' '}
+                Product name:{" "}
                 <span className="text-dark">{saleInfo.item_name}</span>
               </p>
               <p>
@@ -38,7 +38,7 @@ const SaleInfo = () => {
             </div>
             <div className="text-xs p-2">
               <p>
-                Product price:{' '}
+                Product price:{" "}
                 <span className="text-dark">{saleInfo.item_price}</span>
               </p>
               <p className="border-b pb-2">
@@ -56,7 +56,7 @@ const SaleInfo = () => {
                 Order id: <span className="text-dark">{saleInfo.order_id}</span>
               </p>
               <p>
-                Order date:{' '}
+                Order date:{" "}
                 <span className="text-dark">{saleInfo.order_date}</span>
               </p>
             </div>
@@ -67,7 +67,7 @@ const SaleInfo = () => {
             </div>
             <div className="text-xs p-2">
               <p>
-                Delivery date:{' '}
+                Delivery date:{" "}
                 <span className="text-dark">{saleInfo.delivery_date}</span>
               </p>
             </div>
@@ -75,7 +75,7 @@ const SaleInfo = () => {
         </DialogContent>
       </Dialog>
     </div>
-  )
-}
+  );
+};
 
-export default SaleInfo
+export default SaleInfo;

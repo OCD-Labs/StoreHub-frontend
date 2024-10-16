@@ -2,10 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 
-import { setCookie } from "@components/util/cookie";
-import { setUser } from "@components/util/session";
+import { setCookie } from "@lib/cookie";
+import { setUser } from "@lib/session";
 
 // Component for email verification
 const VerifyEmail = () => {

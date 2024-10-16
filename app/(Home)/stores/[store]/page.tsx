@@ -7,7 +7,7 @@ import StoreItem from "@components/stores/StoreItem";
 import { Key, useEffect, useState } from "react";
 
 import useSWR from "swr";
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 import search from "@/public/assets/icons/search.svg";
 import sorticon from "@/public/assets/icons/sorticon.svg";
 import StoresSkeleton from "@components/stores/storesSkeleton";
@@ -18,7 +18,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/NavDropdown";
-import { getCookie } from "@components/util/cookie";
+import { getCookie } from "@lib/cookie";
 export default function Page({ params }: { params: { store: number } }) {
   const [products, setProducts] = useState<[]>([]);
   const session = getCookie("token");
@@ -29,7 +29,7 @@ export default function Page({ params }: { params: { store: number } }) {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${""}`,
+        Authorization: `Bearer ${session}`,
       },
     })
       .then((response) => response.json())
@@ -119,6 +119,11 @@ export default function Page({ params }: { params: { store: number } }) {
 
         <div className="max-w-6xl m-auto">
           <section className="w-full grid lg:grid-cols-3 sm:grid-cols-2 sm:mt-0 grid-cols-1 gap-4">
+            {data.data.result.items.length === 0 && (
+              <div className="text-left">
+                <p>No products found</p>
+              </div>
+            )}
             {data && !error ? (
               data?.data.result.items.map((product: any, key: Key) => (
                 <>

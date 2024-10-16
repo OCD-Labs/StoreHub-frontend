@@ -21,10 +21,10 @@ import duplicate from "@public/assets/icons/Inventory/duplicate.svg";
 import Edit from "@public/assets/icons/Inventory/Edit.svg";
 import status from "@public/assets/icons/Inventory/status.svg";
 import "react-toastify/dist/ReactToastify.css";
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 import { useRouter } from "next/navigation";
-import { Inventory } from "@app/StoreManager/inventory";
-import { getUser } from "@components/util/session";
+import { Inventory } from "@StoreManager/inventory";
+import { getUser } from "@lib/session";
 
 import {
   DropdownMenu,
@@ -35,7 +35,7 @@ import {
   DropdownMenuTrigger,
 } from "../../../components/ui/NavDropdown";
 import "@styles/globals.css";
-import { getCookie } from "@components/util/cookie";
+import { getCookie } from "@lib/cookie";
 
 const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   const session = getCookie("token");
