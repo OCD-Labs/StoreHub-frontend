@@ -1,7 +1,7 @@
 "use client";
 import { createContext } from "react";
-import { getCookie } from "@components/util/cookie";
-import { signinAction } from "./actions/auth-action";
+import { getCookie } from "@lib/cookie";
+import { signinAction } from "../app/actions/auth-action";
 
 const UserContext = createContext({ user: "", session: "" });
 

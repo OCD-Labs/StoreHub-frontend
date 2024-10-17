@@ -6,13 +6,13 @@ import "../styles/inventory.css";
 import { PlusIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import ProductItem from "@components/stores/productitem";
 import AddItemModal from "@components/stores/create-store/addItemModal";
-import { Inventory } from "@app/StoreManager/inventory";
+import { Inventory } from "@StoreManager/inventory";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 import { ToastContainer, toast } from "react-toastify";
 import { Key, Suspense, useEffect, useState } from "react";
-import { ModalOptions, modalstore } from "@app/StoreManager/modalstore";
+import { ModalOptions, modalstore } from "@StoreManager/modalstore";
 
 import necklace from "../../../../public/assets/images/necklace.png";
 import search from "../../../../public/assets/icons/search.svg";
@@ -26,7 +26,7 @@ import {
   TableHeader,
   TableRow,
 } from "../../../../components/ui/Table";
-import { getCookie } from "@components/util/cookie";
+import { getCookie } from "@lib/cookie";
 import "react-toastify/dist/ReactToastify.css";
 
 const StoreInventory = () => {

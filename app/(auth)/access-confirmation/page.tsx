@@ -7,10 +7,10 @@ import { Loader2 } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 
 import "react-toastify/dist/ReactToastify.css";
-import { getCookie } from "@components/util/cookie";
+import { getCookie } from "@lib/cookie";
 
 const AccessConfirmation = () => {
   const storeName = useSearchParams().get("store_name");

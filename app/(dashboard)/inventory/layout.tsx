@@ -1,10 +1,7 @@
-
-import DashboardNav from '@components/stores/Inventory/DashboardNav';
-import './styles/inventory.css'
-import { AuthProvider } from '@app/AuthProvider'
+import DashboardNav from "@components/stores/Inventory/DashboardNav";
+import "./styles/inventory.css";
+import { AuthProvider } from "@contexts/AuthProvider";
 const Inventory = ({ children }: { children: React.ReactNode }) => {
- 
-
   return (
     <html lang="en">
       <body className="font-vietnam">
@@ -13,7 +10,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
         </AuthProvider>
       </body>
     </html>
-  )
-}
+  );
+};
 
-export default Inventory
+export default Inventory;

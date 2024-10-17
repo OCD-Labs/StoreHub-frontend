@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { handleImageUpload } from "../../../app/services/uploadService";
+import { handleImageUpload } from "../../../lib/uploadService";
 import { BASE_URL } from "@components/util/config";
 import ImageUploader from "@components/global/ImageUploader";
 import "../../../styles/inventory.css";

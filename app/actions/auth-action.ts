@@ -1,13 +1,12 @@
 "use server";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
 
-const BASE_URL = "https://store-hub-djxu.onrender.com/api/v1";
+import { BASE_URL } from "@constants";
 
 export const signinAction = async (data: IUserCredential) => {
   try {
     const user: UserResponse = await fetch(
-      "https://store-hub-djxu.onrender.com/api/v1/auth/login",
+      `${BASE_URL}/auth/login`,
 
       {
         method: "POST",

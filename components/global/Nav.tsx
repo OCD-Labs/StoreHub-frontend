@@ -6,12 +6,12 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { z } from "zod";
 import Dropdown from "react-bootstrap/Dropdown";
-import { getAllStores } from "@app/apis";
-import { BASE_URL } from "@components/util/config";
+import { getStores } from "@services/products";
+import { BASE_URL } from "@constants";
 import { Button } from "@components/ui/Button";
 import logo from "@public/assets/images/storehublogo.svg";
 import useSWR from "swr";
-import { clearCookie, getCookie } from "@components/util/cookie";
+import { clearCookie, getCookie } from "@lib/cookie";
 import storehubIcon from "@public/assets/images/storehubIcon.svg";
 import { Divide, ShoppingCart } from "lucide-react";
 import {
@@ -20,7 +20,7 @@ import {
   AvatarImage,
 } from "../../components/ui/Avatar";
 import { getSession } from "@app/actions/auth-action";
-import { getUser, removeUser } from "@components/util/session";
+import { getUser, removeUser } from "@lib/session";
 import { Menu, X } from "lucide-react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
@@ -53,7 +53,7 @@ const Nav = () => {
 
   const { data, error, isLoading } = useSWR(
     session ? `${BASE_URL}/inventory/stores` : null,
-    getAllStores
+    getStores
   );
 
   console.log(data, error, "navdata");

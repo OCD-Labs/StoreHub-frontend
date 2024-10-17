@@ -5,7 +5,7 @@ import fullaccess from "../../../../public/assets/icons/Inventory/fullaccess.svg
 import inventoryaccess from "../../../../public/assets/icons/Inventory/inventoryaccess.svg";
 import salesaccess from "../../../../public/assets/icons/Inventory/salesaccess.svg";
 import { ToastContainer, toast } from "react-toastify";
-import { Inventory } from "@app/StoreManager/inventory";
+import { Inventory } from "@StoreManager/inventory";
 import "react-toastify/dist/ReactToastify.css";
 import coown from "../../../../public/assets/icons/Inventory/coown.svg";
 import Image from "next/image";
@@ -19,10 +19,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../../../../components/ui/Dialog";
-import { getCookie } from "@components/util/cookie";
+import { getCookie } from "@lib/cookie";
 // import { getUser } from "@components/util/session";
 import AccessModal from "@components/stores/storesettings/AccessModal";
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 import { useSearchParams } from "next/navigation";
 
 const Settings = () => {

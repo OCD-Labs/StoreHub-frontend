@@ -2,9 +2,9 @@ import { Dispatch, SetStateAction, useState } from "react";
 import AddImageUpload from "./addImageUpload";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { BASE_URL } from "@components/util/config";
-import { ModalOptions, modalstore } from "@app/StoreManager/modalstore";
-import useProfile from "@app/hooks/useProfile";
-import { getCookie } from "@components/util/cookie";
+import { ModalOptions, modalstore } from "@StoreManager/modalstore";
+import useProfile from "@hooks/useProfile";
+import { getCookie } from "@lib/cookie";
 
 interface PropsInterface {
   userID: string | null;

@@ -171,7 +171,9 @@ const SignUp = () => {
                 I agree to the terms of service and privacy policy.
               </span>
             </div>
-
+            {errors.root && (
+              <p className="text-xs text-red-500">{errors.root.message}</p>
+            )}
             {/* error message */}
             {/* {errors? <div>Fill the form correctly</div>: ''} */}
 

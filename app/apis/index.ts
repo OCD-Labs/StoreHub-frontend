@@ -1,6 +1,6 @@
-import { userWallet } from "@app/StoreManager";
-import { getCookie } from "@components/util/cookie";
-import { BASE_URL } from "@components/util/config";
+import { userWallet } from "@StoreManager";
+import { getCookie } from "@lib/cookie";
+import { BASE_URL } from "@constants";
 
 const { user } = userWallet.getState();
 
@@ -73,4 +73,3 @@ export const signUp = async (data: UserInfo) => {
 };
 
 //get all stores owned by user
-

@@ -3,7 +3,7 @@ import { NextRequest } from "next/server";
 import { NextApiRequest } from "next";
 // import { authOptions } from "../auth/[...nextauth]/route";
 
-import { validateFile } from "@app/services/uploadService";
+import { validateFile } from "@lib/uploadService";
 import { convertFile } from "@lib/convertfile";
 
 // Store environment variables in your .env.local file

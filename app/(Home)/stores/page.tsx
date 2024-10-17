@@ -12,7 +12,7 @@ import { Button } from "@components/ui/Button";
 import storeimg from "@public/assets/images/storeimg.png";
 import Link from "next/link";
 // import { userWallet } from '@app/StoreManager'
-import { BASE_URL } from "@components/util/config";
+import { BASE_URL } from "@constants";
 import useSWR from "swr";
 import { GET_OPTIONS } from "@app/apis";
 import search from "@/public/assets/icons/search.svg";
@@ -147,6 +147,7 @@ const Storepage = ({
           </div>
         </div>
       </div>
+
       <PaginationControls
         hasNextPage={allStores.length > 1}
         hasPrevPage={true}

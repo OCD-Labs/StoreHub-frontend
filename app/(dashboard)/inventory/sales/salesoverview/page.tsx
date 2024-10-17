@@ -4,14 +4,14 @@ import React, { Key, useEffect, useState } from "react";
 import { GetSalesOverview } from "@app/apis/Inventory";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import useProfile from "@app/hooks/useProfile";
+import useProfile from "@hooks/useProfile";
 import search from "../../../../../public/assets/icons/search.svg";
 import filter from "../../../../../public/assets/icons/filter.svg";
 import ProductItem from "@components/stores/productitem";
 import Skeleton from "react-loading-skeleton";
 import { ToastContainer } from "react-toastify";
 import { OPTIONS } from "@app/apis";
-import { getCookie } from "@components/util/cookie";
+import { getCookie } from "@lib/cookie";
 import SalesOverviewTable from "@components/stores/sales/SalesOverviewTable";
 import {
   Table,
