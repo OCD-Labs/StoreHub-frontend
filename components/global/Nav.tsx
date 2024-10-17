@@ -189,8 +189,9 @@ const Nav = () => {
                       !data?.error &&
                       data?.data.result.stores.length ? (
                         <Link
+                        className="hover:text-[#FE5B13] font-[600]"
                           href={{
-                            pathname: "/inventory/Itemsdashboard",
+                            pathname: "/inventory/Dashboard",
                             query: {
                               id: data?.data.result.stores[0].store_id,
                               name: data?.data.result.stores[0].store_name,
