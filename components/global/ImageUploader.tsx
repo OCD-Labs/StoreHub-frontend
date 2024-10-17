@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 
 import { Upload, X, Loader } from "lucide-react";
 import { Spinner } from "react-bootstrap";
+import { get } from "http";
 
 export default function ImageUploader({
   name,
@@ -56,22 +57,52 @@ export default function ImageUploader({
     handleImageUpload(file);
   };
 
+  const getImageUrl = async (name: string, category: string): Promise<any> => {
+    console.log(name, category, "name");
+    if (!name || !category) {
+      return new Error("provide a name or category");
+    }
+
+    const prompt = `A ${category} store named ${name} with a modern design`;
+    const url = `https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev`;
+    const headers = {
+      Authorization: `Bearer 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`,
+    };
+    const response = await fetch(url, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({ inputs: prompt }),
+    });
+
+    if (!response.ok) {
+      return new Error("Failed to generate image");
+    }
+
+    const data = await response.blob();
+    let dataUri;
+    await data.arrayBuffer().then(async (arrayBuffer) => {
+      const buffer = Buffer.from(arrayBuffer);
+
+      // Convert Buffer to Base64
+      const base64Image = buffer.toString("base64");
+
+      // Construct the Data URI
+      dataUri = `data:${data.type};base64,${base64Image}`;
+
+      console.log(dataUri); // This will print the Data URI
+    });
+    console.log(dataUri, "uri");
+
+    return { image: dataUri };
+  };
+
   const generateImage = async () => {
     setIsGeneratingImage(true);
     setImageGenerationError(null);
     try {
       // Assuming there's a function to generate an image using an AI model
-      const res = await fetch("/api/generateAIStoreImage", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: name,
-          category: category,
-        }),
-      });
-      const imageResponse = await res.json();
+      const res = getImageUrl(name, category);
+      const imageResponse = await res;
       setStoreImage(imageResponse.image);
     } catch (error) {
       console.log(error, "imageerror");
