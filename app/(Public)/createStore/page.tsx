@@ -7,8 +7,8 @@ import { ToastContainer, toast } from "react-toastify";
 import { setUser } from "@lib/session";
 import "react-toastify/dist/ReactToastify.css";
 import { Button } from "@components/ui/Button";
-
-import { Upload, Wand2, X } from "lucide-react";
+import { ImageContext } from "@contexts/ImageProvider";
+import { Upload, Wand2, X, Loader } from "lucide-react";
 
 // @ts-nocheck
 import {
@@ -24,6 +24,7 @@ import { BASE_URL, CONTRACT_ADDRESS } from "@constants";
 import { userWallet } from "@StoreManager";
 import ImageUploader from "@components/global/ImageUploader";
 import { getCookie } from "@lib/cookie";
+import { uploadToCloudinary } from "@lib/uploadService";
 import router from "next/router";
 
 const CreateStore = () => {
@@ -40,14 +41,14 @@ const CreateStore = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [generateTextError, setGenerateTextError] = useState("");
   const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
-  console.log(selectedCategory);
+
+  const { imageURI, setImageURI } = useContext(ImageContext);
 
   const [formData, setFormData] = useState({
     name: "",
     description: "",
     store_account_id: "",
-    profile_image_url:
-      "https://res.cloudinary.com/duxnx9n5t/image/upload/fl_preserve_transparency/v1728395460/shopopn_wisbzc.jpg?_s=public-apps",
+    profile_image_url: "",
     category: "fashion",
   });
   console.log(formData, "formData");
@@ -116,10 +117,8 @@ const CreateStore = () => {
     }
   };
 
-  const onSubmit = (): void => {
-    console.log(formData, "formData");
-    // debugger
-    createNewStore();
+  const onSubmit = async (): void => {
+    await createNewStore();
   };
 
   // set Image data
@@ -128,8 +127,33 @@ const CreateStore = () => {
     console.log(data, "image data at store");
   };
 
+  const uploadImage = async () => {
+    let imageUrl;
+    if (imageURI) {
+      imageUrl = await uploadToCloudinary(imageURI);
+      if (imageUrl) {
+        setFormData({ ...formData, profile_image_url: imageUrl });
+      }
+      debugger;
+    } else {
+      imageUrl =
+        "https://res.cloudinary.com/duxnx9n5t/image/upload/fl_preserve_transparency/v1728395460/shopopn_wisbzc.jpg?_s=public-apps";
+    }
+    return imageUrl;
+  };
+
   //crete new store
-  const createNewStore = (): void => {
+  const createNewStore = async (): void => {
+    // upload image to cloudinary here
+    let imageUrl = await uploadImage();
+
+    const storeInfo = {
+      name: formData.name,
+      description: formData.description,
+      profile_image_url: imageUrl,
+      store_account_id: formData.store_account_id,
+      category: formData.category,
+    };
     // debugger
     if (session) {
       try {
@@ -140,7 +164,7 @@ const CreateStore = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${session}`,
           },
-          body: JSON.stringify(formData),
+          body: JSON.stringify(storeInfo),
         })
           .then((response) => {
             debugger;
@@ -192,7 +216,7 @@ const CreateStore = () => {
 
   const {
     register,
-    formState: { errors },
+    formState: { errors, isSubmitting },
     setValue,
     handleSubmit,
   } = useForm<IFormInputs>();
@@ -439,7 +463,13 @@ const CreateStore = () => {
             onClick={handleSubmit(onSubmit)}
             className="rounded-[10px] py-4 text-white bg-[#161616] text-lg w-full sm:w-3/4 sm:mx-auto my-6 sm:my-12"
           >
-            Create Store
+            {isSubmitting ? (
+              <div className="flex justify-center items-center gap-2 text-white">
+                <Loader className="animate-spin" /> <>Creating Store...</>
+              </div>
+            ) : (
+              "Create Store"
+            )}
           </Button>
         </div>
       </form>

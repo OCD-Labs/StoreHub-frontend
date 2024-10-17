@@ -1,10 +1,5 @@
 import { v2 as cloudinary } from "cloudinary";
 import { NextRequest } from "next/server";
-import { NextApiRequest } from "next";
-// import { authOptions } from "../auth/[...nextauth]/route";
-
-import { validateFile } from "@lib/uploadService";
-import { convertFile } from "@lib/convertfile";
 
 // Store environment variables in your .env.local file
 cloudinary.config({
@@ -16,15 +11,10 @@ cloudinary.config({
 
 export async function POST(req: NextRequest, res: Response) {
   try {
-    const formData = await req.formData();
+    const { imageURI } = await req.json();
+    console.log(imageURI, "imageURI");
 
-    const images = formData.getAll("file") as File[];
-    console.log(images, "images");
-
-    const file = formData.get("file") as File;
-    validateFile(file);
-    const imageData = await convertFile(file);
-    const res = await cloudinary.uploader.upload(imageData);
+    const res = await cloudinary.uploader.upload(imageURI);
 
     return new Response(JSON.stringify({ fileUrl: res.secure_url }), {
       status: 200,
