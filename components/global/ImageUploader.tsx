@@ -1,8 +1,8 @@
 import React, { FC, useState } from "react";
 
 import { Upload, X, Loader } from "lucide-react";
-import { Spinner } from "react-bootstrap";
-import { get } from "http";
+import { useContext } from "react";
+import { ImageContext } from "@contexts/ImageProvider";
 
 export default function ImageUploader({
   name,
@@ -17,15 +17,40 @@ export default function ImageUploader({
   const [imageGenerationError, setImageGenerationError] = useState<
     string | null
   >(null);
+  const { imageURI, setImageURI } = useContext(ImageContext);
 
   console.log(storeImage);
 
+  const fileTypes = ["image/jpeg", "image/gif", "image/png", "image/webp"];
+
+  // valid file type
+  function validFileType(file: FIle) {
+    return fileTypes.includes(file.type);
+  }
+  // valid file size
+  function validFileSize(file: FIle) {
+    return file.size / 1024 / 1024 < 10;
+  }
+
   const handleImageUpload = (file: File) => {
     console.log(file, "filee");
+    if (!validFileType(file)) {
+      setImageGenerationError(
+        "Please select an image file (jpg, jpeg, png, webp)"
+      );
+      return;
+    }
+
+    if (!validFileSize(file)) {
+      setImageGenerationError("Please select an image smaller than 10MB");
+      return;
+    }
+    setImageGenerationError(null);
 
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
+        setImageURI(reader.result as string);
         setStoreImage(reader.result as string);
       };
       reader.readAsDataURL(file);
@@ -66,7 +91,7 @@ export default function ImageUploader({
     const prompt = `A ${category} store named ${name} with a modern design`;
     const url = `https://api-inference.huggingface.co/models/black-forest-labs/FLUX.1-dev`;
     const headers = {
-      Authorization: `Bearer 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`,
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_HUGGINGFACE_API_KEY}`,
     };
     const response = await fetch(url, {
       method: "POST",
@@ -103,6 +128,7 @@ export default function ImageUploader({
       // Assuming there's a function to generate an image using an AI model
       const res = getImageUrl(name, category);
       const imageResponse = await res;
+      setImageURI(imageResponse.image);
       setStoreImage(imageResponse.image);
     } catch (error) {
       console.log(error, "imageerror");
