@@ -1,3 +1,4 @@
+
 import { Card } from "react-bootstrap";
 import Image from "next/image";
 import pfpic from "public/assets/images/pfpic.png";
@@ -6,13 +7,10 @@ import Link from "next/link";
 import { FC } from "react";
 import { useState, useEffect } from "react";
 import goto from "@public/assets/icons/goto.svg";
-
 import { WidthIcon } from "@radix-ui/react-icons";
-
 export interface StoreProps {
   store: Store;
 }
-
 const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
   return (
     <>
@@ -34,16 +32,16 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
             <div className="flex justify-between">
               <div>
                 <a href="#">
-                  <h5 className="text-xl tracking-tight text-slate-900 font-medium">
+                  <h5 className="text-xl tracking-tight text-slate-900 font-vietnam font-medium">
                     {store.store.name}
                   </h5>
                 </a>
-                <div className="flex gap-2 mt-2">
-                  <p className="">{store.store.category}</p>
-                  <span>store</span>
+                <div className="flex gap-2 p-1 mt-2 rounded-[60px] items-center justify-center border">
+                  <p className=" text-center  font-vietnam">{store.store.category}</p>
+                  {/* <span>store</span> */}
                 </div>
               </div>
-              <Image src={goto} width={40} height={40} alt="goto"></Image>
+              <Image src={goto} width={60} height={60} alt="goto"></Image>
             </div>
           </div>
         </Link>
@@ -51,5 +49,4 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
     </>
   );
 };
-
 export default Storecard;

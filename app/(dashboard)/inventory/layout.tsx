@@ -7,7 +7,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <html lang="en">
-      <body className="max-w-7xl text-sm m-auto sm:px-16 px-6 font-normal">
+      <body className="font-vietnam">
         <AuthProvider>
           <DashboardNav>{children}</DashboardNav>
         </AuthProvider>

@@ -22,6 +22,7 @@ import {
 import { getSession } from "@app/actions/auth-action";
 import { getUser, removeUser } from "@components/util/session";
 import { Menu, X } from "lucide-react";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 const Nav = () => {
   const [store, setStore] = useState<any>();
@@ -82,21 +83,40 @@ const Nav = () => {
         </div>
 
         <div className="flex gap-[50px]">
-          <Link href="/" className="hover:text-[#FE5B13] font-vietnam font-medium">
+          <Link
+            href="/"
+            className="hover:text-[#FE5B13] font-vietnam font-medium"
+          >
             Home
           </Link>
-          <a href="#video" className="hover:text-[#FE5B13] font-vietnam font-medium">
+          <a
+            href="#video"
+            className="hover:text-[#FE5B13] font-vietnam font-medium"
+          >
             About Us
           </a>
-          <a href="#features" className="hover:text-[#FE5B13] font-vietnam font-medium">
+          <a
+            href="#features"
+            className="hover:text-[#FE5B13] font-vietnam font-medium"
+          >
             Features
           </a>
-          <a href="#faq" className="hover:text-[#FE5B13] font-vietnam font-medium">
+          <a
+            href="#faq"
+            className="hover:text-[#FE5B13] font-vietnam font-medium"
+          >
             FAQ
           </a>
-          <Link href="/stores" className="hover:text-[#FE5B13] font-vietnam font-medium">
+          <Link
+            href="/stores"
+            className="hover:text-[#FE5B13] font-vietnam font-medium"
+          >
             Marketplace
           </Link>
+        </div>
+
+        <div className="hover:text-[#FE5B13] cursor-pointer font-vietnam font-[600] flex items-center space-x-1 ">
+          <p>Cart</p> <ShoppingCartIcon className="h-6  w-6" />
         </div>
 
         <div className="flex gap-[38px]">
@@ -161,6 +181,9 @@ const Nav = () => {
                         Account
                       </Link>
                     </Dropdown.Item>
+
+                  
+
                     <Dropdown.Item>
                       {!error &&
                       !data?.error &&
@@ -200,7 +223,6 @@ const Nav = () => {
         </div>
       </nav>
 
-
       {/* Mobile View  */}
       <nav className=" lg:hidden max-w-[90rem] mx-auto px-4 flex justify-between relative my-3 items-center ">
         {/* Storehub Icon*/}
@@ -229,19 +251,34 @@ const Nav = () => {
         >
           {/* links Nav */}
           <div className="flex flex-col gap-9 mt-5">
-            <Link href="/" className="hover:text-[#FE5B13] font-vietnam font-bold">
+            <Link
+              href="/"
+              className="hover:text-[#FE5B13] font-vietnam font-bold"
+            >
               Home
             </Link>
-            <a href="#video" className="hover:text-[#FE5B13] font-vietnam font-bold">
+            <a
+              href="#video"
+              className="hover:text-[#FE5B13] font-vietnam font-bold"
+            >
               About Us
             </a>
-            <a href="#features" className="hover:text-[#FE5B13] font-vietnam font-bold">
+            <a
+              href="#features"
+              className="hover:text-[#FE5B13] font-vietnam font-bold"
+            >
               Features
             </a>
-            <a href="#faq" className="hover:text-[#FE5B13] font-vietnam font-bold">
+            <a
+              href="#faq"
+              className="hover:text-[#FE5B13] font-vietnam font-bold"
+            >
               FAQ
             </a>
-            <Link href="/stores" className="hover:text-[#FE5B13] font-vietnam font-bold">
+            <Link
+              href="/stores"
+              className="hover:text-[#FE5B13] font-vietnam font-bold"
+            >
               Marketplace
             </Link>
           </div>

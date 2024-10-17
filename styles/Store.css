@@ -1,0 +1,6 @@
+
+.store-custom-bg{
+    background-image: url("../public/assets/images/StoreBgImage.png");
+    background-size: cover;
+    background-position: center;
+  }

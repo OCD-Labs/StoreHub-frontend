@@ -1,3 +1,4 @@
+
 "use client";
 import React from "react";
 import sorticon from "public/assets/icons/sorticon.svg";
@@ -16,6 +17,11 @@ import useSWR from "swr";
 import { GET_OPTIONS } from "@app/apis";
 import search from "@/public/assets/icons/search.svg";
 import PaginationControls from "@components/stores/PaginationControls";
+import "@/styles/Store.css";
+import { Bars3Icon } from "@heroicons/react/24/outline";
+import StoreNav from '@components/global/StoreNav'
+
+
 
 const Storepage = ({
   searchParams,
@@ -25,25 +31,27 @@ const Storepage = ({
   const [allStores, setAllStores] = useState<Store[]>([]);
   const [loading, setLoading] = useState(true);
   // const { wallet } = userWallet.getState()
-
+  const [isOpen, setIsOpen] = useState(false);
+  const categories = [
+    "Electronics",
+    "Clothing",
+    "Home & Kitchen",
+    "Sports",
+    "Books",
+  ];
   const page = searchParams["page"] ?? "1";
   const page_size = searchParams["per_page"] ?? "15";
-
   // Get all store
-
   // const fetcher = (url: string) =>
   //   fetch(url, GET_OPTIONS).then((response) => response.json())
-
   // const { data, error, isLoading } = useSWR(
   //   `${BASE_URL}/stores/?page=${Number(page)}&page_size=${page_size}`,
   //   fetcher,
   // )
   // console.log(data, 'useswr data')
-
   const handlePageLoading = () => {
     setLoading(true);
   };
-
   const fetchAllStores = () => {
     try {
       fetch(
@@ -61,109 +69,62 @@ const Storepage = ({
     }
   };
   console.log("stores", allStores);
-
   useEffect(() => {
     fetchAllStores();
   }, [page]);
-
   return (
-    <div>
+    <div className="">
+        {/* <nav><StoreNav/></nav> */}
       <div className="">
-        <div className="">
-          {/* <div className="bg-graybrand"> */}
-          <div className="">
-            <div className="flex flex-col-reverse lg:flex-row max-w-6xl m-auto lg:gap-40 gap-20 lg:p-0 p-4">
+        <div>
+          {/* Store background Image */}
+          <div className="store-custom-bg mx-[50px] pt-[200px] p-9 rounded-lg">
+            <div className="  lg:p-0 p-4">
               <div className="lg:mt-24">
-                <h2 className="max-w-lg text-5xl leading-normal mb-8">
+                <h2 className="max-w-lg text-5xl font-vietnam leading-normal mb-8">
                   Explore Stores, Discover Wonders
                 </h2>
-                <p className="max-w-lg leading-normal font-light text-lg mb-8">
+                <p className="max-w-lg leading-normal font-vietnam font-light text-[10px] mb-8">
                   Every store tells its own story. Our grid of stores is your
                   passport to a world of unparalleled shopping experiences.
                   Click on a store, and let the products inside surprise you.
                   Your next favorite find is just a store away!
                 </p>
-                <div className="z-100 flex gap-4 mt-8">
-                  <Button variant="default">
-                    <Link href={"/auth/signup"}>Get Started</Link>
-                  </Button>
-                  <Button variant="outline">Watch Demo</Button>
-                </div>
-              </div>
-
-              <div>
-                <Image
-                  src={storeimg}
-                  width={500}
-                  height={500}
-                  alt="onboardimage"
-                ></Image>
               </div>
             </div>
           </div>
-          {/* <svg
-            className="z-[-1]"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 1440 235"
-          >
-            <path
-              fill="#B0A4DB1F"
-              fill-opacity="1"
-              d="M0,0L40,37.3C80,75,160,149,240,154.7C320,160,400,96,480,69.3C560,43,640,53,720,64C800,75,880,85,960,122.7C1040,160,1120,224,1200,224C1280,224,1360,160,1400,128L1440,96L1440,0L1400,0C1360,0,1280,0,1200,0C1120,0,1040,0,960,0C880,0,800,0,720,0C640,0,560,0,480,0C400,0,320,0,240,0C160,0,80,0,40,0L0,0Z"
-            ></path>
-          </svg> */}
-          {/* {wallet.accountId ? (
-            <>
-              <div></div>
-            </>
-          ) : (
-            <>
-              <div className="bg-blue p-6">
-                <p>
-                  Powered by the NEAR blockchain, Store Hub offers secure,
-                  user-friendly, and infinitely scalable solutions for seamless
-                  operations. Revolutionize your digital presence with Store
-                  Hub.
-                </p>
-                <button type="button" className="outline_btn mt-6 font-medium">
-                  <p className="hover:text-white items-baseline leading-tight text-black text-[16px]">
-                    Connect Wallet
-                  </p>
-                </button>
-              </div>
-            </>
-          )} */}
-          <div className="max-w-6xl m-auto">
-            <div className="lg:mx-0 mx-4 m-auto">
-              <div className="flex justify-between pt-8">
-                <div className="text-sm font-medium leading-relaxed mb-2">
-                  {allStores.length} stores
-                </div>
-              </div>
-              <div className="w-full">
-                <span className="relative">
-                  <input
-                    className="border w-full h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
-                    placeholder="Search stores"
-                  ></input>
-                  <Image
-                    src={search}
-                    alt="search product"
-                    height={20}
-                    width={20}
-                    className="absolute top-0 left-2 sm:left-3"
-                  />
-                  <Image
-                    src={sorticon}
-                    height={20}
-                    width={20}
-                    className="absolute top-0 right-2 sm:right-3"
-                    alt="sorticon"
-                  />
-                </span>
-              </div>
+          {/* Categories come right here */}
+          <div className="relative inline-block ml-[50px] mt-[40px] mb-[10px] text-left">
+            {/* Trigger Button */}
+            <div>
+              <button
+                type="button"
+                className="flex items-center gap-2 p-3 mt-2 rounded-[15px] border shadow-md hover:shadow-lg focus:outline-none"
+                onClick={() => setIsOpen(!isOpen)}
+              >
+                <Bars3Icon className="h-6 w-6" />
+                <span className="font-bold">All Categories</span>
+              </button>
             </div>
-
+            {/* Dropdown Menu */}
+            {isOpen && (
+              <div className="absolute left-0 mt-2 w-48 rounded-lg shadow-lg bg-white  z-50">
+                <ul className="py-2">
+                  {categories.map((category) => (
+                    <li
+                      key={category}
+                      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => setIsOpen(false)} // Close dropdown after selecting
+                    >
+                      {category}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+          <div className="max-w-6xl m-auto">
+            {/* Stores list */}
             {loading ? (
               <div className="w-full grid lg:grid-cols-3 sm:grid-cols-2 sm:mt-0 grid-cols-1 gap-4">
                 <StoresSkeleton />
@@ -186,17 +147,12 @@ const Storepage = ({
           </div>
         </div>
       </div>
-
-    
       <PaginationControls
         hasNextPage={allStores.length > 1}
         hasPrevPage={true}
         handlePaginationLoading={handlePageLoading}
       />
-    
-     
     </div>
   );
 };
-
 export default Storepage;
