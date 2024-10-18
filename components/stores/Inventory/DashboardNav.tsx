@@ -25,6 +25,8 @@ import { BASE_URL } from "@constants";
 import { useRouter } from "next/navigation";
 import { Inventory } from "@StoreManager/inventory";
 import { getUser } from "@lib/session";
+import storehubFooterLogo from "@public/assets/images/StorehubFooterLogo.png";
+import PageFooter from "@components/global/PageFooter";
 
 import {
   DropdownMenu,
@@ -84,7 +86,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
     return (
       <>
         <div className="h-64 flex flex-col gap-4 justify-center items-center">
-          <p>Please login first :(</p>
+          <p>Please login first </p>
           {/* login user */}
           <Button variant="default" onClick={() => router.push("/auth/signin")}>
             Login
@@ -95,25 +97,31 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <main className="mb-6">
-      <nav className="flex justify-between sticky top-0 border-b py-3 bg-white z-50">
-        <p className="text-black font-bold leading-tight text-opacity-30 text-[20px] hidden averagescreen:block">
-          StoreHub
-        </p>
+    // max-w-7xl text-sm m-auto sm:px-16 px-6
+    <main className="mb-6 ">
+      <nav className="max-w-7xl text-sm m-auto sm:px-16 px-6 flex justify-between  py-3">
         {sideBar === false ? (
-          <Image
-            src={hambuger}
-            alt="menu"
-            className="averagescreen:hidden"
-            onClick={handleSideBar}
-          />
+          <div>
+            <Link href="/">
+              <Image
+                className=" w-[125px]
+      h-[30px]"
+                src={storehubFooterLogo}
+                alt=" store hub Logo"
+              />{" "}
+            </Link>
+          </div>
         ) : (
-          <Image
-            src={cancel}
-            alt="hide sidebar"
-            className="averagescreen:hidden"
-            onClick={handleSideBar}
-          />
+          <div>
+            <Link href="/">
+              <Image
+                className=" w-[125px]
+          h-[30px]"
+                src={storehubFooterLogo}
+                alt=" store hub Logo"
+              />{" "}
+            </Link>
+          </div>
         )}
 
         <div className="flex items-center">
@@ -133,9 +141,8 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
             <DropdownMenu>
               <DropdownMenuTrigger>
                 {" "}
-                <span className="flex px-3 items-center">
-                  {user.first_name} .{user.last_name[0]}
-                  {/* <Image src={arrow} alt="user details" className="ml-2" /> */}
+                <span className="flex px-3 items-center text-[#000000] hover:text-black">
+                  {user.first_name} {user.last_name}
                 </span>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
@@ -143,15 +150,6 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                   <div className="text-xs">
                     <div className="flex gap-2">
                       <Link href={`/stores/${store?.store_id}`}>My Store</Link>
-
-                      {/* <span>
-                            <Image
-                              src={Edit}
-                              width={15}
-                              height={15}
-                              alt="inventory"
-                            ></Image>
-                          </span> */}
                     </div>
                   </div>
                 </DropdownMenuLabel>
@@ -188,56 +186,58 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           <Image src={notification} alt="notification" />
-          {/* <NavDropDown /> */}
+          
         </div>
       </nav>
-      <div className="md:flex">
+
+      {/* Side bar starts here  */}
+      <div className=" ">
         <section
-          className={`averagescreen:flex gap-5 flex-col mb-6 md:py-6 pr-[20px] w-fit border-r-2 h-[100vh] top-0 ${
+          className={`md:flex gap-5 flex-col mb-6  pr-[20px] w-fit h-[100vh] top-0 ${
             sideBar ? "flex" : "hidden"
-          } fixed bg-white z-50`}
+          } fixed bg-[#1D2131] z-50  px-5`}
         >
-          <p className="text-black  font-semibold leading-tight mt-[15px] md:mt-0 averagescreen:block">
-            <div className="flex flex-row justify-between">
-              <Image src={logo} width={100} height={100} alt="logo"></Image>
-              <div className="sm:hidden" onClick={handleSideBar}>
-                x
-              </div>
+          <div className="flex pl-2 mb-11  mt-6 flex-row justify-between">
+            <div>
+              <Link href="/">
+                <Image
+                  height={100}
+                  width={100}
+                  src={storehubFooterLogo}
+                  alt=" store hub Logo"
+                />
+              </Link>
             </div>
-          </p>
-          {/* <p className="text-[20px] text-black">{name}</p> */}
+            <div className="sm:hidden" onClick={handleSideBar}>
+              x
+            </div>
+          </div>
+
           <div>
-            {/* <Link
-                  onClick={() => handleItmeClick('home')}
-                  className="flex mb-6 cursor-pointer"
-                  href={{
-                    pathname: '/inventory/orders',
-                    query: {
-                      id: id,
-                      name: name,
-                      user: userID,
-                    },
-                  }}
-                >
-                  {' '}
-                  <Image
-                    src={Home}
-                    alt="Dashboard"
-                    width={20}
-                    height={20}
-                  />{' '}
-                  <span
-                    className={`${
-                      activeItem === 'home' ? 'bg-[#000000] text-white' : ''
-                    } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-bold rounded-[5px]`}
-                  >
-                    Home
-                  </span>
-                </Link> */}
+            <Link
+              onClick={() => handleItmeClick("Dashboard")}
+              className={`${
+                activeItem === "Dashboard" ? "bg-[#FE5B13] text-white" : ""
+              }  p-2 gap-2 font-vietnam rounded-[5px] flex mb-6 cursor-pointer text-white`}
+              href={{
+                pathname: "/inventory/Dashboard",
+                query: {
+                  id: store?.store_id,
+                  name: store?.store_name,
+                  user: user.user_id,
+                },
+              }}
+            >
+              {/* flex mb-6 cursor-pointer */}
+              <Image src={Products} alt="user" width={20} height={20} />
+              <span className="text-white">Dashboard</span>
+            </Link>
 
             <Link
               onClick={() => handleItmeClick("products")}
-              className="flex mb-6 cursor-pointer"
+              className={`${
+                activeItem === "products" ? "bg-[#FE5B13] text-white" : ""
+              }  p-2 gap-2 font-vietnam rounded-[5px] flex mb-6 cursor-pointer`}
               href={{
                 pathname: "/inventory/Itemsdashboard",
                 query: {
@@ -247,19 +247,16 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 },
               }}
             >
+              {/* flex mb-6 cursor-pointer */}
               <Image src={Products} alt="user" width={20} height={20} />
-              <span
-                className={`${
-                  activeItem === "products" ? "bg-[#000000] text-white" : ""
-                } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-medium rounded-[5px]`}
-              >
-                Products Inventory
-              </span>
+              <span className="text-white">Products Inventory</span>
             </Link>
 
             <Link
               onClick={() => handleItmeClick("sales")}
-              className="flex mb-6 cursor-pointer"
+              className={`${
+                activeItem === "sales" ? "bg-[#FE5B13] text-white" : ""
+              }  p-2 gap-2 font-vietnam rounded-[5px] flex mb-6 cursor-pointer`}
               href={{
                 pathname: "/inventory/sales/salesoverview",
                 query: {
@@ -271,17 +268,13 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
             >
               {" "}
               <Image src={Sales} alt="Dashboard" width={20} height={20} />{" "}
-              <span
-                className={`${
-                  activeItem === "sales" ? "bg-[#000000] text-white" : ""
-                } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-medium rounded-[5px]`}
-              >
-                Sales Management
-              </span>
+              <span className="text-white">Sales Management</span>
             </Link>
             <Link
               onClick={() => handleItmeClick("orders")}
-              className="flex mb-6"
+              className={`${
+                activeItem === "orders" ? "bg-[#FE5B13] text-white" : ""
+              }  p-2 gap-2 font-vietnam rounded-[5px] flex mb-6 cursor-pointer`}
               href={{
                 pathname: "/inventory/orders/ordersoverview",
                 query: {
@@ -293,17 +286,13 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
             >
               {" "}
               <Image src={Orders} alt="Dashboard" width={20} height={20} />{" "}
-              <span
-                className={`${
-                  activeItem === "orders" ? "bg-[#000000] text-white" : ""
-                } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-medium rounded-[5px]`}
-              >
-                Order Management
-              </span>
+              <span className="text-white">Order Management</span>
             </Link>
             <Link
               onClick={() => handleItmeClick("settings")}
-              className="flex mb-6 cursor-pointer"
+              className={`${
+                activeItem === "settings" ? "bg-[#FE5B13] text-white" : ""
+              }  p-2 gap-2 font-vietnam rounded-[5px] flex mb-6 cursor-pointer`}
               href={{
                 pathname: "/inventory/storesettings",
                 query: {
@@ -320,13 +309,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 width={20}
                 height={20}
               />{" "}
-              <span
-                className={`${
-                  activeItem === "settings" ? "bg-[#000000] text-white" : ""
-                } ml-2 px-4 w-[170px] md:w-[190px] py-[4px] font-medium rounded-[5px]`}
-              >
-                Settings
-              </span>
+              <span className="text-white">Settings</span>
             </Link>
           </div>
         </section>
@@ -334,7 +317,10 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
         <div className="w-full averagescreen:pl-2 averagescreen:ml-[250px] calculated-width">
           {children}
         </div>
+        {/* <PageFooter /> */}
       </div>
+
+      
     </main>
   );
 };

@@ -22,6 +22,7 @@ import {
 import { getSession } from "@app/actions/auth-action";
 import { getUser, removeUser } from "@lib/session";
 import { Menu, X } from "lucide-react";
+import { ShoppingCartIcon } from "@heroicons/react/24/outline";
 
 const Nav = () => {
   const [store, setStore] = useState<any>();
@@ -114,6 +115,10 @@ const Nav = () => {
           </Link>
         </div>
 
+        <div className="hover:text-[#FE5B13] cursor-pointer font-vietnam font-[600] flex items-center space-x-1 ">
+          <p>Cart</p> <ShoppingCartIcon className="h-6  w-6" />
+        </div>
+
         <div className="flex gap-[38px]">
           {/* this is where the login and get started auth logic comes in */}
 
@@ -176,13 +181,17 @@ const Nav = () => {
                         Account
                       </Link>
                     </Dropdown.Item>
+
+                  
+
                     <Dropdown.Item>
                       {!error &&
                       !data?.error &&
                       data?.data.result.stores.length ? (
                         <Link
+                        className="hover:text-[#FE5B13] font-[600]"
                           href={{
-                            pathname: "/inventory/Itemsdashboard",
+                            pathname: "/inventory/Dashboard",
                             query: {
                               id: data?.data.result.stores[0].store_id,
                               name: data?.data.result.stores[0].store_name,

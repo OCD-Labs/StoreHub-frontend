@@ -1,3 +1,4 @@
+
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -11,24 +12,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { signinAction } from "@app/actions/auth-action";
 import { setUser as storeUser } from "@lib/session";
 import { EyeClosedIcon, EyeOpenIcon } from "@radix-ui/react-icons";
-
 const SignIn = () => {
   const [loading, setloading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
-
   const router = useRouter();
-
   const {
     register,
     handleSubmit,
     setError,
     formState: { errors, isSubmitting },
   } = useForm<IUserCredential>();
-
   /**
    * submit logic
    * @param data
@@ -45,33 +41,16 @@ const SignIn = () => {
         });
       } else {
         storeUser("user", JSON.stringify(userData?.user));
-
         router.push("/home");
       }
-      // const user = await signIn("credentials", {
-      //   email: data.email,
-      //   password: data.password,
-      //   redirect: false,
-      // });
-      // if (user) {
-      //   console.log(user);
-      //   debugger;
-      //   setloading(false);
-      //   if (user?.error) {
-      //     toast.error("Wrong email or password. Try again");
-      //   } else {
-      //     debugger;
-      //     router.push("/home");
-      //   }
-      // }
+      
+    
     } catch (error) {}
   };
-
   return (
     <div className="flex justify-center items-center h-screen w-screen z-10">
       <div className="flex flex-col md:flex-row w-full md:p-12">
         <ToastContainer></ToastContainer>
-
         {/* Left Section with Image or Graphics (Optional) */}
         <div className="hidden md:flex flex-col justify-center p-6 items-center w-1/2 ">
           <img
@@ -80,22 +59,18 @@ const SignIn = () => {
             alt="sign up"
           />
         </div>
-
         {/* Right Section: Form */}
         <section className="w-full h-screen md:h-0 md:w-1/2 p-[6%]">
           <form autoComplete="on">
             <h1 className="text-3xl font-bold mb-9 py-4">
               Sign in to Storehub
             </h1>
-
             {/*Pasword error Message  */}
-
             {errors.root && (
               <p className="w-full p-3 mb-6 text-red-500 bg-red-50 border border-gray-300 rounded-lg">
                 {errors.root.message}
               </p>
             )}
-
             <div className="flex flex-col gap-5 sm:gap-3 lg:gap-7">
               {/* Email Input */}
               <div className="">
@@ -115,7 +90,6 @@ const SignIn = () => {
                   })}
                 />
               </div>
-
               {/* Password Input */}
               <div className="mb-2">
                 <label
@@ -131,7 +105,6 @@ const SignIn = () => {
                     placeholder="Enter password"
                     {...register("password", { required: true, min: 9 })}
                   />
-
                   <div className="absolute inset-y-0 right-0 flex items-center pr-3">
                     <button
                       type="button"
@@ -146,21 +119,20 @@ const SignIn = () => {
                     </button>
                   </div>
                 </div>
-
                 {/* Forgot password */}
                 <div className="text-right mb-6">
-                  <p className="text-[#1190e6] mt-4 cursor-pointer font-medium text-sm">
+                  <p className="text-[#060606] mt-4 cursor-pointer font-medium text-sm">
                     Forgot your password?
                   </p>
                 </div>
               </div>
-
+              
               {/* Submit Button */}
               <Button
                 type="submit"
                 disabled={isSubmitting}
                 onClick={handleSubmit(onSubmit)}
-                className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white bg-[#161616] text-lg w-full "
+                className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white bg-[#FE5B13] hover:bg-[#a96a4f] text-lg w-full "
               >
                 {isSubmitting ? (
                   <div className="flex justify-center">
@@ -173,36 +145,15 @@ const SignIn = () => {
               </Button>
             </div>
           </form>
-
-          {/* 
-  <span className="flex justify-between pt-2 sm:pt-1 md:pt-2">
-    <button className="flex items-center justify-center py-1 md:py-2 w-[44%] rounded-[10px] border cursor-pointer">
-      <img
-        className="w-6"
-        src="../../assets/icons/google.svg"
-        alt="sign up with google"
-      />
-      <p className="ml-3">Google</p>
-    </button>
-    <button className="flex items-center justify-center py-1 md:py-2 w-[44%] rounded-[10px] border cursor-pointer">
-      <img
-        className="w-6"
-        src="../../assets/icons/google.svg"
-        alt="sign up with google"
-      />
-      <p className="ml-3">Google</p>
-    </button>
-  </span> */}
-          {/* Divider */}
+         
           <div className=" my-6">
             <div className="flex-grow h-px bg-gray-300"></div>
           </div>
-
           {/* Signup Link */}
           <p className="text-center text-l font-semibold text-gray-600 mt-6">
             Don't have an account?{" "}
             <Link href="/auth/signup">
-              <span className=" underline text-[#1190e6] hover:underline">
+              <span className=" underline text-[#FE5B13] hover:underline">
                 Get Started
               </span>
             </Link>
@@ -212,5 +163,4 @@ const SignIn = () => {
     </div>
   );
 };
-
 export default SignIn;

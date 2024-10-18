@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 import "../styles/inventory.css";
-
+import { PlusIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import ProductItem from "@components/stores/productitem";
 import AddItemModal from "@components/stores/create-store/addItemModal";
 import { Inventory } from "@StoreManager/inventory";
@@ -17,6 +17,11 @@ import { ModalOptions, modalstore } from "@StoreManager/modalstore";
 import necklace from "../../../../public/assets/images/necklace.png";
 import search from "../../../../public/assets/icons/search.svg";
 import filter from "../../../../public/assets/icons/filter.svg";
+import productImage1 from "@public/assets/images/productImage1.png";
+import productImage2 from "@public/assets/images/productImage2.png";
+import productImage3 from "@public/assets/images/productImage3.png";
+import productImage4 from "@public/assets/images/productImage4.png";
+import SearchIcon from "@public/assets/images/SearchIcon.png";
 import {
   Table,
   TableBody,
@@ -39,6 +44,58 @@ const StoreInventory = () => {
   const stores = Inventory((state) => state.stores);
   const modaloptions = modalstore((state) => state.modalOptions);
   const [loading, setloading] = useState<boolean>(true);
+  const [search, setSearch] = useState("");
+
+  const products = [
+    {
+      image: "/assets/images/productImage1.png",
+      name: "Barilla",
+      description: "Pasta",
+      id: "WDT-444",
+      category: "Food",
+      quantity: 240,
+      price: "$1.25",
+      status: "In Stock",
+      statusColor: "text-green-500 ",
+      statusColorDot: "bg-green-500",
+    },
+    {
+      image: "/assets/images/productImage2.png",
+      name: "Indomie",
+      description: "Noodles",
+      id: "WDT-768",
+      category: "Food",
+      quantity: 190,
+      price: "$1.25",
+      status: "In Stock",
+      statusColor: "text-green-500",
+      statusColorDot: "bg-green-500",
+    },
+    {
+      image: "/assets/images/productImage3.png",
+      name: "Pack pasta",
+      description: "Pasta",
+      id: "WDT-890",
+      category: "Food",
+      quantity: 190,
+      price: "$1.25",
+      status: "Out of Stock",
+      statusColor: "text-red-500",
+      statusColorDot: "bg-red-500",
+    },
+    {
+      image: "/assets/images/productImage4.png",
+      name: "Heirloom",
+      description: "Apples",
+      id: "WDT-567",
+      category: "Food",
+      quantity: 190,
+      price: "$1.25",
+      status: "Low Stock",
+      statusColor: "text-yellow-500",
+      statusColorDot: "bg-yellow-500",
+    },
+  ];
 
   const userID: string | null = useSearchParams().get("user");
 
@@ -100,23 +157,26 @@ const StoreInventory = () => {
 
   return (
     <Suspense>
-      <main className="w-full py-4 averagescreen:py-6">
+      {/* modal to be triggered by Add item button below */}
+      <main className="w-full py-4 px-5 max-w-7xl m-auto averagescreen:py-6">
         <div
           className={`modal ${
             isOpen ? "animate-animatefadeIn is-open" : "animate-animatefadeOut"
           } lg:px-[] ${isOpen ? "is-open" : ""}`}
         >
-          <div className="modal-content w-[90%] md:w-[60%] h-[90vh]">
-            <div className="flex justify-between items-center lg:px-20px">
-              <div className="font-bold text-lg">Add Item</div>
-              <span
-                onClick={() => {
-                  toggleModal(options);
-                }}
-                className="text-lg cursor-pointer p-2"
-              >
-                X
-              </span>
+          <div className="modal-content w-[100%] md:w-[80%] h-[90vh]">
+            <div className="bg-white rounded-lg p-6 w-full max-w-4xl">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-semibold">Add Product</h2>
+                <button
+                  onClick={() => {
+                    toggleModal(options);
+                  }}
+                  className="text-gray-500 hover:text-gray-700"
+                >
+                  Discard
+                </button>
+              </div>
             </div>
 
             <AddItemModal
@@ -128,10 +188,118 @@ const StoreInventory = () => {
           </div>
         </div>
 
-        {/* product inventory header */}
+        {/* Product listed items */}
+        <div className="max-w-7xl mx-auto p-6">
+          {/* Top Section with Filters and Search */}
+          <div className="flex items-center rounded-lg justify-between bg-[#FCF8F2] py-2 px-4 shadow-sm">
+            {/* Left section with icons */}
+            <div className="flex items-center space-x-2">
+              <button
+                onClick={() => {
+                  toggleModal(options);
+                }}
+                className="p-2 "
+              >
+                <PlusIcon className="h-5 w-5 text-black" />
+              </button>
+
+              <Image src={filter} width={25} height={25} />
+            </div>
+
+            {/* Search bar */}
+            <div className="relative">
+              <div className="relative">
+                <input
+                  type="text"
+                  className="bg-white border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                  placeholder="Search"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+                <div className="absolute left-4 top-[13px]">
+                  <Image
+                    src={SearchIcon}
+                    height={17}
+                    width={15}
+                    className="text-black"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Table */}
+          <div className="overflow-x-auto">
+            <table className="min-w-full bg-white rounded-lg ">
+              <thead>
+                <tr className="text-left text-gray-500 text-sm">
+                  <th className="py-3 px-4 border-b">
+                    <input type="checkbox" className="rounded" />
+                  </th>
+                  <th className="py-3 px-4 border-b">Product</th>
+                  <th className="py-3 px-4 border-b">ID</th>
+                  <th className="py-3 px-4 border-b">Category</th>
+                  <th className="py-3 px-4 border-b">Quantity</th>
+                  <th className="py-3 px-4 border-b">Pricing</th>
+                  <th className="py-3 px-4 border-b">Status</th>
+                </tr>
+              </thead>
+              <tbody className=" border-b">
+                {products.map((product, index) => (
+                  <tr key={index} className="border-t">
+                    <td className="py-4 px-4">
+                      <input type="checkbox" className="rounded" />
+                    </td>
+                    <td className="py-4 px-4 flex items-center space-x-2">
+                      <Image
+                        src={product.image}
+                        alt={product.name}
+                        width={40}
+                        height={40}
+                      />
+                      <div>
+                        <p className="font-medium text-gray-800">
+                          {product.name}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {product.description}
+                        </p>
+                      </div>
+                    </td>
+                    <td className="py-4 px-4 text-orange-500 font-medium text-sm">
+                      {product.id}
+                    </td>
+                    <td className="py-4 px-4 text-black font-medium text-sm">
+                      {product.category}
+                    </td>
+                    <td className="py-4 px-4 text-black font-medium text-sm">
+                      {product.quantity}
+                    </td>
+                    <td className="py-4 px-4 text-black font-medium text-sm">
+                      {product.price}
+                    </td>
+                    <td className="flex mb-4 items-center">
+                      <span
+                        className={`py-4 px-4 text-[10px] ${product.statusColor}`}
+                      >
+                        {product.status}{" "}
+                      </span>{" "}
+                      <span
+                        className={`ml-1  w-1 h-1 rounded-full ${product.statusColorDot}`}
+                      ></span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* product inventory Starts here
         <div className="flex mb-12">
           <span className="mr-4 flex items-center">
-            {/* <img src='../../assets/images/necklace.png' alt='Product' className='border'/> */}
+            
+
 
             <Image
               src={
@@ -165,10 +333,10 @@ const StoreInventory = () => {
               Jewelry Store
             </div>
           </span>
-        </div>
+        </div> */}
 
         {/* all products header */}
-        <div>
+        {/* <div>
           <div className="flex justify-between">
             <div className="flex">
               <p className="text-base font-bold text-[#000000] mr-6">
@@ -179,13 +347,12 @@ const StoreInventory = () => {
                 {stores.map((store) => {
                   return <option>{store.store_name}</option>;
                 })}
-                {/* <option>Dalu test stores</option>
-                <option>Hi</option>
-                <option>there</option> */}
+               
               </select>
-            </div>
+            </div> */}
 
-            <div>
+        {/* currencs components */}
+        {/* <div>
               <select className="border py-1 px-3">
                 <option>Currency</option>
                 <option>Near</option>
@@ -193,11 +360,12 @@ const StoreInventory = () => {
                 <option>Dollar</option>
               </select>
             </div>
-          </div>
+          </div> */}
 
-          <hr className="my-2" />
-          {/* search bar and add item div */}
-          <div className="flex justify-between mb-6 sm:mb-10">
+        {/* <hr className="my-2" /> */}
+
+        {/* search bar and add item div */}
+        {/* <div className="flex justify-between mb-6 sm:mb-10">
             <span className="relative w-[70%] sm:w-[75%]">
               <input
                 className="border w-full h-[35px] rounded-[5px] pl-[30px] sm:pl-[40px] pr-[30px] sm:pr-[35px]"
@@ -217,8 +385,10 @@ const StoreInventory = () => {
                 width={20}
                 className="absolute top-2 right-2"
               />
-            </span>
-            <button
+            </span> */}
+
+        {/* add item button that triggers the modal above */}
+        {/* <button
               onClick={() => {
                 toggleModal(options);
               }}
@@ -227,9 +397,10 @@ const StoreInventory = () => {
               Add Item +
             </button>
           </div>
-        </div>
+        </div> */}
 
-        <div className="md:flex">
+        {/* Product iventory table content */}
+        {/* <div className="md:flex">
           <ToastContainer />
           <section className="md:flex-1">
             <div className="flex flex-col overflow-x-scroll scroll-smooth">
@@ -264,8 +435,8 @@ const StoreInventory = () => {
                 </TableBody>
               </Table>
             </div>
-          </section>
-        </div>
+          </section> */}
+        {/* </div> */}
       </main>
     </Suspense>
   );
