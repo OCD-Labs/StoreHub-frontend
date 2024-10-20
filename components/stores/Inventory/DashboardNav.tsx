@@ -99,8 +99,8 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   return (
     // max-w-7xl text-sm m-auto sm:px-16 px-6
     <main className="mb-6 ">
-      <nav className="max-w-7xl text-sm m-auto sm:px-16 px-6 flex justify-between  py-3">
-        {sideBar === false ? (
+      <nav className="max-w-7xl text-sm m-auto sm:px-16 px-6 flex items-center  justify-between  py-3">
+        {/* {sideBar === false ? (
           <div>
             <Link href="/">
               <Image
@@ -122,9 +122,9 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               />{" "}
             </Link>
           </div>
-        )}
+        )} */}
 
-        <div className="flex items-center">
+        <div className="flex ml-auto items-center">
           <div
             onClick={() => {
               navigator.clipboard.writeText(user.account_id);

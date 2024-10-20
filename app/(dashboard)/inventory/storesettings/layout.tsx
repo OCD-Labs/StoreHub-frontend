@@ -14,11 +14,23 @@ const Order = ({ children }: { children: React.ReactNode }) => {
     <div>
       <div className="py-4 averagescreen:py-6">
         <section>
-          <div className="bg-[#000000] text-white rounded-[5px] p-3">
-            Settings
-          </div>
-          <div className="flex justify-between my-5">
-            <li className="flex gap-5">
+         
+          <div className="flex my-5">
+          <Link
+                href={{
+                  pathname: '/inventory/storesettings/coownership',
+                  query: {
+                    id: id,
+                    name: name,
+                    token: token,
+                    user: userID,
+                  },
+                }}
+              >
+                <span>Co-ownership Settings</span>
+              </Link>
+
+            {/* <li className="flex gap-5">
               <ul>
                 <Link
                   href={{
@@ -49,23 +61,11 @@ const Order = ({ children }: { children: React.ReactNode }) => {
                   <span>Notifications</span>
                 </Link>
               </ul>
-            </li>
+            </li> */}
 
             <div className="flex gap-3">
-              <Link
-                href={{
-                  pathname: '/inventory/orders/ordersoverview',
-                  query: {
-                    id: id,
-                    name: name,
-                    token: token,
-                    user: userID,
-                  },
-                }}
-              >
-                <span>Co-ownership Settings</span>
-              </Link>
-              <Link
+             
+              {/* <Link
                 href={{
                   pathname: '/inventory/orders/ordersoverview',
                   query: {
@@ -77,7 +77,7 @@ const Order = ({ children }: { children: React.ReactNode }) => {
                 }}
               >
                 <span>Social Media Integration</span>
-              </Link>
+              </Link> */}
             </div>
           </div>
           <hr className="py-3" />
