@@ -131,11 +131,11 @@ const coOwnership = () => {
      
 
       <div className="mt-9 flex items-center justify-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 ">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 ">
           {cardData.map((card, index) => (
             <div
               key={index}
-              className="border h-[187px] w-[225px] border-gray-200 rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="border lg:h-[187px] lg:w-[225px] border-gray-200 rounded-lg px-3 pt-3 shadow-sm hover:shadow-md transition-shadow duration-300"
             >
               <div
                 className={`flex items-center justify-center h-8 w-10 p-2 rounded-md ${card.bgColor}`}
@@ -155,6 +155,7 @@ const coOwnership = () => {
               <p className="mt-4 text-[12px] font-vietnam text-[#1D213180]">
                 {card.description}
               </p>
+              <Image src={coownershicard5} alt="" className="mt-6" />
             </div>
 
             

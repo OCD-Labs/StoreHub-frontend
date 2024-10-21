@@ -109,10 +109,7 @@ const SalesOverview: React.FC = () => {
       <div className="flex items-center rounded-lg justify-between bg-[#FCF8F2] py-2 px-4 shadow-sm">
         {/* Left section with icons */}
         <div className="flex items-center space-x-2">
-          <button
-            
-            className="p-2 "
-          >
+          <button className="p-2 ">
             <PlusIcon className="h-5 w-5 text-black" />
           </button>
 
@@ -147,46 +144,50 @@ const SalesOverview: React.FC = () => {
           {/* my edits starts here */}
 
           <div className="mb-11">
-            <div className="grid grid-cols-4 gap-4 mb-8">
+            <div className="grid grid-cols-2  lg:grid-cols-4 gap-4 mb-8">
               {/* Total Sales one */}
-              <div className="bg-white p-4 rounded-lg shadow-md flex flex-col justify-between relative">
+              <div className="bg-white p-4 rounded-lg border flex flex-col justify-between relative">
                 <div className="absolute top-4 right-4">
                   {/* Placeholder for dropdown */}
-                  <button className=" text-gray-500 text-xs border px-2 py-1 rounded-lg">
+                  <button className="text-gray-500 text-xs sm:text-sm border px-1 sm:px-2 py-0.5 sm:py-1 rounded-lg">
                     Monthly ▼
                   </button>
                 </div>
 
                 <div className="flex items-center">
-                  <div className="bg-orange-100 p-2 rounded-md">
+                  <div className="bg-orange-100 p-1 sm:p-2 rounded-md">
                     {/* Placeholder for the icon */}
                     <Image
                       src={saledOverview1}
                       alt="sales icon"
-                      width={32}
-                      height={32}
+                      width={24}
+                      height={24}
                     />
                   </div>
                 </div>
 
                 <div className="mt-4">
-                  <p className="text-gray-500">Total Sales</p>
+                  <p className="text-gray-500 text-sm  lg:text-lg">
+                    Total Sales
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-between mt-4">
-                  <h3 className="text-2xl font-semibold text-gray-800 mt-2">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mt-2">
                     567
                   </h3>
-                  <p className="text-green-500 mt-2">▲ 10%</p>
+                  <p className="text-green-500 text-xs sm:text-sm mt-2">
+                    ▲ 10%
+                  </p>
                 </div>
               </div>
 
               {/* Monthly Sales*/}
-              <div className="bg-white p-4 rounded-lg shadow-md flex flex-col justify-between relative">
+              <div className="bg-white p-4 rounded-lg border flex flex-col justify-between relative">
                 <div className="absolute top-4 right-4"></div>
 
                 <div className="flex items-center">
-                  <div className="bg-green-100 p-2 rounded-md">
+                  <div className="bg-green-100 p-2 sm:p-2 rounded-md">
                     {/* Placeholder for the icon */}
                     <Image
                       src={saledOverview2}
@@ -198,28 +199,32 @@ const SalesOverview: React.FC = () => {
                 </div>
 
                 <div className="mt-4">
-                  <p className="text-gray-500">Monthly Sales</p>
+                  <p className="text-gray-500 text-sm  lg:text-lg">
+                    Monthly Sales
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-between mt-4">
-                  <h3 className="text-2xl font-semibold text-gray-800 mt-2">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mt-2">
                     $3400
                   </h3>
-                  <p className="text-green-500 mt-2">▲ 10%</p>
+                  <p className="text-green-500 text-xs sm:text-sm mt-2">
+                    ▲ 10%
+                  </p>
                 </div>
               </div>
 
               {/* Total Revenue */}
-              <div className="bg-white p-4 rounded-lg shadow-md flex flex-col justify-between relative">
+              <div className="bg-white p-4 rounded-lg border flex flex-col justify-between relative">
                 <div className="absolute top-4 right-4">
                   {/* Placeholder for dropdown */}
-                  <button className=" text-gray-500 text-xs border px-2 py-1 rounded-lg">
+                  <button className=" text-gray-500 text-xs sm:text-sm border px-1 sm:px-1 py-0.5 sm:py-1 rounded-lg">
                     Monthly ▼
                   </button>
                 </div>
 
                 <div className="flex items-center">
-                  <div className="bg-blue-100 p-2 rounded-md">
+                  <div className="bg-blue-100 p-2 sm:p-2 rounded-md">
                     {/* Placeholder for the icon */}
                     <Image
                       src={saledOverview3}
@@ -231,29 +236,33 @@ const SalesOverview: React.FC = () => {
                 </div>
 
                 <div className="mt-4">
-                  <p className="text-gray-500">Total Revenue</p>
+                  <p className="text-gray-500 text-sm  lg:text-lg">
+                    Total Revenue
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-between mt-4">
-                  <h3 className="text-2xl font-semibold text-gray-800 mt-2">
+                  <h3 className="text-l sm:text-2xl font-semibold text-gray-800 mt-2">
                     $33,565
                   </h3>
-                  <p className="text-green-500 mt-2">▲ 10%</p>
+                  <p className="text-green-500 text-xs sm:text-sm mt-2">
+                    ▲ 10%
+                  </p>
                 </div>
               </div>
 
               {/* Total Customers */}
 
-              <div className="bg-white p-4 rounded-lg shadow-md flex flex-col justify-between relative">
+              <div className="bg-white p-4 rounded-lg border flex flex-col justify-between relative">
                 <div className="absolute top-4 right-4">
                   {/* Placeholder for dropdown */}
-                  <button className=" text-gray-500 text-xs border px-2 py-1 rounded-lg">
+                  <button className=" text-gray-500 text-xs sm:text-sm border px-1 sm:px-2 py-0.5 sm:py-1 rounded-lg">
                     Monthly ▼
                   </button>
                 </div>
 
                 <div className="flex items-center">
-                  <div className="bg-purple-100 p-2 rounded-md">
+                  <div className="bg-blue-100 p-2 sm:p-2 rounded-md">
                     {/* Placeholder for the icon */}
                     <Image
                       src={saledOverview4}
@@ -265,14 +274,18 @@ const SalesOverview: React.FC = () => {
                 </div>
 
                 <div className="mt-4">
-                  <p className="text-gray-500">Total Customers</p>
+                  <p className="text-gray-500 text-sm  lg:text-lg">
+                    Total Customers
+                  </p>
                 </div>
 
                 <div className="flex items-center justify-between mt-4">
-                  <h3 className="text-2xl font-semibold text-gray-800 mt-2">
+                  <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mt-2">
                     145
                   </h3>
-                  <p className="text-green-500 mt-2">▲ 10%</p>
+                  <p className="text-green-500 text-xs sm:text-sm mt-2">
+                    ▲ 10%
+                  </p>
                 </div>
               </div>
             </div>
@@ -281,30 +294,36 @@ const SalesOverview: React.FC = () => {
             <div className="bg-[#FCF8F2] p-6 rounded-lg shadow-md">
               <div className="flex justify-between">
                 {/* Header Section */}
-                <div className="flex justify-between items-center mb-4">
+                <div className="flex justify-between items-center mb-2 sm:mb-4">
                   <div className="flex items-center">
-                    <h3 className="text-xl font-semibold text-gray-800 mr-2">
+                    <h3 className="text-[12px] lg:text-xl font-semibold text-gray-800 mr-1 sm:mr-1">
                       Growth Chart
                     </h3>
-                    <button className=" text-gray-500 text-xs px-2 py-1 border rounded-full">
+                    <button className="hidden sm:block text-gray-500 text-xs sm:text-sm px-1 sm:px-2 py-0.5 sm:py-1 border rounded-full">
                       ?
                     </button>
                   </div>
                 </div>
 
                 {/* Labels Section */}
-                <div className="flex justify-end space-x-4 mb-6">
+                <div className="flex justify-end space-x-2 mt-2 lg:mt-0 sm:space-x-4 mb-4 sm:mb-6">
                   <div className="flex items-center">
-                    <span className="w-3 h-3 bg-purple-500 rounded-full mr-1"></span>
-                    <span className="text-gray-500 text-sm">Customers</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 bg-purple-500 rounded-full mr-1"></span>
+                    <span className="text-xs sm:text-sm text-gray-500">
+                      Customers
+                    </span>
                   </div>
                   <div className="flex items-center">
-                    <span className="w-3 h-3 bg-green-500 rounded-full mr-1"></span>
-                    <span className="text-gray-500 text-sm">Sales</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 bg-green-500 rounded-full mr-1"></span>
+                    <span className="text-xs sm:text-sm text-gray-500">
+                      Sales
+                    </span>
                   </div>
                   <div className="flex items-center">
-                    <span className="w-3 h-3 bg-yellow-500 rounded-full mr-1"></span>
-                    <span className="text-gray-500 text-sm">Growth</span>
+                    <span className="w-2 h-2 sm:w-3 sm:h-3 bg-yellow-500 rounded-full mr-1"></span>
+                    <span className="text-xs sm:text-sm text-gray-500">
+                      Growth
+                    </span>
                   </div>
                 </div>
               </div>

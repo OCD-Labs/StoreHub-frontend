@@ -15,7 +15,7 @@ const Order = ({ children }: { children: React.ReactNode }) => {
       <div className="py-4 averagescreen:py-6">
         <section>
          
-          <div className="flex my-5">
+          <div className="flex px-3 lg:px-0 my-5">
           <Link
                 href={{
                   pathname: '/inventory/storesettings/coownership',
@@ -80,7 +80,7 @@ const Order = ({ children }: { children: React.ReactNode }) => {
               </Link> */}
             </div>
           </div>
-          <hr className="py-3" />
+      
         </section>
         <section>{children}</section>
       </div>

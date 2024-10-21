@@ -9,49 +9,53 @@ const salesHIstory = () => {
       image: "/assets/images/productImage1.png",
       name: "Barilla",
       description: "Pasta",
-      id: "WDT-444",
       category: "Food",
-      quantity: 240,
       price: "$1.25",
-      status: "In Stock",
+      quantity: 3,
+      id: "WDT-444",
+      Discount: "25%",
+      paymentMethods: "Near",
       statusColor: "text-green-500 ",
       statusColorDot: "bg-green-500",
     },
     {
-      image: "/assets/images/productImage2.png",
-      name: "Indomie",
-      description: "Noodles",
-      id: "WDT-768",
+      image: "/assets/images/productImage1.png",
+      name: "Barilla",
+      description: "Pasta",
       category: "Food",
-      quantity: 190,
       price: "$1.25",
-      status: "In Stock",
-      statusColor: "text-green-500",
+      quantity: 3,
+      id: "WDT-444",
+      Discount: "15%",
+      paymentMethods: "Near",
+      statusColor: "text-green-500 ",
       statusColorDot: "bg-green-500",
     },
     {
-      image: "/assets/images/productImage3.png",
-      name: "Pack pasta",
+      image: "/assets/images/productImage1.png",
+      name: "Barilla",
       description: "Pasta",
-      id: "WDT-890",
       category: "Food",
-      quantity: 190,
       price: "$1.25",
-      status: "Out of Stock",
-      statusColor: "text-red-500",
-      statusColorDot: "bg-red-500",
+      quantity: 3,
+      id: "WDT-444",
+      Discount: "25%",
+      paymentMethods: "Near",
+      statusColor: "text-green-500 ",
+      statusColorDot: "bg-green-500",
     },
     {
-      image: "/assets/images/productImage4.png",
-      name: "Heirloom",
-      description: "Apples",
-      id: "WDT-567",
+      image: "/assets/images/productImage1.png",
+      name: "Barilla",
+      description: "Pasta",
       category: "Food",
-      quantity: 190,
       price: "$1.25",
-      status: "Low Stock",
-      statusColor: "text-yellow-500",
-      statusColorDot: "bg-yellow-500",
+      quantity: 3,
+      id: "WDT-444",
+      Discount: "15%",
+      paymentMethods: "Near",
+      statusColor: "text-green-500 ",
+      statusColorDot: "bg-green-500",
     },
   ];
 
@@ -99,11 +103,12 @@ const salesHIstory = () => {
                 <input type="checkbox" className="rounded" />
               </th>
               <th className="py-3 px-4 border-b">Product</th>
-              <th className="py-3 px-4 border-b">ID</th>
               <th className="py-3 px-4 border-b">Category</th>
+              <th className="py-3 px-4 border-b">Price</th>
               <th className="py-3 px-4 border-b">Quantity</th>
-              <th className="py-3 px-4 border-b">Pricing</th>
-              <th className="py-3 px-4 border-b">Status</th>
+              <th className="py-3 px-4 border-b">Product ID</th>
+              <th className="py-3 px-4 border-b">Discount</th>
+              <th className="py-3 px-4 border-b">Payment Method</th>
             </tr>
           </thead>
           <tbody className=" border-b">
@@ -128,24 +133,28 @@ const salesHIstory = () => {
                     </p>
                   </div>
                 </td>
-                <td className="py-4 px-4 text-orange-500 font-medium text-sm">
-                  {salesHistory.id}
-                </td>
-                <td className="py-4 px-4 text-black font-medium text-sm">
+                <td className="py-4 px-9 text-black font-medium text-sm">
                   {salesHistory.category}
-                </td>
-                <td className="py-4 px-4 text-black font-medium text-sm">
-                  {salesHistory.quantity}
                 </td>
                 <td className="py-4 px-4 text-black font-medium text-sm">
                   {salesHistory.price}
                 </td>
+                <td className="py-4 px-9 text-black font-medium text-sm">
+                  {salesHistory.quantity}
+                </td>
+                <td className="py-4 px-4 text-orange-500 font-medium text-sm">
+                  {salesHistory.id}
+                </td>
+                <td className="">
+                  <span className="py-4 px-9 font-medium text-black text-sm">
+                    {salesHistory.Discount}
+                  </span>
+                </td>
                 <td className="">
                   <span
-                    className={`py-4 px-4 text-[10px] ${salesHistory.statusColor}`}
-                  >
-                    {salesHistory.status}
-                  </span>
+                    className={`py-4 px-9 font-medium text-sm ${salesHistory.statusColor}`}
+                  ></span>
+                  {salesHistory.paymentMethods}
                 </td>
               </tr>
             ))}

@@ -27,6 +27,8 @@ import { Inventory } from "@StoreManager/inventory";
 import { getUser } from "@lib/session";
 import storehubFooterLogo from "@public/assets/images/StorehubFooterLogo.png";
 import PageFooter from "@components/global/PageFooter";
+import storehubIcon from "@public/assets/images/storehubIcon.svg";
+import { Menu, X } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -99,31 +101,8 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   return (
     // max-w-7xl text-sm m-auto sm:px-16 px-6
     <main className="mb-6 ">
-      <nav className="max-w-7xl text-sm m-auto sm:px-16 px-6 flex items-center  justify-between  py-3">
-        {/* {sideBar === false ? (
-          <div>
-            <Link href="/">
-              <Image
-                className=" w-[125px]
-      h-[30px]"
-                src={storehubFooterLogo}
-                alt=" store hub Logo"
-              />{" "}
-            </Link>
-          </div>
-        ) : (
-          <div>
-            <Link href="/">
-              <Image
-                className=" w-[125px]
-          h-[30px]"
-                src={storehubFooterLogo}
-                alt=" store hub Logo"
-              />{" "}
-            </Link>
-          </div>
-        )} */}
-
+      {/* Large Screen */}
+      <nav className="hidden max-w-7xl text-sm m-auto sm:px-16 px-6 lg:flex items-center  justify-between  py-3">
         <div className="flex ml-auto items-center">
           <div
             onClick={() => {
@@ -186,7 +165,17 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           <Image src={notification} alt="notification" />
-          
+        </div>
+      </nav>
+
+      {/* mobile navigation */}
+      <nav className=" lg:hidden max-w-[90rem] mx-auto px-4 flex justify-between relative my-5 items-center ">
+        <div className="ml-auto flex gap-2 items-center">
+          <Image src={notification} alt="notification" />
+
+          <div className="sm:hidden" onClick={handleSideBar}>
+            <Menu/>
+          </div>
         </div>
       </nav>
 
@@ -207,9 +196,6 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                   alt=" store hub Logo"
                 />
               </Link>
-            </div>
-            <div className="sm:hidden" onClick={handleSideBar}>
-              x
             </div>
           </div>
 
@@ -294,7 +280,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
                 activeItem === "settings" ? "bg-[#FE5B13] text-white" : ""
               }  p-2 gap-2 font-vietnam rounded-[5px] flex mb-6 cursor-pointer`}
               href={{
-                pathname: "/inventory/storesettings",
+                pathname: "/inventory/storesettings/coownership",
                 query: {
                   id: store?.store_id,
                   name: store?.store_name,
@@ -311,6 +297,71 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               />{" "}
               <span className="text-white">Settings</span>
             </Link>
+
+            {/* only seen in mobile */}
+            <div className="lg:hidden flex ml-[130px] mt-[440px] items-center">
+              <div
+                onClick={() => {
+                  navigator.clipboard.writeText(user.account_id);
+                }}
+              >
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  alt=""
+                />
+              </div>
+
+              <div>
+                <DropdownMenu>
+                  <DropdownMenuTrigger>
+                    {" "}
+                    <span className="flex px-3 text-white font-bold font-vietnam items-center ">
+                      {user.first_name[0]} {user.last_name[0]}
+                    </span>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuLabel>
+                      <div className="text-xs">
+                        <div className="flex gap-2">
+                          <Link href={`/stores/${store?.store_id}`}>
+                            My Store
+                          </Link>
+                        </div>
+                      </div>
+                    </DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <div className="text-xs flex gap-2">
+                        Switch User
+                        <span>
+                          {/* <Image
+                        src={duplicate}
+                        width={15}
+                        height={15}
+                        alt="inventory"
+                      ></Image> */}
+                        </span>
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem>
+                      <div className="text-xs flex gap-2">
+                        Sign Out
+                        <span>
+                          {/* <Image
+                        src={status}
+                        width={15}
+                        height={15}
+                        alt="inventory"
+                      ></Image> */}
+                        </span>
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
           </div>
         </section>
         <ToastContainer />
@@ -319,8 +370,6 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
         </div>
         {/* <PageFooter /> */}
       </div>
-
-      
     </main>
   );
 };

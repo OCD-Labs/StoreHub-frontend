@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { AuthProvider } from "@contexts/AuthProvider";
-import { BASE_URL } from "@components/util/config";
+// import { BASE_URL } from "@components/util/config";
 const Order = ({ children }: { children: React.ReactNode }) => {
   const token = useSearchParams().get("token");
   const userID = useSearchParams().get("user");
@@ -15,11 +15,8 @@ const Order = ({ children }: { children: React.ReactNode }) => {
     <div>
       <div className="py-4 averagescreen:py-6">
         <section>
-          <div className="bg-[#000000] text-white rounded-[5px] p-3">
-            Orders Management
-          </div>
-          <div className="flex justify-between my-5">
-            <li className="flex gap-5">
+          <div className="flex justify-between px-2 lg:px-0 my-5">
+            <li className="flex gap-5 ">
               <ul>
                 <Link
                   href={{
@@ -31,7 +28,7 @@ const Order = ({ children }: { children: React.ReactNode }) => {
                     },
                   }}
                 >
-                  <span>Orders</span>
+                  <span className="text-gray-500 lg:text-lg text-[14px]  hover:text-[#000000]">Overview</span>
                 </Link>
               </ul>
               <ul>
@@ -45,22 +42,12 @@ const Order = ({ children }: { children: React.ReactNode }) => {
                     },
                   }}
                 >
-                  <span>Orders Insight</span>
+                  <span className="text-gray-500 lg:text-lg text-[14px]  hover:text-[#000000]">Order List</span>
                 </Link>
               </ul>
             </li>
-
-            <div>
-              <select className="border py-1 px-3 ">
-                <option>Near</option>
-                <option>Naira</option>
-                <option>USD</option>
-              </select>
-
-              <button className="py-1 px-3 border">Export</button>
-            </div>
           </div>
-          <hr className="py-3" />
+         
         </section>
         <AuthProvider>
           <section>{children}</section>
