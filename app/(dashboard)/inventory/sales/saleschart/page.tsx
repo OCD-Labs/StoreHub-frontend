@@ -42,40 +42,40 @@ import {
 import { BASE_URL } from "@constants";
 
 const SalesChart = () => {
-  const amount = "3,765.88";
-  const percent = "10";
-  const [loading, setloading] = useState<boolean>(true);
-  const [salesHistory, setSalesHistory] = useState([]);
-  const session = getCookie("token");
-  const userID: string | null = useSearchParams().get("user");
+  // const amount = "3,765.88";
+  // const percent = "10";
+  // const [loading, setloading] = useState<boolean>(true);
+  // const [salesHistory, setSalesHistory] = useState([]);
+  // const session = getCookie("token");
+  // const userID: string | null = useSearchParams().get("user");
 
-  const id: string | null = useSearchParams().get("id");
-  const setSaleInfoStatus = modalstore((state) => state.setSaleInfoStatus);
-  const setSaleInfo = modalstore((state) => state.setSaleInfo);
+  // const id: string | null = useSearchParams().get("id");
+  // const setSaleInfoStatus = modalstore((state) => state.setSaleInfoStatus);
+  // const setSaleInfo = modalstore((state) => state.setSaleInfo);
 
-  const fetcher = (url: string) =>
-    fetch(url, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${""}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        return data;
-      });
+  // const fetcher = (url: string) =>
+  //   fetch(url, {
+  //     method: "GET",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       Authorization: `Bearer ${""}`,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       return data;
+  //     });
 
-  const { data, error, isLoading } = useSWR(
-    session ? `${BASE_URL}/inventory/stores/${id}/sales` : null,
-    fetcher
-  );
-  console.log(data?.data.result.sales, "salesdata");
+  // const { data, error, isLoading } = useSWR(
+  //   session ? `${BASE_URL}/inventory/stores/${id}/sales` : null,
+  //   fetcher
+  // );
+  // console.log(data?.data.result.sales, "salesdata");
 
-  // handle sale info display
-  const handleSaleInfoDisplay = (sale: ISalesHistory) => {
-    setSaleInfo(sale), setSaleInfoStatus();
-  };
+  // // handle sale info display
+  // const handleSaleInfoDisplay = (sale: ISalesHistory) => {
+  //   setSaleInfo(sale), setSaleInfoStatus();
+  // };
 
   return (
     <div>
@@ -232,7 +232,7 @@ const SalesChart = () => {
                   <TableHead>Price</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody>
+              {/* <TableBody>
                 {isLoading ? (
                   <Skeleton count={10} />
                 ) : !data?.data.result.sales.length ? (
@@ -248,7 +248,7 @@ const SalesChart = () => {
                     )
                   )
                 )}
-              </TableBody>
+              </TableBody> */}
             </Table>
           </div>
         </section>

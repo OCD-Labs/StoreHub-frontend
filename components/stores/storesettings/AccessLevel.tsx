@@ -12,12 +12,13 @@ const AccessLevel = ({
   access: string
 }) => {
   return (
-    <div className="flex flex-col bg-dark rounded-lg p-2">
-      <div className="pb-2 flex justify-between">
-        <p>{access}</p>
-        <span>
+    <div className=" text-[#000000] border shadow-sm rounded-lg p-2">
+      <div className="pb-2">
+      <span>
           <Image src={icon} width={20} height={20} alt="fullaccess"></Image>
         </span>
+        <p>{access}</p>
+       
       </div>
       <div className="pb-2">{info}</div>
       <div>
@@ -25,6 +26,14 @@ const AccessLevel = ({
           <Image src={moreinfo} width={20} height={20} alt="fullaccess"></Image>
         </span>
       </div>
+
+
+    
+
+
+
+
+
     </div>
   )
 }

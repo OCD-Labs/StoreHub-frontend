@@ -1,11 +1,9 @@
 "use client";
-
-
 import Image from "next/image";
-import search from "../../../../../public/assets/icons/search.svg";
-import filter from "../../../../../public/assets/icons/filter.svg";
-import uptrend from "../../../../../public/assets/icons/uptrend.svg";
-import star from "../../../../../public/assets/icons/star.svg";
+import search from "@public/assets/icons/search.svg";
+import filter from "@public/assets/icons/filter.svg";
+import uptrend from "@public/assets/icons/uptrend.svg";
+import star from "@public/assets/icons/star.svg";
 import { GetAllReviews } from "@app/apis/Inventory";
 import { useSearchParams } from "next/navigation";
 import { OPTIONS } from "@app/apis";
@@ -30,13 +28,15 @@ const Reviews = () => {
 
   const user_id: string | null = useSearchParams().get("id");
 
-  const GET_OPTIONS: OPTIONS = {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
-    },
-  };
+  // The comments below, where highlighted because they had Bug, please fix:
+
+  // const GET_OPTIONS: OPTIONS = {
+  //   method: "GET",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //     Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
+  //   },
+  // };
 
   type ReviewsType = {
     data: {
@@ -49,24 +49,25 @@ const Reviews = () => {
     };
     status: string;
   };
+// The comments below, where highlighted because they had Bug, please fix:
 
-  const getReviews = async (): Promise<any> => {
-    try {
-      const reviews: ReviewsType = await GetAllReviews(user_id, GET_OPTIONS);
-      serReviews(reviews.data.result.reviews);
-      setMetadata(reviews.data.result.metadata);
-      const aggregatedReviews = reviews.data?.result
-        .aggregated_reviews as ReviewStatType;
-      setReviewStats(aggregatedReviews);
-    } catch (error) {
-      console.log(error, "reviews");
-    }
-  };
+  // const getReviews = async (): Promise<any> => {
+  //   try {
+  //     const reviews: ReviewsType = await GetAllReviews(user_id, GET_OPTIONS);
+  //     serReviews(reviews.data.result.reviews);
+  //     setMetadata(reviews.data.result.metadata);
+  //     const aggregatedReviews = reviews.data?.result
+  //       .aggregated_reviews as ReviewStatType;
+  //     setReviewStats(aggregatedReviews);
+  //   } catch (error) {
+  //     console.log(error, "reviews");
+  //   }
+  // };
 
-  useEffect(() => {
-    getReviews();
-  }, []);
-  console.log(reviews, metadata, reviewStats);
+  // useEffect(() => {
+  //   getReviews();
+  // }, []);
+  // console.log(reviews, metadata, reviewStats);
 
   const numberOfStars = (num: number): JSX.Element => {
     const stars: JSX.Element[] = [];
@@ -115,7 +116,7 @@ const Reviews = () => {
     );
   });
   return (
-    <div>
+    <div className="px-6">
       <section>
         <span className="relative w-[70%] sm:w-[75%]">
           <input

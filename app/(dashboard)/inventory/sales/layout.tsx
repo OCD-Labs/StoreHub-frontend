@@ -1,22 +1,32 @@
 "use client";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+import { useState } from "react";
 
 const Sales = ({ children }: { children: React.ReactNode }) => {
+  const [activeItem, setActiveItem] = useState<string>("");
   const token = useSearchParams().get("token");
   const userID = useSearchParams().get("user");
   const id = useSearchParams().get("id");
   const name = useSearchParams().get("name");
+
+  const handleItmeClick = (item: string): void => {
+    setActiveItem(item);
+  };
+
   return (
-    <div className="py-4 averagescreen:py-6">
-      <section>
-        <div className="bg-[#000000] text-white rounded-[5px] p-3">
-          Sales Management
-        </div>
-        <div className="flex justify-between my-5">
+    <div className="py-4 averagescreen:py-6  ">
+      <section className="">
+        <div className="flex justify-between px-2 lg:px-0  my-5">
           <li className="flex gap-5">
             <ul>
               <Link
+                onClick={() => handleItmeClick("salesoverview")}
+                className={`${
+                  activeItem === "salesoverview"
+                    ? "text-[#000000] "
+                    : "text-gray-500"
+                }   font-vietnam `}
                 href={{
                   pathname: "/inventory/sales/salesoverview",
                   query: {
@@ -27,13 +37,14 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span>Sales Overview</span>
+                <span className=" hover:text-[#000000] lg:text-lg text-[11px]  ">Sales Overview</span>
               </Link>
             </ul>
+
             <ul>
               <Link
                 href={{
-                  pathname: "/inventory/sales/saleschart",
+                  pathname: "/inventory/sales/saleshistory",
                   query: {
                     id: id,
                     name: name,
@@ -42,36 +53,52 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span>Sales Chart</span>
+                <span className="text-gray-500 lg:text-lg text-[11px]  hover:text-[#000000]">
+                  Sales History
+                </span>
               </Link>
             </ul>
-            <ul>Top Selling Products</ul>
+
             <ul>
-              <Link href={{
-                pathname: '/inventory/sales/reviews',
-                query: {
-                  id: id,
-                  name: name,
-                  token: token,
-                  user: userID,
-                }
-              }}>
-              Review
+              <Link
+                href={{
+                  pathname: "/inventory/sales/topsellingproduct",
+                  query: {
+                    id: id,
+                    name: name,
+                    token: token,
+                    user: userID,
+                  },
+                }}
+              >
+                <span className="text-gray-500 lg:text-lg text-[11px]  hover:text-[#000000]">
+                  Top Selling Products
+                </span>
               </Link>
-              </ul>
+            </ul>
+
+            <ul>
+              <Link
+                href={{
+                  pathname: "/inventory/sales/reviews",
+                  query: {
+                    id: id,
+                    name: name,
+                    token: token,
+                    user: userID,
+                  },
+                }}
+              >
+                <span className="text-gray-500 lg:text-lg text-[11px]  hover:text-[#000000]">
+                  Review
+                </span>
+              </Link>
+            </ul>
           </li>
 
-          <div>
-            <select className="border py-1 px-3 ">
-              <option>Near</option>
-              <option>Naira</option>
-              <option>USD</option>
-            </select>
-
-            <button className="py-1 px-3 border">Export</button>
-          </div>
+          {/* Replace this with the search bar */}
         </div>
-        <hr className="py-3" />
+        
       </section>
       <section>{children}</section>
     </div>

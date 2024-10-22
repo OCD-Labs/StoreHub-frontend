@@ -13,7 +13,7 @@ const Dashboard = () => {
       <div className="max-w-4xl mx-auto p-6">
         <div className="flex items-center space-x-4">
           {/* Profile Image */}
-          <div className=" ">
+          <div className=" hidden sm:block">
             <Image
               src={DashboardImage}
               alt="Dashboard Image"
@@ -25,7 +25,7 @@ const Dashboard = () => {
 
           {/* Store Info */}
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="lg:text-2xl text-lg font-bold text-gray-900">
               Shine, Shimmer, Glimmer
               <span className="ml-2 inline-flex items-center bg-green-100 text-green-600 text-sm font-medium px-2 py-0.5 rounded-full">
                 <svg
@@ -45,7 +45,7 @@ const Dashboard = () => {
                 Store ID
               </span>
             </h1>
-            <p className="text-gray-600 mt-2">
+            <p className="text-sm sm:text-base text-gray-600 mt-2">
               Welcome to the Glittering Gems Boutique, where timeless elegance
               meets modern style! Step into our enchanting jewelry haven nestled
               within the heart of our beloved general store.
