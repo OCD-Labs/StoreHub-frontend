@@ -172,12 +172,12 @@ const Pending = () => {
               
               
 							<div className="flex justify-between mt-[50px] gap-3">
-								<AlertDialogCancel className="border text-bold bg-[#000000] text-[#ffffff] rounded-[10px] p-3 mt-12 w-[100%]">
-									Confirm Delivery
+								<AlertDialogCancel className="border text-bold bg-[#FCF8F2] text-[#000000] rounded-[10px] p-3 mt-12 w-[100%]">
+								  Confirm Delivery
 								</AlertDialogCancel>
 
-								<AlertDialogCancel className="border text-bold bg-[#fffff] text-[#000000] rounded-[10px] p-3 mt-12 w-[100%]">
-									Track order
+								<AlertDialogCancel className="border text-bold bg-[#FE5B13] text-[#000000] rounded-[10px] p-3 mt-12 w-[100%]">
+									Track Order
 								</AlertDialogCancel>
 							</div>
 						</div>

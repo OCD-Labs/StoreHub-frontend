@@ -24,6 +24,9 @@ import { Button } from "@/components/ui/Button";
 
 const Completed = () => {
   const [checked, setChecked] = useState<boolean>(false);
+  const handleRadioChange = () => {
+    setChecked(!checked);
+  };
   return (
     <main className="p-3 sm:p-6 flex flex-col gap-3">
       <div className="flex justify-between border rounded-[10px] p-2 sm:p-4">
@@ -67,7 +70,7 @@ const Completed = () => {
           <p className="hidden sm:block">May 22, 2024</p>
           <Dialog>
             <DialogTrigger>
-              <p className="hidden sm:block text-green-600 font-semi-bold cursor-pointer underline">
+              <p className="hidden sm:block text-orange-600 font-semi-bold cursor-pointer underline">
                 Review Product
               </p>
             </DialogTrigger>
@@ -135,8 +138,8 @@ const Completed = () => {
                               id="customRadio"
                               name="radioGroup"
                               className="hidden"
-                              //   checked={checked}
-                              //   onClick={handleRadioChange}
+                              checked={checked}
+                              onClick={handleRadioChange}
                             />
 
                             {/* Custom radio button */}
@@ -169,7 +172,7 @@ const Completed = () => {
                           {/* Label text */}
                           <span className="ml-2 sm:ml-4 flex">
                             I agree to the{" "}
-                            <p className="text-[#F5E44A] px-1">
+                            <p className="text-[#f5804a] px-1">
                               terms and condition
                             </p>
                             for this feedback
@@ -181,7 +184,7 @@ const Completed = () => {
                 </DialogDescription>
               </DialogHeader>
               <DialogFooter>
-                <Button type="submit">Submit Review</Button>
+                <Button type="submit" className="bg-[#FE5B13]">Submit Review</Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>

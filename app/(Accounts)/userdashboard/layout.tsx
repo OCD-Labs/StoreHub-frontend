@@ -4,8 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Nav from "../../../components/global/Nav";
-import myAccount from "@public/assets/icons/Myaccount.svg";
 import myAccountBlack from "@public/assets/icons/myAccount-white.svg";
+import myAccountWhite from "@public/assets/icons/myAccount-whitee.svg";
 import orders from "@public/assets/icons/Inventory/orders.svg";
 import ordersWhite from "@public/assets/icons/orders-white.svg";
 import notification from "@public/assets/icons/Notification 2.svg";
@@ -41,7 +41,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
               </div>
 
               <section
-                className={`hidden md:block averagescreen:flex flex-col w-fit border-2 rounded-[10px] h-[83vh] mt-6 ${"flex"} fixed bg-white z-50`}
+                className={`hidden md:block averagescreen:flex flex-col w-fit border-2 rounded-[10px] h-[83vh] mt-6 ${"flex"} fixed bg-[#1D2131] z-50`}
               >
                 <div>
                   <Link
@@ -59,14 +59,14 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                     <span
                       className={`${
                         activeItem === "myAccount"
-                          ? "bg-[#000000] text-white"
-                          : ""
+                          ? "bg-[#FE5B13] text-white"
+                          : "text-white"
                       } flex px-4 w-[170px] md:w-[190px] pt-7 pb-4 font-bold rounded-t-[10px]`}
                     >
                       {" "}
                       {activeItem === "myAccount" ? (
                         <Image
-                          src={myAccount}
+                          src={myAccountBlack}
                           alt="My account"
                           width={15}
                           height={15}
@@ -74,7 +74,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                         />
                       ) : (
                         <Image
-                          src={myAccountBlack}
+                          src={myAccountWhite}
                           alt="My account"
                           width={15}
                           height={15}
@@ -99,13 +99,15 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                   >
                     <span
                       className={`${
-                        activeItem === "orders" ? "bg-[#000000] text-white" : ""
+                        activeItem === "orders"
+                         ? "bg-[#FE5B13] text-white" 
+                         : "text-white"
                       } flex px-4 w-[170px] md:w-[190px] pt-7 pb-4 font-bold`}
                     >
                       {" "}
                       {activeItem === "orders" ? (
                         <Image
-                          src={ordersWhite}
+                          src={orders}
                           alt="My account"
                           width={15}
                           height={15}
@@ -113,7 +115,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                         />
                       ) : (
                         <Image
-                          src={orders}
+                          src={ordersWhite}
                           alt="My account"
                           width={15}
                           height={15}
@@ -139,14 +141,14 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                     <span
                       className={`${
                         activeItem === "notification"
-                          ? "bg-[#000000] text-white"
-                          : ""
+                          ? "bg-[#FE5B13] text-white"
+                          : "text-white"
                       } flex px-4 w-[170px] md:w-[190px] pt-7 pb-4 font-bold`}
                     >
                       {" "}
                       {activeItem === "notification" ? (
                         <Image
-                          src={notificationWhite}
+                          src={notification}
                           alt="My account"
                           width={15}
                           height={15}
@@ -154,7 +156,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                         />
                       ) : (
                         <Image
-                          src={notification}
+                          src={notificationWhite}
                           alt="My account"
                           width={15}
                           height={15}
@@ -179,13 +181,13 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                   >
                     <span
                       className={`${
-                        activeItem === "saved" ? "bg-[#000000] text-white" : ""
+                        activeItem === "saved" ? "bg-[#FE5B13] text-white" : "text-white"
                       } flex px-4 w-[170px] md:w-[190px] pt-7 pb-4 font-bold`}
                     >
                       {" "}
                       {activeItem === "saved" ? (
                         <Image
-                          src={savedWhite}
+                          src={saved}
                           alt="My account"
                           width={15}
                           height={15}
@@ -193,7 +195,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                         />
                       ) : (
                         <Image
-                          src={saved}
+                          src={savedWhite}
                           alt="My account"
                           width={15}
                           height={15}
@@ -204,9 +206,9 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                     </span>
                   </Link>
                 </div>
-                <div className="flex items-center gap-3 absolute left-0 bottom-0 px-4 py-3 cursor-pointer bg-gray-100 w-full">
+                <div className="flex items-center gap-3 absolute left-0 bottom-0 px-4 py-3 cursor-pointer bg-[#1D2131] w-full">
                   <Image src={signoutIcon} width={30} alt="sign out" />
-                  <p className="text-black text-base">Sign Out</p>
+                  <p className="text-white text-base">Sign Out</p>
                 </div>
               </section>
               <Suspense fallback={""}>
