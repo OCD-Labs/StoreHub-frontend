@@ -11,7 +11,7 @@ const ShopperOrders = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <section>
-        <div className="font-bold text-lg p-3">
+        <div className="font-bold text-lg p-3 bg-[#FCF8F2]">
           Orders Information
         </div>
         <hr className="w-full" />

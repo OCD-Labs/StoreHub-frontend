@@ -11,7 +11,7 @@ const ShopperNotifications = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <section>
-        <div className="font-bold text-lg p-3">Notifications</div>
+        <div className="font-bold text-lg p-3 bg-[#FCF8F2]">Notifications</div>
         <hr className="w-full" />
         <div className="flex justify-between my-3 p-3">
           <li className="flex gap-5">

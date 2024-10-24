@@ -9,7 +9,7 @@ const Saved = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <section>
-        <div className="font-bold text-lg p-3">Saved Item</div>
+        <div className="font-bold text-lg p-3 bg-[#FCF8F2]">Saved Item</div>
         <hr className="w-full" />
       </section>
       <section className="">{children}</section>

@@ -18,7 +18,7 @@ const PaymentInfo = () => {
       <section className="flex justify-center">
         <Popover>
           <PopoverTrigger>
-            <section className="border-2 px-7 py-2 flex items-center gap-3 rounded-[10px] mt-6 mx-auto w-72">
+            <section className="border-2 px-7 py-2 flex items-center gap-3 rounded-[10px] mt-6 mx-auto w-72 bg-[#FCF8F2]">
               <Image src={add} alt="add payment" />
               <p className="text-black font-bold">Add new payment menthod</p>
             </section>
