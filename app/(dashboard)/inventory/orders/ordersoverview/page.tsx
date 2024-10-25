@@ -23,8 +23,8 @@ import {
   TableRow,
 } from "../../../../../components/ui/Table";
 import { PlusIcon } from "@heroicons/react/24/solid";
-import saledOverview1 from "@public/assets/images/saledOverview1.png";
-import saledOverview2 from "@public/assets/images/saledOverview2.png";
+import saledOverview1 from "@public/assets/images/SaledOverview1.png";
+import saledOverview2 from "@public/assets/images/SaledOverview2.png";
 import saledOverview3 from "@public/assets/images/SaledOverview3.png";
 import saledOverview4 from "@public/assets/images/SaledOverview4.png";
 
@@ -163,7 +163,6 @@ const OrdersOverview = () => {
 
       {/* Cards */}
       <div className="grid grid-cols-2  lg:grid-cols-4 mt-9 gap-4 mb-11">
-
         {/* Orders*/}
         <div className="bg-white p-4 rounded-lg border flex flex-col justify-between relative">
           <div className="absolute top-4 right-4">
@@ -190,7 +189,9 @@ const OrdersOverview = () => {
           </div>
 
           <div className="flex items-center justify-between mt-4">
-            <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mt-2">500</h3>
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mt-2">
+              500
+            </h3>
             <p className="text-green-500 text-xs sm:text-sm mt-2">▲ 10%</p>
           </div>
         </div>
@@ -211,7 +212,9 @@ const OrdersOverview = () => {
           </div>
 
           <div className="flex items-center justify-between mt-4">
-            <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mt-2">$3400</h3>
+            <h3 className="text-xl sm:text-2xl font-semibold text-gray-800 mt-2">
+              $3400
+            </h3>
             <p className="text-green-500 text-xs sm:text-sm mt-2">▲ 10%</p>
           </div>
         </div>
@@ -248,7 +251,6 @@ const OrdersOverview = () => {
             <p className="text-green-500 text-xs sm:text-sm mt-2">▲ 10%</p>
           </div>
         </div>
-
       </div>
 
       {/* Table  */}
