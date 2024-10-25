@@ -13,13 +13,23 @@ import { ToastContainer } from "react-toastify";
 import { OPTIONS } from "@app/apis";
 import { getCookie } from "@lib/cookie";
 import SalesOverviewTable from "@components/stores/sales/SalesOverviewTable";
-import saledOverview1 from "@public/assets/images/saledOverview1.png";
-import saledOverview2 from "@public/assets/images/saledOverview2.png";
-import saledOverview3 from "@public/assets/images/SaledOverview3.png";
-import saledOverview4 from "@public/assets/images/SaledOverview4.png";
-import GrowthChart from "@public/assets/images/GrowthChart.png";
-import SearchIcon from "@public/assets/images/SearchIcon.png";
+import saledOverview1 from "../../../../../public/assets/images/saledOverview1.png";
+import saledOverview2 from "../../../../../public/assets/images/saledOverview2.png";
+import saledOverview3 from "../../../../../public/assets/images/SaledOverview3.png";
+import saledOverview4 from "../../../../../public/assets/images/SaledOverview4.png";
+import GrowthChart from "../../../../../public/assets/images/GrowthChart.png";
+import SearchIcon from "../../../../../public/assets/images/SearchIcon.png";
 import { PlusIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import {
   Table,
   TableBody,
@@ -68,6 +78,7 @@ const SalesOverview: React.FC = () => {
   }, [1, session]);
   console.log(SalesOverview, "sales");
 
+  // Table dummy Data
   const recentSales = [
     {
       image: "/assets/images/productImage1.png",
@@ -101,6 +112,22 @@ const SalesOverview: React.FC = () => {
       price: "$1.25",
       delivery: "11-11-2024",
     },
+  ];
+
+  // Chart dummy data
+  const data = [
+    { month: "Jan", customers: 1000, sales: 2400, growth: 2400 },
+    { month: "Feb", customers: 1200, sales: 1398, growth: 2210 },
+    { month: "Mar", customers: 2000, sales: 9800, growth: 2290 },
+    { month: "Apr", customers: 2780, sales: 3908, growth: 2000 },
+    { month: "May", customers: 1890, sales: 4800, growth: 2181 },
+    { month: "Jun", customers: 2390, sales: 3800, growth: 2500 },
+    { month: "Jul", customers: 3490, sales: 4300, growth: 2100 },
+    { month: "Aug", customers: 3000, sales: 5000, growth: 2900 },
+    { month: "Sep", customers: 2000, sales: 3500, growth: 2000 },
+    { month: "Oct", customers: 1500, sales: 2700, growth: 2200 },
+    { month: "Nov", customers: 3000, sales: 3000, growth: 2400 },
+    { month: "Dec", customers: 3200, sales: 4000, growth: 2700 },
   ];
 
   return (
@@ -328,9 +355,36 @@ const SalesOverview: React.FC = () => {
                 </div>
               </div>
 
-              {/* Placeholder for the Chart Image */}
-              <div className="h-64 bg-[#FCF8F2] flex justify-center items-center rounded-lg">
-                <Image src={GrowthChart} alt="chart" width={700} height={400} />
+              {/* charts */}
+              <div className="p-6 flex justify-center items-center">
+                {/* Responsive Container */}
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart
+                    data={data}
+                    margin={{
+                      top: 10,
+                      right: 30,
+                      left: 0,
+                      bottom: 0,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+
+                    {/* Lines for Customers, Sales, Growth */}
+                    <Line
+                      type="monotone"
+                      dataKey="customers"
+                      stroke="#8884d8"
+                      activeDot={{ r: 8 }}
+                    />
+                    <Line type="monotone" dataKey="sales" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="growth" stroke="#ffc658" />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </div>

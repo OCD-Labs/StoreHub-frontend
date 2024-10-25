@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import DashboardImage from "@public/assets/images/DashboardImage.png";
+import DashboardImage from "../../../../public/assets/images/DashboardImage.png";
 
 
 const Dashboard = () => {

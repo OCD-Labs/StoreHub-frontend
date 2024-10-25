@@ -299,7 +299,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
             </Link>
 
             {/* only seen in mobile */}
-            <div className="lg:hidden flex ml-[130px] mt-[440px] items-center">
+            <div className="lg:hidden flex ml-[130px] mt-[410px] items-center">
               <div
                 onClick={() => {
                   navigator.clipboard.writeText(user.account_id);
