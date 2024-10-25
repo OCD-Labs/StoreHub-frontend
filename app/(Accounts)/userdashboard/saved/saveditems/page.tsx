@@ -75,7 +75,7 @@ const SavedItems = () => {
 					</span>
 				</div>
 				<div className="flex p-2 sm:p-2">
-					<button className="rounded-[6px] px-2 py-1 ml-auto text-white bg-[#161616]">
+					<button className="rounded-[6px] px-2 py-1 ml-auto text-white bg-[#FE5B13] ">
 						Buy now
 					</button>
 				</div>

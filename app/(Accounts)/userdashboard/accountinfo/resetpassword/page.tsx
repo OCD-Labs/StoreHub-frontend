@@ -19,8 +19,8 @@ const ResetPassword = () => {
         />
 
         <div className="w-full justify-center flex">
-          <button className="rounded-[10px] px-14 py-2 text-white bg-[#161616] mx-auto my-6 sm:my-8">
-            Update Profile
+          <button className="rounded-[10px] px-14 py-2 text-white bg-[#FE5B13] mx-auto my-6 sm:my-8">
+            Reset Password
           </button>
         </div>
       </form>

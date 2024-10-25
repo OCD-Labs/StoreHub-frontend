@@ -12,7 +12,7 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-[100%] w-[100%]">
       <section className=" ">
-        <div className="font-bold text-lg p-3">Account Information</div>
+      <div className="font-bold text-lg p-3 bg-[#FCF8F2]">Account Information</div>
         <hr className="w-full" />
         <div className="flex justify-between my-3 p-3">
           <li className="flex gap-5">
