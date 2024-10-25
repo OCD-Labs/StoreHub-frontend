@@ -63,7 +63,7 @@ const AccountDetails = () => {
         </div>
       </section>
       <div className="w-full justify-center flex">
-        <button className="rounded-[10px]  px-14 py-2 text-white bg-[#161616] mx-auto  mb-[35px]">
+        <button className="rounded-[10px]  px-14 py-2 text-white bg-[#FE5B13] mx-auto  mb-[35px]">
           Update Profile
         </button>
       </div>
