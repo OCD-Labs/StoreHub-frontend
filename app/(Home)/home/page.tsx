@@ -25,7 +25,7 @@ const Page = async () => {
         <section id="main-section">
           <MainSection />
         </section>
-        <MobileLogoSlider/>
+        <MobileLogoSlider />
         <section id="video">
           <Video />
         </section>
@@ -36,7 +36,7 @@ const Page = async () => {
           <FAQ />
         </section>
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 };

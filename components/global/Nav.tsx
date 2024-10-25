@@ -29,14 +29,12 @@ const Nav = () => {
   const [Opened, setOpen] = useState(false);
   const [isMenuOpened, setMenuOpen] = useState(false);
 
-  console.log(isMenuOpened);
-
   const session = getCookie("token");
 
   const user = getUser("user");
 
   // @ts-ignore
-  console.log(session, "user");
+
   const getAllStores = (url: string) =>
     fetch(url, {
       method: "GET",
@@ -55,8 +53,6 @@ const Nav = () => {
     session ? `${BASE_URL}/inventory/stores` : null,
     getStores
   );
-
-  console.log(data, error, "navdata");
 
   const toggleDropdown = () => {
     setOpen(!Opened);
@@ -182,16 +178,14 @@ const Nav = () => {
                       </Link>
                     </Dropdown.Item>
 
-                  
-
                     <Dropdown.Item>
                       {!error &&
                       !data?.error &&
                       data?.data.result.stores.length ? (
                         <Link
-                        className="hover:text-[#FE5B13] font-[600]"
+                          className="hover:text-[#FE5B13] font-[600]"
                           href={{
-                            pathname: "/inventory/Dashboard",
+                            pathname: "/inventory/Itemsdashboard",
                             query: {
                               id: data?.data.result.stores[0].store_id,
                               name: data?.data.result.stores[0].store_name,

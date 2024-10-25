@@ -85,17 +85,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
 
   // check if there is a user logged in
   if (!session) {
-    return (
-      <>
-        <div className="h-64 flex flex-col gap-4 justify-center items-center">
-          <p>Please login first </p>
-          {/* login user */}
-          <Button variant="default" onClick={() => router.push("/auth/signin")}>
-            Login
-          </Button>
-        </div>
-      </>
-    );
+    router.push("/auth/signin");
   }
 
   return (
@@ -167,18 +157,16 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
           <Image src={notification} alt="notification" />
         </div>
       </nav>
-
       {/* mobile navigation */}
       <nav className=" lg:hidden max-w-[90rem] mx-auto px-4 flex justify-between relative my-5 items-center ">
         <div className="ml-auto flex gap-2 items-center">
           <Image src={notification} alt="notification" />
 
           <div className="sm:hidden" onClick={handleSideBar}>
-            <Menu/>
+            <Menu />
           </div>
         </div>
       </nav>
-
       {/* Side bar starts here  */}
       <div className=" ">
         <section
@@ -218,7 +206,6 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               <Image src={Products} alt="user" width={20} height={20} />
               <span className="text-white">Dashboard</span>
             </Link>
-
             <Link
               onClick={() => handleItmeClick("products")}
               className={`${
@@ -237,7 +224,6 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               <Image src={Products} alt="user" width={20} height={20} />
               <span className="text-white">Products Inventory</span>
             </Link>
-
             <Link
               onClick={() => handleItmeClick("sales")}
               className={`${
@@ -297,7 +283,6 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               />{" "}
               <span className="text-white">Settings</span>
             </Link>
-
             {/* only seen in mobile */}
             <div className="lg:hidden flex ml-[130px] mt-[410px] items-center">
               <div
