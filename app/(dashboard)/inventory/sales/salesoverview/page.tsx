@@ -13,12 +13,12 @@ import { ToastContainer } from "react-toastify";
 import { OPTIONS } from "@app/apis";
 import { getCookie } from "@lib/cookie";
 import SalesOverviewTable from "@components/stores/sales/SalesOverviewTable";
-import saledOverview1 from "@public/assets/images/saledOverview1.png";
-import saledOverview2 from "@public/assets/images/saledOverview2.png";
-import saledOverview3 from "@public/assets/images/SaledOverview3.png";
-import saledOverview4 from "@public/assets/images/SaledOverview4.png";
-import GrowthChart from "@public/assets/images/GrowthChart.png";
-import SearchIcon from "@public/assets/images/SearchIcon.png";
+import saledOverview1 from "../../../../../public/assets/images/saledOverview1.png";
+import saledOverview2 from "../../../../../public/assets/images/saledOverview2.png";
+import saledOverview3 from "../../../../../public/assets/images/SaledOverview3.png";
+import saledOverview4 from "../../../../../public/assets/images/SaledOverview4.png";
+import GrowthChart from "../../../../../public/assets/images/GrowthChart.png";
+import SearchIcon from "../../../../../public/assets/images/SearchIcon.png";
 import { PlusIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import {
   LineChart,

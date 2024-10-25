@@ -1,4 +1,4 @@
-import SearchIcon from "@public/assets/images/SearchIcon.png";
+import SearchIcon from "../../../../../public/assets/images/SearchIcon.png";
 import { PlusIcon } from "@heroicons/react/24/solid";
 import filter from "../../../../../public/assets/icons/filter.svg";
 import Image from "next/image";
