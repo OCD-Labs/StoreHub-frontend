@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import AddImageUpload from "./addImageUpload";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { BASE_URL } from "@components/util/config";
+// import { BASE_URL } from "@components/util/config";
 import { ModalOptions, modalstore } from "@StoreManager/modalstore";
 import useProfile from "@hooks/useProfile";
 import { getCookie } from "@lib/cookie";
@@ -388,17 +388,17 @@ const AddItemModal: React.FC<PropsInterface> = ({
               <div className="grid grid-cols-3 gap-4">
                 <input
                   type="text"
-                  className="p-2 border border-gray-300 rounded-lg"
+                  className="md:p-2 p-1 border border-gray-300 rounded-lg"
                   placeholder="ID"
                 />
                 <input
                   type="text"
-                  className="p-2 border border-gray-300 rounded-lg"
+                  className="md:p-2 p-1 border border-gray-300 rounded-lg"
                   placeholder="Colors"
                 />
                 <input
                   type="text"
-                  className="p-2 border border-gray-300 rounded-lg"
+                  className="md:p-2 p-1 border border-gray-300 rounded-lg"
                   placeholder="Quantity"
                 />
               </div>
@@ -406,13 +406,13 @@ const AddItemModal: React.FC<PropsInterface> = ({
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-6 flex justify-end space-x-4">
+          <div className="mt-6 flex justify-center  md:justify-end space-x-4">
             {/* add the close modal function here */}
-            <button className="px-4 py-2 bg-gray-200 rounded-lg">
+            <button className="px-2 md:px-4 py-2 bg-gray-200 text-xs md:text-base rounded-lg">
               Discard Items
             </button>
             <button
-              className="px-4 py-2 bg-orange-500 text-white rounded-lg"
+              className=" py-2 bg-orange-500 text-white text-xs md:text-base px-2 md:px-4 rounded-lg"
               onClick={handleSubmit(handleFormSubmit)}
             >
               {options.title}

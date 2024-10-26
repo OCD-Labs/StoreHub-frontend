@@ -9,7 +9,7 @@ const Inventory = ({ children }: { children: React.ReactNode }) => {
       <html lang="en">
         <body className="font-vietnam">
           <AuthProvider>
-            abc
+          
             <DashboardNav>{children}</DashboardNav>
           </AuthProvider>
         </body>

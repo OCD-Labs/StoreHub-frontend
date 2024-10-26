@@ -15,7 +15,7 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
   };
 
   return (
-    <div className="py-4 averagescreen:py-6  ">
+    <div className="py-4 px-2 md:px-0 ">
       <section className="">
         <div className="flex justify-between px-2 lg:px-0  my-5">
           <li className="flex gap-5">
@@ -37,7 +37,12 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span className=" hover:text-[#000000] lg:text-lg text-[11px]  ">Sales Overview</span>
+                <span className="text-gray-500 hover:text-[#000000] lg:text-lg text-xs lg:inline hidden">
+                  Sales Overview
+                </span>
+                <span className="hover:text-[#000000] lg:text-lg text-xs lg:hidden inline">
+                  Overview
+                </span>
               </Link>
             </ul>
 
@@ -53,8 +58,11 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span className="text-gray-500 lg:text-lg text-[11px]  hover:text-[#000000]">
+                <span className="text-gray-500 hover:text-[#000000] lg:text-lg text-xs lg:inline hidden">
                   Sales History
+                </span>
+                <span className="text-gray-500 hover:text-[#000000] lg:text-lg text-xs lg:hidden inline">
+                  History
                 </span>
               </Link>
             </ul>
@@ -71,7 +79,7 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span className="text-gray-500 lg:text-lg text-[11px]  hover:text-[#000000]">
+                <span className="text-gray-500 lg:text-lg text-xs  hover:text-[#000000]">
                   Top Selling Products
                 </span>
               </Link>
@@ -89,7 +97,7 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span className="text-gray-500 lg:text-lg text-[11px]  hover:text-[#000000]">
+                <span className="text-gray-500 lg:text-lg text-xs  hover:text-[#000000]">
                   Review
                 </span>
               </Link>
@@ -98,7 +106,6 @@ const Sales = ({ children }: { children: React.ReactNode }) => {
 
           {/* Replace this with the search bar */}
         </div>
-        
       </section>
       <section>{children}</section>
     </div>
