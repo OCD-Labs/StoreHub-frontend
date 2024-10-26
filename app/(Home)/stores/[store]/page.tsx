@@ -1,64 +1,67 @@
 "use client";
-import Image from "next/image";
-import owner from "../../../../public/assets/images/owner.jpg";
-import { Button } from "@components/ui/Button";
-import StoreItem from "@components/stores/StoreItem";
 
+import Image from "next/image";
 import { Key, useEffect, useState } from "react";
 import { HeartIcon, ShoppingCartIcon } from "@heroicons/react/24/outline";
 import useSWR from "swr";
-
 import api from "@services/apiClient";
-
-import { BASE_URL } from "@constants";
-import search from "@/public/assets/icons/search.svg";
-import sorticon from "@/public/assets/icons/sorticon.svg";
-import StoresSkeleton from "@components/stores/storesSkeleton";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-} from "@/components/ui/NavDropdown";
-import { getCookie } from "@lib/cookie";
-
+import { getStoreItems } from "@services/products";
+import Link from "next/link";
 import storeImage from "@/public/assets/images/storeImage.png";
 import StoreImage1 from "@/public/assets/images/StoreImage1.png";
 import salered from "@/public/assets/images/salered.png";
-import ProductSectionImage from "@/public/assets/images/ProductSectionImage.png";
+import flashsale from "@public/assets/images/flashsale.png";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
-import NearLogo from "@public/assets/images/NearLogo.png";
 import NearLogo1 from "@public/assets/images/NearLogo1.png";
-import flashsale from "@public/assets/images/flashsale.png";
+import { usePathname } from "next/navigation";
+
+interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  store_id: number;
+  image_urls: string[];
+  category: string;
+  discount_percentage: string;
+  supply_quantity: number;
+  extra: {};
+  is_frozen: boolean;
+  currency: string;
+  cover_img_url: string;
+  status: string;
+  created_at: string;
+  updated_at: string;
+}
 
 export default function Page({ params }: { params: { store: number } }) {
-  const [products, setProducts] = useState([]);
+  const [storeProducts, setProducts] = useState<Product[]>([]);
+  const pathname = usePathname();
+  const [data, setData] = useState(null);
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Added loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProducts = async () => {
-      setIsLoading(true); // Set loading state to true
+    const fetcher = async () => {
       try {
-        const response = await fetch(
-          `${BASE_URL}/stores/${params.store}/items`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch products");
+        const res = await api.get(`/stores/${params.store}/items`);
+
+        if (res.status !== 200) {
+          setError("Server error. Please refresh");
         }
-        const data = await response.json();
-        setProducts(data.data.result.items);
+
+        console.log(res.data.data.result.items, "items");
+
+        setProducts(res.data.data.result.items);
       } catch (error) {
-        setError("Failed to fetch products");
+        setError("could'nt fetch items");
       } finally {
-        setIsLoading(false); // Set loading state to false after request
+        setIsLoading(false);
       }
     };
-
-    fetchProducts();
-  }, [params.store]);
+    fetcher();
+  }, [storeProducts]);
 
   const deals = [
     {
@@ -108,65 +111,6 @@ export default function Page({ params }: { params: { store: number } }) {
       badgeColor: "bg-green-500",
       badgeimg: "/assets/images/salered.png",
       imgSrc: "/assets/images/StoreImage1.png", // Replace with actual image
-    },
-  ];
-
-  const storeProducts = [
-    {
-      imageSrc: "/assets/images/ProductSectionImage.png",
-      title: "Heirloom Apples",
-      discount: "-13%",
-      price: "3.99",
-      savings: "$0.67",
-    },
-    {
-      imageSrc: "/assets/images/ProductSectionImage.png",
-      title: "Heirloom Apples",
-      discount: "-13%",
-      price: "3.99",
-      savings: "$0.67",
-    },
-    {
-      imageSrc: "/assets/images/ProductSectionImage.png",
-      title: "Heirloom Apples",
-      discount: "-13%",
-      price: "3.99",
-      savings: "$0.67",
-    },
-    {
-      imageSrc: "/assets/images/ProductSectionImage.png",
-      title: "Heirloom Apples",
-      discount: "-13%",
-      price: "3.99",
-      savings: "$0.67",
-    },
-    {
-      imageSrc: "/assets/images/ProductSectionImage.png",
-      title: "Heirloom Apples",
-      discount: "-13%",
-      price: "3.99",
-      savings: "$0.67",
-    },
-    {
-      imageSrc: "/assets/images/ProductSectionImage.png",
-      title: "Heirloom Apples",
-      discount: "-13%",
-      price: "3.99",
-      savings: "$0.67",
-    },
-    {
-      imageSrc: "/assets/images/ProductSectionImage.png",
-      title: "Heirloom Apples",
-      discount: "-13%",
-      price: "3.99",
-      savings: "$0.67",
-    },
-    {
-      imageSrc: "/assets/images/ProductSectionImage.png",
-      title: "Heirloom Apples",
-      discount: "-13%",
-      price: "3.99",
-      savings: "$0.67",
     },
   ];
 
@@ -227,7 +171,9 @@ export default function Page({ params }: { params: { store: number } }) {
                 />
 
                 {/* Product Title */}
-                <h2 className="text-lg font-vietnam font-semibold mb-2">{product.title}</h2>
+                <h2 className="text-lg font-vietnam font-semibold mb-2">
+                  {product.title}
+                </h2>
 
                 {/* Product Image */}
                 <div className="flex justify-center mb-2">
@@ -250,7 +196,7 @@ export default function Page({ params }: { params: { store: number } }) {
                 <span
                   className={`text-[10px] flex gap-2 w-[49px] justify-center h-[15px] font-semibold text-white  rounded-lg ${product.badgeColor}`}
                 >
-                  <Image alt="" src={flashsale}/> 
+                  <Image alt="" src={flashsale} />
                   {product.discount}
                 </span>
 
@@ -282,14 +228,16 @@ export default function Page({ params }: { params: { store: number } }) {
               />
 
               {/* Product Title */}
-              <h2 className="text-[20px] text-[#1D2131] font-vietnam font-semibold mb-2">{product.title}</h2>
+              <h2 className="text-[20px] text-[#1D2131] font-vietnam font-semibold mb-2">
+                {product.title}
+              </h2>
 
               {/* Price and Discount */}
 
               <span
                 className={`text-[8px] w-[45px] h-[13px] font-semibold flex justify-center gap-1 text-white  rounded-xl ${product.badgeColor}`}
               >
-                <Image alt="" src={flashsale}/> 
+                <Image alt="" src={flashsale} />
                 {product.discount}
               </span>
             </div>
@@ -365,7 +313,8 @@ export default function Page({ params }: { params: { store: number } }) {
       {/* Product  Section for mobile screens */}
       <div className="lg:hidden">
         <div className="mx-auto p-2 grid grid-cols-2 lg:grid-cols-4 md:gap-8 gap-2">
-          {storeProducts.map((storeProducts, index) => (
+          {isLoading && <>loading...</>}{" "}
+          {storeProducts.map((storeProduct, index) => (
             <div
               key={index}
               className="max-w-xs bg-white border border-gray-200 rounded-lg shadow-lg p-3"
@@ -379,7 +328,7 @@ export default function Page({ params }: { params: { store: number } }) {
               {/* Product Image */}
               <div className="my-2 flex justify-center">
                 <Image
-                  src={storeProducts.imageSrc} // replace with your image path
+                  src={storeProduct.image_urls[0]} // replace with your image path
                   alt="Mixed Pasta"
                   width={120}
                   height={100}
@@ -391,14 +340,15 @@ export default function Page({ params }: { params: { store: number } }) {
               <div className="flex justify-between">
                 <div>
                   <h3 className="font-medium text-[12px] text-gray-800 my-1">
-                    Mixed Pasta
+                    {storeProduct.name}
                   </h3>
                   <div className="flex text-xs text-gray-500 space-x-1">
                     <span className="text-white border bg-[#FF0000] rounded-xl px-2 font-semibold text-[7px]">
                       -13%
                     </span>
                     <span className="text-[6px] text-[#414040BF] font-normal">
-                      Save $0.67
+                      Save $
+                      {Number(storeProduct.discount_percentage).toFixed(2)}
                     </span>
                   </div>
                   <div className="text-[16px] font-semibold text-gray-800 my-1">
@@ -406,9 +356,11 @@ export default function Page({ params }: { params: { store: number } }) {
                   </div>
                 </div>
 
-                <button className="bg-orange-500 w-[53px] h-[22px] mt-6 text-white text-[10px] font-semibold rounded-md ">
-                  Buy Now
-                </button>
+                <Link href={`${pathname}/product`}>
+                  <button className="bg-orange-500 w-[53px] h-[22px] mt-6 text-white text-[10px] font-semibold rounded-md ">
+                    Buy Now
+                  </button>
+                </Link>
               </div>
             </div>
           ))}
@@ -417,9 +369,9 @@ export default function Page({ params }: { params: { store: number } }) {
 
       {/* Product  Section for large screens */}
       <div className="hidden md:block">
-        {" "}
+        {isLoading && <>loading...</>}{" "}
         <div className="mx-auto p-8 grid grid-cols-4 gap-8">
-          {storeProducts.map((storeProducts, index) => (
+          {storeProducts.map((storeProduct, index) => (
             <div
               key={index}
               className="max-w-sm rounded-lg border p-4 bg-white"
@@ -427,8 +379,8 @@ export default function Page({ params }: { params: { store: number } }) {
               {/* Product Image */}
               <div className="relative">
                 <Image
-                  src={storeProducts.imageSrc}
-                  alt={storeProducts.title}
+                  src={storeProduct.image_urls[0]}
+                  alt={storeProduct.name}
                   width={500}
                   height={500}
                   className="rounded-lg"
@@ -448,28 +400,30 @@ export default function Page({ params }: { params: { store: number } }) {
                 {/* Product Details */}
                 <div className="mt-4">
                   <h3 className="text-[16px] font-medium text-[#1D2131]">
-                    {storeProducts.title}
+                    {storeProduct.name}
                   </h3>
 
                   {/* Price Section */}
                   <div className="flex items-center mt-2">
                     <div className="bg-red-500 text-white font-semibold text-[10px] px-2  rounded">
-                      {storeProducts.discount}
+                      {storeProduct.discount_percentage}
                     </div>
                     <p className="text-[10px] font-normal text-gray-500 ml-2">
-                      Save {storeProducts.savings}
+                      Save
                     </p>
                   </div>
 
                   <p className="text-[20px] font-semibold text-[#1D2131] mt-2">
-                    ${storeProducts.price}
+                    ${storeProduct.price}
                   </p>
                 </div>
                 {/* Buy Button */}
                 <div className="mt-[50px]">
-                  <button className="w-full bg-orange-500 text-[14px] font-semibold text-white p-1 rounded-lg hover:bg-orange-600">
-                    Buy Now
-                  </button>
+                  <Link href={`${pathname}/product`}>
+                    <button className="bg-orange-500 w-[53px] h-[22px] mt-6 text-white text-[10px] font-semibold rounded-md ">
+                      Buy Now
+                    </button>
+                  </Link>
                 </div>
               </div>
             </div>

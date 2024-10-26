@@ -12,6 +12,8 @@ import { modalstore } from "@StoreManager/modalstore";
 import { ModalOptions } from "@StoreManager/modalstore";
 import { OPTIONS, deleteStoreItem } from "@app/apis";
 import useProfile from "@hooks/useProfile";
+import { revalidatePath } from "next/cache";
+import { useRouter } from "next/navigation";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -23,6 +25,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@components/ui/AlertDialog";
+import { getCookie } from "@lib/cookie";
 
 const ProductDropdown = ({ itemid }: { itemid: number }) => {
   const toggleModal = modalstore((state) => state.toggleModal);
@@ -33,6 +36,7 @@ const ProductDropdown = ({ itemid }: { itemid: number }) => {
   const deleteStatus = modalstore((state) => state.isItemDeleted);
   const setDeleteStatus = modalstore((state) => state.setDeleteStatus);
   const userID: string | null = useSearchParams().get("user");
+  const session = getCookie("token");
 
   const id: string | null = useSearchParams().get("id");
 
@@ -47,7 +51,7 @@ const ProductDropdown = ({ itemid }: { itemid: number }) => {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${useProfile().getSession()?.access_token}`,
+      Authorization: `Bearer ${session}`,
     },
   };
 
@@ -57,8 +61,7 @@ const ProductDropdown = ({ itemid }: { itemid: number }) => {
     if (res != 200) {
       setDeleteStatus();
     }
-    // const setDeleteStatus = modalstore((state) => state.setDeleteStatus)
-    // setDeleteStatus()
+    revalidatePath("/inventory/Itemsdashboard");
   };
 
   return (

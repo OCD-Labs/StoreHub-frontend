@@ -13,3 +13,14 @@ export const uploadToCloudinary = async (imageURI: string) => {
   const imageURL = img.fileUrl;
   return imageURL;
 };
+
+export const uploadImagesToCloudinary = async (imageURIs: string[]) => {
+  const imageUrls = [];
+
+  for (const imageURI of imageURIs) {
+    const imageUrl = await uploadToCloudinary(imageURI); // Call function for each image
+    imageUrls.push(imageUrl); // Collect each uploaded URL
+  }
+
+  return imageUrls;
+};

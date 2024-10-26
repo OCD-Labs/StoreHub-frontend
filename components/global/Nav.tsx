@@ -14,6 +14,7 @@ import useSWR from "swr";
 import { clearCookie, getCookie } from "@lib/cookie";
 import storehubIcon from "@public/assets/images/storehubIcon.svg";
 import { Divide, ShoppingCart } from "lucide-react";
+import { saveToLocalStorage } from "@lib/session";
 import {
   Avatar,
   AvatarFallback,
@@ -53,6 +54,7 @@ const Nav = () => {
     session ? `${BASE_URL}/inventory/stores` : null,
     getStores
   );
+  saveToLocalStorage("storeId", 0);
 
   const toggleDropdown = () => {
     setOpen(!Opened);

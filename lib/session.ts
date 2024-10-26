@@ -42,6 +42,27 @@ export function setUser(name: string, data: string) {
   return null;
 }
 
+export function saveToLocalStorage(name: string, data: string) {
+  const isBrowser = typeof window !== "undefined";
+  if (isBrowser) {
+    if (!name) return null;
+    localStorage.setItem(name, data);
+  }
+  return null;
+}
+
+export function getFromLocalStorage(name: string) {
+  if (!name) return null;
+  const isBrowser = typeof window !== "undefined";
+  if (isBrowser) {
+    const item = localStorage.getItem(name);
+    if (item) {
+      return JSON.parse(item);
+    }
+  }
+  return null;
+}
+
 export function getUser(name: string) {
   if (!name) return null;
   const isBrowser = typeof window !== "undefined";

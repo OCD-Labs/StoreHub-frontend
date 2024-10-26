@@ -2,6 +2,7 @@
 "use client";
 import "@styles/globals.css";
 import { useSearchParams } from "next/navigation";
+
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@components/ui/Button";
 import { ToastContainer, toast } from "react-toastify";
@@ -24,7 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "@constants";
 import { useRouter } from "next/navigation";
 import { Inventory } from "@StoreManager/inventory";
-import { getUser } from "@lib/session";
+import { getUser, getFromLocalStorage, saveToLocalStorage } from "@lib/session";
 import storehubFooterLogo from "@public/assets/images/StorehubFooterLogo.png";
 import PageFooter from "@components/global/PageFooter";
 import storehubIcon from "@public/assets/images/storehubIcon.svg";
@@ -58,10 +59,11 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   const handleItmeClick = (item: string): void => {
     setActiveItem(item);
   };
+
   const userID = useSearchParams().get("user");
   const id = useSearchParams().get("id");
   const name = useSearchParams().get("name");
-
+  const storeId = getFromLocalStorage("storeId");
   const getAllStoresOwnedByUser = () => {
     fetch(BASE_URL + `/inventory/stores`, {
       method: "GET",
@@ -75,13 +77,22 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
         if (data.data) {
           const stores = data.data.result.stores;
           setStore(stores);
-          setCurrentStore(stores[0]);
+          console.log(storeId, stores, "igfee");
+          let selectedStore = stores.filter((store) => {
+            return store.store_id == storeId;
+          });
+          setCurrentStore(selectedStore[0]);
+          handleItmeClick("products");
         }
       });
   };
   useEffect(() => {
     getAllStoresOwnedByUser();
-  }, [session]);
+  }, [session, id]);
+
+  console.log(getFromLocalStorage("storeId"), "id");
+
+  console.log(store, "storeeee");
 
   // check if there is a user logged in
   if (!session) {
@@ -283,7 +294,6 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               />{" "}
               <span className="text-white">Settings</span>
             </Link>
-
 
             {/* only seen in mobile */}
             <div className="lg:hidden flex ml-[130px] mt-[90%] items-center">
