@@ -33,6 +33,7 @@ import {
 } from "../../../../components/ui/Table";
 import { getCookie } from "@lib/cookie";
 import "react-toastify/dist/ReactToastify.css";
+import { X } from "lucide-react";
 
 const StoreInventory = () => {
   const isOpen = modalstore((state) => state.isOpen);
@@ -164,7 +165,7 @@ const StoreInventory = () => {
             isOpen ? "animate-animatefadeIn is-open" : "animate-animatefadeOut"
           } lg:px-[] ${isOpen ? "is-open" : ""}`}
         >
-          <div className="modal-content w-[100%] md:w-[80%] h-[90vh]">
+          <div className="modal-content w-[80%] md:w-[80%] h-[80vh] md:h-[90vh]">
             <div className="bg-white rounded-lg p-6 w-full max-w-4xl">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-semibold">Add Product</h2>
@@ -174,7 +175,7 @@ const StoreInventory = () => {
                   }}
                   className="text-gray-500 hover:text-gray-700"
                 >
-                  Discard
+                  <X/>
                 </button>
               </div>
             </div>
@@ -191,9 +192,9 @@ const StoreInventory = () => {
         {/* Product listed items */}
         <div className="max-w-7xl mx-auto p-6">
           {/* Top Section with Filters and Search */}
-          <div className="flex items-center rounded-lg justify-between bg-[#FCF8F2] py-2 px-4 shadow-sm">
+          <div className="flex items-center rounded-lg md:justify-between justify-center bg-[#FCF8F2] py-2 px-4 shadow-sm">
             {/* Left section with icons */}
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-2 md:mr-0 mr-7">
               <button
                 onClick={() => {
                   toggleModal(options);
@@ -203,20 +204,20 @@ const StoreInventory = () => {
                 <PlusIcon className="h-5 w-5 text-black" />
               </button>
 
-              <Image src={filter} width={25} height={25} />
+              <Image src={filter} className="h-5 w-5 text-black" />
             </div>
 
             {/* Search bar */}
-            <div className="relative">
+           
               <div className="relative">
                 <input
                   type="text"
-                  className="bg-white border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                  className="bg-white border border-gray-300 rounded-lg md:pl-10 pl-2  md:pr-8 pr-0 py-2  focus:outline-none focus:ring-2 focus:ring-gray-400"
                   placeholder="Search"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
                 />
-                <div className="absolute left-4 top-[13px]">
+                <div className="absolute left-4 top-[13px] hidden lg:block">
                   <Image
                     src={SearchIcon}
                     height={17}
@@ -225,7 +226,7 @@ const StoreInventory = () => {
                   />
                 </div>
               </div>
-            </div>
+           
           </div>
 
           {/* Table */}

@@ -22,9 +22,9 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
 
   return (
     <>
-      <div className="">
-        <div className="">
-          <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+      
+        <div className=" ">
+          <div className="bg-white rounded-lg shadow-lg overflow-hidden  ">
             <Link href={`/stores/${store.store.id}`}>
               <div className="relative">
                 {" "}
@@ -36,29 +36,29 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
                   }
                   width={500}
                   height={300}
-                  className="w-full h-64 object-cover"
+                  className="w-full md:h-64 h-[170px] object-cover"
                   alt="storimg"
                 ></Image>
               </div>
 
               <div className="p-4">
-                <h2 className="text-xl font-medium font-vietnam text-[#000000]">
+                <h2 className="md:text-xl text-[12px]  font-medium font-vietnam text-[#000000]">
                   {store.store.name}
                 </h2>
 
                 {/* Tags */}
 
-                <div className="flex justify-between">
+                <div className="flex justify-between md:mt-3 mt-2">
                   {/* Categories */}
-                  <div className="flex flex-wrap gap-2 mt-5">
-                    <span className=" text-sm font-medium font-vietnam border text-gray-600 py-1 px-9 flex items-center justify-center rounded-full">
+                  <div className="md:mt-3 mt-1">
+                    <span className=" md:text-[12px] text-[6px] font-[400] font-vietnam border text-gray-600 flex items-center justify-center py-1 px-2 rounded-2xl ">
                       {store.store.category}
                     </span>
                   </div>
                   {/* Action Button */}
-                  <div className="mt-5">
-                    <button className="bg-orange-500 text-white w-10 h-10 flex items-center justify-center rounded-full hover:bg-orange-600">
-                      <ArrowRightIcon className="w-5 h-5" />
+                  <div className="">
+                    <button className="bg-orange-500 text-white md:w-[47px] md:h-[47px] w-[24px] h-[24px] flex items-center justify-center rounded-full hover:bg-orange-600">
+                      <ArrowRightIcon className="md:w-5 w-3 md:h-5 h-3" />
                     </button>
                   </div>
                 </div>
@@ -84,7 +84,7 @@ const Storecard: FC<StoreProps> = ({ store }: StoreProps) => {
             </Link>
           </div>
         </div>
-      </div>
+      
     </>
   );
 };

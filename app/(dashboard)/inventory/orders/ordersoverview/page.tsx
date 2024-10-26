@@ -148,7 +148,7 @@ const OrdersOverview = () => {
                 value=""
                 onChange=""
               />
-              <div className="absolute left-4 top-[13px]">
+             <div className="absolute left-4 top-[13px] hidden lg:block">
                 <Image
                   src={search}
                   height={17}
@@ -168,7 +168,7 @@ const OrdersOverview = () => {
           <div className="absolute top-4 right-4">
             {/* Placeholder for dropdown */}
             <button className=" text-gray-500 text-xs sm:text-sm border px-1 sm:px-2 py-0.5 sm:py-1 rounded-lg">
-              Monthly ▼
+              Monthly
             </button>
           </div>
 
@@ -224,7 +224,7 @@ const OrdersOverview = () => {
           <div className="absolute top-4 right-4">
             {/* Placeholder for dropdown */}
             <button className=" text-gray-500 text-xs sm:text-sm border px-1 sm:px-2 py-0.5 sm:py-1 rounded-lg">
-              All time ▼
+              All time
             </button>
           </div>
 

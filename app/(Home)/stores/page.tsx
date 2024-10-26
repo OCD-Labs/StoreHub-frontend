@@ -92,34 +92,34 @@ const Storepage = ({
   ];
 
   return (
-    <div className="max-w-[80rem] m-auto p-6">
+    <div className="max-w-[80rem] m-auto md:p-6 p-3">
       <div className="">
         <div>
           {/* Store background Image */}
-          <div className="store-custom-bg  p-9 rounded-lg">
-            <div className=" mt-[35%] lg:p-0 p-4">
+          <div className="store-custom-bg md:px-9 px-1 py-9  rounded-lg">
+            <div className=" md:mt-[35%] mt-[50%] lg:p-0 p-4">
               <div className="lg:mt-24">
                 <div className=" text-white">
                   {/* Title */}
-                  <h1 className="text-4xl font-vietnam lg:text-5xl font-bold">
+                  <h1 className=" text-xl font-vietnam lg:text-5xl font-bold">
                     Joe's Pendants
                   </h1>
 
                   {/* Tags */}
                   <div className="flex space-x-3 mt-4">
-                    <span className="border font-vietnam text-white text-sm py-1 px-3 rounded-full">
+                    <span className="border font-vietnam text-white md:text-sm text-[10px] py-1 px-3 rounded-full">
                       Food
                     </span>
-                    <span className="border font-vietnam text-white text-sm py-1 px-3 rounded-full">
+                    <span className="border font-vietnam text-white md:text-sm text-[10px] py-1 px-3 rounded-full">
                       Ornaments
                     </span>
-                    <span className="border font-vietnam text-white text-sm py-1 px-3 rounded-full">
+                    <span className="border font-vietnam text-white md:text-sm text-[10px] py-1 px-3 rounded-full">
                       Household
                     </span>
                   </div>
 
                   {/* Description */}
-                  <p className="mt-6 font-vietnam text-sm lg:text-base text-white max-w-md">
+                  <p className="mt-6 font-vietnam md:text-sm text-[10px] lg:text-base hidden md:block text-white max-w-md">
                     We pride ourselves on supporting local farmers, bakers, and
                     artisans, ensuring that everything you find here is locally
                     sourced, sustainable, and crafted with care.
@@ -173,7 +173,7 @@ const Storepage = ({
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 md:gap-6 gap-3 md:p-6 p-1">
                   {allStores.map((store, index) => (
                     <Storecard key={index} store={store} />
                   ))}

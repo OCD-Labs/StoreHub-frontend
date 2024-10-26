@@ -49,35 +49,33 @@ const topSellingProduct = () => {
 
   return (
     <div className="px-10">
-      {/* Top Section with Filters and Search */}
-      <div className="flex items-center rounded-lg justify-between bg-[#FCF8F2] py-2 px-4 shadow-sm">
+     {/* Top Section with Filters and Search */}
+     <div className="flex items-center rounded-lg md:justify-between justify-center bg-[#FCF8F2] py-2 px-4 shadow-sm">
         {/* Left section with icons */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2 md:mr-0 mr-7">
           <button className="p-2 ">
             <PlusIcon className="h-5 w-5 text-black" />
           </button>
 
-          <Image src={filter} alt="filter" width={25} height={25} />
+          <Image alt="" src={filter} className="h-5 w-5 text-black" />
         </div>
 
         {/* Search bar */}
+
         <div className="relative">
-          <div className="relative">
-            <input
-              type="text"
-              className="bg-white border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
-              placeholder="Search"
-              value=""
+          <input
+            type="text"
+            className="bg-white border border-gray-300 rounded-lg md:pl-10 pl-2  md:pr-8 pr-0 py-2  focus:outline-none focus:ring-2 focus:ring-gray-400"
+            placeholder="Search"
+          />
+          <div className="absolute left-4 top-[13px] hidden lg:block">
+            <Image
+              alt=""
+              src={SearchIcon}
+              height={17}
+              width={15}
+              className="text-black"
             />
-            <div className="absolute left-4 top-[13px]">
-              <Image
-                src={SearchIcon}
-                height={17}
-                width={15}
-                alt="searchIcon"
-                className="text-black"
-              />
-            </div>
           </div>
         </div>
       </div>
