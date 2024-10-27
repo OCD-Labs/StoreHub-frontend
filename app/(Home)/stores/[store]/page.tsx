@@ -313,7 +313,8 @@ export default function Page({ params }: { params: { store: number } }) {
       {/* Product  Section for mobile screens */}
       <div className="lg:hidden">
         <div className="mx-auto p-2 grid grid-cols-2 lg:grid-cols-4 md:gap-8 gap-2">
-          {isLoading && <>loading...</>}{" "}
+          {isLoading && <>loading...</>}
+          {!storeProducts.length && <div>No products found</div>}
           {storeProducts.map((storeProduct, index) => (
             <div
               key={index}
@@ -356,7 +357,9 @@ export default function Page({ params }: { params: { store: number } }) {
                   </div>
                 </div>
 
-                <Link href={`${pathname}/product`}>
+                <Link
+                  href={`${pathname}/product?${"item_id=" + storeProduct.id}`}
+                >
                   <button className="bg-orange-500 w-[53px] h-[22px] mt-6 text-white text-[10px] font-semibold rounded-md ">
                     Buy Now
                   </button>
@@ -370,6 +373,7 @@ export default function Page({ params }: { params: { store: number } }) {
       {/* Product  Section for large screens */}
       <div className="hidden md:block">
         {isLoading && <>loading...</>}{" "}
+        {!storeProducts.length && <div>No products found for this store</div>}
         <div className="mx-auto p-8 grid grid-cols-4 gap-8">
           {storeProducts.map((storeProduct, index) => (
             <div
@@ -419,7 +423,9 @@ export default function Page({ params }: { params: { store: number } }) {
                 </div>
                 {/* Buy Button */}
                 <div className="mt-[50px]">
-                  <Link href={`${pathname}/product`}>
+                  <Link
+                    href={`${pathname}/product?${"item_id=" + storeProduct.id}`}
+                  >
                     <button className="bg-orange-500 w-[53px] h-[22px] mt-6 text-white text-[10px] font-semibold rounded-md ">
                       Buy Now
                     </button>

@@ -41,14 +41,7 @@ const Storepage = ({
   ];
   const page = searchParams["page"] ?? "1";
   const page_size = searchParams["per_page"] ?? "15";
-  // Get all store
-  // const fetcher = (url: string) =>
-  //   fetch(url, GET_OPTIONS).then((response) => response.json())
-  // const { data, error, isLoading } = useSWR(
-  //   `${BASE_URL}/stores/?page=${Number(page)}&page_size=${page_size}`,
-  //   fetcher,
-  // )
-  // console.log(data, 'useswr data')
+
   const handlePageLoading = () => {
     setLoading(true);
   };
@@ -72,24 +65,6 @@ const Storepage = ({
   useEffect(() => {
     fetchAllStores();
   }, [page]);
-
-  const Marketplace = [
-    {
-      title: "Golden Chains",
-      imageUrl: "/assets/images/storesImage.png",
-      tags: ["Goldsmith", "Jewelry"],
-    },
-    {
-      title: "Wedding Bells",
-      imageUrl: "/assets/images/storesImage.png",
-      tags: ["Stone", "Rings", "Weddings"],
-    },
-    {
-      title: "Golden Chains",
-      imageUrl: "/assets/images/storesImage.png",
-      tags: ["Goldsmith", "Jewelry"],
-    },
-  ];
 
   return (
     <div className="max-w-[80rem] m-auto md:p-6 p-3">
