@@ -112,11 +112,11 @@ const Nav = () => {
             Marketplace
           </Link>
         </div>
-
-        <div className="hover:text-[#FE5B13] cursor-pointer font-vietnam font-[600] flex items-center space-x-1 ">
-          <p>Cart</p> <ShoppingCartIcon className="h-6  w-6" />
-        </div>
-
+        <Link href="/cart">
+          <div className="hover:text-[#FE5B13] cursor-pointer font-vietnam font-[600] flex items-center space-x-1 ">
+            <p>Cart</p> <ShoppingCartIcon className="h-6  w-6" />
+          </div>
+        </Link>
         <div className="flex gap-[38px]">
           {/* this is where the login and get started auth logic comes in */}
 
