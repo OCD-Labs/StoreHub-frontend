@@ -12,6 +12,8 @@ import { getUser } from "@lib/session";
 
 // Define the interface for the context value
 interface CartContextType {
+  isLoading: boolean;
+  userCarts: Record<string, any>[];
   carts: number;
   cart_id: number;
   addItemToCart: (
@@ -46,6 +48,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   const cart_id = data?.cart_id;
   const carts = data?.cart.length;
+  const userCarts = data?.cart;
+  console.log(userCarts, "userCarts");
 
   const addItemToCart = async (
     item_id: number,
@@ -83,8 +87,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const cartActions = {
+    userCarts,
     carts,
     cart_id,
+    isLoading,
     addItemToCart,
     removeItemFromCart,
     decreaseCartQuantity,

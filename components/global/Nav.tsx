@@ -16,6 +16,7 @@ import { clearCookie, getCookie } from "@lib/cookie";
 import storehubIcon from "@public/assets/images/storehubIcon.svg";
 import { Divide, ShoppingCart } from "lucide-react";
 import { saveToLocalStorage } from "@lib/session";
+import { loginNewAddress } from "@NearAuth/near-wallet";
 import {
   Avatar,
   AvatarFallback,
@@ -39,7 +40,9 @@ const Nav = () => {
   const session = getCookie("token");
 
   const user = getUser("user");
-
+  // useEffect(() => {
+  //   loginNewAddress();
+  // }, []);
   // @ts-ignore
 
   const getAllStores = (url: string) =>

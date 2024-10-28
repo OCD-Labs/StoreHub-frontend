@@ -67,6 +67,12 @@ export const increaseCartQuantity = async (
   return res.data;
 };
 
+export const getStoreInfo = async (store_id: number) => {
+  const res = await api.get(`stores/${store_id}`);
+  console.log(res);
+  return res.data;
+};
+
 export const decreaseCartQuantity = async (
   cart_id: number,
   item_id: number,

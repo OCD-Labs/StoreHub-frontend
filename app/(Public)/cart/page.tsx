@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useContext, useRef } from "react";
+import { CartContext } from "@contexts/CartContext";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import "@/styles/cart.css";
@@ -16,40 +17,40 @@ interface CartItem {
 }
 
 const Cart: React.FC = () => {
+  const addBtnRef = useRef();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 1,
-      name: "Item 1",
-      price: 500,
-      quantity: 1,
-      image: "/assets/images/cartItem1.png",
-      selected: true,
-    },
-    {
-      id: 2,
-      name: "Item 2",
-      price: 500,
-      quantity: 1,
-      image: "/assets/images/cartItem1.png",
-      selected: false,
-    },
-    // Add more items as needed
-  ]);
+  const cartContext = useContext(CartContext);
+  if (!cartContext) {
+    throw new Error("CartContext is undefined");
+  }
+  const {
+    userCarts,
+    isLoading,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+    cart_id,
+  } = cartContext;
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (!userCarts) {
+    throw new Error("userCarts is undefined");
+  }
+
+  console.log(userCarts, "userCarts");
+
   const shippingFee = 20;
 
-  const updateQuantity = (id: number, amount: number) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id
-          ? { ...item, quantity: Math.max(1, item.quantity + amount) }
-          : item
-      )
-    );
-  };
+  // const removeBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  console.log(addBtnRef.current, "addBtnRef");
+
+  // const increaseQuantity = async (id: number, amount: number) => {
+  //   await increaseCartQuantity(cart_id, item_id, quantity);
+  // };
 
   const calculateSubtotal = (): number => {
-    return cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    return userCarts.reduce((acc, item) => acc + item.price * item.quantity, 0);
   };
 
   const subtotal = calculateSubtotal();
@@ -74,35 +75,29 @@ const Cart: React.FC = () => {
           <td colSpan={11} className="h-[70px]"></td>
         </tr>
         <tbody>
-          {cartItems.map((item) => (
+          {userCarts.map((item) => (
             <tr key={item.id} className="border-b">
               <td className="flex items-center p-4">
                 <input
                   type="checkbox"
-                  checked={item.selected}
-                  onChange={() =>
-                    setCartItems((prevItems) =>
-                      prevItems.map((prevItem) =>
-                        prevItem.id === item.id
-                          ? { ...prevItem, selected: !prevItem.selected }
-                          : prevItem
-                      )
-                    )
-                  }
+                  // onChange={() =>
+                  //   setCartItems((prevItems) =>
+                  //     prevItems.map((prevItem) =>
+                  //       prevItem.id === item.id
+                  //         ? { ...prevItem, selected: !prevItem.selected }
+                  //         : prevItem
+                  //     )
+                  //   )
+                  // }
                   className="mr-2"
                 />
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  width={60}
-                  height={30}
-                  className=" object-cover mr-4 rounded"
-                />
+                {item.item_name}
               </td>
-              <td className="text-gray-700 p-2 font-medium">${item.price}</td>
+              <td className="text-gray-700 p-2 font-medium">N{item.price}</td>
               <td className="flex items-center">
                 <button
-                  onClick={() => updateQuantity(item.id, -1)}
+                  ref={addBtnRef}
+                  // onClick={() => updateQuantity(item.id, -1)}
                   className="px-2 border rounded-l"
                   aria-label="Decrease quantity"
                 >
@@ -110,7 +105,7 @@ const Cart: React.FC = () => {
                 </button>
                 <span className="border px-2">{item.quantity}</span>
                 <button
-                  onClick={() => updateQuantity(item.id, 1)}
+                  // onClick={() => updateQuantity(item.id, 1)}
                   className="px-2 border rounded-r"
                   aria-label="Increase quantity"
                 >
@@ -118,7 +113,7 @@ const Cart: React.FC = () => {
                 </button>
               </td>
               <td className="text-gray-700 font-medium">
-                ${item.price * item.quantity}
+                N{item.price * item.quantity}
               </td>
             </tr>
           ))}
@@ -140,7 +135,7 @@ const Cart: React.FC = () => {
               Subtotal :
             </span>
             <span className="text-[17px] font-medium font-vietnam">
-              ${subtotal.toFixed(2)}
+              N{subtotal.toFixed(2)}
             </span>
           </div>
           <div className="flex gap-[60px] py-3 justify-between">
@@ -148,7 +143,7 @@ const Cart: React.FC = () => {
               Shipping fee :
             </span>
             <span className="text-[17px] font-medium font-vietnam">
-              ${shippingFee.toFixed(2)}
+              N{shippingFee.toFixed(2)}
             </span>
           </div>
           <div className="flex gap-[60px] py-3 justify-between text-lg font-bold">
@@ -156,7 +151,7 @@ const Cart: React.FC = () => {
               Total :
             </span>
             <span className="font-vietnam text-[17px] font-medium">
-              ${total.toFixed(2)}
+              N{total.toFixed(2)}
             </span>
           </div>
         </div>
