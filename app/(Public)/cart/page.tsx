@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import "@/styles/cart.css";
-// import CheckoutModal from "@components/global/checkoutModal";
+import CheckoutModal from "@components/global/checkoutModal";
+
 
 interface CartItem {
   id: number;
@@ -17,6 +18,7 @@ interface CartItem {
 
 const Cart: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  
   const [cartItems, setCartItems] = useState<CartItem[]>([
     {
       id: 1,
@@ -34,7 +36,9 @@ const Cart: React.FC = () => {
       image: "/assets/images/cartItem1.png",
       selected: false,
     },
-    // Add more items as needed
+
+	
+    
   ]);
   const shippingFee = 20;
 
@@ -64,7 +68,7 @@ const Cart: React.FC = () => {
             <th>Price</th>
             <th className="">
               <span className="hidden md:block">Quantity</span>{" "}
-              <span className="md:hidden">QTY</span>
+              <span className="md:hidden px-3">QTY</span>
             </th>
             <th>Total</th>
           </tr>
@@ -174,12 +178,14 @@ const Cart: React.FC = () => {
           >
             Checkout
           </button>
-          {/* {isModalOpen && (
+          {isModalOpen && (
             <CheckoutModal
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
+			 
+			  
             />
-          )} */}
+          )}
         </div>
       </div>
     </div>
