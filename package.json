@@ -44,7 +44,6 @@
     "file-loader": "^6.2.0",
     "lucide-react": "^0.268.0",
     "near-api-js": "^5.0.1",
-    "near-fastauth-wallet": "^2.0.5",
     "near-seed-phrase": "^0.2.0",
     "next": "13.4.7",
     "postcss": "8.4.24",

@@ -2,7 +2,6 @@
 // near api js
 import { providers } from "near-api-js";
 import { removeUser } from "@lib/session";
-import { setupFastAuthWallet } from "near-fastauth-wallet";
 
 // wallet selector UI
 import "@near-wallet-selector/modal-ui/styles.css";
@@ -131,37 +130,37 @@ const WALLET_URL = "https://fast-auth-frontend.onrender.com";
 const RELAYER_URL = "https://near-relayer-service.onrender.com";
 
 // Initialize wallet selector
-const selector = setupWalletSelector({
-  network: "mainnet",
-  modules: [
-    setupFastAuthWallet({
-      relayerUrl: RELAYER_URL,
-      walletUrl: WALLET_URL,
-    }),
-  ],
-});
+// const selector = setupWalletSelector({
+//   network: "mainnet",
+//   modules: [
+//     setupFastAuthWallet({
+//       relayerUrl: RELAYER_URL,
+//       walletUrl: WALLET_URL,
+//     }),
+//   ],
+// });
 
 // EITHER setup onClick function for login
-export const loginExistingAddress = () =>
-  selector
-    .then((selector) => selector.wallet("fast-auth-wallet"))
-    .then((fastAuthWallet) =>
-      fastAuthWallet.signIn({
-        contractId: CONTRACT_ID,
-        email: "team.storehub@gmail.com",
-        isRecovery: true,
-      })
-    );
+// export const loginExistingAddress = () =>
+//   selector
+//     .then((selector) => selector.wallet("fast-auth-wallet"))
+//     .then((fastAuthWallet) =>
+//       fastAuthWallet.signIn({
+//         contractId: CONTRACT_ID,
+//         email: "team.storehub@gmail.com",
+//         isRecovery: true,
+//       })
+//     );
 
-// OR setup onClick function for login
-export const loginNewAddress = () =>
-  selector
-    .then((selector) => selector.wallet("fast-auth-wallet"))
-    .then((fastAuthWallet) =>
-      fastAuthWallet.signIn({
-        contractId: CONTRACT_ID,
-        email: "team.storehub@gmail.com",
-        accountId: "greatone0f.near",
-        isRecovery: false,
-      })
-    );
+// // OR setup onClick function for login
+// export const loginNewAddress = () =>
+//   selector
+//     .then((selector) => selector.wallet("fast-auth-wallet"))
+//     .then((fastAuthWallet) =>
+//       fastAuthWallet.signIn({
+//         contractId: CONTRACT_ID,
+//         email: "team.storehub@gmail.com",
+//         accountId: "greatone0f.near",
+//         isRecovery: false,
+//       })
+//     );
