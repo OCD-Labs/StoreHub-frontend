@@ -12,10 +12,17 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="h-[100%] w-[100%]">
       <section className=" ">
-      <div className="font-bold text-lg p-3 bg-[#FCF8F2]">Account Information</div>
+      <div className="font-vietnam font-bold text-xl p-3 bg-[#FCF8F2]">Account Information</div>
         <hr className="w-full" />
-        <div className="flex justify-between my-3 p-3">
-          <li className="flex gap-5">
+        <div className="flex justify-between items-end p-3">
+          <li className="flex gap-5"   style={{
+    width: '550px',
+    height: '20px',
+    top: '218px',
+    left: '311px',
+    gap: '60px',
+    paddingBottom: '-4px' 
+  }}>
             <ul>
               <Link
                 className="md:mb-[35px]"
@@ -29,7 +36,7 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span className=" hover:underline "> Account Details </span>
+                <span className="font-vietnam w-500 font-weight-500 hover:text-orange-500"> Personal Details </span>
               </Link>
             </ul>
             <ul>
@@ -44,7 +51,7 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span className=" hover:underline">Reset Password</span>
+                <span className="font-vietnam font-weight-500 hover:text-orange-500">Reset Password</span>
               </Link>
             </ul>
             <ul>
@@ -58,7 +65,7 @@ const AccountInfo = ({ children }: { children: React.ReactNode }) => {
                     user: userID,
                   },
                 }}
-                className=" hover:underline"
+                className="font-vietnam font-weight-500 hover:text-orange-500"
               >
                 Payment Information
               </Link>

@@ -69,7 +69,7 @@ const Nav = () => {
   return (
     <>
       {/* Large Screen */}
-      <nav className="hidden max-w-[90rem] mx-auto px-4 lg:flex justify-between my-3 items-center ">
+      <nav className="hidden max-w-[90rem] mx-auto px-4 lg:flex justify-between my-3 items-center">
         <div>
           <Link href="/">
             {" "}
