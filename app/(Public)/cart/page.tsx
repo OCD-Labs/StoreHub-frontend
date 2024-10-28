@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, use } from "react";
 import { CartContext } from "@contexts/CartContext";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import "@/styles/cart.css";
 import CheckoutModal from "@components/global/checkoutModal";
 
+import { Button } from "@components/ui/Button";
+import { Loader2 } from "lucide-react";
+
+// import CheckoutModal from "@components/global/checkoutModal";
 
 interface CartItem {
   id: number;
@@ -18,9 +22,11 @@ interface CartItem {
 }
 
 const Cart: React.FC = () => {
-  const addBtnRef = useRef();
+  const addBtnRef = useRef([]);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [item_id, setItemId] = useState<number>(0); // itemId
   const cartContext = useContext(CartContext);
+  const [removingItem, setRemovingItem] = useState(false);
   if (!cartContext) {
     throw new Error("CartContext is undefined");
   }
@@ -29,6 +35,8 @@ const Cart: React.FC = () => {
     isLoading,
     increaseCartQuantity,
     decreaseCartQuantity,
+    removeItemFromCart,
+    refreshCart,
     cart_id,
   } = cartContext;
   if (isLoading) {
@@ -44,18 +52,42 @@ const Cart: React.FC = () => {
 
   // const removeBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  console.log(addBtnRef.current, "addBtnRef");
+  console.log(item_id, "addBtnRef");
+
+  function getItemDetail(index: number, id: number) {
+    if (addBtnRef.current[index]) {
+      // Do something with the specific button ref
+    }
+    console.log(id);
+  }
 
   // const increaseQuantity = async (id: number, amount: number) => {
   //   await increaseCartQuantity(cart_id, item_id, quantity);
   // };
 
   const calculateSubtotal = (): number => {
-    return userCarts.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    return userCarts?.cart?.reduce(
+      (acc, item) => acc + item.price * item.quantity,
+      0
+    );
   };
 
   const subtotal = calculateSubtotal();
   const total = subtotal + shippingFee;
+
+  // remove cart item
+  const removeCartItem = async (item_id: number) => {
+    try {
+      console.log("clic", item_id, userCarts.cart_id);
+
+      setItemId(item_id);
+      setRemovingItem(true);
+      await removeItemFromCart(userCarts.cart_id, item_id);
+    } catch (error) {
+    } finally {
+      setRemovingItem(false);
+    }
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-4">
@@ -76,8 +108,8 @@ const Cart: React.FC = () => {
           <td colSpan={11} className="h-[70px]"></td>
         </tr>
         <tbody>
-          {userCarts.map((item) => (
-            <tr key={item.id} className="border-b">
+          {userCarts?.cart?.map((item, i) => (
+            <tr key={i} className="border-b">
               <td className="flex items-center p-4">
                 <input
                   type="checkbox"
@@ -97,8 +129,8 @@ const Cart: React.FC = () => {
               <td className="text-gray-700 p-2 font-medium">N{item.price}</td>
               <td className="flex items-center">
                 <button
-                  ref={addBtnRef}
-                  // onClick={() => updateQuantity(item.id, -1)}
+                  ref={(el) => (addBtnRef.current[i] = el)}
+                  onClick={() => getItemDetail(i, item.item_id)}
                   className="px-2 border rounded-l"
                   aria-label="Decrease quantity"
                 >
@@ -115,6 +147,23 @@ const Cart: React.FC = () => {
               </td>
               <td className="text-gray-700 font-medium">
                 N{item.price * item.quantity}
+              </td>
+              <td className="text-gray-700 font-medium">
+                <Button
+                  onClick={() => removeCartItem(item.item_id)}
+                  className="text-orange-500"
+                  variant="ghost"
+                  size="sm"
+                >
+                  {removingItem && item.item_id === item_id ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      <p>Removing...</p>
+                    </>
+                  ) : (
+                    "Remove"
+                  )}
+                </Button>
               </td>
             </tr>
           ))}
@@ -136,7 +185,7 @@ const Cart: React.FC = () => {
               Subtotal :
             </span>
             <span className="text-[17px] font-medium font-vietnam">
-              N{subtotal.toFixed(2)}
+              {/* N{subtotal.toFixed(2)} */}
             </span>
           </div>
           <div className="flex gap-[60px] py-3 justify-between">
@@ -144,7 +193,7 @@ const Cart: React.FC = () => {
               Shipping fee :
             </span>
             <span className="text-[17px] font-medium font-vietnam">
-              N{shippingFee.toFixed(2)}
+              {/* N{shippingFee.toFixed(2)} */}
             </span>
           </div>
           <div className="flex gap-[60px] py-3 justify-between text-lg font-bold">
@@ -152,7 +201,7 @@ const Cart: React.FC = () => {
               Total :
             </span>
             <span className="font-vietnam text-[17px] font-medium">
-              N{total.toFixed(2)}
+              {/* N{total.toFixed(2)} */}
             </span>
           </div>
         </div>
@@ -174,8 +223,6 @@ const Cart: React.FC = () => {
             <CheckoutModal
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
-			 
-			  
             />
           )}
         </div>

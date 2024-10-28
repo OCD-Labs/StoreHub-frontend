@@ -1,6 +1,4 @@
-import { POST_OPTION } from "@app/apis";
 import api from "./apiClient";
-import { it } from "node:test";
 
 export const getStores = async () => {
   const res = await api.get("/inventory/stores");
@@ -26,10 +24,8 @@ export const getStoreItemDetails = async (url: string) => {
 
 export const getUserCart = async (url: string) => {
   const res = await api.get(url);
-  if (res.status !== 200) {
-    throw new Error("couldn't fetch cart");
-  }
-  console.log(res);
+  console.log(res.data.data.result);
+
   return res.data.data.result;
 };
 
@@ -52,6 +48,7 @@ export const removeItemFromCartApi = async (
 ) => {
   const res = await api.delete(`/carts/${cart_id}/items/${item_id}`);
   console.log(res);
+
   return res.data;
 };
 

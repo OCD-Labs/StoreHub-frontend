@@ -63,7 +63,10 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   const userID = useSearchParams().get("user");
   const id = useSearchParams().get("id");
   const name = useSearchParams().get("name");
-  const storeId = getFromLocalStorage("storeId");
+  if (!localStorage.getItem("storeId")) {
+    saveToLocalStorage("storeId", 0);
+  }
+  const storeId = getFromLocalStorage("storeId") || 0;
   const getAllStoresOwnedByUser = () => {
     fetch(BASE_URL + `/inventory/stores`, {
       method: "GET",
@@ -81,6 +84,13 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
           let selectedStore = stores.filter((store) => {
             return store.store_id == storeId;
           });
+          console.log(
+            selectedStore,
+            stores[0].store_id,
+            storeId,
+            "selected store"
+          );
+
           setCurrentStore(selectedStore[0]);
           handleItmeClick("products");
         }
@@ -88,7 +98,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   };
   useEffect(() => {
     getAllStoresOwnedByUser();
-  }, [session, id]);
+  }, []);
 
   console.log(getFromLocalStorage("storeId"), "id");
 

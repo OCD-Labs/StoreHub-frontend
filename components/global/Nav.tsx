@@ -63,7 +63,8 @@ const Nav = () => {
     session ? `${BASE_URL}/inventory/stores` : null,
     getStores
   );
-  saveToLocalStorage("storeId", 0);
+
+  saveToLocalStorage("storeId", data?.data?.result?.stores[0]?.store_id || 0);
 
   const toggleDropdown = () => {
     setOpen(!Opened);
@@ -76,7 +77,7 @@ const Nav = () => {
   return (
     <>
       {/* Large Screen */}
-      <nav className="hidden max-w-[90rem] mx-auto px-4 lg:flex justify-between my-3 items-center ">
+      <nav className="hidden max-w-[90rem] mx-auto px-4 lg:flex justify-between my-3 items-center">
         <div>
           <Link href="/">
             {" "}

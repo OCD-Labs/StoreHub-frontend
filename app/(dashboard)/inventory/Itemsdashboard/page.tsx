@@ -174,7 +174,7 @@ const StoreInventory = () => {
     const selected = e.target.value;
     const store_id = selected.match(/\(([^)]+)\)/)[1];
     const store_name = selected.split(" ")[0];
-    saveToLocalStorage("storeId", store_id);
+    saveToLocalStorage("storeId", store_id || 0);
     router.push(
       `/inventory/Itemsdashboard?id=${store_id}&name=${store_name}&user=1`
     );
@@ -209,6 +209,7 @@ const StoreInventory = () => {
               userID={userID}
               addItemStatus={setAddItemStatus}
               options={modaloptions}
+              setloading={setloading}
             ></AddItemModal>
           </div>
         </div>
@@ -287,6 +288,7 @@ const StoreInventory = () => {
               </thead>
               <tbody className=" border-b">
                 {loading && <>loading...</>}
+                {loading && <Skeleton className="w-full" count={2} />}
                 {storeItems.map((product, index) => (
                   <tr key={index} className="border-t">
                     <td className="py-4 px-4">

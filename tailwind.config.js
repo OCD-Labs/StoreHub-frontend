@@ -59,6 +59,15 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        fontSize: {
+          '20px': '20px',
+        },
+        lineHeight: {
+          '34.7px': '34.7px',
+        },
+        lineHeight: {
+          '34.7px': '34.7px',
+        },
         // light mode
         tremor: {
           brand: {
@@ -109,6 +118,7 @@ module.exports = {
         satoshi: ['Satoshi', 'sans-serif'],
         inter: ['Inter', 'sans-serif'],
         vietnam: ['"Be Vietnam Pro"', 'sans-serif'],
+        sans: ['"DM Sans"', 'sans-serif'],
       },
       keyframes: {
         fadeIn: {

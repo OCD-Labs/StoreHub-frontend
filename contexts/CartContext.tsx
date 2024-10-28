@@ -1,5 +1,13 @@
 "use client";
-import { createContext, ReactNode } from "react";
+import {
+  createContext,
+  ReactNode,
+  useState,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+  use,
+} from "react";
 import {
   addItemToCartApi,
   getUserCart,
@@ -16,6 +24,7 @@ interface CartContextType {
   userCarts: Record<string, any>[];
   carts: number;
   cart_id: number;
+  refreshCart: () => void;
   addItemToCart: (
     item_id: number,
     store_id: number,
@@ -40,6 +49,9 @@ export const CartContext = createContext<CartContextType | null>(null);
 // Provider component
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
+  const [carts, setCarts] = useState(0);
+  const [userCarts, setUserCarts] = useState<any>({});
+  const [refresh, setRefresh] = useState(0);
   let uid = getUser("user");
   const userID = uid?.user_id;
   console.log(userID);
@@ -47,11 +59,21 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const { data, isLoading, error } = useSWR(`carts/${userID}`, (url) =>
     getUserCart(url)
   );
+  useEffect(() => {
+    if (data) {
+      setCarts((prev) => prev + data.cart.length);
+      setUserCarts((prevUserCarts) => data);
+    }
+  }, [isLoading, data]);
+  console.log(data);
 
+  const refreshCart = () => {
+    setRefresh(refresh + 1);
+  };
   const cart_id = data?.cart_id;
-  const carts = data?.cart.length;
-  const userCarts = data?.cart;
+
   console.log(userCarts, "userCarts");
+  console.log(carts, "carts");
 
   const addItemToCart = async (
     item_id: number,
@@ -59,6 +81,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     cart_id: number
   ): Promise<any> => {
     const res = await addItemToCartApi(item_id, store_id, cart_id);
+    refreshCart();
     return res;
   };
 
@@ -93,6 +116,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     carts,
     cart_id,
     isLoading,
+    refreshCart,
     addItemToCart,
     removeItemFromCart,
     decreaseCartQuantity,

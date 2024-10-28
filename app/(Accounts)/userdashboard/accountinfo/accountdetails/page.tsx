@@ -17,7 +17,7 @@ const AccountDetails = () => {
 
         <div className="sm:w-[35%] flex flex-col gap-6">
           <span className="flex flex-col gap-2">
-            <label>Name</label>
+            <label className="font-vietnam  font-bold font-weight-500">Name</label>
             <input
               type="text"
               name="fullname"
@@ -28,7 +28,7 @@ const AccountDetails = () => {
           </span>
 
           <span className="flex flex-col gap-2">
-            <label>Phone Number</label>
+            <label className="font-vietnam  font-bold font-weight-500">Phone Number</label>
             <input
               type="text"
               name="fullname"
@@ -39,7 +39,7 @@ const AccountDetails = () => {
           </span>
 
           <span className="flex flex-col gap-2">
-            <label>Email Address</label>
+            <label className="font-vietnam  font-bold font-weight-500">Email Address</label>
             <input
               type="email"
               name="email"
@@ -52,18 +52,18 @@ const AccountDetails = () => {
 
         <div className="sm:w-[35%] flex flex-col gap-6">
           <span className="flex flex-col gap-3">
-            <p>Account ID:</p>
-            <p>mxy567gt</p>
+            <p className="font-vietnam font-bold font-weight-500">Account ID:</p>
+            <p className="font-vietnam text-gray-500">mxy567gt</p>
           </span>
 
           <div className="flex flex-col gap-3">
-            <label>Shipping Adress</label>
+            <label className="font-vietnam  font-bold font-weight-500">Shipping Address</label>
             <textarea className="border-2 rounded-[10px] max-h-[120px]" />
           </div>
         </div>
       </section>
       <div className="w-full justify-center flex">
-        <button className="rounded-[10px]  px-14 py-2 text-white bg-[#FE5B13] mx-auto  mb-[35px]">
+        <button className="font-vietnam rounded-[10px]  px-14 py-2 text-white bg-[#FE5B13] mx-auto  mb-[35px]">
           Update Profile
         </button>
       </div>

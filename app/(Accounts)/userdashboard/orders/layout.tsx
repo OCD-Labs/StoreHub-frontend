@@ -11,12 +11,19 @@ const ShopperOrders = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <section>
-        <div className="font-bold text-lg p-3 bg-[#FCF8F2]">
+        <div className="font-vietnam font-bold text-xl p-3 bg-[#FCF8F2]">
           Orders Information
         </div>
         <hr className="w-full" />
-        <div className="flex justify-between my-3 p-3">
-          <li className="flex gap-5">
+        <div className="flex justify-between items-end p-3">
+          <li className="flex gap-5" style={{
+    width: '550px',
+    height: '20px',
+    top: '218px',
+    left: '311px',
+    gap: '60px',
+    paddingBottom: '-4px' 
+  }}>
             <ul>
               <Link
                 href={{
@@ -29,7 +36,7 @@ const ShopperOrders = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span className="hover:underline">Pending Orders</span>
+                <span className="font-vietnam font-weight-500 hover:text-orange-500">Pending Orders</span>
               </Link>
             </ul>
             <ul>
@@ -44,12 +51,12 @@ const ShopperOrders = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span className="hover:underline">Completed</span>
+                <span className="font-vietnam font-weight-500 hover:text-orange-500">Completed</span>
               </Link>
             </ul>
             <ul>
               <Link
-              className="hover:underline"
+              className="font-vietnam font-weight-500 hover:text-orange-500"
                 href={{
                   pathname: "/userdashboard/orders/reviews",
                   query: {
