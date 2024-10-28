@@ -5,7 +5,8 @@ import { CartContext } from "@contexts/CartContext";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import "@/styles/cart.css";
-// import CheckoutModal from "@components/global/checkoutModal";
+import CheckoutModal from "@components/global/checkoutModal";
+
 
 interface CartItem {
   id: number;
@@ -65,7 +66,7 @@ const Cart: React.FC = () => {
             <th>Price</th>
             <th className="">
               <span className="hidden md:block">Quantity</span>{" "}
-              <span className="md:hidden">QTY</span>
+              <span className="md:hidden px-3">QTY</span>
             </th>
             <th>Total</th>
           </tr>
@@ -169,12 +170,14 @@ const Cart: React.FC = () => {
           >
             Checkout
           </button>
-          {/* {isModalOpen && (
+          {isModalOpen && (
             <CheckoutModal
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
+			 
+			  
             />
-          )} */}
+          )}
         </div>
       </div>
     </div>
