@@ -5,15 +5,12 @@ import { CartContext } from "@contexts/CartContext";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import "@/styles/cart.css";
-<<<<<<< HEAD
 import CheckoutModal from "@components/global/checkoutModal";
 
-=======
 import { Button } from "@components/ui/Button";
 import { Loader2 } from "lucide-react";
 
 // import CheckoutModal from "@components/global/checkoutModal";
->>>>>>> e047f1c (fixes)
 
 interface CartItem {
   id: number;
@@ -226,8 +223,6 @@ const Cart: React.FC = () => {
             <CheckoutModal
               isOpen={isModalOpen}
               onClose={() => setIsModalOpen(false)}
-			 
-			  
             />
           )}
         </div>
