@@ -3,7 +3,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { CartContext } from "@contexts/CartContext";
 import { z } from "zod";
 import Dropdown from "react-bootstrap/Dropdown";
 import { getStores } from "@services/products";
@@ -14,12 +15,15 @@ import useSWR from "swr";
 import { clearCookie, getCookie } from "@lib/cookie";
 import storehubIcon from "@public/assets/images/storehubIcon.svg";
 import { Divide, ShoppingCart } from "lucide-react";
+import { saveToLocalStorage } from "@lib/session";
+import { loginNewAddress } from "@NearAuth/near-wallet";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "../../components/ui/Avatar";
 import { getSession } from "@app/actions/auth-action";
+
 import { getUser, removeUser } from "@lib/session";
 import { Menu, X } from "lucide-react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
@@ -28,15 +32,19 @@ const Nav = () => {
   const [store, setStore] = useState<any>();
   const [Opened, setOpen] = useState(false);
   const [isMenuOpened, setMenuOpen] = useState(false);
-
-  console.log(isMenuOpened);
-
+  const cartContext = useContext(CartContext);
+  if (!cartContext) {
+    throw new Error("Context could not be reached");
+  }
+  const { carts } = cartContext;
   const session = getCookie("token");
 
   const user = getUser("user");
-
+  // useEffect(() => {
+  //   loginNewAddress();
+  // }, []);
   // @ts-ignore
-  console.log(session, "user");
+
   const getAllStores = (url: string) =>
     fetch(url, {
       method: "GET",
@@ -56,7 +64,7 @@ const Nav = () => {
     getStores
   );
 
-  console.log(data, error, "navdata");
+  saveToLocalStorage("storeId", data?.data?.result?.stores[0]?.store_id);
 
   const toggleDropdown = () => {
     setOpen(!Opened);
@@ -114,11 +122,12 @@ const Nav = () => {
             Marketplace
           </Link>
         </div>
-
-        <div className="hover:text-[#FE5B13] cursor-pointer font-vietnam font-[600] flex items-center space-x-1 ">
-          <p>Cart</p> <ShoppingCartIcon className="h-6  w-6" />
-        </div>
-
+        <Link href="/cart">
+          <div className="hover:text-[#FE5B13] cursor-pointer font-vietnam font-[600] flex items-center space-x-1 ">
+            <p>Cart</p> <ShoppingCartIcon className="h-6  w-6" />{" "}
+            <p className="text-sm text-orange-500">{carts}</p>
+          </div>
+        </Link>
         <div className="flex gap-[38px]">
           {/* this is where the login and get started auth logic comes in */}
 
@@ -182,16 +191,14 @@ const Nav = () => {
                       </Link>
                     </Dropdown.Item>
 
-                  
-
                     <Dropdown.Item>
                       {!error &&
                       !data?.error &&
                       data?.data.result.stores.length ? (
                         <Link
-                        className="hover:text-[#FE5B13] font-[600]"
+                          className="hover:text-[#FE5B13] font-[600]"
                           href={{
-                            pathname: "/inventory/Dashboard",
+                            pathname: "/inventory/Itemsdashboard",
                             query: {
                               id: data?.data.result.stores[0].store_id,
                               name: data?.data.result.stores[0].store_name,

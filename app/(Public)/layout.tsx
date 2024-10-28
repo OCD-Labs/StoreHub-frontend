@@ -5,6 +5,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import Error from "./error";
 import { AuthProvider } from "@contexts/AuthProvider";
 import ImageProvider from "@contexts/ImageProvider";
+import { CartProvider } from "@contexts/CartContext";
 
 export const metadata = {
   title: "storehub",
@@ -25,18 +26,20 @@ export default function RootLayout({
 
         <main className="h-screen flex flex-col justify-between">
           <AuthProvider>
-            <ImageProvider>
-              <div>
-                <div className="">
-                  <Nav />
-                  <ErrorBoundary
-                    fallback={<Error error="something went wrong" />}
-                  >
-                    {children}
-                  </ErrorBoundary>
+            <CartProvider>
+              <ImageProvider>
+                <div>
+                  <div className="">
+                    <Nav />
+                    <ErrorBoundary
+                      fallback={<Error error="something went wrong" />}
+                    >
+                      {children}
+                    </ErrorBoundary>
+                  </div>
                 </div>
-              </div>
-            </ImageProvider>
+              </ImageProvider>
+            </CartProvider>
           </AuthProvider>
           {/* <Footer /> */}
         </main>

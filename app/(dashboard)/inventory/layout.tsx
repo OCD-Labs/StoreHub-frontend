@@ -3,20 +3,17 @@ import "./styles/inventory.css";
 import { AuthProvider } from "@contexts/AuthProvider";
 import PageFooter from "@components/global/PageFooter";
 
-
 const Inventory = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>  
-    <html lang="en">
-      <body className="font-vietnam">
-        <AuthProvider>
-          <DashboardNav>{children}</DashboardNav>
-        </AuthProvider>
-        
-      </body>
-      
-    </html>
-   
+    <>
+      <html lang="en">
+        <body className="font-vietnam">
+          <AuthProvider>
+          
+            <DashboardNav>{children}</DashboardNav>
+          </AuthProvider>
+        </body>
+      </html>
     </>
   );
 };

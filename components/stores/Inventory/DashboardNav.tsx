@@ -2,6 +2,7 @@
 "use client";
 import "@styles/globals.css";
 import { useSearchParams } from "next/navigation";
+
 import { useEffect, useState, useRef } from "react";
 import { Button } from "@components/ui/Button";
 import { ToastContainer, toast } from "react-toastify";
@@ -24,7 +25,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "@constants";
 import { useRouter } from "next/navigation";
 import { Inventory } from "@StoreManager/inventory";
-import { getUser } from "@lib/session";
+import { getUser, getFromLocalStorage, saveToLocalStorage } from "@lib/session";
 import storehubFooterLogo from "@public/assets/images/StorehubFooterLogo.png";
 import PageFooter from "@components/global/PageFooter";
 import storehubIcon from "@public/assets/images/storehubIcon.svg";
@@ -58,10 +59,11 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   const handleItmeClick = (item: string): void => {
     setActiveItem(item);
   };
+
   const userID = useSearchParams().get("user");
   const id = useSearchParams().get("id");
   const name = useSearchParams().get("name");
-
+  const storeId = getFromLocalStorage("storeId");
   const getAllStoresOwnedByUser = () => {
     fetch(BASE_URL + `/inventory/stores`, {
       method: "GET",
@@ -75,27 +77,33 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
         if (data.data) {
           const stores = data.data.result.stores;
           setStore(stores);
-          setCurrentStore(stores[0]);
+          console.log(storeId, stores, "igfee");
+          let selectedStore = stores.filter((store) => {
+            return store.store_id == storeId;
+          });
+          console.log(
+            selectedStore,
+            stores[0].store_id,
+            storeId,
+            "selected store"
+          );
+
+          setCurrentStore(selectedStore[0]);
+          handleItmeClick("products");
         }
       });
   };
   useEffect(() => {
     getAllStoresOwnedByUser();
-  }, [session]);
+  }, []);
+
+  console.log(getFromLocalStorage("storeId"), "id");
+
+  console.log(store, "storeeee");
 
   // check if there is a user logged in
   if (!session) {
-    return (
-      <>
-        <div className="h-64 flex flex-col gap-4 justify-center items-center">
-          <p>Please login first </p>
-          {/* login user */}
-          <Button variant="default" onClick={() => router.push("/auth/signin")}>
-            Login
-          </Button>
-        </div>
-      </>
-    );
+    router.push("/auth/signin");
   }
 
   return (
@@ -167,18 +175,16 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
           <Image src={notification} alt="notification" />
         </div>
       </nav>
-
       {/* mobile navigation */}
       <nav className=" lg:hidden max-w-[90rem] mx-auto px-4 flex justify-between relative my-5 items-center ">
         <div className="ml-auto flex gap-2 items-center">
           <Image src={notification} alt="notification" />
 
           <div className="sm:hidden" onClick={handleSideBar}>
-            <Menu/>
+            <Menu />
           </div>
         </div>
       </nav>
-
       {/* Side bar starts here  */}
       <div className=" ">
         <section
@@ -218,7 +224,6 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               <Image src={Products} alt="user" width={20} height={20} />
               <span className="text-white">Dashboard</span>
             </Link>
-
             <Link
               onClick={() => handleItmeClick("products")}
               className={`${
@@ -237,7 +242,6 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               <Image src={Products} alt="user" width={20} height={20} />
               <span className="text-white">Products Inventory</span>
             </Link>
-
             <Link
               onClick={() => handleItmeClick("sales")}
               className={`${
@@ -299,7 +303,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
             </Link>
 
             {/* only seen in mobile */}
-            <div className="lg:hidden flex ml-[130px] mt-[440px] items-center">
+            <div className="lg:hidden flex ml-[130px] mt-[90%] items-center">
               <div
                 onClick={() => {
                   navigator.clipboard.writeText(user.account_id);

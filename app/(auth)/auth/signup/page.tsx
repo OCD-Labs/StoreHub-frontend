@@ -175,7 +175,7 @@ const SignUp = () => {
               <p className="text-xs text-red-500">{errors.root.message}</p>
             )}
             {/* error message */}
-            {/* {errors? <div>Fill the form correctly</div>: ''} */}
+            {/* {errors ? <div>Fill the form correctly</div> : ""} */}
 
             <Button
               type="submit"

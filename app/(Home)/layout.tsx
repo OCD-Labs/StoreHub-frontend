@@ -4,7 +4,7 @@ import Nav from "@components/global/Nav";
 import Footer from "@components/global/Footer";
 
 import { AuthProvider } from "@contexts/AuthProvider";
-
+import { CartProvider } from "@contexts/CartContext";
 export const metadata = {
   title: "storehub",
   description: "One click deployable e-commerce store",
@@ -24,15 +24,17 @@ export default async function RootLayout({
 
         <main className="">
           <div>
-            <div className="">
-              <AuthProvider>
-                <Nav />
-              </AuthProvider>
-            </div>
+            <CartProvider>
+              <div className="">
+                <AuthProvider>
+                  <Nav />
+                </AuthProvider>
+              </div>
 
-            <div className="">
-              <AuthProvider>{children}</AuthProvider>
-            </div>
+              <div className="">
+                <AuthProvider>{children}</AuthProvider>
+              </div>
+            </CartProvider>
           </div>
 
           {/* <Footer /> */}

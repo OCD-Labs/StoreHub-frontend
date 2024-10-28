@@ -1,13 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import DashboardImage from "@public/assets/images/DashboardImage.png";
-
+import DashboardImage from "../../../../public/assets/images/DashboardImage.png";
 
 const Dashboard = () => {
-  
-
-
   return (
     <>
       <div className="max-w-4xl mx-auto p-6">
@@ -19,7 +15,6 @@ const Dashboard = () => {
               alt="Dashboard Image"
               height={200}
               width={200}
-    
             />
           </div>
 
@@ -58,9 +53,6 @@ const Dashboard = () => {
           <p className="text-gray-400 text-xl">Open to ideas</p>
         </div>
       </div>
-
-      
-      
     </>
   );
 };

@@ -78,7 +78,7 @@ const OrdersInsight = () => {
                 placeholder="Search"
                 value=""
               />
-              <div className="absolute left-4 top-[13px]">
+              <div className="absolute left-4 top-[13px] hidden lg:block">
                 <Image
                   alt="search"
                   src={search}

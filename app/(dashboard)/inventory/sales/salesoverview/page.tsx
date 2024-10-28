@@ -13,13 +13,23 @@ import { ToastContainer } from "react-toastify";
 import { OPTIONS } from "@app/apis";
 import { getCookie } from "@lib/cookie";
 import SalesOverviewTable from "@components/stores/sales/SalesOverviewTable";
-import saledOverview1 from "@public/assets/images/saledOverview1.png";
-import saledOverview2 from "@public/assets/images/saledOverview2.png";
-import saledOverview3 from "@public/assets/images/SaledOverview3.png";
-import saledOverview4 from "@public/assets/images/SaledOverview4.png";
-import GrowthChart from "@public/assets/images/GrowthChart.png";
-import SearchIcon from "@public/assets/images/SearchIcon.png";
+import saledOverview1 from "../../../../../public/assets/images/SaledOverview1.png";
+import saledOverview2 from "../../../../../public/assets/images/SaledOverview2.png";
+import saledOverview3 from "../../../../../public/assets/images/SaledOverview3.png";
+import saledOverview4 from "../../../../../public/assets/images/SaledOverview4.png";
+import GrowthChart from "../../../../../public/assets/images/GrowthChart.png";
+import SearchIcon from "../../../../../public/assets/images/SearchIcon.png";
 import { PlusIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import {
   Table,
   TableBody,
@@ -68,6 +78,7 @@ const SalesOverview: React.FC = () => {
   }, [1, session]);
   console.log(SalesOverview, "sales");
 
+  // Table dummy Data
   const recentSales = [
     {
       image: "/assets/images/productImage1.png",
@@ -103,30 +114,46 @@ const SalesOverview: React.FC = () => {
     },
   ];
 
+  // Chart dummy data
+  const data = [
+    { month: "Jan", customers: 1000, sales: 2400, growth: 2400 },
+    { month: "Feb", customers: 1200, sales: 1398, growth: 2210 },
+    { month: "Mar", customers: 2000, sales: 9800, growth: 2290 },
+    { month: "Apr", customers: 2780, sales: 3908, growth: 2000 },
+    { month: "May", customers: 1890, sales: 4800, growth: 2181 },
+    { month: "Jun", customers: 2390, sales: 3800, growth: 2500 },
+    { month: "Jul", customers: 3490, sales: 4300, growth: 2100 },
+    { month: "Aug", customers: 3000, sales: 5000, growth: 2900 },
+    { month: "Sep", customers: 2000, sales: 3500, growth: 2000 },
+    { month: "Oct", customers: 1500, sales: 2700, growth: 2200 },
+    { month: "Nov", customers: 3000, sales: 3000, growth: 2400 },
+    { month: "Dec", customers: 3200, sales: 4000, growth: 2700 },
+  ];
+
   return (
     <div className="px-10">
       {/* Top Section with Filters and Search */}
-      <div className="flex items-center rounded-lg justify-between bg-[#FCF8F2] py-2 px-4 shadow-sm">
+      <div className="flex items-center rounded-lg md:justify-between justify-center bg-[#FCF8F2] py-2 px-4 shadow-sm">
         {/* Left section with icons */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-2 md:mr-0 mr-7">
           <button className="p-2 ">
             <PlusIcon className="h-5 w-5 text-black" />
           </button>
 
-          <Image src={filter} width={25} height={25} />
+          <Image src={filter} className="h-5 w-5 text-black"/>
         </div>
 
         {/* Search bar */}
-        <div className="relative">
+        
           <div className="relative">
             <input
               type="text"
-              className="bg-white border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              className="bg-white border border-gray-300 rounded-lg md:pl-10 pl-2  md:pr-8 pr-0 py-2  focus:outline-none focus:ring-2 focus:ring-gray-400"
               placeholder="Search"
               value=""
               onChange=""
             />
-            <div className="absolute left-4 top-[13px]">
+            <div className="absolute left-4 top-[13px] hidden lg:block">
               <Image
                 src={SearchIcon}
                 height={17}
@@ -135,7 +162,7 @@ const SalesOverview: React.FC = () => {
               />
             </div>
           </div>
-        </div>
+        
       </div>
 
       <div className="md:flex mt-4 averagescreen:mt-6">
@@ -150,7 +177,7 @@ const SalesOverview: React.FC = () => {
                 <div className="absolute top-4 right-4">
                   {/* Placeholder for dropdown */}
                   <button className="text-gray-500 text-xs sm:text-sm border px-1 sm:px-2 py-0.5 sm:py-1 rounded-lg">
-                    Monthly ▼
+                    Monthly
                   </button>
                 </div>
 
@@ -219,7 +246,7 @@ const SalesOverview: React.FC = () => {
                 <div className="absolute top-4 right-4">
                   {/* Placeholder for dropdown */}
                   <button className=" text-gray-500 text-xs sm:text-sm border px-1 sm:px-1 py-0.5 sm:py-1 rounded-lg">
-                    Monthly ▼
+                    Monthly
                   </button>
                 </div>
 
@@ -257,7 +284,7 @@ const SalesOverview: React.FC = () => {
                 <div className="absolute top-4 right-4">
                   {/* Placeholder for dropdown */}
                   <button className=" text-gray-500 text-xs sm:text-sm border px-1 sm:px-2 py-0.5 sm:py-1 rounded-lg">
-                    Monthly ▼
+                    Monthly
                   </button>
                 </div>
 
@@ -328,9 +355,36 @@ const SalesOverview: React.FC = () => {
                 </div>
               </div>
 
-              {/* Placeholder for the Chart Image */}
-              <div className="h-64 bg-[#FCF8F2] flex justify-center items-center rounded-lg">
-                <Image src={GrowthChart} alt="chart" width={700} height={400} />
+              {/* charts */}
+              <div className="p-6 flex justify-center items-center">
+                {/* Responsive Container */}
+                <ResponsiveContainer width="100%" height={300}>
+                  <LineChart
+                    data={data}
+                    margin={{
+                      top: 10,
+                      right: 30,
+                      left: 0,
+                      bottom: 0,
+                    }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="month" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+
+                    {/* Lines for Customers, Sales, Growth */}
+                    <Line
+                      type="monotone"
+                      dataKey="customers"
+                      stroke="#8884d8"
+                      activeDot={{ r: 8 }}
+                    />
+                    <Line type="monotone" dataKey="sales" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="growth" stroke="#ffc658" />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             </div>
           </div>

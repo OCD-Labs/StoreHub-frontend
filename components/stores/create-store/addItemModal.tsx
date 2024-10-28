@@ -1,16 +1,20 @@
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import AddImageUpload from "./addImageUpload";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { BASE_URL } from "@components/util/config";
+import { set, SubmitHandler, useForm } from "react-hook-form";
+// import { BASE_URL } from "@components/util/config";
 import { ModalOptions, modalstore } from "@StoreManager/modalstore";
 import useProfile from "@hooks/useProfile";
 import { getCookie } from "@lib/cookie";
+import { Wand2 } from "lucide-react";
+import { Button } from "@components/ui/Button";
+import { uploadImagesToCloudinary } from "@lib/uploadService";
 
 interface PropsInterface {
   userID: string | null;
   id: string | null;
   addItemStatus: any;
   options: ModalOptions;
+  setloading: Dispatch<SetStateAction<boolean>>;
 }
 
 const AddItemModal: React.FC<PropsInterface> = ({
@@ -18,6 +22,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
   id,
   addItemStatus,
   options,
+  setloading,
 }) => {
   type FormData = {
     name: string;
@@ -35,6 +40,10 @@ const AddItemModal: React.FC<PropsInterface> = ({
     images.push(imgurl);
     console.log(images);
   };
+  const [imageError, setImageError] = useState("");
+  const [imageLoader, setImageLoader] = useState(false);
+  const [generateTextError, setGenerateTextError] = useState("");
+  const [isGeneratingDescription, setIsGeneratingDescription] = useState(false);
   const [formData, setFormData] = useState<any>({
     name: "",
     description: "",
@@ -47,19 +56,21 @@ const AddItemModal: React.FC<PropsInterface> = ({
     discount_percentage: "",
     supply_quantity: 1,
   });
+  console.log(formData);
 
   const toggleModal = modalstore((state) => state.toggleModal);
 
-  console.log(session, "user oo");
-
   const addStoreProducts = async () => {
+    setloading(true);
+    setImageLoader(true);
+    const imageArray = await uploadImagesToCloudinary(images);
     debugger;
 
     const itemData = {
       name: formData.name,
       description: formData.description,
       price: formData.price,
-      image_urls: images,
+      image_urls: imageArray,
       cover_img_url: "string",
       category: formData.category,
       discount_percentage: formData.discount_percentage,
@@ -73,7 +84,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
         method: method,
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${""}`,
+          Authorization: `Bearer ${session}`,
         },
         body: JSON.stringify(itemData),
       })
@@ -84,11 +95,47 @@ const AddItemModal: React.FC<PropsInterface> = ({
         })
         .then((data: any) => {
           addItemStatus(data?.status, options.title);
+          setImageLoader(false);
           console.log(data, "store items");
         });
+      setloading(false);
     } catch (error) {
       console.log(error, "error from call");
       addItemStatus("error");
+    }
+  };
+  console.log(images, "images");
+
+  // generate description
+  const generateDesc = async (name: string, category: string) => {
+    setGenerateTextError("");
+    setIsGeneratingDescription(true);
+    try {
+      const response = await fetch("/api/generatetext", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name,
+          category: category,
+        }),
+      });
+      if (!response.ok) {
+        console.log(response, "response");
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setValue("description", data.message, { shouldValidate: true });
+      setFormData({ ...formData, description: data.message });
+
+      console.log(data, "ai_response");
+    } catch (error) {
+      setGenerateTextError(
+        "An error occurred while generating the description. Please try again later."
+      );
+    } finally {
+      setIsGeneratingDescription(false);
     }
   };
 
@@ -126,6 +173,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
   const {
     register,
     formState: { errors },
+    setValue,
     handleSubmit,
   } = useForm<IFormInputs>();
 
@@ -214,9 +262,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
               </div>
 
               {/* Description */}
-              <div className="mb-4">
-                <label className="block text-gray-600">Description</label>
-
+              <div className="relative">
                 <textarea
                   {...register("description", {
                     required: "Description is required",
@@ -225,23 +271,36 @@ const AddItemModal: React.FC<PropsInterface> = ({
                       message: "Description must be at least 10 characters",
                     },
                     maxLength: {
-                      value: 200,
+                      value: 1000,
                       message: "Description cannot exceed 200 characters",
                     },
                   })}
                   name="description"
-                  value={formData.description}
                   onChange={handleChange}
-                  placeholder="Try Our AI Feature"
-                  className="w-full p-2 border border-gray-300 rounded-lg"
+                  // placeholder="Best farmland produces at your door step"
+                  placeholder="Manually Describe Your Store or Utilize Our AI"
+                  className="mt-2 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                 />
-                <span>
-                  {errors.description && (
-                    <p className="text-red-500 mb-2">
-                      {errors.description.message}
-                    </p>
-                  )}
-                </span>
+                {formData.name && formData.category && !formData.description ? (
+                  <Button
+                    type="button"
+                    size="sm"
+                    className="absolute right-2 top-2"
+                    onClick={() =>
+                      generateDesc(formData.name, formData.category)
+                    }
+                    disabled={isGeneratingDescription}
+                  >
+                    {isGeneratingDescription ? (
+                      "Generating..."
+                    ) : (
+                      <>
+                        <Wand2 className="w-4 h-4 mr-2" />
+                        AI Generate
+                      </>
+                    )}
+                  </Button>
+                ) : null}
               </div>
             </div>
 
@@ -279,7 +338,16 @@ const AddItemModal: React.FC<PropsInterface> = ({
                   Discount Percentage (%)
                 </label>
                 <input
-                  type="text"
+                  {...register("discount_percentage", {
+                    required: "Store name is required",
+
+                    maxLength: {
+                      value: 4,
+                      message: "can't be more than 100%",
+                    },
+                  })}
+                  type="number"
+                  inputMode="numeric"
                   className="w-full p-2 border border-gray-300 rounded-lg"
                   onChange={handleChange}
                   value={formData.discount_percentage}
@@ -291,31 +359,76 @@ const AddItemModal: React.FC<PropsInterface> = ({
                   )}
                 </span>
               </div>
-              <div className="mb-4">
-                <label className="block text-gray-600">Discount Type</label>
-                <select className="w-full p-2 border border-gray-300 rounded-lg">
-                  <option>Select discount type</option>
-                </select>
-              </div>
             </div>
           </div>
 
           {/* Media aand category section */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
             {/* Media Section */}
-            <div className="lg:col-span-2 border  border-gray-200 p-4 rounded-lg">
+            <div className="lg:col-span-2 border border-gray-200 p-4 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">Media</h3>
-              <div className="border-2 border-dashed border-gray-300 p-6 flex flex-col items-center justify-center rounded-lg h-40">
-                <span className="text-gray-500 mb-4">No images uploaded</span>
-                {/* <AddImageUpload  updateImage={updateImage} /> */}
+              <div className="border-2 border-dashed border-gray-300 p-6 flex flex-col items-center justify-center rounded-lg h-40 relative">
+                <span className="text-gray-500 mb-4 flex flex-col absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                  <div>
+                    {" "}
+                    {images.length === 0
+                      ? "No images uploaded"
+                      : `${images.length} images selected`}
+                  </div>
+                  <p className="text-sm text-orange-600">
+                    You can select Multiple images
+                  </p>
+                </span>
+                <input
+                  type="file"
+                  multiple
+                  accept=".png, .jpg, .jpeg, .gif"
+                  className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+                  onChange={async (e) => {
+                    if (e.target.files && e.target.files.length <= 3) {
+                      setImageError("");
+                      const files = Array.from(e.target.files);
+                      const validFiles = files.filter(
+                        (file) =>
+                          file.size <= 2000000 && file.type.includes("image/")
+                      );
+                      if (validFiles.length !== files.length) {
+                        setImageError(
+                          "One or more images failed to upload due to size or type restrictions."
+                        );
+                        return;
+                      }
+                      const imagesUrls = await Promise.all(
+                        validFiles.map(async (file) => {
+                          const reader = new FileReader();
+                          reader.readAsDataURL(file);
+                          return new Promise((resolve, reject) => {
+                            reader.onload = () =>
+                              resolve(reader.result as string);
+                            reader.onerror = reject;
+                          });
+                        })
+                      );
+                      setImages(imagesUrls as string[]);
+                    } else {
+                      setImageError("Can't upload more than 5 images");
+                    }
+                  }}
+                />
               </div>
-
-              <div className="flex flex-col items-center justify-center">
-                {" "}
-                <button className="px-4 py-2 mt-4 bg-gray-200 text-sm text-gray-700 rounded-lg">
-                  Add Image
-                </button>
+              <div className="flex flex-wrap mt-4">
+                {images.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt="uploaded image"
+                    className="w-20 h-20 object-cover mr-2 mb-2"
+                  />
+                ))}
               </div>
+              {imageError && (
+                <p className="text-sm text-red-500">{imageError}</p>
+              )}
             </div>
 
             {/* Category Section */}
@@ -385,34 +498,28 @@ const AddItemModal: React.FC<PropsInterface> = ({
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
             <div className="lg:col-span-2 border p-4 rounded-lg">
               <h3 className="text-lg font-semibold mb-2">Product Details</h3>
-              <div className="grid grid-cols-3 gap-4">
-                <input
-                  type="text"
-                  className="p-2 border border-gray-300 rounded-lg"
-                  placeholder="ID"
-                />
-                <input
-                  type="text"
-                  className="p-2 border border-gray-300 rounded-lg"
-                  placeholder="Colors"
-                />
-                <input
-                  type="text"
-                  className="p-2 border border-gray-300 rounded-lg"
-                  placeholder="Quantity"
-                />
-              </div>
+              <label>quantity</label>
+              <input
+                {...register("supply_quantity", {
+                  required: "Store name is required",
+                })}
+                name="supply_quantity"
+                onChange={handleChange}
+                value={formData.supply_quantity}
+                placeholder="20Near"
+                className="w-full p-2 border border-gray-300 rounded-lg"
+              />
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="mt-6 flex justify-end space-x-4">
+          <div className="mt-6 flex justify-center  md:justify-end space-x-4">
             {/* add the close modal function here */}
-            <button className="px-4 py-2 bg-gray-200 rounded-lg">
+            <button className="px-2 md:px-4 py-2 bg-gray-200 text-xs md:text-base rounded-lg">
               Discard Items
             </button>
             <button
-              className="px-4 py-2 bg-orange-500 text-white rounded-lg"
+              className=" py-2 bg-orange-500 text-white text-xs md:text-base px-2 md:px-4 rounded-lg"
               onClick={handleSubmit(handleFormSubmit)}
             >
               {options.title}

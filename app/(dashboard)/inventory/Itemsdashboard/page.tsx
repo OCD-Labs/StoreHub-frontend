@@ -1,10 +1,12 @@
 // @ts-nocheck
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+
 import Image from "next/image";
 import "../styles/inventory.css";
 import { PlusIcon, AdjustmentsHorizontalIcon } from "@heroicons/react/24/solid";
 import ProductItem from "@components/stores/productitem";
+import ProductDropdown from "@components/stores/Inventory/ProductDropdown";
 import AddItemModal from "@components/stores/create-store/addItemModal";
 import { Inventory } from "@StoreManager/inventory";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
@@ -13,7 +15,7 @@ import { BASE_URL } from "@constants";
 import { ToastContainer, toast } from "react-toastify";
 import { Key, Suspense, useEffect, useState } from "react";
 import { ModalOptions, modalstore } from "@StoreManager/modalstore";
-
+import clsx from "clsx";
 import necklace from "../../../../public/assets/images/necklace.png";
 import search from "../../../../public/assets/icons/search.svg";
 import filter from "../../../../public/assets/icons/filter.svg";
@@ -31,9 +33,13 @@ import {
   TableHeader,
   TableRow,
 } from "../../../../components/ui/Table";
+import { saveToLocalStorage } from "@lib/session";
 import { getCookie } from "@lib/cookie";
 import "react-toastify/dist/ReactToastify.css";
-
+import { X } from "lucide-react";
+import { getUserStores } from "@services/dashboard";
+import useSWR from "swr";
+import api from "@services/apiClient";
 const StoreInventory = () => {
   const isOpen = modalstore((state) => state.isOpen);
   const toggleModal = modalstore((state) => state.toggleModal);
@@ -45,6 +51,7 @@ const StoreInventory = () => {
   const modaloptions = modalstore((state) => state.modalOptions);
   const [loading, setloading] = useState<boolean>(true);
   const [search, setSearch] = useState("");
+  const router = useRouter();
 
   const products = [
     {
@@ -101,7 +108,7 @@ const StoreInventory = () => {
 
   const id: string | null = useSearchParams().get("id");
   const name: string | null = useSearchParams().get("name");
-  console.log(session, "session");
+
   const setAddItemStatus = (data: string, action: string) => {
     if (action == "update store") {
       if (data !== "error") {
@@ -130,7 +137,8 @@ const StoreInventory = () => {
   };
 
   const getStoreData = async () => {
-    const token = session?.user.token;
+    setloading(true);
+    const token = session;
     console.log(token, "token");
     try {
       fetch(BASE_URL + `/inventory/stores/${id}/items`, {
@@ -153,8 +161,25 @@ const StoreInventory = () => {
 
   useEffect(() => {
     getStoreData();
-  }, [refNo, session]);
+  }, [refNo, session, id]);
 
+  // load all user stores
+  const fetcher = (url) => getUserStores(url);
+
+  const { data, error, isLoading } = useSWR("/inventory/stores", fetcher);
+  console.log(data, "dataomo");
+
+  // change store function
+  function changeStore(e) {
+    const selected = e.target.value;
+    const store_id = selected.match(/\(([^)]+)\)/)[1];
+    const store_name = selected.split(" ")[0];
+    saveToLocalStorage("storeId", store_id);
+    router.push(
+      `/inventory/Itemsdashboard?id=${store_id}&name=${store_name}&user=1`
+    );
+    console.log(store_id, store_name, "selected store");
+  }
   return (
     <Suspense>
       {/* modal to be triggered by Add item button below */}
@@ -164,7 +189,7 @@ const StoreInventory = () => {
             isOpen ? "animate-animatefadeIn is-open" : "animate-animatefadeOut"
           } lg:px-[] ${isOpen ? "is-open" : ""}`}
         >
-          <div className="modal-content w-[100%] md:w-[80%] h-[90vh]">
+          <div className="modal-content w-[80%] md:w-[80%] h-[80vh] md:h-[90vh]">
             <div className="bg-white rounded-lg p-6 w-full max-w-4xl">
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-semibold">Add Product</h2>
@@ -174,7 +199,7 @@ const StoreInventory = () => {
                   }}
                   className="text-gray-500 hover:text-gray-700"
                 >
-                  Discard
+                  <X />
                 </button>
               </div>
             </div>
@@ -184,6 +209,7 @@ const StoreInventory = () => {
               userID={userID}
               addItemStatus={setAddItemStatus}
               options={modaloptions}
+              setloading={setloading}
             ></AddItemModal>
           </div>
         </div>
@@ -191,9 +217,9 @@ const StoreInventory = () => {
         {/* Product listed items */}
         <div className="max-w-7xl mx-auto p-6">
           {/* Top Section with Filters and Search */}
-          <div className="flex items-center rounded-lg justify-between bg-[#FCF8F2] py-2 px-4 shadow-sm">
+          <div className="flex items-center rounded-lg md:justify-between justify-center bg-[#FCF8F2] py-2 px-4 shadow-sm">
             {/* Left section with icons */}
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-2 md:mr-0 mr-7">
               <button
                 onClick={() => {
                   toggleModal(options);
@@ -202,28 +228,44 @@ const StoreInventory = () => {
               >
                 <PlusIcon className="h-5 w-5 text-black" />
               </button>
-
-              <Image src={filter} width={25} height={25} />
+              <select
+                onChange={changeStore}
+                value={"store"}
+                className="bg-white border border-gray-300 rounded-lg py-2 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
+              >
+                <option value="" className="text-gray-400">
+                  Select your store
+                </option>
+                {data?.map((item) => (
+                  <option
+                    key={item.id}
+                    value={item.name}
+                    className="text-gray-700"
+                  >
+                    {item.store_name} ({item.store_id})
+                  </option>
+                ))}
+              </select>
+              <Image src={filter} className="h-5 w-5 text-black" />
             </div>
 
             {/* Search bar */}
+
             <div className="relative">
-              <div className="relative">
-                <input
-                  type="text"
-                  className="bg-white border border-gray-300 rounded-lg pl-10 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
-                  placeholder="Search"
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+              <input
+                type="text"
+                className="bg-white border border-gray-300 rounded-lg md:pl-10 pl-2  md:pr-8 pr-0 py-2  focus:outline-none focus:ring-2 focus:ring-gray-400"
+                placeholder="Search"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <div className="absolute left-4 top-[13px] hidden lg:block">
+                <Image
+                  src={SearchIcon}
+                  height={17}
+                  width={15}
+                  className="text-black"
                 />
-                <div className="absolute left-4 top-[13px]">
-                  <Image
-                    src={SearchIcon}
-                    height={17}
-                    width={15}
-                    className="text-black"
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -245,14 +287,16 @@ const StoreInventory = () => {
                 </tr>
               </thead>
               <tbody className=" border-b">
-                {products.map((product, index) => (
+                {loading && <>loading...</>}
+                {loading && <Skeleton className="w-full" count={2} />}
+                {storeItems.map((product, index) => (
                   <tr key={index} className="border-t">
                     <td className="py-4 px-4">
                       <input type="checkbox" className="rounded" />
                     </td>
                     <td className="py-4 px-4 flex items-center space-x-2">
                       <Image
-                        src={product.image}
+                        src={product.image_urls[0]}
                         alt={product.name}
                         width={40}
                         height={40}
@@ -262,7 +306,7 @@ const StoreInventory = () => {
                           {product.name}
                         </p>
                         <p className="text-xs text-gray-500">
-                          {product.description}
+                          {product.description.substr(0, 50)}...
                         </p>
                       </div>
                     </td>
@@ -273,20 +317,27 @@ const StoreInventory = () => {
                       {product.category}
                     </td>
                     <td className="py-4 px-4 text-black font-medium text-sm">
-                      {product.quantity}
+                      {product.supply_quantity}
                     </td>
                     <td className="py-4 px-4 text-black font-medium text-sm">
                       {product.price}
                     </td>
                     <td className="flex mb-4 items-center">
                       <span
-                        className={`py-4 px-4 text-[10px] ${product.statusColor}`}
+                        className={clsx(
+                          `py-4 px-4 text-[10px] ${
+                            product.status == "VISIBLE"
+                              ? "text-green-500"
+                              : "text-red-500"
+                          }`
+                        )}
                       >
                         {product.status}{" "}
                       </span>{" "}
                       <span
                         className={`ml-1  w-1 h-1 rounded-full ${product.statusColorDot}`}
                       ></span>
+                      <ProductDropdown itemid={product.id}></ProductDropdown>
                     </td>
                   </tr>
                 ))}

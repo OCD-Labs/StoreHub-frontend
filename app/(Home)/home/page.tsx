@@ -6,6 +6,7 @@ import Features from "../../(Home)/components/Features";
 import FAQ from "../../(Home)/components/Faq";
 import Footer from "@components/global/Footer";
 import MobileLogoSlider from "../components/MobileLogoSlider";
+
 // import { InitContract } from '@components/util/config'
 
 const Page = async () => {
@@ -25,7 +26,7 @@ const Page = async () => {
         <section id="main-section">
           <MainSection />
         </section>
-        <MobileLogoSlider/>
+        <MobileLogoSlider />
         <section id="video">
           <Video />
         </section>
@@ -36,7 +37,7 @@ const Page = async () => {
           <FAQ />
         </section>
       </main>
-      <Footer/>
+      <Footer />
     </>
   );
 };

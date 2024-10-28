@@ -80,11 +80,7 @@ const VerifyEmail = () => {
             await response.json();
           if ("data" in data && data.status !== "error") {
             // If verification is successful, set cookie and user data
-            setCookie(
-              "token",
-              JSON.stringify(data.data.result.access_token),
-              1
-            );
+            setCookie("token", data.data.result.access_token, 1);
             setUser("user", JSON.stringify(data.data.result.user));
             // Redirect to choose role page
             router.push("/auth/choose-role");

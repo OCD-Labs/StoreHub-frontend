@@ -24,11 +24,11 @@ export default function ImageUploader({
   const fileTypes = ["image/jpeg", "image/gif", "image/png", "image/webp"];
 
   // valid file type
-  function validFileType(file: FIle) {
+  function validFileType(file: File) {
     return fileTypes.includes(file.type);
   }
   // valid file size
-  function validFileSize(file: FIle) {
+  function validFileSize(file: File) {
     return file.size / 1024 / 1024 < 10;
   }
 
@@ -220,7 +220,7 @@ export default function ImageUploader({
         ) : null}
         {isGeneratingImage && (
           <p className="text-sm text-gray-500 text-center">
-            This may take a while to finish :)
+            This may take a few minutes to finish :)
           </p>
         )}
 
