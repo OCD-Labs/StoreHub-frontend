@@ -11,10 +11,17 @@ const ShopperNotifications = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
       <section>
-        <div className="font-bold text-lg p-3 bg-[#FCF8F2]">Notifications</div>
+        <div className="font-vietnam font-bold text-xl p-3 bg-[#FCF8F2]">Notifications</div>
         <hr className="w-full" />
-        <div className="flex justify-between my-3 p-3">
-          <li className="flex gap-5">
+        <div className="flex justify-between items-end p-3">
+          <li className="flex gap-5" style={{
+    width: '550px',
+    height: '20px',
+    top: '218px',
+    left: '311px',
+    gap: '60px',
+    paddingBottom: '-4px' 
+  }}>
             <ul>
               <Link
                 href={{
@@ -27,7 +34,7 @@ const ShopperNotifications = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span className=" hover:underline">Notifications</span>
+                <span className="font-vietnam font-weight-500 hover:text-orange-500">Notifications</span>
               </Link>
             </ul>
             <ul>
@@ -42,7 +49,7 @@ const ShopperNotifications = ({ children }: { children: React.ReactNode }) => {
                   },
                 }}
               >
-                <span className="hover:underline">Notification Settings</span>
+                <span className="font-vietnam font-weight-500 hover:text-orange-500">Notification Settings</span>
               </Link>
             </ul>
           </li>

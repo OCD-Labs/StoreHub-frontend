@@ -29,9 +29,9 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
   const name = useSearchParams().get("name");
   return (
     <html lang="en">
-      <body className="max-w-7xl text-sm m-auto sm:px-16 px-6">
+      <body className="min-h-screen text-sm max-w-7xl m-auto sm:px-16 px-6">
         <AuthProvider>
-          <main className="h-screen flex flex-col justify-between">
+          <main className="h-screen flex flex-col justify-between py-4">
             <div className="mb-6">
               <div className="lg:hidden relative">
                 <AccountNav />
@@ -41,7 +41,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
               </div>
 
               <section
-                className={`hidden md:block averagescreen:flex flex-col w-fit border-2 rounded-[10px] h-[83vh] mt-6 ${"flex"} fixed bg-[#1D2131] z-50`}
+                className={`hidden md:block averagescreen:flex flex-col w-fit border-3 rounded-[10px] h-[83vh] mt-1 ${"flex"} fixed bg-[#1D2131] z-50`}
               >
                 <div>
                   <Link
@@ -66,7 +66,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                       {" "}
                       {activeItem === "myAccount" ? (
                         <Image
-                          src={myAccountBlack}
+                          src={myAccountWhite}
                           alt="My account"
                           width={15}
                           height={15}
@@ -81,7 +81,15 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                           className="mr-[15px]"
                         />
                       )}{" "}
-                      <p>My Account</p>
+                      <p
+                        className={`font-sans text-xl font-light leading-[34.7px] text-center ${
+                          activeItem === "myAccount"
+                            ? "text-white"
+                            : "text-[#FFFFFF] text-opacity-70"
+                        }`}
+                      >
+                        MyAccount
+                      </p>
                     </span>
                   </Link>
 
@@ -100,8 +108,8 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                     <span
                       className={`${
                         activeItem === "orders"
-                         ? "bg-[#FE5B13] text-white" 
-                         : "text-white"
+                          ? "bg-[#FE5B13] text-white"
+                          : "text-white"
                       } flex px-4 w-[170px] md:w-[190px] pt-7 pb-4 font-bold`}
                     >
                       {" "}
@@ -122,7 +130,15 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                           className="mr-[15px]"
                         />
                       )}{" "}
-                      <p>Orders</p>
+                      <p
+                        className={`font-sans text-xl font-light leading-[34.7px] text-center ${
+                          activeItem === "orders"
+                            ? "text-white"
+                            : "text-[#FFFFFF] text-opacity-70"
+                        }`}
+                      >
+                        Orders
+                      </p>
                     </span>
                   </Link>
 
@@ -148,7 +164,7 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                       {" "}
                       {activeItem === "notification" ? (
                         <Image
-                          src={notification}
+                          src={notificationWhite}
                           alt="My account"
                           width={15}
                           height={15}
@@ -163,7 +179,15 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                           className="mr-[15px]"
                         />
                       )}{" "}
-                      <p>Notifications</p>
+                      <p
+                        className={`font-sans text-xl font-light leading-[34.7px] text-center ${
+                          activeItem === "notification"
+                            ? "text-white"
+                            : "text-[#FFFFFF] text-opacity-70"
+                        }`}
+                      >
+                        Notifications
+                      </p>
                     </span>
                   </Link>
 
@@ -181,13 +205,15 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                   >
                     <span
                       className={`${
-                        activeItem === "saved" ? "bg-[#FE5B13] text-white" : "text-white"
+                        activeItem === "saved"
+                          ? "bg-[#FE5B13] text-white"
+                          : "text-white"
                       } flex px-4 w-[170px] md:w-[190px] pt-7 pb-4 font-bold`}
                     >
                       {" "}
                       {activeItem === "saved" ? (
                         <Image
-                          src={saved}
+                          src={savedWhite}
                           alt="My account"
                           width={15}
                           height={15}
@@ -202,17 +228,25 @@ const Accounts = ({ children }: { children: React.ReactNode }) => {
                           className="mr-[15px]"
                         />
                       )}{" "}
-                      <p>Saved</p>
+                      <p
+                        className={`font-sans text-xl font-light leading-[34.7px] text-center ${
+                          activeItem === "saved"
+                            ? "text-white"
+                            : "text-[#FFFFFF] text-opacity-70"
+                        }`}
+                      >
+                        Saved
+                      </p>
                     </span>
                   </Link>
                 </div>
-                <div className="flex items-center gap-3 absolute left-0 bottom-0 px-4 py-3 cursor-pointer bg-[#1D2131] w-full">
+                <div className="flex items-center gap-3 absolute left-0 bottom-0 px-4 py-3 rounded-[10px] cursor-pointer bg-[#1D2131] w-full">
                   <Image src={signoutIcon} width={30} alt="sign out" />
-                  <p className="text-white text-base">Sign Out</p>
+                  <p className="text-white text-base font-sans">Sign Out</p>
                 </div>
               </section>
               <Suspense fallback={""}>
-                <div className="w-full averagescreen:ml-[220px] calculated-account-width md:border-2  rounded-[10px] h-[83vh] mt-6">
+                <div className="w-full averagescreen:ml-[220px] calculated-account-width md:border-2  rounded-[10px] h-[83vh] mt-2">
                   {children}
                 </div>
               </Suspense>
