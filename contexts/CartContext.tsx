@@ -40,7 +40,9 @@ export const CartContext = createContext<CartContextType | null>(null);
 // Provider component
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const userID = getUser("user").user_id;
+  let uid = getUser("user");
+  const userID = uid?.user_id;
+  console.log(userID);
 
   const { data, isLoading, error } = useSWR(`carts/${userID}`, (url) =>
     getUserCart(url)
