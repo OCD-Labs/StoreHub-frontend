@@ -63,7 +63,10 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   const userID = useSearchParams().get("user");
   const id = useSearchParams().get("id");
   const name = useSearchParams().get("name");
-  const storeId = getFromLocalStorage("storeId");
+  if (!localStorage.getItem("storeId")) {
+    saveToLocalStorage("storeId", 0);
+  }
+  const storeId = getFromLocalStorage("storeId") || 0;
   const getAllStoresOwnedByUser = () => {
     fetch(BASE_URL + `/inventory/stores`, {
       method: "GET",

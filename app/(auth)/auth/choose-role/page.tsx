@@ -14,12 +14,12 @@ const ChooseRole = () => {
         <div className="flex flex-col items-center mt-40">
           <p className="text-2xl mb-4">Sign Up as</p>
           <div className="flex flex-col gap-4">
-            <Link href={"/auth/signin"}>
+            <Link href={"/createStore"}>
               <Button variant="default" className="w-60">
                 Store Owner
               </Button>
             </Link>
-            <Link href={"/auth/signin"}>
+            <Link href={"/userdashboard/accountinfo/accountdetails"}>
               <Button variant="outline" className="w-60">
                 Shopper
               </Button>

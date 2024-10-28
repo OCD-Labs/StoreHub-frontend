@@ -56,6 +56,9 @@ export function getFromLocalStorage(name: string) {
   const isBrowser = typeof window !== "undefined";
   if (isBrowser) {
     const item = localStorage.getItem(name);
+    console.log(item, "item");
+
+    if (item == undefined) return null;
     if (item) {
       return JSON.parse(item);
     }
