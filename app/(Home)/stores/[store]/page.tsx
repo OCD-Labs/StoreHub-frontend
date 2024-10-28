@@ -15,6 +15,7 @@ import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import NearLogo1 from "@public/assets/images/NearLogo1.png";
 import { usePathname } from "next/navigation";
+import { getStoreInfo } from "@services/products";
 
 interface Product {
   id: number;
@@ -37,10 +38,21 @@ interface Product {
 
 export default function Page({ params }: { params: { store: number } }) {
   const [storeProducts, setProducts] = useState<Product[]>([]);
+  const [storeDetails, setStoreDetails] = useState<any>(null);
   const pathname = usePathname();
   const [data, setData] = useState(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    async function getStoreDetails() {
+      const res = await getStoreInfo(params.store);
+      setStoreDetails(res.data.result);
+      console.log(res.data.result);
+    }
+    try {
+      getStoreDetails();
+    } catch (error) {}
+  }, []);
 
   useEffect(() => {
     const fetcher = async () => {
@@ -61,7 +73,7 @@ export default function Page({ params }: { params: { store: number } }) {
       }
     };
     fetcher();
-  }, [storeProducts]);
+  }, []);
 
   const deals = [
     {
@@ -118,11 +130,13 @@ export default function Page({ params }: { params: { store: number } }) {
     <div className="md:max-w-[80rem] max-w-[80rem] m-auto md:p-6 p-0">
       <div className=" mx-auto md:p-8 p-4 grid grid-cols-2 lg:grid-cols-2 md:gap-8 gap-3">
         {/* Image Section */}
-        <div className="">
+        <div className="relative">
           <Image
-            src={storeImage}
+            src={storeDetails?.store.profile_image_url}
             alt="Store Shopping Cart"
-            className="rounded-lg  md:h-[503px] md:w-[603px] h-[140px] w-[183px]"
+            layout="fill"
+            objectFit="cover"
+            className="rounded-lg"
           />
         </div>
 
@@ -130,7 +144,7 @@ export default function Page({ params }: { params: { store: number } }) {
         <div className=" ">
           {/* Title */}
           <h1 className="md:text-[70px] text-[#1D2131] text-base font-vietnam font-semibold leading-none mt-0 md:mb-4 mb-[42px]">
-            Farmers Market
+            {storeDetails?.store.name}
           </h1>
 
           {/* Category Buttons */}
@@ -140,16 +154,14 @@ export default function Page({ params }: { params: { store: number } }) {
                 key={category}
                 className="md:px-5 md:py-1 px-2 py-0 border border-[#1D2131] md:rounded-2xl rounded-xl md:text-[12px] text-[7px] text-[#1D2131]"
               >
-                {category}
+                {storeDetails?.store.category}
               </button>
             ))}
           </div>
 
           {/* Description */}
           <p className="text-[#1D2131] md:text-[17px] text-[8px] md:font-medium font-normal font-vietnam mb-2 md:mb-[82px]">
-            We pride ourselves on supporting local farmers, bakers, and
-            artisans, ensuring that everything you find here is locally sourced,
-            sustainable, and crafted with care.
+            {storeDetails?.store.description}
           </p>
 
           {/* Deals Section for Large */}
@@ -313,7 +325,8 @@ export default function Page({ params }: { params: { store: number } }) {
       {/* Product  Section for mobile screens */}
       <div className="lg:hidden">
         <div className="mx-auto p-2 grid grid-cols-2 lg:grid-cols-4 md:gap-8 gap-2">
-          {isLoading && <>loading...</>}{" "}
+          {isLoading && <>loading...</>}
+          {!storeProducts.length && <div>No products found</div>}
           {storeProducts.map((storeProduct, index) => (
             <div
               key={index}
@@ -356,7 +369,9 @@ export default function Page({ params }: { params: { store: number } }) {
                   </div>
                 </div>
 
-                <Link href={`${pathname}/product`}>
+                <Link
+                  href={`${pathname}/product?${"item_id=" + storeProduct.id}`}
+                >
                   <button className="bg-orange-500 w-[53px] h-[22px] mt-6 text-white text-[10px] font-semibold rounded-md ">
                     Buy Now
                   </button>
@@ -370,6 +385,7 @@ export default function Page({ params }: { params: { store: number } }) {
       {/* Product  Section for large screens */}
       <div className="hidden md:block">
         {isLoading && <>loading...</>}{" "}
+        {!storeProducts.length && <div>No products found for this store</div>}
         <div className="mx-auto p-8 grid grid-cols-4 gap-8">
           {storeProducts.map((storeProduct, index) => (
             <div
@@ -419,7 +435,9 @@ export default function Page({ params }: { params: { store: number } }) {
                 </div>
                 {/* Buy Button */}
                 <div className="mt-[50px]">
-                  <Link href={`${pathname}/product`}>
+                  <Link
+                    href={`${pathname}/product?${"item_id=" + storeProduct.id}`}
+                  >
                     <button className="bg-orange-500 w-[53px] h-[22px] mt-6 text-white text-[10px] font-semibold rounded-md ">
                       Buy Now
                     </button>

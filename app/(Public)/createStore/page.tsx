@@ -69,9 +69,7 @@ const CreateStore = () => {
   useMemo(() => {
     setFormData({
       ...formData,
-      store_account_id: `${
-        Math.random().toString(36) + formData.name
-      }.v2-storehub.testnet`,
+      store_account_id: `${Math.random().toString(36) + formData.name}`,
     });
   }, [formData.name]);
 

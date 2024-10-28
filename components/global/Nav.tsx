@@ -3,7 +3,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { CartContext } from "@contexts/CartContext";
 import { z } from "zod";
 import Dropdown from "react-bootstrap/Dropdown";
 import { getStores } from "@services/products";
@@ -15,12 +16,14 @@ import { clearCookie, getCookie } from "@lib/cookie";
 import storehubIcon from "@public/assets/images/storehubIcon.svg";
 import { Divide, ShoppingCart } from "lucide-react";
 import { saveToLocalStorage } from "@lib/session";
+import { loginNewAddress } from "@NearAuth/near-wallet";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "../../components/ui/Avatar";
 import { getSession } from "@app/actions/auth-action";
+
 import { getUser, removeUser } from "@lib/session";
 import { Menu, X } from "lucide-react";
 import { ShoppingCartIcon } from "@heroicons/react/24/outline";
@@ -29,11 +32,17 @@ const Nav = () => {
   const [store, setStore] = useState<any>();
   const [Opened, setOpen] = useState(false);
   const [isMenuOpened, setMenuOpen] = useState(false);
-
+  const cartContext = useContext(CartContext);
+  if (!cartContext) {
+    throw new Error("Context could not be reached");
+  }
+  const { carts } = cartContext;
   const session = getCookie("token");
 
   const user = getUser("user");
-
+  // useEffect(() => {
+  //   loginNewAddress();
+  // }, []);
   // @ts-ignore
 
   const getAllStores = (url: string) =>
@@ -114,7 +123,8 @@ const Nav = () => {
         </div>
         <Link href="/cart">
           <div className="hover:text-[#FE5B13] cursor-pointer font-vietnam font-[600] flex items-center space-x-1 ">
-            <p>Cart</p> <ShoppingCartIcon className="h-6  w-6" />
+            <p>Cart</p> <ShoppingCartIcon className="h-6  w-6" />{" "}
+            <p className="text-sm text-orange-500">{carts}</p>
           </div>
         </Link>
         <div className="flex gap-[38px]">
