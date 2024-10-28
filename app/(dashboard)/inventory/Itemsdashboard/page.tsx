@@ -174,7 +174,7 @@ const StoreInventory = () => {
     const selected = e.target.value;
     const store_id = selected.match(/\(([^)]+)\)/)[1];
     const store_name = selected.split(" ")[0];
-    saveToLocalStorage("storeId", store_id);
+    saveToLocalStorage("storeId", store_id || 0);
     router.push(
       `/inventory/Itemsdashboard?id=${store_id}&name=${store_name}&user=1`
     );

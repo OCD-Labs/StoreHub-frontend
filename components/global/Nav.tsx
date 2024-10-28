@@ -64,7 +64,7 @@ const Nav = () => {
     getStores
   );
 
-  saveToLocalStorage("storeId", data?.data?.result?.stores[0]?.store_id);
+  saveToLocalStorage("storeId", data?.data?.result?.stores[0]?.store_id || 0);
 
   const toggleDropdown = () => {
     setOpen(!Opened);
