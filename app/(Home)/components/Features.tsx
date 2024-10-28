@@ -34,6 +34,59 @@ const Features = () => {
             />
           </div>
           <h3 className="text-xl font-vietnam font-semibold text-gray-800">
+            Artificial Intelligence
+          </h3>
+          <p className="mt-2 font-vietnam text-gray-600">
+            Genrate Store pictures and desscription using our Aartificial
+            intelligence.
+          </p>
+        </div>
+
+        {/* <!-- Card 2 --> */}
+        <div className="bg-white shadow-md rounded-lg p-6 text-center border border-gray-200">
+          <div className="mb-4 flex justify-center">
+            <Image
+              className="h-10 bg-white"
+              src={FeaturesCard2}
+              alt=" Insightful Analytics"
+            />
+          </div>
+          <h3 className="text-xl font-vietnam font-semibold text-gray-800">
+            Non-Fungible Tokens (NFTs)
+          </h3>
+          <p className="mt-2 font-vietnam text-gray-600">
+            Create exclusive, digital products. Enhance customer engagement and add a layer of uniqueness to
+            the shopping experience.
+          </p>
+        </div>
+
+        {/* <!-- Card 3 --> */}
+        <div className="bg-white shadow-md rounded-lg p-6 text-center border border-gray-200">
+          <div className="mb-4 flex justify-center">
+            <Image
+              className="h-10 bg-white"
+              src={FeaturesCard3}
+              alt=" Social Media Integration"
+            />
+          </div>
+          <h3 className="text-xl font-vietnam font-semibold text-gray-800">
+            Social Media Integration
+          </h3>
+          <p className="mt-2 font-vietnam text-gray-600">
+            Receive real-time WhatsApp order notifications, and effortlessly
+            share updates on your WhatsApp Status.
+          </p>
+        </div>
+        {/* card four */}
+        <div className="bg-white font-vietnam shadow-md rounded-lg p-6 text-center border border-gray-200">
+          <div className="mb-4 flex justify-center">
+            <Image
+              className="h-10 bg-white"
+              src={FeaturesCard1}
+              alt=" Collaborative Ownership"
+            />
+          </div>
+          <h3 className="text-xl font-vietnam font-semibold text-gray-800">
             Collaborative Ownership
           </h3>
           <p className="mt-2 font-vietnam text-gray-600">
@@ -42,7 +95,7 @@ const Features = () => {
           </p>
         </div>
 
-        {/* <!-- Card 2 --> */}
+        {/* <!-- Card 5 --> */}
         <div className="bg-white shadow-md rounded-lg p-6 text-center border border-gray-200">
           <div className="mb-4 flex justify-center">
             <Image
@@ -60,7 +113,7 @@ const Features = () => {
           </p>
         </div>
 
-        {/* <!-- Card 3 --> */}
+        {/* <!-- Card 5 --> */}
         <div className="bg-white shadow-md rounded-lg p-6 text-center border border-gray-200">
           <div className="mb-4 flex justify-center">
             <Image
@@ -102,9 +155,6 @@ const Features = () => {
         </div>
       </div>
 
-
-
-
       {/* Launch store section */}
       <div className=" mx-auto py-12 px-4">
         {/* Main Content Section */}
@@ -124,12 +174,15 @@ const Features = () => {
               </h3>
               <p className="text-gray-300 font-vietnam mb-6">
                 From launch to scale, StoreHub equips you with everything you
-                need to succeed. <span className="hidden md:inline">  Effortlessly set <br /> up your online store,
-                manage products, and streamline operations with our intuitive
-                platform. <br />
-                As your business grows, tap into advanced analytics, secure
-                blockchain technology, <br /> and collaborative tools that make
-                expansion easy and efficient. </span>
+                need to succeed.{" "}
+                <span className="hidden md:inline">
+                  {" "}
+                  Effortlessly set <br /> up your online store, manage products,
+                  and streamline operations with our intuitive platform. <br />
+                  As your business grows, tap into advanced analytics, secure
+                  blockchain technology, <br /> and collaborative tools that
+                  make expansion easy and efficient.{" "}
+                </span>
               </p>
               {/* Image placeholder - you can replace with your images later */}
               <div className="flex justify-center">
@@ -151,10 +204,12 @@ const Features = () => {
               Leverage cutting-edge technology and user-friendly tools designed
               to drive your store’s growth.
             </p>
-            <Link href="/createStore" ><button className="px-6 py-3 my-5 bg-white text-[#000000] rounded-lg font-semibold hover:bg-gray-100 transition">
-              Launch Store
-            </button></Link>
-            
+            <Link href="/createStore">
+              <button className="px-6 py-3 my-5 bg-white text-[#000000] rounded-lg font-semibold hover:bg-gray-100 transition">
+                Launch Store
+              </button>
+            </Link>
+
             {/* Image placeholder - you can replace with your images later */}
             <div className="flex justify-center mt-6">
               <Image

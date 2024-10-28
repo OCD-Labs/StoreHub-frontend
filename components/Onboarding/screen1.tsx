@@ -4,16 +4,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import onboard1 from '../../public/assets/images/onboard1.png'
 
+
 const Screen1 = () => {
   return (
     <div className="w-full h-64 p-8">
       <div>
         <div className="flex flex-col-reverse lg:flex-row">
           <div className="lg:mt-24">
-            <h2 className="max-w-lg text-3xl font-semibold leading-normal">
+            <h2 className="max-w-lg font-vietnam text-3xl font-semibold leading-normal">
               Your One Click Ecommerce Solution
             </h2>
-            <p className="max-w-lg leading-normal">
+            <p className="max-w-lg font-vietnam leading-normal">
               Effortlessly launch your online store, co-own with friends, access
               valuable business insights, and ensure store integrity through
               blockchain technology, powered by NEAR.

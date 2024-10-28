@@ -67,7 +67,9 @@ module.exports = {
             subtle: '#60a5fa', // blue-400
             DEFAULT: '#3b82f6', // blue-500
             emphasis: '#1d4ed8', // blue-700
-            inverted: '#ffffff', // white
+            inverted: '#ffffff',
+            orange: "#FE5B13",
+            hover: "#452213", // orange
           },
           background: {
             muted: '#f9fafb', // gray-50

@@ -10,10 +10,10 @@ const Screen2 = () => {
       <div>
         <div className="flex flex-col-reverse lg:flex-row">
           <div className="lg:mt-24">
-            <h2 className="max-w-lg text-3xl font-semibold leading-normal">
+            <h2 className="max-w-lg font-vietnam text-3xl font-semibold leading-normal">
               How would you like to join StoreHub?
             </h2>
-            <p className="max-w-lg leading-normal">
+            <p className="max-w-lg font-vietnam leading-normal">
               StoreHub aims to provide a tailored experience for every member of
               our community. By understanding your role, we can ensure that the
               features, recommendations, and content you see are most relevant

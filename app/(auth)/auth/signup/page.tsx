@@ -79,20 +79,20 @@ const SignUp = () => {
       {/* Right Section */}
       <section className="sm:w-[55%] pb-6 md:px-6">
         <form autoComplete="on">
-          <p className="text-end">
+          <p className="text-end font-vietnam">
             Already have an account?
             <Link href="/auth/signin">
-              <span className="text-dark hover:bg-blue p-1 ml-2">Sign In</span>
+              <span className="text-dark font-vietnam font-medium hover:text-black/50 p-1 ml-2">Sign In</span>
             </Link>
           </p>
-          <p className="text-2xl mb-6 font-bold py-4">
+          <p className="text-2xl mb-6 font-vietnam font-bold py-4">
             Create a StoreHub Account
           </p>
           <div className="flex flex-col gap-5 sm:gap-3 lg:gap-7">
             {/*FirstName Input */}
             <div>
               <label
-                className="block text-gray-700 mb-2 font-medium"
+                className="block text-gray-700 font-vietnam mb-2 font-medium"
                 htmlFor="email"
               >
                 First Name*
@@ -108,7 +108,7 @@ const SignUp = () => {
             {/*LastName Input */}
             <div>
               <label
-                className="block text-gray-700 font-medium mb-2"
+                className="block text-gray-700 font-vietnam font-medium mb-2"
                 htmlFor="email"
               >
                 Last name *
@@ -125,7 +125,7 @@ const SignUp = () => {
             <div>
               {" "}
               <label
-                className="block text-gray-700 font-medium mb-2"
+                className="block text-gray-700 font-vietnam font-medium mb-2"
                 htmlFor="email"
               >
                 Work Email *
@@ -151,7 +151,7 @@ const SignUp = () => {
             {/*Password Input */}
             <div>
               <label
-                className="block text-gray-700 font-medium mb-2"
+                className="block text-gray-700 font-vietnam font-medium mb-2"
                 htmlFor="email"
               >
                 Password *
@@ -159,15 +159,17 @@ const SignUp = () => {
               <input
                 className=" w-full p-3 border border-gray-300 rounded-lg focus:outline-none"
                 type="text"
-                placeholder="Enter 6 or more characters"
+                placeholder="Enter 9 or more characters"
                 {...register("password", { required: true, min: 9 })}
+                
               />
+              
             </div>
 
             {/* Checkmark  */}
             <div className="flex gap-2">
               <input type="checkbox" name="Agreement" id="" />
-              <span className="text-sm">
+              <span className="text-sm font-vietnam">
                 I agree to the terms of service and privacy policy.
               </span>
             </div>
@@ -181,11 +183,11 @@ const SignUp = () => {
               type="submit"
               disabled={isSubmitting}
               onClick={handleSubmit(onSubmit)}
-              className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white bg-[#161616] text-lg w-full my-3 md:my-6"
+              className="rounded-[10px] md:py-2 sm:py-1 py-2 text-white  text-lg w-full my-3 md:my-6"
             >
               {isSubmitting ? (
                 <div className="flex justify-center">
-                  <Loader2 className="mr-2 mt-1 h-6 w-6 animate-spin" />{" "}
+                  <Loader2 className="mr-2 mt-1 h-6 w-6 font-vietnam animate-spin" />{" "}
                   Creating Your Account...
                 </div>
               ) : (

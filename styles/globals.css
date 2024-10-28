@@ -232,6 +232,11 @@
   flex-direction: column;
 }
 
+/* global button color */
+.newbutton{
+  @apply bg-[#FE5B13] hover:bg-[#452213];
+}
+
 .box {
   margin: 20px;
 }

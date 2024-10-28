@@ -356,10 +356,10 @@ export default function Page({ params }: { params: { store: number } }) {
                     {storeProduct.name}
                   </h3>
                   <div className="flex text-xs text-gray-500 space-x-1">
-                    <span className="text-white border bg-[#FF0000] rounded-xl px-2 font-semibold text-[7px]">
+                    <span className="text-white border bg-[#FF0000] rounded-xl px-2 font-semibold text-[9px]">
                       -13%
                     </span>
-                    <span className="text-[6px] text-[#414040BF] font-normal">
+                    <span className="text-[8px] text-[#414040BF] font-normal">
                       Save $
                       {Number(storeProduct.discount_percentage).toFixed(2)}
                     </span>
