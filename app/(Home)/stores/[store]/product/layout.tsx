@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, use, useEffect } from "react";
 import { CartContext } from "@contexts/CartContext";
 import Image from "next/image";
 import reviewProduct from "@public/assets/images/reviewProduct.png";
@@ -14,32 +14,43 @@ import useSWR from "swr";
 import { useRouter } from "next/navigation";
 
 import { getStoreItemDetails } from "@services/products";
+import { set } from "react-hook-form";
 
 const Product = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-
+  const [refresh, setRefresh] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const pathname = usePathname();
 
   const store_id = pathname?.match(/stores\/(\d+)/)?.[1] || "";
 
   const item_id = useSearchParams().get("item_id") as string;
-
+  useEffect(() => {}, [refresh]);
   const cartActions = useContext(CartContext);
   if (!cartActions) {
     throw new Error("CartContext must be used within a CartProvider");
   }
-  const { cart_id, addItemToCart } = cartActions;
+  const { userCarts, addItemToCart } = cartActions;
+  console.log(userCarts);
 
   const [isAddingCart, setIsCartAdded] = useState(false);
-
+  // const userCart = userCarts?.cart?.filter(
+  //   (item) => item.item_id === Number(item_id)
+  // );
+  // console.log(userCart, Number(item_id), userCarts?.cart_id, "userCarts");
   const addToCart = async () => {
     setIsCartAdded(true);
     try {
-      await addItemToCart(Number(item_id), Number(store_id), cart_id);
-    } catch (error) {}
+      await addItemToCart(
+        Number(item_id),
+        Number(store_id),
+        userCarts?.cart_id
+      );
+    } catch (error) {
+      throw new Error("Failed to add item to cart");
+    }
     setIsCartAdded(false);
-    router.refresh();
+    setRefresh(refresh + 1);
   };
 
   const fetcher = (url: string) => getStoreItemDetails(url);

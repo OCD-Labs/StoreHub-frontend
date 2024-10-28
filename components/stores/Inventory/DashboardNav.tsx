@@ -81,6 +81,13 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
           let selectedStore = stores.filter((store) => {
             return store.store_id == storeId;
           });
+          console.log(
+            selectedStore,
+            stores[0].store_id,
+            storeId,
+            "selected store"
+          );
+
           setCurrentStore(selectedStore[0]);
           handleItmeClick("products");
         }
@@ -88,7 +95,7 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
   };
   useEffect(() => {
     getAllStoresOwnedByUser();
-  }, [session, id]);
+  }, []);
 
   console.log(getFromLocalStorage("storeId"), "id");
 

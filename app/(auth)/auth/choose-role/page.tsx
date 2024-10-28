@@ -1,9 +1,9 @@
-import React from 'react'
-import logo from '@public/assets/images/storehublogo.svg'
-import Image from 'next/image'
-import { Button } from '@components/ui/Button'
-import Link from 'next/link'
-import BackButton from '@components/Onboarding/BackButton'
+import React from "react";
+import logo from "@public/assets/images/storehublogo.svg";
+import Image from "next/image";
+import { Button } from "@components/ui/Button";
+import Link from "next/link";
+import BackButton from "@components/Onboarding/BackButton";
 
 const ChooseRole = () => {
   return (
@@ -14,12 +14,12 @@ const ChooseRole = () => {
         <div className="flex flex-col items-center mt-40">
           <p className="text-2xl mb-4">Sign Up as</p>
           <div className="flex flex-col gap-4">
-            <Link href={'/createStore'}>
+            <Link href={"/auth/signin"}>
               <Button variant="default" className="w-60">
                 Store Owner
               </Button>
             </Link>
-            <Link href={'/userdashboard/accountinfo/accountdetails'}>
+            <Link href={"/auth/signin"}>
               <Button variant="outline" className="w-60">
                 Shopper
               </Button>
@@ -28,7 +28,7 @@ const ChooseRole = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ChooseRole
+export default ChooseRole;

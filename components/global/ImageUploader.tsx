@@ -220,7 +220,7 @@ export default function ImageUploader({
         ) : null}
         {isGeneratingImage && (
           <p className="text-sm text-gray-500 text-center">
-            This may take a while to finish :)
+            This may take a few minutes to finish :)
           </p>
         )}
 

@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useRef, useState } from "react";
 import AddImageUpload from "./addImageUpload";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { set, SubmitHandler, useForm } from "react-hook-form";
 // import { BASE_URL } from "@components/util/config";
 import { ModalOptions, modalstore } from "@StoreManager/modalstore";
 import useProfile from "@hooks/useProfile";
@@ -14,6 +14,7 @@ interface PropsInterface {
   id: string | null;
   addItemStatus: any;
   options: ModalOptions;
+  setloading: Dispatch<SetStateAction<boolean>>;
 }
 
 const AddItemModal: React.FC<PropsInterface> = ({
@@ -21,6 +22,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
   id,
   addItemStatus,
   options,
+  setloading,
 }) => {
   type FormData = {
     name: string;
@@ -59,6 +61,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
   const toggleModal = modalstore((state) => state.toggleModal);
 
   const addStoreProducts = async () => {
+    setloading(true);
     setImageLoader(true);
     const imageArray = await uploadImagesToCloudinary(images);
     debugger;
@@ -95,6 +98,7 @@ const AddItemModal: React.FC<PropsInterface> = ({
           setImageLoader(false);
           console.log(data, "store items");
         });
+      setloading(false);
     } catch (error) {
       console.log(error, "error from call");
       addItemStatus("error");

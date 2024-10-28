@@ -63,7 +63,8 @@ const Nav = () => {
     session ? `${BASE_URL}/inventory/stores` : null,
     getStores
   );
-  saveToLocalStorage("storeId", 0);
+
+  saveToLocalStorage("storeId", data?.data?.result?.stores[0]?.store_id);
 
   const toggleDropdown = () => {
     setOpen(!Opened);

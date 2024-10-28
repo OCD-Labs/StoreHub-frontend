@@ -209,6 +209,7 @@ const StoreInventory = () => {
               userID={userID}
               addItemStatus={setAddItemStatus}
               options={modaloptions}
+              setloading={setloading}
             ></AddItemModal>
           </div>
         </div>
@@ -287,6 +288,7 @@ const StoreInventory = () => {
               </thead>
               <tbody className=" border-b">
                 {loading && <>loading...</>}
+                {loading && <Skeleton className="w-full" count={2} />}
                 {storeItems.map((product, index) => (
                   <tr key={index} className="border-t">
                     <td className="py-4 px-4">
