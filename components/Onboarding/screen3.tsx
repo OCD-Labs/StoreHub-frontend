@@ -10,10 +10,10 @@ const Screen3 = () => {
       <div>
         <div className="flex flex-col-reverse lg:flex-row">
           <div className="lg:mt-24">
-            <h2 className="max-w-lg text-3xl font-semibold leading-normal">
+            <h2 className="max-w-lg font-vietnam text-3xl font-semibold leading-normal">
               Connect NEAR wallet
             </h2>
-            <p className="max-w-lg leading-normal">
+            <p className="max-w-lg font-vietnam leading-normal">
               We're proud to utilize the NEAR blockchain, which provides a
               secure and scalable foundation for your online store. With NEAR,
               you can rest assured that the integrity of your store is upheld,

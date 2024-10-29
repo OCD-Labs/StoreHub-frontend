@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react'
 import Screen1 from '@components/Onboarding/screen1'
 import Screen2 from '@components/Onboarding/screen2'
 import Screen3 from '@components/Onboarding/screen3'
-import storehublogo from '@public/assets/images/storehublogo.svg'
+import storehubIcon from "@public/assets/images/storehubIcon.svg";
 
 const Onboarding = () => {
   const componentSlider = [Screen1, Screen2, Screen3]
@@ -35,7 +35,7 @@ const Onboarding = () => {
         <section className="flex justify-between p-8">
           <div className="font-bold">
             <Image
-              src={storehublogo}
+              src={storehubIcon}
               height={100}
               width={100}
               alt="logo"

@@ -115,25 +115,20 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
       {/* Large Screen */}
       <nav className="hidden max-w-7xl text-sm m-auto sm:px-16 px-6 lg:flex items-center  justify-between  py-3">
         <div className="flex ml-auto items-center">
-          <div
-            onClick={() => {
-              navigator.clipboard.writeText(user.account_id);
-            }}
-          >
-            <img
-              className="h-8 w-8 rounded-full"
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-              alt=""
-            />
-          </div>
-
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger>
-                {" "}
-                <span className="flex px-3 items-center text-[#000000] hover:text-black">
-                  {user.first_name} {user.last_name}
-                </span>
+                <div
+                  onClick={() => {
+                    navigator.clipboard.writeText(user.account_id);
+                  }}
+                >
+                  <img
+                    className="h-8 w-8 rounded-full"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt=""
+                  />
+                </div>{" "}
               </DropdownMenuTrigger>
               <DropdownMenuContent>
                 <DropdownMenuLabel>
@@ -174,7 +169,9 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-
+          <span className="flex px-3 items-center text-[#000000] hover:text-black">
+            {user.first_name} {user.last_name}
+          </span>
           <Image src={notification} alt="notification" />
         </div>
       </nav>
@@ -307,25 +304,25 @@ const DashboardNav = ({ children }: { children: React.ReactNode }) => {
 
             {/* only seen in mobile */}
             <div className="lg:hidden flex ml-[130px] mt-[90%] items-center">
-              <div
-                onClick={() => {
-                  navigator.clipboard.writeText(user.account_id);
-                }}
-              >
-                <img
-                  className="h-8 w-8 rounded-full"
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                  alt=""
-                />
-              </div>
+              <span className="flex px-3 text-white font-bold font-vietnam items-center ">
+                {user.first_name[0]} {user.last_name[0]}
+              </span>
 
               <div>
                 <DropdownMenu>
                   <DropdownMenuTrigger>
                     {" "}
-                    <span className="flex px-3 text-white font-bold font-vietnam items-center ">
-                      {user.first_name[0]} {user.last_name[0]}
-                    </span>
+                    <div
+                      onClick={() => {
+                        navigator.clipboard.writeText(user.account_id);
+                      }}
+                    >
+                      <img
+                        className="h-8 w-8 rounded-full"
+                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                        alt=""
+                      />
+                    </div>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
                     <DropdownMenuLabel>

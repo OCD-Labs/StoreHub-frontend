@@ -72,7 +72,7 @@ const Storepage = ({
         <div>
           {/* Store background Image */}
           <div className="store-custom-bg md:px-9 px-1 py-9  rounded-lg">
-            <div className=" md:mt-[35%] mt-[50%] lg:p-0 p-4">
+            <div className=" md:mt-[35%] mt-[40%] lg:p-0 p-4">
               <div className="lg:mt-24">
                 <div className=" text-white">
                   {/* Title */}

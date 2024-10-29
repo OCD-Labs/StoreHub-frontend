@@ -125,7 +125,7 @@ const Nav = () => {
         <Link href="/cart">
           <div className="hover:text-[#FE5B13] cursor-pointer font-vietnam font-[600] flex items-center space-x-1 ">
             <p>Cart</p> <ShoppingCartIcon className="h-6  w-6" />{" "}
-            <p className="text-sm text-orange-500">{carts}</p>
+            <p className="text-sm mb-3 text-orange-500">{carts}</p>
           </div>
         </Link>
         <div className="flex gap-[38px]">
@@ -244,10 +244,20 @@ const Nav = () => {
           </Link>
         </div>
 
+        {/* add carts here */}
+
         {/* Hamburger icon for mobile */}
-        <button onClick={toggleNavdown}>
-          {isMenuOpened ? <X /> : <Menu />}
-        </button>
+        <div className="flex gap-3">
+          <Link href="/cart">
+            <div className="hover:text-[#FE5B13] cursor-pointer font-vietnam font-[600] flex items-center space-x-1 ">
+              <ShoppingCartIcon className="h-6  w-6" />{" "}
+              <p className="text-sm mb-3 text-orange-500">{carts}</p>
+            </div>
+          </Link>
+          <button onClick={toggleNavdown}>
+            {isMenuOpened ? <X /> : <Menu />}
+          </button>
+        </div>
 
         {/* For Nav link and login logic */}
         <div

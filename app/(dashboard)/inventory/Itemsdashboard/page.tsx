@@ -197,7 +197,7 @@ const StoreInventory = () => {
                   onClick={() => {
                     toggleModal(options);
                   }}
-                  className="text-gray-500 hover:text-gray-700"
+                  className="text-[#000000] text-3xl hover:text-gray-700"
                 >
                   <X />
                 </button>
@@ -231,9 +231,9 @@ const StoreInventory = () => {
               <select
                 onChange={changeStore}
                 value={"store"}
-                className="bg-white border border-gray-300 rounded-lg py-2 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                className="bg-white border border-gray-300 rounded-lg md:py-2 py-1 md:px-4 px-1 text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-400"
               >
-                <option value="" className="text-gray-400">
+                <option value="" className="text-gray-400 font-vietnam md:text-lg text-[9px]">
                   Select your store
                 </option>
                 {data?.map((item) => (
@@ -251,7 +251,7 @@ const StoreInventory = () => {
 
             {/* Search bar */}
 
-            <div className="relative">
+            <div className="relative hidden md:block">
               <input
                 type="text"
                 className="bg-white border border-gray-300 rounded-lg md:pl-10 pl-2  md:pr-8 pr-0 py-2  focus:outline-none focus:ring-2 focus:ring-gray-400"
