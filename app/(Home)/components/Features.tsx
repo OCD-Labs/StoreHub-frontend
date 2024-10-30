@@ -23,7 +23,7 @@ const Features = () => {
       </div>
 
       {/* <!-- Feature Cards Section --> */}
-      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-5">
         {/* <!-- Card 1 --> */}
         <div className="bg-white font-vietnam shadow-md rounded-lg p-6 text-center border border-gray-200">
           <div className="mb-4 flex justify-center">
@@ -55,8 +55,8 @@ const Features = () => {
             Non-Fungible Tokens (NFTs)
           </h3>
           <p className="mt-2 font-vietnam text-gray-600">
-            Create exclusive, digital products. Enhance customer engagement and add a layer of uniqueness to
-            the shopping experience.
+            Create exclusive, digital products. Enhance customer engagement and
+            add a layer of uniqueness to the shopping experience.
           </p>
         </div>
 
@@ -77,6 +77,10 @@ const Features = () => {
             share updates on your WhatsApp Status.
           </p>
         </div>
+      </div>
+
+      {/* second feature con */}
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 mb-16">
         {/* card four */}
         <div className="bg-white font-vietnam shadow-md rounded-lg p-6 text-center border border-gray-200">
           <div className="mb-4 flex justify-center">
@@ -112,26 +116,7 @@ const Features = () => {
             improvements in sales, inventory, and market response.
           </p>
         </div>
-
-        {/* <!-- Card 5 --> */}
-        <div className="bg-white shadow-md rounded-lg p-6 text-center border border-gray-200">
-          <div className="mb-4 flex justify-center">
-            <Image
-              className="h-10 bg-white"
-              src={FeaturesCard3}
-              alt=" Social Media Integration"
-            />
-          </div>
-          <h3 className="text-xl font-vietnam font-semibold text-gray-800">
-            Social Media Integration
-          </h3>
-          <p className="mt-2 font-vietnam text-gray-600">
-            Receive real-time WhatsApp order notifications, and effortlessly
-            share updates on your WhatsApp Status.
-          </p>
-        </div>
       </div>
-
       {/* <!-- Call to Action Section --> */}
 
       <div className="grid gap-6 sm:grid-cols-1 mb-5 rounded-lg border border-gray-200 lg:grid-cols-2">
