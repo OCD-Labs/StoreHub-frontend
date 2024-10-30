@@ -20,15 +20,6 @@ const AccessConfirmation = () => {
   const Router = useRouter();
   const session = getCookie("token");
 
-  // const signIn = async (e: any) => {
-  //   debugger
-  //   const res = await storehubAPI.post('/auth/login', user)
-  //   console.log(res.data, 'user')
-  //   setSession(res.data.data.result)
-  // }
-
-  // debugger // accept invitation from store
-  // const token = getSession()?.access_token
   const token = "session?.user.token";
   const GET_OPTIONS = {
     method: "GET",
