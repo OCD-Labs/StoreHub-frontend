@@ -6,7 +6,7 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import "@/styles/cart.css";
 import CheckoutModal from "@components/global/checkoutModal";
-
+import Link from "next/link";
 import { Button } from "@components/ui/Button";
 import { Loader2 } from "lucide-react";
 
@@ -78,8 +78,6 @@ const Cart: React.FC = () => {
   // remove cart item
   const removeCartItem = async (item_id: number) => {
     try {
-      console.log("clic", item_id, userCarts.cart_id);
-
       setItemId(item_id);
       setRemovingItem(true);
       await removeItemFromCart(userCarts.cart_id, item_id);
@@ -209,9 +207,11 @@ const Cart: React.FC = () => {
 
       {/* Action Buttons */}
       <div className="flex justify-between mt-9">
-        <button className="px-4 py-2 bg-[#FCF8F2] border text-[16px] font-semibold text-[#1D2131] rounded-md hover:bg-[#d8a65a]">
-          Continue Shopping
-        </button>
+        <Link href="/stores">
+          <button className="px-4 py-2 bg-[#FCF8F2] border text-[16px] font-semibold text-[#1D2131] rounded-md hover:bg-[#d8a65a]">
+            Continue Shopping
+          </button>
+        </Link>
         <div>
           <button
             onClick={() => setIsModalOpen(true)}

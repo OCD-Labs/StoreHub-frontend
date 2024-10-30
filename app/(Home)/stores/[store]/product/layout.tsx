@@ -44,6 +44,7 @@ const Product = ({ children }: { children: React.ReactNode }) => {
       await addItemToCart(
         Number(item_id),
         Number(store_id),
+        //@ts-ignore
         userCarts?.cart_id
       );
     } catch (error) {
