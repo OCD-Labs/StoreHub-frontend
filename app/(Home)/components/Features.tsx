@@ -37,7 +37,7 @@ const Features = () => {
             Artificial Intelligence
           </h3>
           <p className="mt-2 font-vietnam text-gray-600">
-            Genrate Store pictures and desscription using our Aartificial
+            Genrate Store pictures and description using our Artificial
             intelligence.
           </p>
         </div>
@@ -55,7 +55,7 @@ const Features = () => {
             Non-Fungible Tokens (NFTs)
           </h3>
           <p className="mt-2 font-vietnam text-gray-600">
-            Create exclusive, digital products. Enhance customer engagement and
+            All stores created are NFT's, Which Enhances customer engagement and
             add a layer of uniqueness to the shopping experience.
           </p>
         </div>
